@@ -22,22 +22,6 @@ public class GuideActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide);
 
-        OkHttpUtils.get(Urls.URL_METHOD)//
-                .tag(this)//
-                .headers("header1", "headerValue1")//
-                .params("param1", "paramValue1")//
-                .execute(new MethodCallBack(this));
-
     }
 
-    private class MethodCallBack extends DialogCallback<String> {
-        public MethodCallBack(Activity activity) {
-            super(activity);
-        }
-
-        @Override
-        public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
-            Toast.makeText(GuideActivity.this, s, Toast.LENGTH_LONG).show();
-        }
-    }
 }

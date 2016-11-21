@@ -17,7 +17,7 @@ import okhttp3.Response;
 /**
  * 描    述：默认将返回的数据解析成需要的Bean,可以是 BaseBean，String，List，Map
  */
-public abstract class JsonCallback<T> extends EncryptCallback<T> {
+public abstract class JsonCallback<T> extends CommonCallback<T> {
 
     private Class<T> clazz;
     private Type type;
