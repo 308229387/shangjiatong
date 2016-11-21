@@ -14,13 +14,7 @@ import okhttp3.Call;
 import okhttp3.Response;
 
 /**
- * ================================================
- * 作    者：廖子尧
- * 版    本：1.0
- * 创建日期：2016/1/14
  * 描    述：请求图图片的时候显示对话框
- * 修订历史：
- * ================================================
  */
 public abstract class BitmapDialogCallback extends BitmapCallback {
 

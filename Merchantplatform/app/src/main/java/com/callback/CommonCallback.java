@@ -5,13 +5,7 @@ import com.okhttputils.callback.AbsCallback;
 import com.okhttputils.request.BaseRequest;
 
 /**
- * ================================================
- * 作    者：jeasonlzy（廖子尧）
- * 版    本：1.0
- * 创建日期：2016/4/8
- * 描    述：我的Github地址  https://github.com/jeasonlzy0216
- * 修订历史：该类主要用于在所有请求之前添加公共的请求头或请求参数，例如登录授权的 token,使用的设备信息等
- * ================================================
+ * 描    述：请求头
  */
 public abstract class CommonCallback<T> extends AbsCallback<T> {
     @Override
