@@ -13,6 +13,7 @@ public class GuideActivity extends BaseActivity<GuideActivityModel> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide);
         model.showToast();
+        model.initLayout();
     }
 
     @Override

@@ -10,10 +10,9 @@ import java.util.List;
 /**
  * Created by SongYongmeng on 2016/11/21.
  */
-
 public class Application extends android.app.Application {
     private static Application instance;
-    private List<Activity> activityList = new LinkedList<Activity>();
+    private List<Activity> activityList = new LinkedList<>();
 
     @Override
     public void onCreate() {
