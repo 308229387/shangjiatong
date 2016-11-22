@@ -5,6 +5,6 @@ package com.utils;
  */
 
 public class Urls {
-    public static final String SERVER = "http://server.jeasonlzy.com/OkHttpUtils/";
-    public static final String URL_METHOD = SERVER + "method";
+    public static final String BASE_URL = "https://zhaobiao.58.com/";
+    public static final String URL_METHOD = BASE_URL + "test";
 }
