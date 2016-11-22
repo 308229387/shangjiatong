@@ -3,6 +3,7 @@ package com.merchantplatform.application;
 import android.app.Activity;
 
 import com.okhttputils.OkHttpUtils;
+import com.utils.LoginRegisterUtils;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,6 +19,7 @@ public class Application extends android.app.Application {
     public void onCreate() {
         super.onCreate();
         initOkHttp();
+        initLogin();
     }
 
     private void initOkHttp() {
@@ -38,5 +40,9 @@ public class Application extends android.app.Application {
     public void removeActivity(Activity context) {
         if (activityList.contains(context))
             activityList.remove(context);
+    }
+
+    public void initLogin() {
+        new LoginRegisterUtils(this);
     }
 }

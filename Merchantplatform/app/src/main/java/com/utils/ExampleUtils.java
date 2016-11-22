@@ -18,10 +18,10 @@ public class ExampleUtils extends Activity {
 
    //get请求
     public void get() {
-        OkHttpUtils.get(Urls.URL_METHOD)//
-                .tag(this)//
-                .headers("header1", "headerValue1")//
-                .params("param1", "paramValue1")//
+        OkHttpUtils.get(Urls.URL_METHOD)
+                .tag(this)
+                .headers("header1", "headerValue1")
+                .params("param1", "paramValue1")
                 .execute(new TestMethodCallBack(this));
     }
 

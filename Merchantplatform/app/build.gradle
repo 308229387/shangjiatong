@@ -15,7 +15,15 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "boolean", "isRelease", "true"
         }
+        debug {
+            buildConfigField "boolean", "isRelease", "false"
+        }
+    }
+    configurations.all {
+        resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
     }
 }
 
@@ -24,8 +32,34 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.google.code.gson:gson:2.5'
     compile 'com.android.support:appcompat-v7:24.2.1'
     testCompile 'junit:junit:4.12'
     compile project(path: ':librarys')
+
+    compile 'com.google.code.gson:gson:2.5'
+    //线上passport SDK(带线上签名的),只能打包登陆，AS直接安装是登陆不了的
+    releaseCompile 'com.wuba.wuxian.sdk:login:2.3.9-NOLEGO'
+    debugCompile 'com.wuba.wuxian.sdk:login:2.3.9-NOLEGO-debug-SNAPSHOT-2'
+}
+
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url "http://artifactory.58corp.com:8081/artifactory/android-public"
+        }
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.2.3'
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        maven {
+            url "http://artifactory.58corp.com:8081/artifactory/android-public"
+        }
+    }
 }
