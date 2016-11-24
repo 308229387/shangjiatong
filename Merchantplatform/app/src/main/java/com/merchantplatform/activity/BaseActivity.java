@@ -3,7 +3,7 @@ package com.merchantplatform.activity;
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.merchantplatform.application.Application;
+import com.merchantplatform.application.HyApplication;
 import com.merchantplatform.model.BaseModel;
 
 /**
@@ -21,7 +21,7 @@ public abstract class BaseActivity<T extends BaseModel> extends Activity{
     }
 
     private void insert(Activity context) {
-        Application.getInstance().addActivity(context);
+        HyApplication.getInstance().addActivity(context);
     }
 
     private void initModel() {
@@ -37,7 +37,7 @@ public abstract class BaseActivity<T extends BaseModel> extends Activity{
     }
 
     private void remove(Activity context) {
-        Application.getInstance().removeActivity(context);
+        HyApplication.getInstance().removeActivity(context);
     }
 
 }

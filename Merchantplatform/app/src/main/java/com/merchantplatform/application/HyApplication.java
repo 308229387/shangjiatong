@@ -1,6 +1,7 @@
 package com.merchantplatform.application;
 
 import android.app.Activity;
+import android.app.Application;
 
 import com.okhttputils.OkHttpUtils;
 import com.utils.LoginRegisterUtils;
@@ -11,8 +12,8 @@ import java.util.List;
 /**
  * Created by SongYongmeng on 2016/11/21.
  */
-public class Application extends android.app.Application {
-    private static Application instance;
+public class HyApplication extends Application {
+    private static HyApplication instance;
     private List<Activity> activityList = new LinkedList<>();
 
     @Override
@@ -31,9 +32,9 @@ public class Application extends android.app.Application {
             activityList.add(activity);
     }
 
-    public static Application getInstance() {
+    public static HyApplication getInstance() {
         if (null == instance)
-            instance = new Application();
+            instance = new HyApplication();
         return instance;
     }
 
