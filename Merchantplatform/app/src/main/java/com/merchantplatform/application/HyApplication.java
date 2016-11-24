@@ -2,6 +2,7 @@ package com.merchantplatform.application;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 
 import com.okhttputils.OkHttpUtils;
 import com.utils.LoginRegisterUtils;
@@ -14,6 +15,7 @@ import java.util.List;
  */
 public class HyApplication extends Application {
     private static HyApplication instance;
+    private static HyApplication application;
     private List<Activity> activityList = new LinkedList<>();
 
     @Override
@@ -21,6 +23,7 @@ public class HyApplication extends Application {
         super.onCreate();
         initOkHttp();
         initLogin();
+        application = this;
     }
 
     private void initOkHttp() {
@@ -45,5 +48,9 @@ public class HyApplication extends Application {
 
     public void initLogin() {
         new LoginRegisterUtils(this);
+    }
+
+    public static Context getApplication() {
+        return application;
     }
 }

@@ -24,7 +24,7 @@
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.Homepage"
+            android:name=".activity.HomepageActivity"
             android:screenOrientation="portrait"></activity>
 
     </application>

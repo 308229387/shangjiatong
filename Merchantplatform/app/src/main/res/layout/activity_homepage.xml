@@ -3,5 +3,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:id="@+id/ly_tab_menu"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/bg_white"
+        android:orientation="horizontal">
+
+        <com.ui.HomepageBottomButton
+            android:id="@+id/homepage_bottom_button1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"></com.ui.HomepageBottomButton>
+
+        <com.ui.HomepageBottomButton
+            android:id="@+id/homepage_bottom_button2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"></com.ui.HomepageBottomButton>
+        <com.ui.HomepageBottomButton
+            android:id="@+id/homepage_bottom_button3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"></com.ui.HomepageBottomButton>
+        <com.ui.HomepageBottomButton
+            android:id="@+id/homepage_bottom_button4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"></com.ui.HomepageBottomButton>
+    </LinearLayout>
 
 </RelativeLayout>

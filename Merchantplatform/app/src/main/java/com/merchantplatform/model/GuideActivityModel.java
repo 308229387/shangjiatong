@@ -7,7 +7,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.merchantplatform.R;
-import com.merchantplatform.activity.Homepage;
+import com.merchantplatform.activity.HomepageActivity;
 import com.merchantplatform.activity.LoginActivity;
 
 /**
@@ -26,7 +26,7 @@ public class GuideActivityModel extends BaseModel {
         text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, LoginActivity.class));
+                context.startActivity(new Intent(context, HomepageActivity.class));
             }
         });
     }
