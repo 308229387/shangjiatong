@@ -21,7 +21,7 @@ public class LoginActivityModel extends BaseModel {
         this.context = context;
     }
 
-    public void creatCallback() {
+    public void createCallback() {
         callback = new LoginCallback() {
 
             @Override
@@ -81,7 +81,7 @@ public class LoginActivityModel extends BaseModel {
         LoginClient.register(callback);
     }
 
-    public void creatRequest() {
+    public void createRequest() {
         Request request = new Request.Builder()
                 //必选，服务类型为登录
                 .setOperate(Request.LOGIN)

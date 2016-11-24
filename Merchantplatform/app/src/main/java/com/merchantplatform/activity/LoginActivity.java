@@ -15,9 +15,9 @@ public class LoginActivity extends BaseActivity<LoginActivityModel> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_layout);
 
-        model.creatCallback();
+        model.createCallback();
         model.setCallback();
-        model.creatRequest();
+        model.createRequest();
     }
 
     @Override

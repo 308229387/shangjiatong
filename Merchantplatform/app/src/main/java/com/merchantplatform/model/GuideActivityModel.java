@@ -7,6 +7,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.merchantplatform.R;
+import com.merchantplatform.activity.Homepage;
 import com.merchantplatform.activity.LoginActivity;
 
 /**
