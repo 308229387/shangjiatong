@@ -2,6 +2,7 @@ package com.merchantplatform.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.merchantplatform.application.HyApplication;
 import com.merchantplatform.model.BaseModel;
@@ -10,7 +11,7 @@ import com.merchantplatform.model.BaseModel;
  * Created by SongYongmeng on 2016/11/22.
  */
 
-public abstract class BaseActivity<T extends BaseModel> extends Activity{
+public abstract class BaseActivity<T extends BaseModel> extends AppCompatActivity {
     protected T model;
 
     @Override

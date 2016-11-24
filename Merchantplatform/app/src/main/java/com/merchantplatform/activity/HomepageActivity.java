@@ -1,6 +1,7 @@
 package com.merchantplatform.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 
 import com.merchantplatform.R;
 import com.merchantplatform.model.HomepageModel;
@@ -18,6 +19,7 @@ public class HomepageActivity extends BaseActivity<HomepageModel> {
         setContentView(R.layout.activity_homepage);
         model.init();
         model.setListener();
+        model.createFragment();
     }
 
     @Override
