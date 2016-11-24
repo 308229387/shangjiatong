@@ -56,4 +56,8 @@ public class HomepageBottomButton extends FrameLayout {
     public void setSelectedState() {
         imageLayout.setSelected(true);
     }
+
+    public void setShowRedHot() {
+        redHot.setVisibility(VISIBLE);
+    }
 }

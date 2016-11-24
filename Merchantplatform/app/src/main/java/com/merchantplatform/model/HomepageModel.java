@@ -97,6 +97,7 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
                 break;
             case R.id.homepage_bottom_button2:
                 dealWithClick(bottomButton2, fragment2);
+                bottomButton2.setShowRedHot();
                 break;
             case R.id.homepage_bottom_button3:
                 dealWithClick(bottomButton3, fragment3);
