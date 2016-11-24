@@ -20,7 +20,7 @@ public class HomepageActivity extends BaseActivity<HomepageModel> {
         model.init();
         model.setListener();
         model.createFragment();
-        model.createFragmentManager();
+        model.createFragmentManagerAndShow();
     }
 
     @Override

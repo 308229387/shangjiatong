@@ -38,7 +38,7 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         bottomButton4.setOnClickListener(this);
     }
 
-    private void clickThisView(HomepageBottomButton v) {
+    private void selectThis(HomepageBottomButton v) {
         registerState();
         v.dismissRedHot();
         if (!v.isSelected())
@@ -60,7 +60,7 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         mFragment = fragment1;
     }
 
-    public void createFragmentManager() {
+    public void createFragmentManagerAndShow() {
         FragmentManager fragmentManager = context.getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.main_fragment, mFragment).commit();
     }
@@ -71,11 +71,11 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
     }
 
     private void isNotShowing(BaseFragment fragment) {
-        jugeFragmentAdded(fragment);
+        judgeFragmentAdded(fragment);
         mFragment = fragment;
     }
 
-    private void jugeFragmentAdded(BaseFragment fragment) {
+    private void judgeFragmentAdded(BaseFragment fragment) {
         if (!fragment.isAdded())
             context.getSupportFragmentManager().beginTransaction().hide(mFragment)
                     .add(R.id.main_fragment, fragment).commit();
@@ -83,28 +83,30 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
             context.getSupportFragmentManager().beginTransaction().hide(mFragment).show(fragment).commit();
     }
 
+    private void dealWithClick(HomepageBottomButton button, BaseFragment fragment) {
+        selectThis(button);
+        switchFragment(fragment);
+    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.homepage_bottom_button1:
-                clickThisView(bottomButton1);
-                switchFragment(fragment1);
+                dealWithClick(bottomButton1, fragment1);
+                bottomButton1.setNum(20);
                 break;
             case R.id.homepage_bottom_button2:
-                clickThisView(bottomButton2);
-                switchFragment(fragment2);
+                dealWithClick(bottomButton2, fragment2);
                 break;
             case R.id.homepage_bottom_button3:
-                clickThisView(bottomButton3);
-                switchFragment(fragment3);
+                dealWithClick(bottomButton3, fragment3);
                 break;
             case R.id.homepage_bottom_button4:
-                clickThisView(bottomButton4);
-                switchFragment(fragment4);
+                dealWithClick(bottomButton4, fragment4);
                 break;
             default:
                 break;
         }
     }
+
 }

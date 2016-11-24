@@ -14,12 +14,14 @@ import com.merchantplatform.activity.HomepageActivity;
 
 /**
  * Created by SongYongmeng on 2016/11/24.
+ * 描    述：带红点的底部导航按钮
  */
 
 public class HomepageBottomButton extends FrameLayout {
     private View view;
     private ImageView redHot;
     private TextView imageLayout;
+    private TextView redNum;
     private HomepageActivity context;
 
     public HomepageBottomButton(Context context, AttributeSet attrs) {
@@ -34,14 +36,21 @@ public class HomepageBottomButton extends FrameLayout {
     private void initLayout() {
         imageLayout = (TextView) view.findViewById(R.id.tab_menu_setting);
         redHot = (ImageView) view.findViewById(R.id.tab_menu_red_hot);
+        redNum = (TextView) view.findViewById(R.id.tab_menu_red_num);
     }
 
     public void dismissRedHot() {
         redHot.setVisibility(GONE);
+        redNum.setVisibility(GONE);
     }
 
     public void registerState() {
         imageLayout.setSelected(false);
+    }
+
+    public void setNum(int num) {
+        redNum.setText(num + "");
+        redNum.setVisibility(VISIBLE);
     }
 
     public void setSelectedState() {
