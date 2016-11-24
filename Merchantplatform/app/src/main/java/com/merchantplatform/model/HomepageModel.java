@@ -35,30 +35,27 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.homepage_bottom_button1:
-                registerState();
-                if (!bottomButton1.isSelected())
-                    bottomButton1.setSelectedState();
+                clickThisView(bottomButton1);
                 break;
             case R.id.homepage_bottom_button2:
-                registerState();
-                if (!bottomButton2.isSelected())
-                    bottomButton2.setSelectedState();
+                clickThisView(bottomButton2);
                 break;
             case R.id.homepage_bottom_button3:
-                registerState();
-                if (!bottomButton3.isSelected())
-                    bottomButton3.setSelectedState();
-                bottomButton3.dismissRedHot();
+                clickThisView(bottomButton3);
                 break;
             case R.id.homepage_bottom_button4:
-                registerState();
-                bottomButton4.dismissRedHot();
-                if (!bottomButton4.isSelected())
-                    bottomButton4.setSelectedState();
+                clickThisView(bottomButton4);
                 break;
             default:
                 break;
         }
+    }
+
+    private void clickThisView(HomepageBottomButton v) {
+        registerState();
+        v.dismissRedHot();
+        if (!v.isSelected())
+            v.setSelectedState();
     }
 
     private void registerState() {
