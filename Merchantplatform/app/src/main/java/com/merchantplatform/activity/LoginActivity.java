@@ -7,6 +7,7 @@ import com.merchantplatform.model.LoginActivityModel;
 
 /**
  * Created by SongYongmeng on 2016/11/22.
+ * 描    述：登陆页，此界面为Passport界面
  */
 
 public class LoginActivity extends BaseActivity<LoginActivityModel> {

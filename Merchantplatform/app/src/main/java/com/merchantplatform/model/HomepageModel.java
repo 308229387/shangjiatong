@@ -15,6 +15,7 @@ import com.ui.HomepageBottomButton;
 /**
  * Created by SongYongmeng on 2016/11/24.
  */
+
 public class HomepageModel extends BaseModel implements View.OnClickListener {
     private HomepageActivity context;
     private HomepageBottomButton bottomButton1, bottomButton2, bottomButton3, bottomButton4;

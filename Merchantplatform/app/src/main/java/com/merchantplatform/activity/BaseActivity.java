@@ -9,6 +9,7 @@ import com.merchantplatform.model.BaseModel;
 
 /**
  * Created by SongYongmeng on 2016/11/22.
+ * 描    述：此界面为Base抽象类，会有MVC绑定、Activity管理等方法。
  */
 
 public abstract class BaseActivity<T extends BaseModel> extends AppCompatActivity {

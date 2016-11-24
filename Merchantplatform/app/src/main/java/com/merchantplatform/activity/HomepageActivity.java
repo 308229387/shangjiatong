@@ -9,6 +9,7 @@ import com.ui.HomepageBottomButton;
 
 /**
  * Created by SongYongmeng on 2016/11/24.
+ * 描    述：首页
  */
 
 public class HomepageActivity extends BaseActivity<HomepageModel> {
