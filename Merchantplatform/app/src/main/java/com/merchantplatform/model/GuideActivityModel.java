@@ -3,10 +3,12 @@ package com.merchantplatform.model;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.merchantplatform.R;
+import com.merchantplatform.activity.AboutActivity;
 import com.merchantplatform.activity.HomepageActivity;
 import com.merchantplatform.activity.LoginActivity;
 
@@ -16,6 +18,7 @@ import com.merchantplatform.activity.LoginActivity;
 public class GuideActivityModel extends BaseModel {
     private Activity context;
     private TextView text;
+    private Button button;
 
     public GuideActivityModel(Activity context) {
         this.context = context;
@@ -27,6 +30,14 @@ public class GuideActivityModel extends BaseModel {
             @Override
             public void onClick(View v) {
                 context.startActivity(new Intent(context, HomepageActivity.class));
+            }
+        });
+
+        button = (Button) context.findViewById(R.id.button_click);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, AboutActivity.class));
             }
         });
     }
