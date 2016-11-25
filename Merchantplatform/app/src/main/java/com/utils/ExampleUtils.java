@@ -15,8 +15,8 @@ import okhttp3.Response;
  */
 
 public class ExampleUtils extends Activity {
-
-   //get请求
+    
+    //get请求
     public void get() {
         OkHttpUtils.get(Urls.URL_METHOD)
                 .tag(this)
