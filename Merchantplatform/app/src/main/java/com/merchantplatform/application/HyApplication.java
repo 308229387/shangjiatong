@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
+import com.merchantplatform.BuildConfig;
 import com.okhttputils.OkHttpUtils;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.utils.LoginRegisterUtils;
 
 import java.util.LinkedList;
@@ -19,6 +21,7 @@ public class HyApplication extends Application {
     private static HyApplication instance;
     private static HyApplication application;
     private List<Activity> activityList = new LinkedList<>();
+    private static final String BUGLY_APP_ID = "900060310";
 
     @Override
     public void onCreate() {
@@ -26,6 +29,7 @@ public class HyApplication extends Application {
         setApplicationContext();
         initOkHttp();
         initLogin();
+        initBugly();
     }
 
     private void setApplicationContext() {
@@ -39,6 +43,11 @@ public class HyApplication extends Application {
     public void initLogin() {
         new LoginRegisterUtils(this);
     }
+
+    private void initBugly() {
+        CrashReport.initCrashReport(getApplicationContext(), BUGLY_APP_ID, !BuildConfig.isRelease);
+    }
+
 
     public void addActivity(Activity activity) {
         if (!activityList.contains(activity))

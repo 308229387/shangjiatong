@@ -11,6 +11,7 @@ import com.merchantplatform.R;
 import com.merchantplatform.activity.AboutActivity;
 import com.merchantplatform.activity.HomepageActivity;
 import com.merchantplatform.activity.LoginActivity;
+import com.tencent.bugly.crashreport.CrashReport;
 
 /**
  * Created by SongYongmeng on 2016/11/22.
@@ -19,6 +20,7 @@ public class GuideActivityModel extends BaseModel {
     private Activity context;
     private TextView text;
     private Button button;
+    private Button button_bugly_test;
 
     public GuideActivityModel(Activity context) {
         this.context = context;
@@ -38,6 +40,13 @@ public class GuideActivityModel extends BaseModel {
             @Override
             public void onClick(View v) {
                 context.startActivity(new Intent(context, AboutActivity.class));
+            }
+        });
+        button_bugly_test = (Button) context.findViewById(R.id.button_bugly_test);
+        button_bugly_test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CrashReport.testJavaCrash();
             }
         });
     }

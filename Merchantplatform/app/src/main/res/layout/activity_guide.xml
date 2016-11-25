@@ -22,5 +22,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/text_click"
         android:text="关于"
-        android:textSize="15sp"/>
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/button_bugly_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_click"
+        android:text="崩溃一下"
+        android:textSize="15sp" />
 </RelativeLayout>
