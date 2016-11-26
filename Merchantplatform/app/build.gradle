@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
-//这里是要输入的路径
-def outputPathName = "../jenkinspackage/"
+////这里是要输入的路径
+//def outputPathName = "../jenkinspackage/"
 
 repositories {
     mavenCentral()
     flatDir {
-        dirs '../librarys/aars', 'aars'
+        dirs '../librarys/aars','aars'
     }
 }
 
@@ -48,13 +48,13 @@ android {
     lintOptions {
         abortOnError false
     }
-    //这是应用编译完成
-    applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            //开始输出
-            output.outputFile = new File(outputPathName, output.outputFile.name.replace(".apk", "-" + defaultConfig.versionName + ".apk"))
-        }
-    }
+//    //这是应用编译完成
+//    android.applicationVariants.all { variant ->
+//        variant.outputs.each  { output ->
+//            //开始输出
+//            output.outputFile = new File(outputPathName,output.outputFile.name.replace(".apk", "-" + defaultConfig.versionName + ".apk"))
+//        }
+//    }
     dexOptions {
         javaMaxHeapSize "4g"
     }
