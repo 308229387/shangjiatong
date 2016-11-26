@@ -57,6 +57,7 @@ public class BallBeatIndicator extends BaseIndicatorController {
                 }
             });
             scaleAnim.start();
+
             ValueAnimator alphaAnim = ValueAnimator.ofInt(255, 51, 255);
             alphaAnim.setDuration(700);
             alphaAnim.setRepeatCount(-1);

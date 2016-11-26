@@ -5,17 +5,17 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class SimpleViewSwithcer extends ViewGroup {
+public class SimpleViewSwitcher extends ViewGroup {
 
-    public SimpleViewSwithcer(Context context) {
+    public SimpleViewSwitcher(Context context) {
         super(context);
     }
 
-    public SimpleViewSwithcer(Context context, AttributeSet attrs) {
+    public SimpleViewSwitcher(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public SimpleViewSwithcer(Context context, AttributeSet attrs, int defStyle) {
+    public SimpleViewSwitcher(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
@@ -27,6 +27,8 @@ public class SimpleViewSwithcer extends ViewGroup {
         for (int i = 0; i < childCount; i++) {
             View child = this.getChildAt(i);
             this.measureChild(child, widthMeasureSpec, heightMeasureSpec);
+            int cw = child.getMeasuredWidth();
+            // int ch = child.getMeasuredHeight();
             maxWidth = child.getMeasuredWidth();
             maxHeight = child.getMeasuredHeight();
         }

@@ -13,6 +13,7 @@ public class BallRotateIndicator extends BaseIndicatorController {
 
     float scaleFloat = 0.5f;
 
+
     @Override
     public void draw(Canvas canvas, Paint paint) {
         float radius = getWidth() / 10;

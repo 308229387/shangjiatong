@@ -13,65 +13,7 @@ import android.view.View;
 
 import com.librarys.R;
 import com.xrecyclerview.progressindicator.indicator.BallBeatIndicator;
-import com.xrecyclerview.progressindicator.indicator.BallClipRotateIndicator;
-import com.xrecyclerview.progressindicator.indicator.BallClipRotateMultipleIndicator;
-import com.xrecyclerview.progressindicator.indicator.BallClipRotatePulseIndicator;
-import com.xrecyclerview.progressindicator.indicator.BallGridBeatIndicator;
-import com.xrecyclerview.progressindicator.indicator.BallGridPulseIndicator;
-import com.xrecyclerview.progressindicator.indicator.BallPulseIndicator;
-import com.xrecyclerview.progressindicator.indicator.BallPulseRiseIndicator;
-import com.xrecyclerview.progressindicator.indicator.BallPulseSyncIndicator;
-import com.xrecyclerview.progressindicator.indicator.BallRotateIndicator;
-import com.xrecyclerview.progressindicator.indicator.BallScaleIndicator;
-import com.xrecyclerview.progressindicator.indicator.BallScaleMultipleIndicator;
-import com.xrecyclerview.progressindicator.indicator.BallScaleRippleIndicator;
-import com.xrecyclerview.progressindicator.indicator.BallScaleRippleMultipleIndicator;
-import com.xrecyclerview.progressindicator.indicator.BallSpinFadeLoaderIndicator;
-import com.xrecyclerview.progressindicator.indicator.BallTrianglePathIndicator;
-import com.xrecyclerview.progressindicator.indicator.BallZigZagDeflectIndicator;
-import com.xrecyclerview.progressindicator.indicator.BallZigZagIndicator;
-import com.xrecyclerview.progressindicator.indicator.BaseIndicatorController;
-import com.xrecyclerview.progressindicator.indicator.CubeTransitionIndicator;
-import com.xrecyclerview.progressindicator.indicator.LineScaleIndicator;
-import com.xrecyclerview.progressindicator.indicator.LineScalePartyIndicator;
-import com.xrecyclerview.progressindicator.indicator.LineScalePulseOutIndicator;
-import com.xrecyclerview.progressindicator.indicator.LineScalePulseOutRapidIndicator;
-import com.xrecyclerview.progressindicator.indicator.LineSpinFadeLoaderIndicator;
-import com.xrecyclerview.progressindicator.indicator.PacmanIndicator;
-import com.xrecyclerview.progressindicator.indicator.SemiCircleSpinIndicator;
-import com.xrecyclerview.progressindicator.indicator.SquareSpinIndicator;
-import com.xrecyclerview.progressindicator.indicator.TriangleSkewSpinIndicator;
 
-/**
- * .BallPulse,
- * .BallGridPulse,
- * .BallClipRotate,
- * .BallClipRotatePulse,
- * .SquareSpin,
- * .BallClipRotateMultiple,
- * .BallPulseRise,
- * .BallRotate,
- * .CubeTransition,
- * .BallZigZag,
- * .BallZigZagDeflect,
- * .BallTrianglePath,
- * .BallScale,
- * .LineScale,
- * .LineScaleParty,
- * .BallScaleMultiple,
- * .BallPulseSync,
- * .BallBeat,
- * .LineScalePulseOut,
- * .LineScalePulseOutRapid,
- * .BallScaleRipple,
- * .BallScaleRippleMultiple,
- * .BallSpinFadeLoader,
- * .LineSpinFadeLoader,
- * .TriangleSkewSpin,
- * .Pacman,
- * .BallGridBeat,
- * .SemiCircleSpin
- */
 public class AVLoadingIndicatorView extends View {
     //indicators
     public static final int BallPulse = 0;
@@ -102,7 +44,6 @@ public class AVLoadingIndicatorView extends View {
     public static final int Pacman = 25;
     public static final int BallGridBeat = 26;
     public static final int SemiCircleSpin = 27;
-
 
     @IntDef(flag = true,
             value = {
@@ -144,13 +85,9 @@ public class AVLoadingIndicatorView extends View {
     //attrs
     int mIndicatorId;
     int mIndicatorColor;
-
     Paint mPaint;
-
     BaseIndicatorController mIndicatorController;
-
     private boolean mHasAnimation;
-
 
     public AVLoadingIndicatorView(Context context) {
         super(context);
@@ -166,7 +103,6 @@ public class AVLoadingIndicatorView extends View {
         super(context, attrs, defStyleAttr);
         init(attrs, defStyleAttr);
     }
-
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public AVLoadingIndicatorView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {

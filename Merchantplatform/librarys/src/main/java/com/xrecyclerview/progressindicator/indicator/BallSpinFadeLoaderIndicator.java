@@ -32,6 +32,7 @@ public class BallSpinFadeLoaderIndicator extends BaseIndicatorController {
             ALPHA,
             ALPHA};
 
+
     @Override
     public void draw(Canvas canvas, Paint paint) {
         float radius = getWidth() / 10;

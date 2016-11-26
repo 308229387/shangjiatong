@@ -13,7 +13,6 @@ public abstract class BaseIndicatorController {
 
     private List<Animator> mAnimators;
 
-
     public void setTarget(View target) {
         this.mTarget = target;
     }

@@ -1,5 +1,6 @@
 package com.xrecyclerview;
 
+
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 
@@ -80,14 +82,16 @@ public class JellyView extends View implements BaseRefreshHeader {
         return jellyHeight;
     }
 
+
     @Override
-    public void refreshComplate() {
+    public void refreshComplete() {
 
     }
 
     @Override
     public void onMove(float delta) {
         jellyHeight = jellyHeight + (int) delta;
+        Log.i("jellyHeight", "delta = " + delta);
         this.invalidate();
     }
 

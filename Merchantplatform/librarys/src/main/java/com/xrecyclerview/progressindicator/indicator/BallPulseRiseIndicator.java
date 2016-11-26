@@ -17,6 +17,7 @@ public class BallPulseRiseIndicator extends BaseIndicatorController {
         float radius = getWidth() / 10;
         canvas.drawCircle(getWidth() / 4, radius * 2, radius, paint);
         canvas.drawCircle(getWidth() * 3 / 4, radius * 2, radius, paint);
+
         canvas.drawCircle(radius, getHeight() - 2 * radius, radius, paint);
         canvas.drawCircle(getWidth() / 2, getHeight() - 2 * radius, radius, paint);
         canvas.drawCircle(getWidth() - radius, getHeight() - 2 * radius, radius, paint);
