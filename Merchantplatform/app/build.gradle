@@ -20,6 +20,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true //支持多dex
     }
 
     signingConfigs {
@@ -47,13 +48,15 @@ android {
     lintOptions {
         abortOnError false
     }
-
     //这是应用编译完成
     applicationVariants.all { variant ->
         variant.outputs.each  { output ->
             //开始输出
             output.outputFile = new File(outputPathName,output.outputFile.name.replace(".apk", "-" + defaultConfig.versionName + ".apk"))
         }
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
     }
     configurations.all {
         resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
@@ -76,6 +79,6 @@ dependencies {
     compile 'com.tencent.bugly:crashreport:2.3.6'
     compile(name: 'WChatLib-release', ext: 'aar')
     compile(name: 'WChatWrap-release', ext: 'aar')
-
+    compile 'com.android.support:multidex:1.0.1'
 }
 

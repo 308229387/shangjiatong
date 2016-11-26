@@ -3,6 +3,8 @@ package com.merchantplatform.application;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 
 import com.merchantplatform.BuildConfig;
 import com.okhttputils.OkHttpUtils;
@@ -17,7 +19,7 @@ import java.util.List;
  * 描    述：黄页商店平台Application,此界面会注册框架、全局上下文、单例对象等，请注意维护此界面整洁！
  */
 
-public class HyApplication extends Application {
+public class HyApplication extends MultiDexApplication {
     private static HyApplication instance;
     private static HyApplication application;
     private List<Activity> activityList = new LinkedList<>();
@@ -68,5 +70,11 @@ public class HyApplication extends Application {
 
     public static Context getApplication() {
         return application;
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 }
