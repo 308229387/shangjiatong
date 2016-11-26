@@ -6,7 +6,7 @@ def outputPathName = "../jenkinspackage/"
 repositories {
     mavenCentral()
     flatDir {
-        dirs '../librarys/aars','aars'
+        dirs '../librarys/aars', 'aars'
     }
 }
 
@@ -50,9 +50,9 @@ android {
     }
     //这是应用编译完成
     applicationVariants.all { variant ->
-        variant.outputs.each  { output ->
+        variant.outputs.each { output ->
             //开始输出
-            output.outputFile = new File(outputPathName,output.outputFile.name.replace(".apk", "-" + defaultConfig.versionName + ".apk"))
+            output.outputFile = new File(outputPathName, output.outputFile.name.replace(".apk", "-" + defaultConfig.versionName + ".apk"))
         }
     }
     dexOptions {
@@ -69,6 +69,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile 'com.android.support:support-v4:23.2.1'
     compile 'com.android.support:appcompat-v7:23.2.1'
     testCompile 'junit:junit:4.12'
     compile project(path: ':librarys')
@@ -80,5 +81,6 @@ dependencies {
     compile(name: 'WChatLib-release', ext: 'aar')
     compile(name: 'WChatWrap-release', ext: 'aar')
     compile 'com.android.support:multidex:1.0.1'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
 }
 
