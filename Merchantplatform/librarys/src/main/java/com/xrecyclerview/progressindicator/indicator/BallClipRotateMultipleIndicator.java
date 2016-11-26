@@ -9,10 +9,10 @@ import android.graphics.RectF;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class BallClipRotateMultipleIndicator extends BaseIndicatorController {
 
     float scaleFloat = 1, degrees;
+
 
     @Override
     public void draw(Canvas canvas, Paint paint) {

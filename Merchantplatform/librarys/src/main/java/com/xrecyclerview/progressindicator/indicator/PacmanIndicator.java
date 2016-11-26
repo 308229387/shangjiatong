@@ -13,9 +13,7 @@ import java.util.List;
 public class PacmanIndicator extends BaseIndicatorController {
 
     private float translateX;
-
     private int alpha;
-
     private float degrees1, degrees2;
 
     @Override

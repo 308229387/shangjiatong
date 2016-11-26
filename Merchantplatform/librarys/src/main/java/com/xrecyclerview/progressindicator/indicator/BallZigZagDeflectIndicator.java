@@ -1,5 +1,6 @@
 package com.xrecyclerview.progressindicator.indicator;
 
+
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.view.animation.LinearInterpolator;
