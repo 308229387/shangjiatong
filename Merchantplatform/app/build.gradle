@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 
+//这里是要输入的路径
 def outputPathName = "../jenkinspackage/"
 
 android {
