@@ -21,13 +21,26 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    signingConfigs {
+        key {
+            storeFile file("merchantplatform.jks")
+            storePassword "123456"
+            keyAlias "merchantplatform"
+            keyPassword "123456"
+        }
+    }
+
+
     buildTypes {
         release {
+            signingConfig signingConfigs.key  // 配置release包的签名
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "boolean", "isRelease", "true"
         }
         debug {
+            signingConfig signingConfigs.key  // 配置debug包的签名
             buildConfigField "boolean", "isRelease", "false"
         }
     }
