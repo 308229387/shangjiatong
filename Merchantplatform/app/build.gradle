@@ -3,6 +3,13 @@ apply plugin: 'com.android.application'
 //这里是要输入的路径
 def outputPathName = "../jenkinspackage/"
 
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs '../librarys/aars','aars'
+    }
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -54,5 +61,8 @@ dependencies {
     releaseCompile 'com.wuba.wuxian.sdk:login:2.3.9-NOLEGO'
     debugCompile 'com.wuba.wuxian.sdk:login:2.3.9-NOLEGO-debug-SNAPSHOT-2'
     compile 'com.tencent.bugly:crashreport:2.3.6'
+    compile(name: 'WChatLib-release', ext: 'aar')
+    compile(name: 'WChatWrap-release', ext: 'aar')
+
 }
 
