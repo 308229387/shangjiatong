@@ -45,9 +45,10 @@ public class HyApplication extends Application {
     }
 
     private void initBugly() {
-        CrashReport.initCrashReport(getApplicationContext(), BUGLY_APP_ID, !BuildConfig.isRelease);
+        if (BuildConfig.isRelease) {
+            CrashReport.initCrashReport(getApplicationContext(), BUGLY_APP_ID, false);
+        }
     }
-
 
     public void addActivity(Activity activity) {
         if (!activityList.contains(activity))
