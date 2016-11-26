@@ -13,6 +13,34 @@ import android.view.View;
 
 import com.librarys.R;
 import com.xrecyclerview.progressindicator.indicator.BallBeatIndicator;
+import com.xrecyclerview.progressindicator.indicator.BallClipRotateIndicator;
+import com.xrecyclerview.progressindicator.indicator.BallClipRotateMultipleIndicator;
+import com.xrecyclerview.progressindicator.indicator.BallClipRotatePulseIndicator;
+import com.xrecyclerview.progressindicator.indicator.BallGridBeatIndicator;
+import com.xrecyclerview.progressindicator.indicator.BallGridPulseIndicator;
+import com.xrecyclerview.progressindicator.indicator.BallPulseIndicator;
+import com.xrecyclerview.progressindicator.indicator.BallPulseRiseIndicator;
+import com.xrecyclerview.progressindicator.indicator.BallPulseSyncIndicator;
+import com.xrecyclerview.progressindicator.indicator.BallRotateIndicator;
+import com.xrecyclerview.progressindicator.indicator.BallScaleIndicator;
+import com.xrecyclerview.progressindicator.indicator.BallScaleMultipleIndicator;
+import com.xrecyclerview.progressindicator.indicator.BallScaleRippleIndicator;
+import com.xrecyclerview.progressindicator.indicator.BallScaleRippleMultipleIndicator;
+import com.xrecyclerview.progressindicator.indicator.BallSpinFadeLoaderIndicator;
+import com.xrecyclerview.progressindicator.indicator.BallTrianglePathIndicator;
+import com.xrecyclerview.progressindicator.indicator.BallZigZagDeflectIndicator;
+import com.xrecyclerview.progressindicator.indicator.BallZigZagIndicator;
+import com.xrecyclerview.progressindicator.indicator.BaseIndicatorController;
+import com.xrecyclerview.progressindicator.indicator.CubeTransitionIndicator;
+import com.xrecyclerview.progressindicator.indicator.LineScaleIndicator;
+import com.xrecyclerview.progressindicator.indicator.LineScalePartyIndicator;
+import com.xrecyclerview.progressindicator.indicator.LineScalePulseOutIndicator;
+import com.xrecyclerview.progressindicator.indicator.LineScalePulseOutRapidIndicator;
+import com.xrecyclerview.progressindicator.indicator.LineSpinFadeLoaderIndicator;
+import com.xrecyclerview.progressindicator.indicator.PacmanIndicator;
+import com.xrecyclerview.progressindicator.indicator.SemiCircleSpinIndicator;
+import com.xrecyclerview.progressindicator.indicator.SquareSpinIndicator;
+import com.xrecyclerview.progressindicator.indicator.TriangleSkewSpinIndicator;
 
 public class AVLoadingIndicatorView extends View {
     //indicators

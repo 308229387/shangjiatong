@@ -13,4 +13,4 @@
     <item android:duration="100" android:drawable="@drawable/loading_10" />
     <item android:duration="100" android:drawable="@drawable/loading_11" />
     <item android:duration="100" android:drawable="@drawable/loading_12" />
-</animation-list><!-- From: file:/android/plugin/XRecyclerView/xrecyclerview/src/main/res/drawable-hdpi/progressbar.xml -->
+</animation-list>
