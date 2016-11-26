@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 
-def outputPathName = "../jenkinspackage/platform.apk"
+def outputPathName = "../jenkinspackage/"
 
 android {
     compileSdkVersion 23
@@ -31,7 +31,7 @@ android {
     applicationVariants.all { variant ->
         variant.outputs.each  { output ->
             //开始输出
-            output.outputFile = new File(outputPathName)
+            output.outputFile = new File(outputPathName,output.outputFile.name.replace(".apk", "-" + defaultConfig.versionName + ".apk"))
         }
     }
     configurations.all {
