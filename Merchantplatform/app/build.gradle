@@ -25,7 +25,7 @@ android {
 
     signingConfigs {
         key {
-            storeFile file("merchantplatform.jks")
+            storeFile file("../merchantplatform.jks")
             storePassword "123456"
             keyAlias "merchantplatform"
             keyPassword "123456"
