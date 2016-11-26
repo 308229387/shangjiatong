@@ -39,5 +39,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.5'
     releaseCompile 'com.wuba.wuxian.sdk:login:2.3.9-NOLEGO'
     debugCompile 'com.wuba.wuxian.sdk:login:2.3.9-NOLEGO-debug-SNAPSHOT-2'
+    compile 'com.tencent.bugly:crashreport:2.3.6'
 }
 
