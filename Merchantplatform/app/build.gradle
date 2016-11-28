@@ -31,11 +31,9 @@ android {
             signingConfig signingConfigs.key  // 配置release包的签名
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField "boolean", "isRelease", "true"
         }
         debug {
             signingConfig signingConfigs.key  // 配置debug包的签名
-            buildConfigField "boolean", "isRelease", "false"
         }
     }
     lintOptions {
