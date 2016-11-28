@@ -36,6 +36,7 @@ public class ArrowRefreshHeader extends LinearLayout implements BaseRefreshHeade
     private static final int ROTATE_ANIM_DURATION = 180;
 
     public int mMeasuredHeight;
+    private long lastUpdateTime = System.currentTimeMillis();
 
     public ArrowRefreshHeader(Context context) {
         super(context);
@@ -144,7 +145,6 @@ public class ArrowRefreshHeader extends LinearLayout implements BaseRefreshHeade
                 break;
             default:
         }
-
         mState = state;
     }
 
@@ -154,8 +154,8 @@ public class ArrowRefreshHeader extends LinearLayout implements BaseRefreshHeade
 
     @Override
     public void refreshComplete() {
-        mHeaderTimeView.setText(friendlyTime(new Date()));
         setState(STATE_DONE);
+        lastUpdateTime = System.currentTimeMillis();
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 reset();
@@ -185,6 +185,9 @@ public class ArrowRefreshHeader extends LinearLayout implements BaseRefreshHeade
                 } else {
                     setState(STATE_NORMAL);
                 }
+            }
+            if (mState == STATE_NORMAL) {
+                mHeaderTimeView.setText(friendlyTime());
             }
         }
     }
@@ -231,9 +234,9 @@ public class ArrowRefreshHeader extends LinearLayout implements BaseRefreshHeade
         animator.start();
     }
 
-    public static String friendlyTime(Date time) {
+    public String friendlyTime() {
         //获取time距离当前的秒数
-        int ct = (int) ((System.currentTimeMillis() - time.getTime()) / 1000);
+        int ct = (int) ((System.currentTimeMillis() - lastUpdateTime) / 1000);
 
         if (ct == 0) {
             return "刚刚";
