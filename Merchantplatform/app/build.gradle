@@ -52,11 +52,6 @@ android {
     dexOptions {
         javaMaxHeapSize "4g"
     }
-    configurations.all {
-        resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
-        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-    }
-
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
             def outputFile = output.outputFile
@@ -64,10 +59,10 @@ android {
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
                 if (variant.buildType.name.equals('release')) {
                     output.outputFile = new File(outputPathName,
-                            "shangjiatong_${variant.buildType.name}_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk".toLowerCase())
+                            "shangjiatong_release_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk".toLowerCase())
                 } else if (variant.buildType.name.equals('debug')) {
                     output.outputFile = new File(outputFile.parent,
-                            "shangjiatong_${variant.buildType.name}_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk".toLowerCase())
+                            "shangjiatong_debug_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk".toLowerCase())
                 }
             }
         }
@@ -76,6 +71,11 @@ android {
     productFlavors {
         xiaomi {}
         huawei {}
+    }
+
+    configurations.all {
+        resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
     }
 }
 
