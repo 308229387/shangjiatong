@@ -38,13 +38,12 @@ public class HyApplication extends MultiDexApplication {
         application = this;
     }
 
-
     private void initOkHttp() {
         OkHttpUtils.init(application);
     }
 
     public void initLogin() {
-        new LoginRegisterUtils(this);
+        new LoginRegisterUtils(application);
     }
 
     private void initBugly() {
@@ -75,6 +74,6 @@ public class HyApplication extends MultiDexApplication {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        MultiDex.install(this);
+        MultiDex.install(application);
     }
 }
