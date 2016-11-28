@@ -1,7 +1,6 @@
 package com.merchantplatform.application;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
@@ -10,6 +9,7 @@ import com.merchantplatform.BuildConfig;
 import com.okhttputils.OkHttpUtils;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.utils.Constant;
+import com.utils.IMInitUtils;
 import com.utils.LoginRegisterUtils;
 
 import java.util.LinkedList;
@@ -35,6 +35,7 @@ public class HyApplication extends MultiDexApplication {
         setApplicationContext();
         initOkHttp();
         initLogin();
+        initIM();
         initBugly();
     }
 
@@ -48,6 +49,10 @@ public class HyApplication extends MultiDexApplication {
 
     public void initLogin() {
         new LoginRegisterUtils(application);
+    }
+
+    public void initIM() {
+        new IMInitUtils();
     }
 
     private void initBugly() {

@@ -46,6 +46,11 @@
             android:name=".activity.AboutActivity"
             android:screenOrientation="portrait" />
 
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+
         <permission
             android:name="com.merchantplatform.permission.MIPUSH_RECEIVE"
             android:protectionLevel="signature" />
@@ -55,6 +60,10 @@
         <meta-data
             android:name="CHANNEL_ID"
             android:value="${CHANNEL_VALUE}" />
+
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="LtuUAAHpPannZfSGztqxGrBtO0IPZqhG" />
 
     </application>
 
