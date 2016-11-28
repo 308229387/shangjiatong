@@ -1,15 +1,5 @@
 apply plugin: 'com.android.application'
 
-////这里是要输入的路径
-//def outputPathName = "../jenkinspackage/"
-
-repositories {
-    mavenCentral()
-    flatDir {
-        dirs '../librarys/aars','aars'
-    }
-}
-
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -32,7 +22,6 @@ android {
         }
     }
 
-
     buildTypes {
         release {
             signingConfig signingConfigs.key  // 配置release包的签名
@@ -48,19 +37,23 @@ android {
     lintOptions {
         abortOnError false
     }
-//    //这是应用编译完成
-//    android.applicationVariants.all { variant ->
-//        variant.outputs.each  { output ->
-//            //开始输出
-//            output.outputFile = new File(outputPathName,output.outputFile.name.replace(".apk", "-" + defaultConfig.versionName + ".apk"))
-//        }
-//    }
+
     dexOptions {
         javaMaxHeapSize "4g"
     }
+
     configurations.all {
         resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
         resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+    }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            universalApk false
+            include "armeabi"//im64位兼容问题
+        }
     }
 }
 
@@ -78,8 +71,8 @@ dependencies {
     releaseCompile 'com.wuba.wuxian.sdk:login:2.3.9-NOLEGO'
     debugCompile 'com.wuba.wuxian.sdk:login:2.3.9-NOLEGO-debug-SNAPSHOT-2'
     compile 'com.tencent.bugly:crashreport:2.3.6'
-    compile(name: 'WChatLib-release', ext: 'aar')
-    compile(name: 'WChatWrap-release', ext: 'aar')
+    compile 'com.wuba.wchat:WChatWrap-release:1.2.1.48'
+    compile 'com.wuba.wchat:WChatLib-release:1.2.1.48'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
 }

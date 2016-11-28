@@ -5,9 +5,11 @@ import android.widget.Toast;
 
 import com.merchantplatform.R;
 import com.merchantplatform.activity.LoginActivity;
+import com.utils.IMLoginUtils;
 import com.wuba.loginsdk.external.LoginCallback;
 import com.wuba.loginsdk.external.LoginClient;
 import com.wuba.loginsdk.external.Request;
+import com.wuba.loginsdk.external.SimpleLoginCallback;
 import com.wuba.loginsdk.model.LoginSDKBean;
 
 /**
@@ -22,57 +24,12 @@ public class LoginActivityModel extends BaseModel {
     }
 
     public void createCallback() {
-        callback = new LoginCallback() {
+        callback = new SimpleLoginCallback() {
 
             @Override
             public void onLogin58Finished(boolean b, String s, @Nullable LoginSDKBean loginSDKBean) {
-                    Toast.makeText(context, "onLogin58Finished", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onLogoutFinished(boolean b, String s) {
-                Toast.makeText(context, "onLogoutFinished", Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            public void onCheckPPUFinished(boolean b, String s, @Nullable LoginSDKBean loginSDKBean) {
-                Toast.makeText(context, "onCheckPPUFinished", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onBindPhoneFinished(boolean b, String s) {
-                Toast.makeText(context, "onBindPhoneFinished", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onUnBindPhoneFinished(boolean b, String s) {
-                Toast.makeText(context, "onUnBindPhoneFinished", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onFetchUserInfoFinished(boolean b, String s, @Nullable LoginSDKBean loginSDKBean) {
-                Toast.makeText(context, "onFetchUserInfoFinished", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onResetPasswordFinished(boolean b, String s) {
-                Toast.makeText(context, "onResetPasswordFinished", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onSocialAccountBound(boolean b, String s) {
-                Toast.makeText(context, "onSocialAccountBound", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onQQAuthCallback(boolean b, String s) {
-                Toast.makeText(context, "onQQAuthCallback", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onSMSCodeSendFinished(boolean b, String s, int i, String s1) {
-                Toast.makeText(context, "onSMSCodeSendFinished", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "onLogin58Finished", Toast.LENGTH_LONG).show();
+                new IMLoginUtils();
             }
         };
     }
