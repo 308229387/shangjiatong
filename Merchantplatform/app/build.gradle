@@ -81,10 +81,6 @@ android {
             manifestPlaceholders = [CHANNEL_VALUE: "baidu"]
         }
 
-        yingyongbao_local {
-            manifestPlaceholders = [CHANNEL_VALUE: "yingyongbao_local"]
-        }
-
         fir {
             manifestPlaceholders = [CHANNEL_VALUE: "fir"]
         }
