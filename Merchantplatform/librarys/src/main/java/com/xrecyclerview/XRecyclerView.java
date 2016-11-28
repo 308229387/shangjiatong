@@ -330,8 +330,6 @@ public class XRecyclerView extends RecyclerView {
         }
     }
 
-    ;
-
     public class WrapAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         private RecyclerView.Adapter adapter;
