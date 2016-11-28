@@ -5,7 +5,9 @@ package com.utils;
  */
 
 public class Constant {
-
+    /**
+     * buglyId
+     */
     public static String BUGLY_APP_ID = "900060310";
 
 }

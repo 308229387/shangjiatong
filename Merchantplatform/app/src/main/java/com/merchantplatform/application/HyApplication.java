@@ -28,6 +28,10 @@ public class HyApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        initConfig();
+    }
+
+    private void initConfig() {
         setApplicationContext();
         initOkHttp();
         initLogin();

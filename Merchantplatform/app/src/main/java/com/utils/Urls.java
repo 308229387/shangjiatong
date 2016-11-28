@@ -2,6 +2,7 @@ package com.utils;
 
 /**
  * Created by SongYongmeng on 2016/11/21.
+ * 描    述：请求Url汇总类
  */
 
 public class Urls {
