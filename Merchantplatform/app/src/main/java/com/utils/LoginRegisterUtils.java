@@ -19,7 +19,7 @@ public class LoginRegisterUtils {
         LoginSdk.LoginConfig loginConfig = new LoginSdk.LoginConfig()
                 .setLogLevel(ILogger.FULL_LOG)
                 .setAppId("1008")
-                .setChannel("58")
+                .setChannel(AppInfoUtils.getChannelId(context))
                 .setProductId("huangyeshanghupingtai")
                 .setLogoResId(R.drawable.loginsdk_account_newlogin_logo);
         LoginSdk.register(context, loginConfig, new LoginSdk.RegisterCallback() {

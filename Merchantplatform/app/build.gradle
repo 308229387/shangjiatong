@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -37,9 +41,45 @@ android {
     lintOptions {
         abortOnError false
     }
-
     dexOptions {
         javaMaxHeapSize "4g"
+    }
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            def outputPathName = "../jenkinspackage/"
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                if (variant.buildType.name.equals('release')) {
+                    output.outputFile = new File(outputPathName,
+                            "shangjiatong_release_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk".toLowerCase())
+                } else if (variant.buildType.name.equals('debug')) {
+                    output.outputFile = new File(outputFile.parent,
+                            "shangjiatong_debug_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk".toLowerCase())
+                }
+            }
+        }
+    }
+
+    productFlavors {
+        yingyongbao {
+            manifestPlaceholders = [CHANNEL_VALUE: "yingyongbao"]
+        }
+
+        tsz {
+            manifestPlaceholders = [CHANNEL_VALUE: "360"]
+        }
+
+        baidu {
+            manifestPlaceholders = [CHANNEL_VALUE: "baidu"]
+        }
+
+        yingyongbao_local {
+            manifestPlaceholders = [CHANNEL_VALUE: "yingyongbao_local"]
+        }
+
+        fir {
+            manifestPlaceholders = [CHANNEL_VALUE: "fir"]
+        }
     }
 
     configurations.all {
@@ -75,5 +115,7 @@ dependencies {
     compile 'com.wuba.wchat:WChatLib-release:1.2.1.48'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    compile 'com.squareup.okio:okio:1.11.0'
+    compile 'com.alibaba:fastjson:1.1.55.android'
 }
-
