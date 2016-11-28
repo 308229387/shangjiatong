@@ -1,12 +1,13 @@
 apply plugin: 'com.android.application'
 
-//这里是要输入的路径
-//def outputPathName = "../jenkinspackage/"
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
 
 repositories {
     mavenCentral()
     flatDir {
-        dirs '../librarys/aars', 'aars'
+        dirs '../librarys/aars','aars'
     }
 }
 
@@ -47,14 +48,7 @@ android {
     }
     lintOptions {
         abortOnError false
-    }
-//    //这是应用编译完成
-//    android.applicationVariants.all { variant ->
-//        variant.outputs.each  { output ->
-//            //开始输出
-//            output.outputFile = new File(outputPathName,output.outputFile.name.replace(".apk", "-" + defaultConfig.versionName + ".apk"))
-//        }
-//    }
+
     dexOptions {
         javaMaxHeapSize "4g"
     }
@@ -62,30 +56,30 @@ android {
         resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
         resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
     }
-}
 
-//FIXME 自动化打包的另一种方案，最后记得删除
-//build {
-//    doLast {
-//        def fileName = "app-debug.apk"
-//        def fromFile = "build/outputs/apk/" + fileName
-//        def intoFile = "../../jenkinspackage/"
-//        def applicationId = android.defaultConfig.applicationId
-//        def versionName = android.defaultConfig.versionName
-//        def buildType = "debug"
-////        def channel = "site"
-//        def appName = "${applicationId}_v${versionName}_${buildType}.apk"
-//        // copy --> rename
-//        copy {
-//            from fromFile
-//            into intoFile
-//            rename {
-//                appName
-//            }
-//        }
-//        println("=====================build.doLast success.=========================")
-//    }
-//}
+    applicationVariants.all { variant ->
+        variant.outputs.each  { output ->
+            def outputFile = output.outputFile
+            def outputPathName = "../jenkinspackage/"
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                if (variant.buildType.name.equals('release')) {
+                    output.outputFile = new File(outputPathName,
+                            "shangjiatong_${variant.buildType.name}_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk".toLowerCase())
+                } else if (variant.buildType.name.equals('debug')) {
+                    output.outputFile = new File(outputFile.parent,
+                            "shangjiatong_${variant.buildType.name}_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk".toLowerCase())
+                }
+            }
+
+
+        }
+    }
+
+    productFlavors{
+        xiaomi{}
+        huawei{}
+    }
+}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
