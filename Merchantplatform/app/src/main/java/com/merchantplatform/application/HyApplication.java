@@ -9,6 +9,7 @@ import android.support.multidex.MultiDexApplication;
 import com.merchantplatform.BuildConfig;
 import com.okhttputils.OkHttpUtils;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.utils.Constant;
 import com.utils.LoginRegisterUtils;
 
 import java.util.LinkedList;
@@ -23,7 +24,6 @@ public class HyApplication extends MultiDexApplication {
     private static HyApplication instance;
     private static HyApplication application;
     private List<Activity> activityList = new LinkedList<>();
-    private static final String BUGLY_APP_ID = "900060310";
 
     @Override
     public void onCreate() {
@@ -38,6 +38,7 @@ public class HyApplication extends MultiDexApplication {
         application = this;
     }
 
+
     private void initOkHttp() {
         OkHttpUtils.init(application);
     }
@@ -47,9 +48,8 @@ public class HyApplication extends MultiDexApplication {
     }
 
     private void initBugly() {
-        if (BuildConfig.isRelease) {
-            CrashReport.initCrashReport(getApplicationContext(), BUGLY_APP_ID, false);
-        }
+        if (BuildConfig.isRelease)
+            CrashReport.initCrashReport(getApplicationContext(), Constant.BUGLY_APP_ID, false);
     }
 
     public void addActivity(Activity activity) {
