@@ -28,10 +28,10 @@
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
 
-        <!--渠道商编号-->
-        <meta-data
-            android:name="CHANNEL_ID"
-            android:value="${CHANNEL_VALUE}" />
+        <!--&lt;!&ndash;渠道商编号&ndash;&gt;-->
+        <!--<meta-data-->
+            <!--android:name="CHANNEL_ID"-->
+            <!--android:value="${CHANNEL_VALUE}" />-->
 
         <!--&lt;!&ndash; WPush &ndash;&gt;-->
         <!--<service-->
