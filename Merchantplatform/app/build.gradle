@@ -42,7 +42,7 @@ android {
             buildConfigField "boolean", "isRelease", "true"
         }
         debug {
-            signingConfig signingConfigs.key  // 配置debug包的签名
+//            signingConfig signingConfigs.key  // 配置debug包的签名
             buildConfigField "boolean", "isRelease", "false"
         }
     }
@@ -59,7 +59,7 @@ android {
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
                 if (variant.buildType.name.equals('release')) {
                     output.outputFile = new File(outputPathName,
-                            "shangjiatong_release_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk".toLowerCase())
+                            "shangjiatong_release_v${defaultConfig.versionName}_${releaseTime()}.apk")
                 } else if (variant.buildType.name.equals('debug')) {
                     output.outputFile = new File(outputFile.parent,
                             "shangjiatong_debug_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk".toLowerCase())
