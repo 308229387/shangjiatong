@@ -52,7 +52,7 @@ public class HyApplication extends MultiDexApplication {
     }
 
     public void initIM() {
-        new IMInitUtils();
+        new IMInitUtils(application);
     }
 
     private void initBugly() {
