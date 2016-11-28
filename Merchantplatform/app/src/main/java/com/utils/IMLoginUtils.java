@@ -15,6 +15,7 @@ import okhttp3.Response;
 
 /**
  * Created by SongYongmeng on 2016/11/28.
+ * 描    述：获取IMtoken
  */
 
 public class IMLoginUtils {

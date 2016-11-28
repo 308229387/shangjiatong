@@ -25,7 +25,6 @@ public class LoginActivityModel extends BaseModel {
 
     public void createCallback() {
         callback = new SimpleLoginCallback() {
-
             @Override
             public void onLogin58Finished(boolean b, String s, @Nullable LoginSDKBean loginSDKBean) {
                 Toast.makeText(context, "onLogin58Finished", Toast.LENGTH_LONG).show();

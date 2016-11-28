@@ -54,6 +54,8 @@ public abstract class JsonCallback<T> extends CommonCallback<T> {
                  * code = 0 代表成功，默认实现了Gson解析成相应的实体Bean返回，可以自己替换成fastjson等
                  * 对于返回参数，先支持 String，然后优先支持class类型的字节码，最后支持type类型的参数
                  */
+
+                if (data.equals("")) return (T) responseData;
                 if (clazz == String.class) return (T) data;
                 if (clazz != null) return new Gson().fromJson(data, clazz);
                 if (type != null) return new Gson().fromJson(data, type);
