@@ -1,13 +1,10 @@
 package com.utils;
 
-import android.app.Application;
-import android.content.Context;
 import android.support.annotation.Nullable;
 
 import com.callback.JsonCallback;
 import com.merchantplatform.application.HyApplication;
 import com.okhttputils.OkHttpUtils;
-import com.okhttputils.callback.AbsCallback;
 import com.wuba.loginsdk.external.LoginClient;
 
 import java.security.MessageDigest;
@@ -21,17 +18,16 @@ import okhttp3.Response;
  */
 
 public class IMLoginUtils {
-    String keyValue = "wb@D11ncE2Ym4xOJnSWknzi";
-    String key;
-    String appId = "100217-wb@a2hvgoAwgHY";
     String userId = LoginClient.getUserID(HyApplication.getApplication());
+    String keyValue = "wb@D11ncE2Ym4xOJnSWknzi";
+    String appId = "100217-wb@a2hvgoAwgHY";
     String clientType = "app";
     String source = "2";
+    String key;
 
     public IMLoginUtils() {
         calculationKey();
-        OkHttpUtils.get(Urls.IM_TOKEN+"?" + "appId=" + appId +"&clientType=" + clientType +"&source=" + source +"&userId=" + userId +"&key="+key)
-                .execute(new IMLoginResult());
+        getToken();
     }
 
     public void calculationKey() {
@@ -44,17 +40,6 @@ public class IMLoginUtils {
         temp3.append(temp2);
         temp3.append(keyValue);
         key = encryptToSHA(temp3.toString());
-
-
-//        String temp = "/common/push/bind_entity?source=2&debug=qa";
-//        StringBuffer temp1 = new StringBuffer();
-//        temp1.append(keyValue);
-//        temp1.append(temp);
-//        String temp2 = encryptToSHA(temp1.toString());
-//        StringBuffer temp3 = new StringBuffer();
-//        temp3.append(temp2);
-//        temp3.append(keyValue);
-//        key = encryptToSHA(temp3.toString());
     }
 
     public static String encryptToSHA(String info) {
@@ -82,6 +67,11 @@ public class IMLoginUtils {
             }
         }
         return hs;
+    }
+
+    private void getToken() {
+        OkHttpUtils.get(Urls.IM_TOKEN+"?" + "appId=" + appId +"&clientType=" + clientType +"&source=" + source +"&userId=" + userId +"&key="+key)
+                .execute(new IMLoginResult());
     }
 
     private class IMLoginResult extends JsonCallback<String> {

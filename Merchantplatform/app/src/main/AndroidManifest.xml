@@ -2,23 +2,27 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.merchantplatform">
 
+    <!--网络权限-->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!--SD卡读权限-->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--SD卡写权限-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 在SDCard中创建与删除文件权限 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-
     <!--腾讯Bugly请求权限-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
+    <!--访问网络状态权限-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--访问wifi状态权限-->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--读系统日志权限-->
     <uses-permission android:name="android.permission.READ_LOGS" />
 
     <permission
         android:name="com.merchantplatform.permission.MIPUSH_RECEIVE"
         android:protectionLevel="signature" />
-    <uses-permission
-        android:name="com.merchantplatform.permission.MIPUSH_RECEIVE" />
+    <uses-permission android:name="com.merchantplatform.permission.MIPUSH_RECEIVE" />
 
     <application xmlns:tools="http://schemas.android.com/tools"
         android:name=".application.HyApplication"
@@ -28,37 +32,29 @@
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
 
+        <activity android:name=".activity.GuideActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.HomepageActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.AboutActivity"
+            android:screenOrientation="portrait" />
+
         <!--渠道商编号-->
         <meta-data
             android:name="CHANNEL_ID"
             android:value="${CHANNEL_VALUE}" />
-
-        <!--&lt;!&ndash; WPush &ndash;&gt;-->
-        <!--<service-->
-            <!--android:name="com.tencent.android.tpush.rpc.XGRemoteService"-->
-            <!--android:exported="true" >-->
-            <!--<intent-filter>-->
-                <!--<action-->
-                    <!--android:name="com.merchantplatform.PUSH_ACTION" />-->
-            <!--</intent-filter>-->
-        <!--</service>-->
-
-        <activity android:name=".activity.GuideActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".activity.LoginActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.HomepageActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.AboutActivity"
-            android:screenOrientation="portrait" />
 
     </application>
 
