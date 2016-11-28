@@ -14,9 +14,11 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
 
-    <!--<meta-data
-        android:name="UMENG_CHANNEL"
-        android:value="${CHANNEL_NAME}" />-->
+    <permission
+        android:name="com.merchantplatform.permission.MIPUSH_RECEIVE"
+        android:protectionLevel="signature" />
+    <uses-permission
+        android:name="com.merchantplatform.permission.MIPUSH_RECEIVE" />
 
     <application xmlns:tools="http://schemas.android.com/tools"
         android:name=".application.HyApplication"
@@ -25,6 +27,22 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
+
+        <!--渠道商编号-->
+        <meta-data
+            android:name="CHANNEL_ID"
+            android:value="${CHANNEL_VALUE}" />
+
+        <!--&lt;!&ndash; WPush &ndash;&gt;-->
+        <!--<service-->
+            <!--android:name="com.tencent.android.tpush.rpc.XGRemoteService"-->
+            <!--android:exported="true" >-->
+            <!--<intent-filter>-->
+                <!--<action-->
+                    <!--android:name="com.merchantplatform.PUSH_ACTION" />-->
+            <!--</intent-filter>-->
+        <!--</service>-->
+
         <activity android:name=".activity.GuideActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
