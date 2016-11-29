@@ -3,4 +3,7 @@
 
     <string name="tab_menu_alert">提醒</string>
 
+    <string name="bind_userid">bindUserID</string>
+    <string name="bind_alias">bindAlias</string>
+
 </resources>

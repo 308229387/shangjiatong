@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.AboutActivity;
 import com.merchantplatform.activity.HomepageActivity;
-import com.merchantplatform.activity.LoginActivity;
+import com.merchantplatform.activity.PushActivity;
 import com.tencent.bugly.crashreport.CrashReport;
 
 /**
@@ -24,6 +24,7 @@ public class GuideActivityModel extends BaseModel {
     private Button button;
     private Button button_bugly_test;
     private ImageView imageView_glide_test;
+    private Button button_push;
 
     public GuideActivityModel(Activity context) {
         this.context = context;
@@ -34,7 +35,7 @@ public class GuideActivityModel extends BaseModel {
         text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, LoginActivity.class));
+                context.startActivity(new Intent(context, HomepageActivity.class));
             }
         });
 
@@ -54,6 +55,13 @@ public class GuideActivityModel extends BaseModel {
         });
         imageView_glide_test = (ImageView) context.findViewById(R.id.imageView_glide_test);
         Glide.with(context).load("http://img.58cdn.com.cn/logo/58/252_84/logo-o.png?v=2").into(imageView_glide_test);
+        button_push = (Button) context.findViewById(R.id.button_push);
+        button_push.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, PushActivity.class));
+            }
+        });
     }
 
     public void showToast() {

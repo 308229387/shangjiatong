@@ -19,10 +19,17 @@
     <!--读系统日志权限-->
     <uses-permission android:name="android.permission.READ_LOGS" />
 
+    <!--调用者的包名申请权限必须-->
     <permission
         android:name="com.merchantplatform.permission.MIPUSH_RECEIVE"
         android:protectionLevel="signature" />
     <uses-permission android:name="com.merchantplatform.permission.MIPUSH_RECEIVE" />
+    <!--接入个推新增的申请权限-->
+    <uses-permission android:name="getui.permission.GetuiService.com.merchantplatform" />
+    <permission
+        android:name="getui.permission.GetuiService.com.merchantplatform"
+        android:protectionLevel="normal" >
+    </permission>
 
     <application xmlns:tools="http://schemas.android.com/tools"
         android:name=".application.HyApplication"
@@ -50,12 +57,17 @@
         <activity
             android:name=".activity.AboutActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PushActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NewsActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
-
         <!--渠道商编号-->
         <meta-data
             android:name="CHANNEL_ID"
@@ -64,6 +76,29 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="LtuUAAHpPannZfSGztqxGrBtO0IPZqhG" />
+
+        <!-- WPush 配置个推参数-->
+        <meta-data
+            android:name="PUSH_APPID"
+            android:value="Ql3Q1vsnTL6910GpSQf2p4" />
+        <meta-data
+            android:name="PUSH_APPKEY"
+            android:value="JdiFj3EBkZ7Cf73WeA3bPA" />
+        <meta-data
+            android:name="PUSH_APPSECRET"
+            android:value="p8WERCFG2o54ekCbK1QKLA" />
+        <provider
+            android:name="com.igexin.download.DownloadProvider"
+            android:authorities="downloads.com.merchantplatform"
+            android:exported="true"
+            android:process=":pushservice" />
+        <receiver
+            android:name="com.wuba.wbpush.receiver.GeTuiReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.Ql3Q1vsnTL6910GpSQf2p4" />
+            </intent-filter>
+        </receiver>
 
     </application>
 
