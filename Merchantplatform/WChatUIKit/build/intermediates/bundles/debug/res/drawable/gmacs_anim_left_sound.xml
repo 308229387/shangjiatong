@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<animation-list android:oneshot="false"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:duration="150" android:drawable="@drawable/gmacs_ic_left_sound1" />
-    <item android:duration="150" android:drawable="@drawable/gmacs_ic_left_sound2" />
-    <item android:duration="150" android:drawable="@drawable/gmacs_ic_left_sound3" />
-</animation-list>
