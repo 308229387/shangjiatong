@@ -5,7 +5,6 @@ import android.widget.Toast;
 
 import com.merchantplatform.R;
 import com.merchantplatform.activity.LoginActivity;
-import com.utils.IMLoginUtils;
 import com.wuba.loginsdk.external.LoginCallback;
 import com.wuba.loginsdk.external.LoginClient;
 import com.wuba.loginsdk.external.Request;
