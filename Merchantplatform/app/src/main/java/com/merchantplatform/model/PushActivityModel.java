@@ -18,6 +18,7 @@ import com.merchantplatform.R;
 import com.merchantplatform.activity.NewsActivity;
 import com.merchantplatform.application.HyApplication;
 import com.push.WPushListener;
+import com.utils.WPushInitUtils;
 import com.wuba.wbpush.Push;
 
 import java.util.List;
@@ -72,7 +73,7 @@ public class PushActivityModel extends BaseModel implements
     }
 
     public void setPushListener(WPushListener listener){
-        ((HyApplication)context.getApplication()).setPushListener(listener);
+        new WPushInitUtils(context).setPushListener(listener);
 
     }
 
