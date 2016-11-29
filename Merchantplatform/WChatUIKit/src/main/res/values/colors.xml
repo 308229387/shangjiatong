@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="gray">#111121</color>
+    <color name="black_gray">#FF404040</color>
+    <color name="light_grey">#FFBFBFBF</color>
+    <color name="light_gray">#FFBCBCBC</color>
+    <color name="dark_grey">#FF404040</color>
+    <color name="dark_212121">#FF212121</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="red">#ffff5500</color>
+    <color name="green">#FF55BB22</color>
+    <color name="orange">#FFFA800A</color>
+    <color name="transparent">#00000000</color>
+    <color name="blue">#FF4C8ED8</color>
+    <color name="transparent_half">#0e000000</color>
+    <color name="blue_A1ADC4">#FFA1ADC4</color>
+    <color name="black_353535">#FF353535</color>
+    <color name="light_blue">#FF1395DA</color>
+    <drawable name="white">#FFFFFFFF</drawable>
+    <drawable name="transparent">#00000000</drawable>
+    <drawable name="orange">#FFFF5500</drawable>
+    <drawable name="green">#FF51BE03</drawable>
+    <drawable name="blue">#FF4C8ED8</drawable>
+    <color name="gray_a5a5a5">#ffa5a5a5</color>
+    <color name="gray_f0f0f0">#fff0f0f0</color>
+    <color name="gray_f7f7f7">#fff7f7f7</color>
+    <color name="gray_d4d4d4">#ffd4d4d4</color>
+    <color name="gray_ebebeb">#ffebebeb</color>
+    <color name="gray_bfbfbf">#ffbfbfbf</color>
+    <color name="gray_f3f3f3">#fff3f3f3</color>
+    <color name="gray_808080">#ff808080</color>
+    <color name="gray_9a9a9a">#ff9a9a9a</color>
+    <color name="gray_cac6c3">#ffcac6c3</color>
+    <color name="gray_999999">#ff999999</color>
+    <color name="gray_404040">#ff404040</color>
+    <color name="gray_777777">#ff777777</color>
+    <color name="gray_f6f6f6">#fff6f6f6</color>
+
+    <!-- 标题栏的文字颜色 -->
+    <color name="titlebar_text_color">@color/white</color>
+
+    <!-- 所有分割线的颜色 -->
+    <color name="divider_line">#FFD8D8D8</color>
+    <color name="bg_emoji_bar">#FFDADADA</color>
+
+    <!-- 聊天界面中快捷回复点击背景 -->
+    <drawable name="bg_quick_msg_item_press">@color/gray_f6f6f6</drawable>
+
+    <!-- 聊天气泡中字体颜色 -->
+    <color name="chat_left">#000000</color>
+    <color name="chat_right">#ffffff</color>
+    <color name="chat_left_super_link">#3e94da</color>
+    <color name="chat_right_super_link">#92ffff</color>
+
+    <!-- album -->
+    <color name="album_bg">#fff0f0f0</color>
+
+    <!-- contact list -->
+    <color name="contact_name">@color/black_353535</color>
+
+    <!-- conversation list -->
+    <color name="conversation_list_name">#FF2b2b2b</color>
+    <color name="conversation_list_msg">#FF969696</color>
+    <color name="conversation_list_time">#FF969696</color>
+    <color name="conversation_list_divider">#FFE0E0E0</color>
+    <color name="conversation_list_item_bg_pressed">@color/gray_ebebeb</color>
+    <color name="conversation_list_item_bg_default">@color/white</color>
+    <color name="conversation_list_connection_status_bg">#F2DEDE</color>
+
+    <!-- SendMoreLayout -->
+    <color name="send_more_layout_text">@color/gray_404040</color>
+    <color name="send_more_layout_divider">@color/gray_a5a5a5</color>
+
+    <color name="gray_tip">#FF404040</color>
+    <color name="gray_medium">#FF969696</color>
+    <color name="gray_dark">#FF555555</color>
+    <color name="gray_line">#FFDCDCE1</color>
+
+    <!-- time 字体颜色-->
+    <color name="chat_time_text_color">#969696</color>
+    <!-- 聊天背景 -->
+    <color name="chat_background">#F3F3F3</color>
+    <!-- duration语音音长数字颜色 -->
+    <color name="chat_duration_text_color">@color/black</color>
+
+    <!-- SendMsgLayout 编辑文本颜色 -->
+    <color name="im_chat_edittext_text_color">@color/black</color>
+    <color name="send_msg_layout_divider">@color/gray_a5a5a5</color>
+
+    <!-- 标题栏颜色-->
+    <color name="title_bar_background">#FF1395DA</color>
+    <color name="location_msg_background">#6A6A6A</color>
+
+    <!-- Captcha tip -->
+    <color name="captcha_text_default">#333333</color>
+    <color name="captcha_text_error">#f43d32</color>
+</resources>

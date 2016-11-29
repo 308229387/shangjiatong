@@ -1,0 +1,123 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dip</dimen>
+    <dimen name="activity_vertical_margin">16dip</dimen>
+
+    <!-- text size -->
+    <dimen name="size_b">18dip</dimen>
+    <dimen name="size_b_b">16dip</dimen>
+    <dimen name="size_m">14dip</dimen>
+    <dimen name="size_s">12dip</dimen>
+    <dimen name="size_s_s">11dip</dimen>
+
+    <!-- avatar size -->
+    <dimen name="avatar_conversation_list">48dip</dimen>
+    <dimen name="avatar_chat">40dip</dimen>
+    <dimen name="avatar_contact_list">36dip</dimen>
+
+    <!-- conversation list -->
+    <dimen name="conversation_list_avatar_margin_right">10dip</dimen>
+    <dimen name="conversation_list_margin_top">8dip</dimen>
+    <dimen name="conversation_list_margin_bottom">8dip</dimen>
+    <dimen name="conversation_list_margin_left">15dip</dimen>
+    <dimen name="conversation_list_sending_status_margin_right">5dip</dimen>
+    <dimen name="conversation_list_time_margin_right">14dip</dimen>
+    <dimen name="conversation_list_msg_count_text_size">@dimen/size_s_s</dimen>
+
+    <dimen name="conversation_list_name">16dip</dimen>
+    <dimen name="conversation_list_msg">13dip</dimen>
+    <dimen name="conversation_list_time">12dip</dimen>
+
+    <!-- conversation list divider -->
+    <dimen name="conversation_list_divider_height">1px</dimen>
+    <dimen name="conversation_list_divider_margin_left">0dip</dimen>
+    <dimen name="conversation_list_divider_margin_right">0dip</dimen>
+
+    <!-- contact list -->
+    <dimen name="contact_list_margin_left">12dip</dimen>
+
+    <!-- contact detail -->
+    <dimen name="contact_detail_name_card_height">80dip</dimen>
+    <dimen name="contact_detail_name_card_separator_height">20dip</dimen>
+    <dimen name="contact_detail_phone_height">45dip</dimen>
+    <dimen name="contact_detail_remark_info_height">100dip</dimen>
+
+    <!-- contact remark -->
+    <dimen name="contact_remark_name_height">45dip</dimen>
+    <dimen name="contact_remark_name_separator_height">20dip</dimen>
+    <dimen name="contact_remark_phone_height">45dip</dimen>
+    <dimen name="contact_remark_info_height">120dip</dimen>
+    <dimen name="contact_remark_first_separator_height">15dip</dimen>
+
+    <!-- contact report -->
+    <dimen name="contact_report_reason_height">120dip</dimen>
+
+    <!-- 标题栏 -->
+    <drawable name="titlebar_background">@color/title_bar_background</drawable>
+    <dimen name="titlebar_height">45dip</dimen>
+    <dimen name="titlebar_text_size">18dip</dimen>
+
+    <dimen name="msg_quick_view_max_height">200dip</dimen>
+
+    <!-- 聊天详情界面显示时间与内容的距离-->
+    <dimen name="im_chat_msg_item_time_margin_content">13dip</dimen>
+
+    <!-- 聊天界面中声音的高宽度 -->
+    <dimen name="im_voice_height">38dip</dimen>
+    <dimen name="im_voice_min_width">70dip</dimen>
+    <dimen name="im_voice_max_width">180dip</dimen>
+    <dimen name="im_voice_margin_right_left">20dip</dimen>
+
+    <!-- 聊天详情界面图片消息的宽高 -->
+    <dimen name="im_chat_msg_pic_msg_height">140dip</dimen>
+    <dimen name="im_chat_msg_pic_msg_width">140dip</dimen>
+
+    <!-- 聊天详情界面图片消息最小宽高 -->
+    <dimen name="im_chat_msg_pic_min_size">60dip</dimen>
+
+    <!-- SendMsgLayout 一堆按钮距离屏幕底部的高度 -->
+    <dimen name="im_chat_buttons_margin_bottom">9dip</dimen>
+    <!-- SendMsgLayout 一堆按钮margin Left / Right -->
+    <dimen name="im_chat_buttons_margin_left_right">3dip</dimen>
+    <dimen name="im_chat_edittext_size">@dimen/size_b_b</dimen>
+
+    <!-- Dialog dimens-->
+    <dimen name="im_dialog_left_text_margin">15dip</dimen>
+    <dimen name="im_dialog_right_text_margin_right">15dip</dimen>
+    <dimen name="im_dialog_right_text_margin_left">5dip</dimen>
+    <dimen name="im_dialog_right_button_padding_lr">13dip</dimen>
+    <dimen name="im_dialog_right_button_padding_tb">6dip</dimen>
+    <dimen name="im_dialog_right_button_bg_corner">3dip</dimen>
+    <dimen name="im_dialog_list_item_divider_height">1px</dimen>
+
+    <!--无头像card notice-->
+    <dimen name="im_chat_notice_margin_left">25dip</dimen>
+    <dimen name="im_chat_notice_margin_right">25dip</dimen>
+    <!--右侧带头像的消息 -->
+    <dimen name="im_chat_right_text_margin_left">60dip</dimen>
+    <dimen name="im_chat_right_text_margin_right">10dip</dimen>
+    <!--左侧带头像的消息 -->
+    <dimen name="im_chat_left_text_margin_left">10dip</dimen>
+    <dimen name="im_chat_left_text_margin_right">60dip</dimen>
+    <!--发送失败与气泡的距离 -->
+    <dimen name="im_chat_send_failed_margin_right">3dip</dimen>
+    <!--气泡与头像的距离 -->
+    <dimen name="im_chat_content_item_margin_right">3dip</dimen>
+    <!--两个气泡之间的距离 -->
+    <dimen name="im_chat_item_paddingTop">6dip</dimen>
+    <dimen name="im_chat_item_paddingBottom">6dip</dimen>
+
+    <dimen name="im_chat_notice_paddingTop">6dp</dimen>
+    <dimen name="im_chat_notice_paddingBottom">6dp</dimen>
+
+    <!--气泡父布局最大宽度 -->
+    <dimen name="im_chat_maxWidth_right">306dp</dimen>
+    <dimen name="im_chat_maxWidth_left">246dp</dimen>
+    <dimen name="im_chat_name_left_margin_avatar">22dp</dimen>
+
+    <dimen name="navigation_bar_height">48dp</dimen>
+
+    <dimen name="show_input_method_max_span">100dp</dimen>
+    <dimen name="max_loading_progress_bar_height">30dp</dimen>
+</resources>
