@@ -23,3 +23,13 @@
   public *;
 }
 -keepresourcexmlelements manifest/application/meta-data@value=GlideModule
+#getui
+-dontwarn com.igexin.**
+-keep class com.igexin.**{*;}
+#xiaomi
+-dontwarn com.xiaomi.**
+-keep class com.xiaomi.**{*;}
+-keep class org.apache.thrift.** {*;}
+-keep class com.google.protobuf.micro.** {*;}
+
+-keep class com.wuba.wbpush.**{*;}
