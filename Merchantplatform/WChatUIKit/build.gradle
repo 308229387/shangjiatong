@@ -28,9 +28,12 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:24.2.1'
-    apt 'org.greenrobot:eventbus-annotation-processor:3.0.1'
+    compile files('libs/baidumapapi_base_v3_6_1.jar')
+    compile files('libs/baidumapapi_map_v3_6_1.jar')
+    compile files('libs/baidumapapi_search_v3_6_1.jar')
+    compile files('libs/locSDK_6.13.jar')
     compile 'org.greenrobot:eventbus:3.0.0'
-
+    apt 'org.greenrobot:eventbus-annotation-processor:3.0.1'
     testCompile 'junit:junit:4.12'
 }
 
