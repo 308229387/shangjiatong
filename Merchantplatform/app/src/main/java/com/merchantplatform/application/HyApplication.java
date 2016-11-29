@@ -9,7 +9,7 @@ import com.merchantplatform.BuildConfig;
 import com.okhttputils.OkHttpUtils;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.utils.Constant;
-import com.utils.IMInitUtils;
+import com.utils.IMInitAppUtils;
 import com.utils.LoginRegisterUtils;
 import com.utils.WPushInitUtils;
 
@@ -59,7 +59,7 @@ public class HyApplication extends MultiDexApplication {
     }
 
     public void initIM() {
-        new IMInitUtils(application);
+        new IMInitAppUtils(application);
     }
 
     private void initBugly() {

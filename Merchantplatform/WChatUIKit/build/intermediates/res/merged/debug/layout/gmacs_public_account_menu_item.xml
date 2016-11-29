@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:orientation="horizontal">
+
+    <View
+        android:id="@+id/divider_public_account_menu_item"
+        android:layout_width="0.5dip"
+        android:layout_height="match_parent"
+        android:background="@color/gray_bfbfbf" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gmacs_public_account_menu_item_bg">
+
+        <Button
+            android:id="@+id/btn_public_account_menu_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gmacs_public_account_menu_item_bg"
+            android:theme="@android:style/Theme.Light" />
+
+        <ImageView
+            android:id="@+id/spinner_public_account_menu_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gmacs_spinner"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</LinearLayout>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.gmacs.view.SendMsgLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/send_msg_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="false"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/line_top"
+        style="@style/DottedLine"
+        android:layout_alignParentTop="true"
+        android:background="@color/send_msg_layout_divider" />
+
+    <LinearLayout
+        android:id="@+id/editSendMsgLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray_f7f7f7"
+        android:baselineAligned="false"
+        android:minHeight="53.25dip"
+        android:orientation="horizontal">
+
+        <!-- 公众号键盘切换按钮 -->
+        <ImageView
+            android:id="@+id/iv_public_account_keyboard_down"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="4dip"
+            android:background="@drawable/gmacs_bg_vertical_divider"
+            android:clickable="true"
+            android:gravity="bottom"
+            android:paddingBottom="@dimen/im_chat_buttons_margin_bottom"
+            android:scaleType="fitEnd"
+            android:src="@drawable/gmacs_ic_public_account_keyboard_down"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/layout_send_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/im_chat_buttons_margin_bottom"
+            android:layout_marginLeft="@dimen/im_chat_buttons_margin_left_right">
+
+            <!-- 快捷回复 -->
+            <ImageView
+                android:id="@+id/send_quick_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/im_chat_buttons_margin_left_right"
+                android:src="@drawable/gmacs_ic_quick"
+                android:visibility="gone" />
+
+            <!-- 语音 -->
+            <ImageView
+                android:id="@+id/send_voice_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/im_chat_buttons_margin_left_right"
+                android:layout_toRightOf="@id/send_quick_button"
+                android:src="@drawable/gmacs_ic_voice" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/send_text_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginRight="@dimen/im_chat_buttons_margin_left_right"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:minHeight="53.25dip"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/send_msg_edittext"
+                style="@style/style_chat_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="5dip"
+                android:layout_marginTop="5dip"
+                android:background="@drawable/gmacs_bg_input"
+                android:gravity="center_vertical"
+                android:imeOptions="actionDone"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/im_chat_edittext_size"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/record_voice"
+                style="@style/GmacsTheme.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="5dip"
+                android:layout_marginTop="5dip"
+                android:background="@drawable/gmacs_bg_send"
+                android:longClickable="true"
+                android:text="@string/record_start"
+                android:textColor="@color/gmacs_color_send_voice_button"
+                android:textSize="@dimen/size_b_b" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_send_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/im_chat_buttons_margin_bottom"
+            android:layout_marginRight="@dimen/im_chat_buttons_margin_left_right"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal">
+
+            <!-- 表情 -->
+            <ImageView
+                android:id="@+id/send_emoji_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/im_chat_buttons_margin_left_right"
+                android:src="@drawable/gmacs_ic_emoji" />
+
+            <!-- 更多 -->
+            <ImageView
+                android:id="@+id/send_more_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/send_emoji_button"
+                android:src="@drawable/gmacs_ic_more" />
+
+            <!-- 发送按钮 -->
+            <Button
+                android:id="@+id/send_text"
+                style="@style/style_chat_send_button"
+                android:layout_alignBottom="@id/send_emoji_button"
+                android:layout_alignTop="@id/send_emoji_button"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/send_emoji_button"
+                android:background="@drawable/gmacs_btn_send"
+                android:gravity="center"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <!-- 底部发送"图片"、"拍照"、"房源" -->
+    <include
+        layout="@layout/gmacs_send_more"
+        android:visibility="gone" />
+
+    <include layout="@layout/gmacs_custom_facerelativelayout" />
+
+    <include
+        layout="@layout/gmacs_layout_quick_msg"
+        android:visibility="gone" />
+
+</com.android.gmacs.view.SendMsgLayout>

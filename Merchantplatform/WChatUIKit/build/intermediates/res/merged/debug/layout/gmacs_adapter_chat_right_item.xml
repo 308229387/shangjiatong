@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/list_post_title_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:paddingBottom="@dimen/im_chat_item_paddingBottom"
+    android:paddingTop="@dimen/im_chat_item_paddingTop">
+
+    <!-- 时间 -->
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/im_chat_msg_item_time_margin_content"
+        android:background="@drawable/gmacs_chat_time_background"
+        android:paddingBottom="1dp"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
+        android:paddingTop="1dp"
+        android:textColor="@color/chat_time_text_color"
+        android:textSize="12dp" />
+
+    <!-- 右边用户头像与聊天信息父View -->
+
+    <RelativeLayout
+        android:id="@+id/right_item_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/time"
+        android:layout_marginRight="@dimen/im_chat_right_text_margin_right">
+
+        <com.android.gmacs.view.NetworkImageView
+            android:id="@+id/right_head"
+            android:layout_width="@dimen/avatar_chat"
+            android:layout_height="@dimen/avatar_chat"
+            android:layout_alignParentRight="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/gmacs_ic_default_avatar"
+            app:drawShape="@string/drawShape" />
+
+        <LinearLayout
+            android:id="@+id/content_item"
+            android:layout_width="@dimen/im_chat_maxWidth_right"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/im_chat_send_failed_margin_right"
+            android:layout_marginRight="@dimen/im_chat_content_item_margin_right"
+            android:layout_toLeftOf="@id/right_head"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/im_chat_send_failed_margin_right"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/right_failed_sendf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/gmacs_ic_failed_send" />
+
+                <include
+                    android:id="@+id/send_progress"
+                    layout="@layout/gmacs_im_send_down_progress" />
+            </RelativeLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

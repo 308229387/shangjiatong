@@ -62,7 +62,7 @@
                 android:layout_alignTop="@+id/tv_phone_city"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/tv_phone_city"
-                android:background="@color/green"
+                android:background="@color/wb_background"
                 android:textSize="@dimen/phoneNum_textsize" />
 
             <TextView

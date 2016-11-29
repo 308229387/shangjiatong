@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants">
+
+    <TextView
+        android:id="@+id/msg"
+        style="@style/style_talk_text_content_right"
+        android:background="@drawable/gmacs_msg_right_talk"
+        android:textColor="@color/black" />
+
+</LinearLayout>

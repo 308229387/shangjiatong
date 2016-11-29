@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_conversation_hiddenview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
+
+    <ListView
+        android:id="@+id/lv_conversation_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_conversation_hiddenview"
+        android:listSelector="@color/transparent"
+        android:divider="@null"
+        android:scrollbars="none"/>
+
+    <LinearLayout
+        android:id="@+id/ll_conversation_list_empty_prompt"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/lv_conversation_list"
+        android:orientation="vertical"/>
+
+</RelativeLayout>

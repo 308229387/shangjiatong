@@ -106,15 +106,13 @@ dependencies {
     compile project(path: ':librarys')
     compile 'com.google.code.gson:gson:2.5'
     compile(name: 'wbpush-release_1.2.0_build_3082', ext: 'aar')
-    compile project(':WChatUIKit')
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.tencent.bugly:crashreport:2.3.6'
-    compile 'com.wuba.wchat:WChatWrap-release:1.2.1.48'
-    compile 'com.wuba.wchat:WChatLib-release:1.2.1.48'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     testCompile 'junit:junit:4.12'
     debugCompile 'com.wuba.wuxian.sdk:login:2.3.9-NOLEGO-debug-SNAPSHOT-2'
     releaseCompile 'com.wuba.wuxian.sdk:login:2.3.9-NOLEGO'
+    compile 'com.wuba.wchat:WChatLib-release:1.2.1.48'
 }

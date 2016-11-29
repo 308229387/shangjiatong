@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.gmacs.view.SendMoreLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/send_more_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/line_top"
+        android:background="@color/send_more_layout_divider"
+        style="@style/DottedLine" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/send_more_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="169.25dip"
+        android:paddingBottom="@dimen/size_b_b"
+        android:paddingTop="@dimen/size_b_b"
+        android:paddingLeft="8dip"
+        android:paddingRight="8dip">
+    </android.support.v4.view.ViewPager>
+
+    <LinearLayout
+        android:id="@+id/send_more_view_dot"
+        android:layout_width="match_parent"
+        android:layout_height="25dip"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:visibility="gone">
+    </LinearLayout>
+</com.android.gmacs.view.SendMoreLayout>

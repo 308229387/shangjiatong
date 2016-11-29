@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/conversation_list_connection_status_bg"
+    android:visibility="gone">
+    <ImageView
+        android:id="@+id/gmacs_connection_status_img"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:scaleType="centerInside"
+        android:layout_margin="2dp"
+        android:src="@drawable/gmacs_ic_disconnect"/>
+
+    <TextView
+        android:id="@+id/gmacs_connection_status_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:textSize="14dp"
+        android:includeFontPadding="false"
+        android:textColor="@color/gray_9a9a9a"
+        android:layout_gravity="center_vertical"
+        android:gravity="center" />
+</LinearLayout>

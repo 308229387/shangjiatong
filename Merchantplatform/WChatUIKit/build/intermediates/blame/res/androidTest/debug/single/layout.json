@@ -1,0 +1,394 @@
+[
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_icon.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_list_menu_item_icon.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_send_more_item_layout.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_send_more_item_layout.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_popup_menu_header_item_layout.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_popup_menu_header_item_layout.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_popup_menu_item_layout.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_popup_menu_item_layout.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_contact_list_item.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_contact_list_item.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_layout_quick_msg.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_layout_quick_msg.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_expanded_menu_layout.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_expanded_menu_layout.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_captcha_layout.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_captcha_layout.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_activity_contact_report.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_activity_contact_report.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_radio.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_list_menu_item_radio.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_public_account_menu_layout.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_public_account_menu_layout.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_conversation_list_other_info_layout.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_conversation_list_other_info_layout.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_activity_chat.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_activity_chat.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_activity_photo_browse.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_activity_photo_browse.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_conversation_connection_status_header.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_conversation_connection_status_header.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_layout_emoji_gif.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_layout_emoji_gif.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_activity_album_dir.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_activity_album_dir.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_menu_item_layout.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_action_menu_item_layout.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_adapter_talk_item_right_content_text.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_adapter_talk_item_right_content_text.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_custom_facerelativelayout.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_custom_facerelativelayout.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_alert_dialog_button_bar_material.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_alert_dialog_button_bar_material.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_adapter_talk_item_content_left_voice.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_adapter_talk_item_content_left_voice.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_send_more.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_send_more.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\select_dialog_singlechoice_material.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\select_dialog_singlechoice_material.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_big_media.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\notification_template_big_media.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_conversation_list_item.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_conversation_list_item.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_public_account_menu_item.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_public_account_menu_item.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_send_more_view.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_send_more_view.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_conversation_list.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_conversation_list.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_public_account_menuitem.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_public_account_menuitem.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_adapter_talk_item_content_left_map.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_adapter_talk_item_content_left_map.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_brand_service_list.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_brand_service_list.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_media.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\notification_template_media.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_layout_record_sound.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_layout_record_sound.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_contact_list.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_contact_list.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\select_dialog_item_material.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\select_dialog_item_material.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_webview.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_webview.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_media_action.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\notification_media_action.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_widget_map_pop.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_widget_map_pop.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_activity_chooser_view.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_activity_chooser_view.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_activity_chooser_view_list_item.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_activity_chooser_view_list_item.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_toolbar.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_screen_toolbar.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\select_dialog_multichoice_material.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\select_dialog_multichoice_material.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_part_chronometer.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\notification_template_part_chronometer.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_adapter_talk_item_content_right_gif.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_adapter_talk_item_content_right_gif.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_contact_detail_info.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_contact_detail_info.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_adapter_chat_left_item.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_adapter_chat_left_item.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_item_album_dir.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_item_album_dir.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_layout_titlebar.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_layout_titlebar.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_activity_contact_remark.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_activity_contact_remark.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_public_account_menuitem_layout.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_public_account_menuitem_layout.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_big_media_narrow.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\notification_template_big_media_narrow.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_adapter_chat_notice_item.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_adapter_chat_notice_item.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_adapter_talk_item_notice_content.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_adapter_talk_item_notice_content.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_xxlistview_header.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_xxlistview_header.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_dialog_list_item.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_dialog_list_item.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_adapter_talk_item_left_content_text.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_adapter_talk_item_left_content_text.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_content_include.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_screen_content_include.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_adapter_image_pager_item.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_adapter_image_pager_item.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_layout.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_list_menu_item_layout.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_activity_album_choose.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_activity_album_choose.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_dialog_layout.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_dialog_layout.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_search_view.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_search_view.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_item_face.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_item_face.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_alert_dialog_material.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_alert_dialog_material.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_adapter_talk_item_content_left_picture.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_adapter_talk_item_content_left_picture.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_media_cancel_action.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\notification_media_cancel_action.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_adapter_talk_item_tip_content.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_adapter_talk_item_tip_content.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_mode_bar.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_action_mode_bar.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_part_time.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\notification_template_part_time.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_bar_title_item.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_action_bar_title_item.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_menu_layout.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_action_menu_layout.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_activity_map.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_activity_map.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_im_send_down_progress.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_im_send_down_progress.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_adapter_talk_item_content_left_gif.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_adapter_talk_item_content_left_gif.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_bar_view_list_nav_layout.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_action_bar_view_list_nav_layout.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_layout_chat_bottom.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_layout_chat_bottom.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_popu_gif.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_popu_gif.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_checkbox.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_list_menu_item_checkbox.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_item_album_select_img.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_item_album_select_img.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_adapter_chat_right_item.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_adapter_chat_right_item.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_activity_image.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_activity_image.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_item_emoji_gif.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_item_emoji_gif.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_adapter_talk_item_content_right_voice.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_adapter_talk_item_content_right_voice.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_window_base.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_window_base.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_mode_close_item_material.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_action_mode_close_item_material.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_lines.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\notification_template_lines.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_simple.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_screen_simple.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_item_quick_msg.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_item_quick_msg.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\support_simple_spinner_dropdown_item.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\support_simple_spinner_dropdown_item.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_item_list_separators.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_item_list_separators.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_adapter_talk_item_content_right_map.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_adapter_talk_item_content_right_map.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_dialog_title_material.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_dialog_title_material.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_search_dropdown_item_icons_2line.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_search_dropdown_item_icons_2line.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_select_dialog_material.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_select_dialog_material.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_simple_overlay_action_mode.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_screen_simple_overlay_action_mode.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_bar_up_container.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_action_bar_up_container.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_adapter_talk_item_content_right_picture.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_adapter_talk_item_content_right_picture.xml"
+    }
+]

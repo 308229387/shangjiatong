@@ -4,20 +4,18 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Process;
 
-import com.baidu.mapapi.SDKInitializer;
-import com.common.gmacs.BuildConfig;
 import com.common.gmacs.core.Gmacs;
+import com.merchantplatform.BuildConfig;
 import com.merchantplatform.application.HyApplication;
 
-import static com.tencent.open.utils.Global.getPackageName;
 
 /**
  * Created by SongYongmeng on 2016/11/28.
  */
-public class IMInitUtils {
+public class IMInitAppUtils {
     private final HyApplication application;
 
-    public IMInitUtils(HyApplication application) {
+    public IMInitAppUtils(HyApplication application) {
         this.application = application;
         init();
     }
