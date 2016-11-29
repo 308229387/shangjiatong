@@ -23,7 +23,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -35,6 +35,8 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     apt 'org.greenrobot:eventbus-annotation-processor:3.0.1'
     testCompile 'junit:junit:4.12'
+    compile 'com.wuba.wchat:WChatLib-release:1.2.1.48'
+    compile 'com.wuba.wchat:WChatWrap-release:1.2.1.48'
 }
 
 apt {
