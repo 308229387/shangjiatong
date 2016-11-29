@@ -7,5 +7,4 @@
 /captures
 .externalNativeBuild
 .idea/
-
-
+/WChatUIKit/build/

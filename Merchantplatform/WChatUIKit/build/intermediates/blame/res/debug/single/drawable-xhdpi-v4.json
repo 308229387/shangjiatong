@@ -744,12 +744,12 @@
         "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\res\\drawable-xhdpi\\gmacs_ic_public_account_keyboard_down_pressed.png"
     },
     {
-        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_list_pressed_holo_dark.9.png",
-        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable-xhdpi-v4\\abc_list_pressed_holo_dark.9.png"
-    },
-    {
         "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\gmacs_ic_recording5.png",
         "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\res\\drawable-xhdpi\\gmacs_ic_recording5.png"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_list_pressed_holo_dark.9.png",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable-xhdpi-v4\\abc_list_pressed_holo_dark.9.png"
     },
     {
         "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\smiley_017.png",

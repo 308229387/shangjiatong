@@ -376,12 +376,12 @@
         "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\gmacs_btn_gray_selected.9.png"
     },
     {
-        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\smiley_072.png",
-        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\smiley_072.png"
-    },
-    {
         "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\abc_ic_star_black_36dp.png",
         "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable-xhdpi-v4\\abc_ic_star_black_36dp.png"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\smiley_072.png",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\smiley_072.png"
     },
     {
         "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\smiley_015.png",

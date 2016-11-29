@@ -232,12 +232,12 @@
         "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_screen_content_include.xml"
     },
     {
-        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_adapter_image_pager_item.xml",
-        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_adapter_image_pager_item.xml"
-    },
-    {
         "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_layout.xml",
         "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_list_menu_item_layout.xml"
+    },
+    {
+        "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_adapter_image_pager_item.xml",
+        "source": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\bundles\\debug\\res\\layout\\gmacs_adapter_image_pager_item.xml"
     },
     {
         "merged": "D:\\huangye_android\\Merchantplatform\\WChatUIKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\gmacs_activity_album_choose.xml",
