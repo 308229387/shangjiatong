@@ -36,9 +36,6 @@ public class HyApplication extends MultiDexApplication implements Push.MessageLi
     private String mDeviceID;
     private ArrayList<Push.PushMessage> mPushMessageList ;
     private List<Activity> activityList = new LinkedList<>();
-    private static final String WPUSH_APP_ID= "1007"; //WPush的APP_ID
-    private static final String WPUSH_APP_KEY = "b04RT5u0dyWXjewN"; //WPush的APP_KEY
-    private static final String BUGLY_APP_ID = "900060310";
 
     @Override
     public void onCreate() {
@@ -67,7 +64,7 @@ public class HyApplication extends MultiDexApplication implements Push.MessageLi
         Push.getInstance().setDeviceIDAvalibleListener(this);//设置设备ID监听器
         Push.getInstance().setNotificationClickedListener(this);//设置通知点击监听器
         Push.getInstance().enableDebug(this, true); //线下Debug模式true，正式为false
-        Push.getInstance().registerPush(this, WPUSH_APP_ID, WPUSH_APP_KEY, AppInfoUtils.getChannelId(this));
+        Push.getInstance().registerPush(this, Constant.WPUSH_APP_ID, Constant.WPUSH_APP_KEY, AppInfoUtils.getChannelId(this));
 //        Push.getInstance().binderUserID(""); //绑定/解绑用户信息:非空串,绑定指定的userID,空串(“”),解绑userID
 //        Push.getInstance().binderAlias(""); //绑定/解绑别名:非空串,绑定指定的alias ,空串(“”),解绑alias。
     }
