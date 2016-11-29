@@ -115,4 +115,5 @@ dependencies {
     debugCompile 'com.wuba.wuxian.sdk:login:2.3.9-NOLEGO-debug-SNAPSHOT-2'
     releaseCompile 'com.wuba.wuxian.sdk:login:2.3.9-NOLEGO'
     compile 'com.wuba.wchat:WChatLib-release:1.2.1.48'
+    compile project(':WChatUIKit')
 }
