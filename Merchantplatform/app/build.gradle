@@ -98,13 +98,13 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile 'junit:junit:4.12'
     compile project(path: ':librarys')
-    compile files('src/main/libs/baidu/BaiduLBS_Android.jar')
+    compile 'com.google.code.gson:gson:2.5'
     releaseCompile 'com.wuba.wuxian.sdk:login:2.3.9-NOLEGO'
     debugCompile 'com.wuba.wuxian.sdk:login:2.3.9-NOLEGO-debug-SNAPSHOT-2'
     compile 'com.android.support:support-v4:23.2.1'
@@ -116,5 +116,5 @@ dependencies {
     compile(name: 'wbpush-release_1.2.0_build_3082', ext: 'aar')
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-
+    compile project(':WChatUIKit')
 }
