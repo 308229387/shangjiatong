@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
-import android.widget.Toast;
 
 import com.merchantplatform.BuildConfig;
 import com.okhttputils.OkHttpUtils;
