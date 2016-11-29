@@ -30,7 +30,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class PushActivityModel extends BaseModel implements
         DialogInterface.OnClickListener,
-        View.OnClickListener{
+        View.OnClickListener,
+        WPushListener{
 
     private Activity context;
 
@@ -72,8 +73,8 @@ public class PushActivityModel extends BaseModel implements
 
     }
 
-    public void setPushListener(WPushListener listener){
-        new WPushInitUtils(context).setPushListener(listener);
+    public void setPushListener(){
+        new WPushInitUtils(context).setPushListener(this);
 
     }
 
@@ -102,16 +103,16 @@ public class PushActivityModel extends BaseModel implements
     public void onClick(DialogInterface dialog, int which) {
         Push.getInstance().reportPushMessageClicked(mMessageID);
     }
-
-    public void onModelDeviceIDAvalible(String deviceID) {
+    @Override
+    public void onDeviceIDAvalible(String deviceID) {
         String msgString = String.format("onDeviceIDAvalible :%s",deviceID);
         logList.add(msgString);
         Message msg = Message.obtain();
         msg.obj = msgString;
         mMessgeHandler.sendMessage(msg);
     }
-
-    public void onModelError(int errorCode, String errorString) {
+    @Override
+    public void onError(int errorCode, String errorString) {
         Toast.makeText(context, errorString, Toast.LENGTH_LONG).show();
         if (errorCode == BIND_USER_OK || errorCode == BIND_ALIAS_OK) {
             String msgString = null;
@@ -126,12 +127,12 @@ public class PushActivityModel extends BaseModel implements
             mMessgeHandler.sendMessage(msg);
         }
     }
-
-    public void onModelNotificationClicked(String messageId) {
+    @Override
+    public void onNotificationClicked(String messageId) {
         Toast.makeText(context, messageId, Toast.LENGTH_LONG).show();
     }
-
-    public void OnModelMessage(Push.PushMessage message) {
+    @Override
+    public void OnMessage(Push.PushMessage message) {
         String type = message.messageType == Push.MessageType.Notify ? "Notify" : "PassThrough";
         String msgString = null;
         if (message.messageInfos != null) {
@@ -176,6 +177,11 @@ public class PushActivityModel extends BaseModel implements
             AllLog = AllLog + log + "\n\n";
         }
         mLogView.setText(AllLog);
+    }
+
+    public void clearPushListener(){
+        new WPushInitUtils(context).setPushListener(null);
+
     }
 
 

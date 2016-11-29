@@ -4,14 +4,12 @@ import android.os.Bundle;
 
 import com.merchantplatform.R;
 import com.merchantplatform.model.PushActivityModel;
-import com.push.WPushListener;
-import com.wuba.wbpush.Push;
 
 /**
  * Created by 58 on 2016/11/28.
  */
 
-public class PushActivity extends BaseActivity<PushActivityModel> implements WPushListener {
+public class PushActivity extends BaseActivity<PushActivityModel>  {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,7 +22,7 @@ public class PushActivity extends BaseActivity<PushActivityModel> implements WPu
         model.initLayout();
         model.initListener();
         model.initHandler();
-        model.setPushListener(this);
+        model.setPushListener();
         model.goToNewsActivity();
     }
 
@@ -37,7 +35,7 @@ public class PushActivity extends BaseActivity<PushActivityModel> implements WPu
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        model.setPushListener(null);
+        model.clearPushListener();
     }
 
     @Override
@@ -45,23 +43,4 @@ public class PushActivity extends BaseActivity<PushActivityModel> implements WPu
         return new PushActivityModel(this);
     }
 
-    @Override
-    public void onDeviceIDAvalible(String deviceID) {
-        model.onModelDeviceIDAvalible(deviceID);
-    }
-
-    @Override
-    public void onError(int errorCode, String errorString) {
-        model.onModelError(errorCode, errorString);
-    }
-
-    @Override
-    public void onNotificationClicked(String messageId) {
-        model.onModelNotificationClicked(messageId);
-    }
-
-    @Override
-    public void OnMessage(Push.PushMessage message) {
-       model.OnModelMessage(message);
-    }
 }

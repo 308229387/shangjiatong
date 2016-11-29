@@ -57,6 +57,10 @@ public class WPushInitUtils implements  Push.MessageListener,
         }
     }
 
+    /**
+     * 收到的Push消息
+     * @param pushMessage
+     */
     @Override
     public void OnMessage(Push.PushMessage pushMessage) {
         //注意如果pushListener为空，则需要上层存储次消息
@@ -69,6 +73,10 @@ public class WPushInitUtils implements  Push.MessageListener,
         }
     }
 
+    /**
+     * 点击通知事件监听
+     * @param messageId
+     */
     @Override
     public void onNotificationClicked(String messageId) {
         if (pushListener != null) {
