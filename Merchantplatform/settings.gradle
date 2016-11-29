@@ -1,1 +1,1 @@
-include ':app', ':librarys'
+include ':app', ':librarys', ':WChatUIKit'
