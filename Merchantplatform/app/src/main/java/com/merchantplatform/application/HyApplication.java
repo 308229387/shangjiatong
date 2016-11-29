@@ -9,6 +9,7 @@ import com.merchantplatform.BuildConfig;
 import com.okhttputils.OkHttpUtils;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.utils.Constant;
+import com.utils.IMInitUtils;
 import com.utils.LoginRegisterUtils;
 
 import java.util.LinkedList;
