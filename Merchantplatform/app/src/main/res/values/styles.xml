@@ -25,4 +25,8 @@
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/text_white</item>
     </style>
+
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">15sp</item>
+    </style>
 </resources>

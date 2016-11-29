@@ -1,7 +1,11 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="textsize">16sp</dimen>
+    <dimen name="tablayout_indicator_size">0dp</dimen>
+    <dimen name="tablayout_maxwidth">100dp</dimen>
+    <dimen name="phoneNum_textsize">13sp</dimen>
+    <dimen name="item_phone_height">15dp</dimen>
+    <dimen name="divider_size">2dp</dimen>
 </resources>

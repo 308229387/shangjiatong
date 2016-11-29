@@ -7,4 +7,6 @@
     <color name="text_yellow">#FFC800</color>
     <color name="bg_white">#FFFFFF</color>
     <color name="text_white">#FFFFFF</color>
+    <color name="text_black">#000000</color>
+    <color name="call_tab_background">#58697D</color>
 </resources>

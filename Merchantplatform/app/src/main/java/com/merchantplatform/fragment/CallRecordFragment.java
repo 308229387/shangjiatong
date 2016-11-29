@@ -6,18 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.merchantplatform.model.Fragment3Model;
+import com.merchantplatform.model.CallRecordModel;
 
-/**
- * Created by SongYongmeng on 2016/11/24.
- */
-
-public class Fragment3 extends BaseFragment<Fragment3Model> {
+public class CallRecordFragment extends BaseFragment<CallRecordModel> {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         initializationLayout(inflater, container);
+        initAdapter();
         return model.getView();
     }
 
@@ -25,8 +22,12 @@ public class Fragment3 extends BaseFragment<Fragment3Model> {
         model.createView(inflater, container);
     }
 
+    private void initAdapter() {
+        model.initAdapter();
+    }
+
     @Override
-    protected Fragment3Model createModel() {
-        return new Fragment3Model(this);
+    protected CallRecordModel createModel() {
+        return new CallRecordModel(this);
     }
 }
