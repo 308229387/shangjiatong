@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
+import android.widget.Toast;
 
 import com.merchantplatform.BuildConfig;
 import com.okhttputils.OkHttpUtils;
@@ -56,8 +57,8 @@ public class HyApplication extends MultiDexApplication {
     }
 
     private void initBugly() {
-        if (BuildConfig.isRelease)
-            CrashReport.initCrashReport(getApplicationContext(), Constant.BUGLY_APP_ID, false);
+        if (!BuildConfig.DEBUG)
+            CrashReport.initCrashReport(application, Constant.BUGLY_APP_ID, false);
     }
 
     public void addActivity(Activity activity) {
