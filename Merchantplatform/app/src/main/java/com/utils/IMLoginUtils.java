@@ -3,8 +3,13 @@ package com.utils;
 import android.support.annotation.Nullable;
 
 import com.callback.JsonCallback;
+import com.common.gmacs.core.ClientManager;
+import com.common.gmacs.core.Gmacs;
+import com.common.gmacs.parse.message.GmacsUserInfo;
+import com.google.gson.Gson;
 import com.merchantplatform.application.HyApplication;
 import com.okhttputils.OkHttpUtils;
+import com.response.ImGetTokenResponse;
 import com.wuba.loginsdk.external.LoginClient;
 
 import java.security.MessageDigest;
@@ -25,6 +30,10 @@ public class IMLoginUtils {
     String clientType = "app";
     String source = "2";
     String key;
+    String imToken;
+
+    String tempUserId;
+    ImGetTokenResponse tokenResponse;
 
     public IMLoginUtils() {
         calculationKey();
@@ -32,7 +41,7 @@ public class IMLoginUtils {
     }
 
     public void calculationKey() {
-        String temp = "/swap/im" + "?" + "appId=" + appId +"&clientType=" + clientType +"&source=" + source +"&userId=" + userId ;
+        String temp = "/swap/im" + "?" + "appId=" + appId + "&clientType=" + clientType + "&source=" + source + "&userId=" + userId;
         StringBuffer temp1 = new StringBuffer();
         temp1.append(keyValue);
         temp1.append(temp);
@@ -71,15 +80,37 @@ public class IMLoginUtils {
     }
 
     private void getToken() {
-        OkHttpUtils.get(Urls.IM_TOKEN+"?" + "appId=" + appId +"&clientType=" + clientType +"&source=" + source +"&userId=" + userId +"&key="+key)
-                .execute(new IMLoginResult());
+        OkHttpUtils.get(Urls.IM_TOKEN + "?" + "appId=" + appId + "&clientType=" + clientType + "&source=" + source + "&userId=" + userId + "&key=" + key)
+                .execute(new GetTokenResult());
     }
 
-    private class IMLoginResult extends JsonCallback<String> {
+    private class GetTokenResult extends JsonCallback<String> {
 
         @Override
         public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
-            ToastUtils.showToast(s);
+            Gson temp = new Gson();
+            tokenResponse = temp.fromJson(s, ImGetTokenResponse.class);
+
+
+            GmacsUserInfo gmacsUserInfo = new GmacsUserInfo();
+            gmacsUserInfo.avatar = UserUtils.getFace();
+            gmacsUserInfo.userId = UserUtils.getUserId();
+            gmacsUserInfo.userName = UserUtils.getName();
+            gmacsUserInfo.userSource = 2;
+
+            tempUserId = UserUtils.getUserId();
+            imToken = tokenResponse.getToken();
+
+            Gmacs.getInstance().setGmacsUserInfo(gmacsUserInfo);
+            Gmacs.getInstance().loginAsync(tempUserId, "", 2, "", imToken, 0, new ClientManager.LoginCb() {
+
+                @Override
+                public void done(int i, String s) {
+                    if (i == 0) {
+                        ToastUtils.showToast("成功");
+                    }
+                }
+            });
         }
     }
 }

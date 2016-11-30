@@ -6,6 +6,7 @@ import android.widget.Toast;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.LoginActivity;
 import com.utils.IMLoginUtils;
+import com.utils.UserUtils;
 import com.wuba.loginsdk.external.LoginCallback;
 import com.wuba.loginsdk.external.LoginClient;
 import com.wuba.loginsdk.external.Request;
@@ -28,6 +29,7 @@ public class LoginActivityModel extends BaseModel {
             @Override
             public void onLogin58Finished(boolean b, String s, @Nullable LoginSDKBean loginSDKBean) {
                 Toast.makeText(context, "onLogin58Finished", Toast.LENGTH_LONG).show();
+                UserUtils.setUserId(context,loginSDKBean.getUserId());
                 new IMLoginUtils();
             }
         };
