@@ -3,6 +3,7 @@
 buildscript {
     repositories {
         jcenter()
+        mavenCentral()
         maven {
             url "http://artifactory.58corp.com:8081/artifactory/android-public"
         }
