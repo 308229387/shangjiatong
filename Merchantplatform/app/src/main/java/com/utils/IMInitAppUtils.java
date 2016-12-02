@@ -55,8 +55,8 @@ public class IMInitAppUtils {
             setEnvironment();
             setInfo();
             GmacsUiUtil.setAppMainClassName(GuideActivity.class.getName());
-            GmacsUiUtil.setChatClassName(HomepageActivity.class.getName());
-            GmacsUiUtil.setContactDetailInfoActivityClassName(WChatContactDetailInfoActivity.class.getName());
+            GmacsUiUtil.setChatClassName(HomepageActivity.class.getName());//liaotianxiangqing
+            GmacsUiUtil.setContactDetailInfoActivityClassName(WChatContactDetailInfoActivity.class.getName());//用户详情
 
             EmojiManager.getInstance().setEmojiPaser(FaceConversionUtil.getInstace());
             GifManager.getInstance().setGifParser(GifUtil.getInstance());

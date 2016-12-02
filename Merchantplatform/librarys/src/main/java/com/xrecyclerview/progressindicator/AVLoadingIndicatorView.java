@@ -42,6 +42,9 @@ import com.xrecyclerview.progressindicator.indicator.SemiCircleSpinIndicator;
 import com.xrecyclerview.progressindicator.indicator.SquareSpinIndicator;
 import com.xrecyclerview.progressindicator.indicator.TriangleSkewSpinIndicator;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 public class AVLoadingIndicatorView extends View {
     //indicators
     public static final int BallPulse = 0;
@@ -104,6 +107,8 @@ public class AVLoadingIndicatorView extends View {
                     BallGridBeat,
                     SemiCircleSpin
             })
+    
+    @Retention(RetentionPolicy.SOURCE)
     public @interface Indicator {
     }
 
