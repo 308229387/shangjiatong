@@ -54,7 +54,7 @@ android {
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
             def outputFile = output.outputFile
-            def outputName = "shangjiatong_${variant.buildType.name}_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk".toLowerCase()
+            def outputName = " ${variant.buildType.name}_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk".toLowerCase()
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
                 if (variant.buildType.name.equals('release')) {
                     output.outputFile = new File(outputPath, outputName)
