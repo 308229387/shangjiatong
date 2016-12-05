@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
+apply plugin: 'com.growingio.android'
 
 def outputPath = "../jenkinspackage/"
 
@@ -25,6 +26,8 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true //支持多dex
+        resValue("string", "growingio_project_id", "8f94949c9d9a0ba9")
+        resValue("string", "growingio_url_scheme", "growing.c94ea84d8a44973f")
     }
 
     signingConfigs {
@@ -55,7 +58,7 @@ android {
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
             def outputFile = output.outputFile
-            def outputName = " ${variant.buildType.name}_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk".toLowerCase()
+            def outputName = "58shangjiatong_${variant.buildType.name}_v${defaultConfig.versionName}_${variant.productFlavors[0].name}_${releaseTime()}.apk".toLowerCase()
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
                 if (variant.buildType.name.equals('release')) {
                     output.outputFile = new File(outputPath, outputName)
@@ -118,4 +121,5 @@ dependencies {
     releaseCompile 'com.wuba.wuxian.sdk:login:2.3.9-NOLEGO'
     compile 'com.wuba.wchat:WChatLib-release:1.2.1.48'
     compile project(':WChatUIKit')
+    compile 'com.growingio.android:vds-android-agent:0.9.100@aar'
 }
