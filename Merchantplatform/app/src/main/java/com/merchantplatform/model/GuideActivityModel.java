@@ -9,9 +9,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.db.dao.CallHistory;
+import com.db.dao.CallHistoryDaoOperate;
+import com.db.helper.DbManager;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.AboutActivity;
-import com.merchantplatform.activity.LoginActivity;
+import com.merchantplatform.activity.HomepageActivity;
 import com.merchantplatform.activity.PushActivity;
 import com.tencent.bugly.crashreport.CrashReport;
 
@@ -25,6 +28,8 @@ public class GuideActivityModel extends BaseModel {
     private Button button_bugly_test;
     private ImageView imageView_glide_test;
     private Button button_push;
+    private Button button_db_create;
+    private Button button_db_insert;
 
     public GuideActivityModel(Activity context) {
         this.context = context;
@@ -35,7 +40,7 @@ public class GuideActivityModel extends BaseModel {
         text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, LoginActivity.class));
+                context.startActivity(new Intent(context, HomepageActivity.class));
             }
         });
 
@@ -62,9 +67,40 @@ public class GuideActivityModel extends BaseModel {
                 context.startActivity(new Intent(context, PushActivity.class));
             }
         });
+        button_db_create = (Button) context.findViewById(R.id.button_db_create);
+        button_db_create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createDataBase();
+            }
+        });
+        button_db_insert = (Button) context.findViewById(R.id.button_db_insert);
+        button_db_insert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                insertDbData();
+            }
+        });
     }
 
     public void showToast() {
         Toast.makeText(context, "test", Toast.LENGTH_LONG).show();
+    }
+
+    private void createDataBase() {
+        DbManager.getInstance(context);
+    }
+
+    private void insertDbData() {
+        CallHistory callHistory = new CallHistory();
+        callHistory.setId(System.currentTimeMillis());
+        callHistory.setTimeStamp(System.currentTimeMillis());
+        callHistory.setCallType("呼入");
+        callHistory.setPhoneNum("18888888888");
+        callHistory.setCallCity("北京");
+        callHistory.setBusinessType("推广");
+        callHistory.setCallDate(System.currentTimeMillis());
+        callHistory.setCallDuration(System.currentTimeMillis());
+        CallHistoryDaoOperate.insertData(context, callHistory);
     }
 }

@@ -9,7 +9,16 @@ public class Constant {
      * buglyId
      */
     public static final String BUGLY_APP_ID = "900060310";
-    public static final String WPUSH_APP_ID= "1007"; //WPush的APP_ID
-    public static final String WPUSH_APP_KEY = "b04RT5u0dyWXjewN"; //WPush的APP_KEY
-
+    /**
+     * WPush的APP_ID
+     */
+    public static final String WPUSH_APP_ID = "1007";
+    /**
+     * WPush的APP_KEY
+     */
+    public static final String WPUSH_APP_KEY = "b04RT5u0dyWXjewN";
+    /**
+     * 储存通话信息的数据库
+     */
+    public static final String DATABASE_CALL = "merchantplatform.db";
 }

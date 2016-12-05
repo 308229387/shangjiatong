@@ -42,4 +42,22 @@
         android:layout_below="@id/imageView_glide_test"
         android:text="跳转WPUSH"
         android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/button_db_create"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_push"
+        android:text="创建数据库"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/button_db_insert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/button_db_create"
+        android:layout_below="@+id/button_push"
+        android:layout_toRightOf="@+id/button_db_create"
+        android:text="插入一条数据"
+        android:textSize="15sp" />
 </RelativeLayout>

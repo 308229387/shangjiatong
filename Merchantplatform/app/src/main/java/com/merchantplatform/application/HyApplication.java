@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
+import com.facebook.stetho.Stetho;
 import com.merchantplatform.BuildConfig;
 import com.okhttputils.OkHttpUtils;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -42,13 +43,14 @@ public class HyApplication extends MultiDexApplication {
         initIM();
         initGrowingIo();
         initBugly();
+        initStetho();
     }
 
     private void setApplicationContext() {
         application = this;
     }
 
-    private void initWPush(){
+    private void initWPush() {
         new WPushInitUtils(application);
     }
 
@@ -64,13 +66,21 @@ public class HyApplication extends MultiDexApplication {
         new IMInitAppUtils(application);
     }
 
-    private void initGrowingIo(){
+    private void initGrowingIo() {
         new GrowingIoInitUtils(application);
     }
 
     private void initBugly() {
         if (!BuildConfig.DEBUG)
             CrashReport.initCrashReport(application, Constant.BUGLY_APP_ID, false);
+    }
+
+    private void initStetho() {
+        Stetho.initialize(
+                Stetho.newInitializerBuilder(application)
+                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(application))
+                        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(application))
+                        .build());
     }
 
     public void addActivity(Activity activity) {
