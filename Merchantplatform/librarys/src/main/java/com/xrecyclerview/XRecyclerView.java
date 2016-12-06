@@ -68,6 +68,13 @@ public class XRecyclerView extends RecyclerView {
         mFootView.setVisibility(GONE);
     }
 
+    public void setFootViewText(String loading, String noMore) {
+        if (mFootView instanceof LoadingMoreFooter) {
+            ((LoadingMoreFooter) mFootView).setLoadingHint(loading);
+            ((LoadingMoreFooter) mFootView).setNoMoreHint(noMore);
+        }
+    }
+
     public void addHeaderView(View view) {
         sHeaderTypes.add(HEADER_INIT_INDEX + mHeaderViews.size());
         mHeaderViews.add(view);
@@ -196,7 +203,10 @@ public class XRecyclerView extends RecyclerView {
     //避免用户自己调用getAdapter() 引起的ClassCastException
     @Override
     public Adapter getAdapter() {
-        return mWrapAdapter.getOriginalAdapter();
+        if (mWrapAdapter != null)
+            return mWrapAdapter.getOriginalAdapter();
+        else
+            return null;
     }
 
     @Override
@@ -298,22 +308,21 @@ public class XRecyclerView extends RecyclerView {
     private class DataObserver extends RecyclerView.AdapterDataObserver {
         @Override
         public void onChanged() {
-            Adapter<?> adapter = getAdapter();
-            if (adapter != null && mEmptyView != null) {
-                int emptyCount = 1 + ((WrapAdapter) adapter).getHeadersCount();
+            if (mWrapAdapter != null) {
+                mWrapAdapter.notifyDataSetChanged();
+            }
+            if (mWrapAdapter != null && mEmptyView != null) {
+                int emptyCount = 1 + mWrapAdapter.getHeadersCount();
                 if (loadingMoreEnabled) {
                     emptyCount++;
                 }
-                if (adapter.getItemCount() == emptyCount) {
+                if (mWrapAdapter.getItemCount() == emptyCount) {
                     mEmptyView.setVisibility(View.VISIBLE);
                     XRecyclerView.this.setVisibility(View.GONE);
                 } else {
                     mEmptyView.setVisibility(View.GONE);
                     XRecyclerView.this.setVisibility(View.VISIBLE);
                 }
-            }
-            if (mWrapAdapter != null) {
-                mWrapAdapter.notifyDataSetChanged();
             }
         }
 
@@ -343,7 +352,7 @@ public class XRecyclerView extends RecyclerView {
         }
     }
 
-    public class WrapAdapter extends RecyclerView.Adapter<ViewHolder> {
+    private class WrapAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         private RecyclerView.Adapter adapter;
 
