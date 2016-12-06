@@ -102,7 +102,7 @@ android {
     }
 
     greendao {
-        schemaVersion 2
+        schemaVersion 1
         daoPackage 'com.db.dao.gen'
         targetGenDir 'src/main/java'
     }

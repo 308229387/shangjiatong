@@ -33,8 +33,8 @@ public class CallHistoryDaoOperate {
     /**
      * @desc 添加数据至数据库，如果存在，将原来的数据覆盖
      **/
-    public static void saveData(Context context, CallHistory student) {
-        DbManager.getDaoSession(context).getCallHistoryDao().save(student);
+    public static void saveData(Context context, CallHistory callHistory) {
+        DbManager.getDaoSession(context).getCallHistoryDao().save(callHistory);
     }
 
     /**
