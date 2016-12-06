@@ -10,13 +10,15 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.db.dao.CallHistory;
-import com.db.dao.CallHistoryDaoOperate;
+import com.db.helper.DaoHelper;
 import com.db.helper.DbManager;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.AboutActivity;
 import com.merchantplatform.activity.HomepageActivity;
 import com.merchantplatform.activity.PushActivity;
 import com.tencent.bugly.crashreport.CrashReport;
+
+import java.util.ArrayList;
 
 /**
  * Created by SongYongmeng on 2016/11/22.
@@ -101,6 +103,6 @@ public class GuideActivityModel extends BaseModel {
         callHistory.setBusinessType("推广");
         callHistory.setCallDate(System.currentTimeMillis());
         callHistory.setCallDuration(System.currentTimeMillis());
-        CallHistoryDaoOperate.insertData(context, callHistory);
+        DaoHelper.insertData(context, callHistory);
     }
 }

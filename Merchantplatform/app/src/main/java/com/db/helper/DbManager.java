@@ -5,9 +5,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.db.dao.gen.CallHistoryDao;
+import com.db.dao.gen.CallListDao;
 import com.db.dao.gen.DaoMaster;
 import com.db.dao.gen.DaoSession;
-import com.orhanobut.logger.Logger;
 import com.utils.Constant;
 
 /**
@@ -19,11 +19,9 @@ public class DbManager extends DaoMaster.OpenHelper {
     private static DbManager mDbManager;
     private static DaoMaster mDaoMaster;
     private static DaoSession mDaoSession;
-    private Context mContext;
 
     private DbManager(Context context, String name) {
         super(context, name);
-        this.mContext = context;
     }
 
     public static DbManager getInstance(Context context) {
@@ -87,7 +85,6 @@ public class DbManager extends DaoMaster.OpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Logger.e("数据库升级");
-        MigrationHelper.migrate(db, CallHistoryDao.class);
+        MigrationHelper.migrate(db, CallHistoryDao.class, CallListDao.class);
     }
 }

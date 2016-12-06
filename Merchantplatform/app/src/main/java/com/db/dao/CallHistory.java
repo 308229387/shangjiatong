@@ -2,6 +2,7 @@ package com.db.dao;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
 
 /**
  * Created by 58 on 2016/12/1.
@@ -9,6 +10,7 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity(generateConstructors = false)
 public class CallHistory {
 
+    @Id
     private long id;//从后台获取到的ID
     private long timeStamp;//时间戳
     private String callType;//电话类型
