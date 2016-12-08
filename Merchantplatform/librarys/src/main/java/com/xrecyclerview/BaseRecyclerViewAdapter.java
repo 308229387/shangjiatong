@@ -1,4 +1,4 @@
-package com.merchantplatform.adapter;
+package com.xrecyclerview;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,17 +9,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.List;
-
+import java.util.ArrayList;
 
 public abstract class BaseRecyclerViewAdapter<T, VH extends BaseRecyclerViewAdapter.SparseArrayViewHolder> extends RecyclerView.Adapter<VH> {
 
     protected Context context;
-    protected List<T> mList;
+    protected ArrayList<T> mList;
     protected OnItemLongClickListener onItemLongClickListener;
     protected OnItemClickListener onItemClickListener;
 
-    public BaseRecyclerViewAdapter(Context context, List<T> mList) {
+    public BaseRecyclerViewAdapter(Context context, ArrayList<T> mList) {
         this.context = context;
         this.mList = mList;
     }
@@ -42,27 +41,50 @@ public abstract class BaseRecyclerViewAdapter<T, VH extends BaseRecyclerViewAdap
     }
 
     public final void onBindViewHolder(VH vh, int position) {
-        final T item = getItem(position);
-        bindDataToItemView(vh, item);
-        bindItemViewClickListener(vh, item);
+        bindDataToItemView(vh, position);
+        bindItemViewClickListener(vh, position);
     }
 
-    protected abstract void bindDataToItemView(VH vh, T item);
+    protected void deleteItem(int position) {
+        if (position >= 0 && position < mList.size()) {
+            mList.remove(position);
+            notifyDataSetChanged();
+        }
+    }
 
-    protected final void bindItemViewClickListener(VH vh, final T item) {
+    protected void deleteItem(VH vh, int position) {
+        deleteItem(position);
+        ((SwipeMenuLayout) vh.itemView).quickClose();
+    }
+
+    protected abstract void bindDataToItemView(VH vh, int position);
+
+    protected final void bindItemViewClickListener(VH vh, final int position) {
         if (onItemClickListener != null) {
-            vh.itemView.setOnClickListener(new View.OnClickListener() {
+            View view;
+            if (vh.itemView instanceof SwipeMenuLayout) {
+                view = ((ViewGroup) vh.itemView).getChildAt(0);
+            } else {
+                view = vh.itemView;
+            }
+            view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemClickListener.onItemClick(v, item);
+                    onItemClickListener.onItemClick(v, position);
                 }
             });
         }
         if (onItemLongClickListener != null) {
-            vh.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            View view;
+            if (vh.itemView instanceof SwipeMenuLayout) {
+                view = ((ViewGroup) vh.itemView).getChildAt(0);
+            } else {
+                view = vh.itemView;
+            }
+            view.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    onItemLongClickListener.onItemLongClick(v, item);
+                    onItemLongClickListener.onItemLongClick(v, position);
                     return true;
                 }
             });
@@ -74,7 +96,7 @@ public abstract class BaseRecyclerViewAdapter<T, VH extends BaseRecyclerViewAdap
 
         public SparseArrayViewHolder(View itemView) {
             super(itemView);
-            views = new SparseArray<View>();
+            views = new SparseArray<>();
         }
 
         public <T extends View> T getView(int id) {
@@ -128,21 +150,27 @@ public abstract class BaseRecyclerViewAdapter<T, VH extends BaseRecyclerViewAdap
             return SparseArrayViewHolder.this;
         }
 
-        public SparseArrayViewHolder setOnTouchListener(int viewId, View.OnTouchListener listener) {
-            View view = getView(viewId);
-            view.setOnTouchListener(listener);
-            return SparseArrayViewHolder.this;
-        }
-
         public SparseArrayViewHolder setOnLongClickListener(int viewId, View.OnLongClickListener listener) {
             View view = getView(viewId);
             view.setOnLongClickListener(listener);
             return SparseArrayViewHolder.this;
         }
 
+        public SparseArrayViewHolder setOnTouchListener(int viewId, View.OnTouchListener listener) {
+            View view = getView(viewId);
+            view.setOnTouchListener(listener);
+            return SparseArrayViewHolder.this;
+        }
+
         public SparseArrayViewHolder setTag(int viewId, Object tag) {
             View view = getView(viewId);
             view.setTag(tag);
+            return SparseArrayViewHolder.this;
+        }
+
+        public SparseArrayViewHolder setTag(int viewId, int tagId, Object tag) {
+            View view = getView(viewId);
+            view.setTag(tagId, tag);
             return SparseArrayViewHolder.this;
         }
     }
@@ -155,11 +183,11 @@ public abstract class BaseRecyclerViewAdapter<T, VH extends BaseRecyclerViewAdap
         this.onItemLongClickListener = onItemLongClickListener;
     }
 
-    public interface OnItemClickListener<T> {
-        void onItemClick(View view, T item);
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
     }
 
-    public interface OnItemLongClickListener<T> {
-        void onItemLongClick(View view, T item);
+    public interface OnItemLongClickListener {
+        void onItemLongClick(View view, int position);
     }
 }

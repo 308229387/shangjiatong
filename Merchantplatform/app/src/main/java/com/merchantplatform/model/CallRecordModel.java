@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.merchantplatform.R;
-import com.merchantplatform.adapter.BaseRecyclerViewAdapter;
+import com.xrecyclerview.BaseRecyclerViewAdapter;
 import com.merchantplatform.adapter.CallRecordAdapter;
 import com.merchantplatform.bean.CallRecordBean;
 import com.merchantplatform.fragment.CallRecordFragment;
@@ -128,8 +128,8 @@ public class CallRecordModel extends BaseModel {
     private class OnCallItemClickListener implements BaseRecyclerViewAdapter.OnItemClickListener {
 
         @Override
-        public void onItemClick(View view, Object item) {
-            Toast.makeText(context.getContext(), "点击了Item" + ((CallRecordBean) item).getCallRecordId() + "可以查看详情", Toast.LENGTH_SHORT).show();
+        public void onItemClick(View view, int position) {
+            Toast.makeText(context.getContext(), "position" + position, Toast.LENGTH_SHORT).show();
         }
     }
 }
