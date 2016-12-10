@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Alipay</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="recharge">58充值</string>
+    <string name="payment">58支付</string>
+    <string name="close">关闭</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="recharge_amount">充值金额(元):</string>
+    <string name="recharge_amount_hint">请输入充值金额</string>
+    <string name="continue_to_recharge">继续充值</string>
+    <string name="ways_to_pay">支付方式</string>
+    <string name="order_details">订单详情</string>
+    <string name="total">金额总计</string>
+    <string name="image">图片注释</string>
+    <string name="account_information">账户信息</string>
+    <string name="need_to_pay">还需支付</string>
+    <string name="promotion_surplus">推广余额</string>
+    <string name="weixin_pay">微信支付</string>
+    <string name="weixin_pay_explain">推荐已在微信中绑定银行卡的用户使用</string>
+    <string name="zhifubao_app">支付宝客户端支付</string>
+    <string name="zhifubao_app_explain">推荐已下载支付宝客户端的用户使用</string>
+    <string name="zhifubao_web">支付宝网页支付</string>
+    <string name="zhifubao_web_explain">推荐有支付宝账号的用户使用</string>
+    <string name="app_tip">提示</string>
+    <string name="get_access_token">正在获取access token...</string>
+    <string name="get_access_token_succ">获取access token成功</string>
+	<string name="get_access_token_fail" formatted="false">获取access token失败，原因%s</string>
+	<string name="get_prepayid_succ">获取prepayid成功</string>
+	<string name="get_prepayid_fail" formatted="false">获取prepayid失败，原因%s</string>
+	<string name="getting_prepayid">正在获取预支付订单...</string>
+	<string name="WXApp_not_supported_pay">当前微信版本不支持微信支付。</string>
+	<string name="WXApp_not_install">尚未安装微信，无法使用微信支付。</string>
+	<string name="recharge_dialog_title">充值提示信息</string>
+	<string name="payment_dialog_title">支付提示信息</string>
+	<string name="agents_name">代理商名称：</string>
+	<string name="contacts">联系人：</string>
+	<string name="landlines">座机：</string>
+	<string name="cell_phone">手机：</string>
+	<string name="not_recharge_online">对不起，您不能使用在线充值，请联系以下代理商完成充值！</string>
+	<string name="not_payment_online">您好，请您选择推广余额进行付款，或者联系以下代理商进行充值！</string>
+	<string name="recharge_preferential_title">优惠赠送信息</string>
+	<string name="recharge_preferential_info1">您好，现在直销城市VIP用户有推广余额充值返优惠活动！</string>
+	<string name="recharge_preferential_amount">您的充值金额为：</string>
+	<string name="recharge_preferential_gift_amount">您将获得系统赠送优惠：</string>
+	<string name="recharge_preferential_info2">赠送优惠将在您完成充值后加入您的账号，请耐心等候。</string>
+	<string name="loading_check_order_info">正在查询账户信息...</string>
+	<string name="loading_create_pay_order">正在创建支付订单...</string>
+	<string name="loading_create_reacher_order">正在创建充值订单...</string>
+	<string name="loading_check_order_status">正在确认支付信息...</string>
+	<string name="dialog_pay_success">支付成功</string>
+	<string name="dialog_pay_fail">支付失败</string>
+	<string name="dialog_recharge_success">充值成功</string>
+	<string name="dialog_recharge_fail">充值失败</string>
+	<string name="dialog_pay_loading">提交成功，订单正在处理中</string>
+	<string name="pay_result_callback_msg">微信支付回调</string>
+	<string name="request_fail_title">提示</string>
+	<string name="request_fail">网络请求错误，请稍后重试！\n错误码：</string>
+	<string name="request_error">网络请求异常，请稍后重试！\n错误码：</string>
+	<string name="recharge_money_null">请输入您要充值的金额!</string>
+	<string name="recharge_money_beyond">充值金额最大为壹佰万元</string>
+	<string name="recharge_money_error">请输入正确的充值金额!</string>
+	<string name="parameter_error">参数错误</string>
+	<string name="to_recharge">立即充值</string>
+	<string name="to_pay">立即支付</string>
+	<string name="order_error">订单错误</string>
+	<string name="parse_error">数据解析错误</string>
+
+</resources>

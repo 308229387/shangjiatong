@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <com.ui.TitleBar
+        android:id="@+id/tb_funding_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <include
+        layout="@layout/no_internet_view"
+        android:id="@+id/view_no_internet"
+        android:visibility="gone"/>
+
+    <ProgressBar
+        android:id="@+id/pb_progress"
+        android:layout_width="fill_parent"
+        android:layout_height="10dip"
+        android:indeterminate="false"
+        android:progressDrawable="@drawable/web_bar_color"
+        style="@android:style/Widget.ProgressBar.Horizontal"/>
+
+    <LinearLayout
+        android:id="@+id/ll_funding_container"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:visibility="gone"
+        android:layout_height="fill_parent"/>
+
+    <WebView
+        android:id="@+id/webView_funding"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="48dip"
+    android:gravity="center_vertical"
+    android:background="@drawable/common_list_item_selector"
+    android:paddingLeft="@dimen/personal_center_entry_padding_left_right"
+    android:paddingRight="@dimen/personal_center_entry_padding_left_right">
+
+    <ImageView
+        android:id="@+id/iv_entry_icon"
+        android:layout_width="@dimen/personal_center_entry_icon"
+        android:layout_height="@dimen/personal_center_entry_icon"
+        android:visibility ="gone"/>
+
+    <TextView
+        android:id="@+id/tv_entry_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/personal_center_entry_title_padding"
+        android:textColor="@color/gray_dark"
+        android:textSize="@dimen/common_text_size_16"/>
+
+    <View
+        android:layout_width="0.0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0"/>
+
+    <TextView
+        android:id="@+id/tv_entry_sub_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="@dimen/personal_center_entry_padding_left_right"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/ll_toggle_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingLeft="20dp">
+
+        <ToggleButton
+            android:id="@+id/btn_toggle"
+            style="@style/ToggleButton"
+            android:layout_width="40dp"
+            android:layout_height="30dp" />
+    </LinearLayout>
+
+</LinearLayout>

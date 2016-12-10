@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="msp_alpha_out" type="anim"/>
+    <item name="msp_left_in" type="anim"/>
+    <item name="msp_left_out" type="anim"/>
+    <item name="msp_right_in" type="anim"/>
+    <item name="msp_right_out" type="anim"/>
+    
+</resources>
