@@ -23,6 +23,10 @@ public class Fragment2 extends BaseFragment<Fragment2Model> {
         return model.getView();
     }
 
+    private void initializationLayout(LayoutInflater inflater, ViewGroup container) {
+        model.createView(inflater, container);
+    }
+
     private void creatFragment() {
         model.createFragment();
         model.setHeaderHeight();
@@ -32,8 +36,10 @@ public class Fragment2 extends BaseFragment<Fragment2Model> {
         model.setupViewPager();
     }
 
-    private void initializationLayout(LayoutInflater inflater, ViewGroup container) {
-        model.createView(inflater, container);
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        model.deleteLastMonthData();
     }
 
     @Override

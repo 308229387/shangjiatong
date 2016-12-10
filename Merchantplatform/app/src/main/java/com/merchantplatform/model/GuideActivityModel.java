@@ -9,16 +9,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.db.dao.CallHistory;
-import com.db.helper.DaoHelper;
+import com.db.dao.CallDetail;
+import com.db.helper.CallDetailDaoOperate;
 import com.db.helper.DbManager;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.AboutActivity;
 import com.merchantplatform.activity.HomepageActivity;
 import com.merchantplatform.activity.PushActivity;
 import com.tencent.bugly.crashreport.CrashReport;
-
-import java.util.ArrayList;
 
 /**
  * Created by SongYongmeng on 2016/11/22.
@@ -94,15 +92,15 @@ public class GuideActivityModel extends BaseModel {
     }
 
     private void insertDbData() {
-        CallHistory callHistory = new CallHistory();
-        callHistory.setId(System.currentTimeMillis());
-        callHistory.setTimeStamp(System.currentTimeMillis());
-        callHistory.setCallType("呼入");
-        callHistory.setPhoneNum("18888888888");
-        callHistory.setCallCity("北京");
-        callHistory.setBusinessType("推广");
-        callHistory.setCallDate(System.currentTimeMillis());
-        callHistory.setCallDuration(System.currentTimeMillis());
-        DaoHelper.insertData(context, callHistory);
+        CallDetail callDetail = new CallDetail();
+        callDetail.setId(System.currentTimeMillis());
+        callDetail.setBackTime(System.currentTimeMillis());
+        callDetail.setType(1);
+        callDetail.setPhone("18888888888");
+        callDetail.setLocal("北京");
+        callDetail.setCate("推广");
+        callDetail.setCallTime(System.currentTimeMillis());
+        callDetail.setEntryTime(System.currentTimeMillis());
+        CallDetailDaoOperate.insertData(context, callDetail);
     }
 }

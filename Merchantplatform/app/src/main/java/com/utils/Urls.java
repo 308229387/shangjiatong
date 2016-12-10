@@ -9,7 +9,11 @@ public class Urls {
     /**
      * 基础Url
      */
-    public static final String BASE_URL = "https://zhaobiao.58.com/";
+    public static final String BASE_URL = "http://hyapp.58.com/";
+    /**
+     * 基础Url_APP
+     */
+    public static final String BASE_URL_APP = BASE_URL + "app/";
     /**
      * test
      */
@@ -18,4 +22,12 @@ public class Urls {
      * im获取登陆token
      */
     public static final String IM_TOKEN = "https://ppuswapapi.58.com/swap/im";
+    /**
+     * 400电话请求增量数据接口
+     */
+    public static final String PHONE_INCREASE_DATA = BASE_URL_APP + "phone/increasedata";
+    /**
+     * 400电话回拨上传数据接口
+     */
+    public static final String PHONE_UPLOAD_DATA = BASE_URL_APP + "phone/uploaddata";
 }

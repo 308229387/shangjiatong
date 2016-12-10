@@ -5,30 +5,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.db.dao.CallList;
 import com.merchantplatform.R;
-import com.merchantplatform.bean.CallRecordBean;
 import com.xrecyclerview.BaseRecyclerViewAdapter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
  * Created by 58 on 2016/11/29.
  */
 
-public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallRecordBean, CallRecordAdapter.CallRecordViewHolder> {
+public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRecordAdapter.CallRecordViewHolder> {
 
-    public CallRecordAdapter(Context context, ArrayList<CallRecordBean> mList) {
+    public CallRecordAdapter(Context context, ArrayList<CallList> mList) {
         super(context, mList);
     }
 
     @Override
     protected void bindDataToItemView(final CallRecordViewHolder callRecordViewHolder, final int position) {
         callRecordViewHolder.setImageResource(R.id.iv_phoneState, position % 2 == 0 ? android.R.drawable.sym_call_incoming : android.R.drawable.sym_call_outgoing)
-                .setText(R.id.tv_phoneNum, getItem(position).getPhoneNum())
-                .setText(R.id.tv_call_count, getItem(position).getCallCount() + "")
-                .setText(R.id.tv_phone_city, getItem(position).getPhoneNumCity())
-                .setText(R.id.tv_call_type, getItem(position).getCallType())
-                .setText(R.id.tv_call_time, getItem(position).getCallTime())
+                .setText(R.id.tv_phoneNum, getItem(position).getPhone())
+                .setText(R.id.tv_call_count, getItem(position).getPhoneCount() + "")
+                .setText(R.id.tv_phone_city, getItem(position).getLocal())
+                .setText(R.id.tv_call_type, getItem(position).getType() == 1 ? "呼入" : "呼出")
+                .setText(R.id.tv_call_time, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(getItem(position).getCallTime()))
                 .setTag(R.id.ll_callrecord_content, position)
                 .setOnLongClickListener(R.id.ll_callrecord_content, new OnContentLongClickListener())
                 .setTag(R.id.iv_call_detail, position)

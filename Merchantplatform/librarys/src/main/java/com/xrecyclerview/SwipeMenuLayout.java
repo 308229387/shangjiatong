@@ -331,9 +331,7 @@ public class SwipeMenuLayout extends ViewGroup {
             mContentView.setLongClickable(false);
         }
 
-        if (mCloseAnim != null && mCloseAnim.isRunning()) {
-            mCloseAnim.cancel();
-        }
+        cancelAnim();
         mExpandAnim = ValueAnimator.ofInt(getScrollX(), isLeftSwipe ? mRightMenuWidths : -mRightMenuWidths);
         mExpandAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -351,6 +349,15 @@ public class SwipeMenuLayout extends ViewGroup {
         mExpandAnim.setDuration(300).start();
     }
 
+    private void cancelAnim() {
+        if (mCloseAnim != null && mCloseAnim.isRunning()) {
+            mCloseAnim.cancel();
+        }
+        if (mExpandAnim != null && mExpandAnim.isRunning()) {
+            mExpandAnim.cancel();
+        }
+    }
+
     public void smoothClose() {
         mViewCache = null;
 
@@ -358,9 +365,7 @@ public class SwipeMenuLayout extends ViewGroup {
             mContentView.setLongClickable(true);
         }
 
-        if (mExpandAnim != null && mExpandAnim.isRunning()) {
-            mExpandAnim.cancel();
-        }
+        cancelAnim();
         mCloseAnim = ValueAnimator.ofInt(getScrollX(), 0);
         mCloseAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -413,9 +418,7 @@ public class SwipeMenuLayout extends ViewGroup {
 
     public void quickClose() {
         if (this == mViewCache) {
-            if (null != mExpandAnim && mExpandAnim.isRunning()) {
-                mExpandAnim.cancel();
-            }
+            cancelAnim();
             mViewCache.scrollTo(0, 0);
             mViewCache = null;
         }

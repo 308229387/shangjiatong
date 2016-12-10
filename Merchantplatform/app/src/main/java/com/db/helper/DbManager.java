@@ -4,7 +4,7 @@ package com.db.helper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.db.dao.gen.CallHistoryDao;
+import com.db.dao.gen.CallDetailDao;
 import com.db.dao.gen.CallListDao;
 import com.db.dao.gen.DaoMaster;
 import com.db.dao.gen.DaoSession;
@@ -85,6 +85,6 @@ public class DbManager extends DaoMaster.OpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        MigrationHelper.migrate(db, CallHistoryDao.class, CallListDao.class);
+        MigrationHelper.migrate(db, CallDetailDao.class, CallListDao.class);
     }
 }
