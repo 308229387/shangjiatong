@@ -30,4 +30,16 @@ public class Urls {
      * 400电话回拨上传数据接口
      */
     public static final String PHONE_UPLOAD_DATA = BASE_URL_APP + "phone/uploaddata";
+    /**
+     * 充值页面接口
+     */
+    public static final String RECHARGE = "http://paycenter.58.com/wapaccount?payfrom=22&platfrom=app";
+    /**
+     * 充值页面要拦截的URL
+     */
+    public static final String RECHARGE_INTERCEPT_URL = "http://paycenter.capital/?jump=true&payfrom=22&transType=";
+    /**
+     * 充值SDK回调接口
+     */
+    public static final String RECHARGE_NOTIFY_URL = "http://paycenter.58.com";
 }

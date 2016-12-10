@@ -21,4 +21,6 @@ public class Constant {
      * 储存通话信息的数据库
      */
     public static final String DATABASE_CALL = "merchantplatform.db";
+
+    public  static final String MOBILE = "mobile";
 }

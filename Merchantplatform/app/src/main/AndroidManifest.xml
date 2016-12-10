@@ -72,6 +72,29 @@
             android:name=".activity.NewsActivity"
             android:screenOrientation="portrait" />
 
+
+
+        <!--这个Activity不要启用单独的Process，否则支付SDK的回调不会执行-->
+        <activity
+            android:name="activity.FundingManageActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="activity.SettingActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="activity.SettingPushActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.PersonalSettingActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="activity.MobileBindChangeActivity"
+            android:screenOrientation="portrait" />
+
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"

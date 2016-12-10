@@ -9,7 +9,7 @@ import com.merchantplatform.fragment.BaseFragment;
 import com.merchantplatform.fragment.Fragment1;
 import com.merchantplatform.fragment.Fragment2;
 import com.merchantplatform.fragment.Fragment3;
-import com.merchantplatform.fragment.Fragment4;
+import com.merchantplatform.fragment.PersonalCenterFragment;
 import com.ui.HomepageBottomButton;
 
 /**
@@ -57,7 +57,7 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         fragment1 = new Fragment1();
         fragment2 = new Fragment2();
         fragment3 = new Fragment3();
-        fragment4 = new Fragment4();
+        fragment4 = new PersonalCenterFragment();
         mFragment = fragment1;
     }
 

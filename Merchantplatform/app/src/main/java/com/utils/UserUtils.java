@@ -15,10 +15,11 @@ public class UserUtils {
     private static final String USER_ID = "userId";
     private static final String USER_FACE = "face";
     private static final String USER_NAME = "name";
+    private static final String USER_MOBILE = "mobile";
     private static String userId = "";
     private static String face = "";
     private static String name = "";
-
+    private static String mobile = "";
 
     public static void setUserId(Context context, String userId) {
         SharedPreferences sp = context.getSharedPreferences(USER_SP_NAME, 0);
@@ -36,7 +37,7 @@ public class UserUtils {
     public static void setFace(Context context, String face) {
         SharedPreferences sp = context.getSharedPreferences(USER_SP_NAME, 0);
         UserUtils.face = face;
-        sp.edit().putString(USER_ID, face).commit();
+        sp.edit().putString(USER_FACE, face).commit();
     }
 
     public static String getFace() {
@@ -49,7 +50,7 @@ public class UserUtils {
     public static void setName(Context context, String name) {
         SharedPreferences sp = context.getSharedPreferences(USER_SP_NAME, 0);
         UserUtils.name = name;
-        sp.edit().putString(USER_ID, name).commit();
+        sp.edit().putString(USER_NAME, name).commit();
     }
 
     public static String getName() {
@@ -57,5 +58,18 @@ public class UserUtils {
             name = HyApplication.getApplication().getSharedPreferences(USER_SP_NAME, 0).getString(USER_NAME, "");
         }
         return name;
+    }
+
+    public static void setMobile(Context context, String mobile) {
+        SharedPreferences sp = context.getSharedPreferences(USER_SP_NAME, 0);
+        UserUtils.mobile = mobile;
+        sp.edit().putString(USER_MOBILE, mobile).commit();
+    }
+
+    public static String getMobile() {
+        if (TextUtils.isEmpty(mobile)) {
+            mobile = HyApplication.getApplication().getSharedPreferences(USER_SP_NAME, 0).getString(USER_MOBILE, "");
+        }
+        return mobile;
     }
 }

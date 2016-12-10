@@ -1,1 +1,1 @@
-include ':app', ':librarys', ':WChatUIKit'
+include ':app', ':librarys', ':WChatUIKit', ':pay58sdk'

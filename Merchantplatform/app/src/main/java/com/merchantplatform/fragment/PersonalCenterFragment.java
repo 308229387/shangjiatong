@@ -6,13 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.merchantplatform.model.Fragment4Model;
+import com.merchantplatform.model.PersonalCenterModel;
 
 /**
  * Created by SongYongmeng on 2016/11/24.
  */
 
-public class Fragment4 extends BaseFragment<Fragment4Model> {
+public class PersonalCenterFragment extends BaseFragment<PersonalCenterModel> {
 
     @Nullable
     @Override
@@ -23,10 +23,13 @@ public class Fragment4 extends BaseFragment<Fragment4Model> {
 
     private void initializationLayout(LayoutInflater inflater, ViewGroup container) {
         model.createView(inflater, container);
+        model.initView();
+        model.initData();
+        model.setListener();
     }
 
     @Override
-    protected Fragment4Model createModel() {
-        return new Fragment4Model(this);
+    protected PersonalCenterModel createModel() {
+        return new PersonalCenterModel(this);
     }
 }
