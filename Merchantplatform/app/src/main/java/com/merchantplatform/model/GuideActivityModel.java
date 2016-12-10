@@ -101,6 +101,6 @@ public class GuideActivityModel extends BaseModel {
         callDetail.setCate("推广");
         callDetail.setCallTime(System.currentTimeMillis());
         callDetail.setEntryTime(System.currentTimeMillis());
-        CallDetailDaoOperate.insertData(context, callDetail);
+        CallDetailDaoOperate.saveData(context, callDetail);
     }
 }
