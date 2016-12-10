@@ -42,4 +42,6 @@ public class Urls {
      * 充值SDK回调接口
      */
     public static final String RECHARGE_NOTIFY_URL = "http://paycenter.58.com";
+
+    public static final String PERSONAL_FEEDBACK = "";
 }

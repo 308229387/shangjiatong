@@ -14,6 +14,13 @@ public class PersonalSettingActivity extends BaseActivity<PersonalSettingActivit
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_setting);
+        init();
+    }
+
+    private void init(){
+        model.initView();
+        model.initData();
+        model.setListener();
     }
 
     @Override

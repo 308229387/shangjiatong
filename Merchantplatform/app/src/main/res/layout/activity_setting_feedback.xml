@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.ui.TitleBar
+        android:id="@+id/tb_feedback_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dip"
+        android:layout_marginTop="10dip"
+        android:background="@color/line_gray_color"/>
+
+    <ScrollView
+        android:id="@+id/sv_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/content_bg_color"
+        android:fadingEdge="none"
+        android:scrollbarThumbVertical="@color/transparent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/et_content"
+                style="@style/CommonEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/content_bg_white"
+                android:gravity="left|top"
+                android:hint="@string/feedback_input_hint"
+                android:maxLines="12"
+                android:minLines="8"
+                android:padding="15.0dip"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:background="@color/white">
+
+        <EditText
+            android:id="@+id/et_contact"
+            style="@style/CommonEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dip"
+            android:background="@drawable/content_bg_white"
+            android:hint="@string/feedback_contact"
+            android:maxLines="1"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dip"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="15dip"
+            android:background="@color/line_gray_color"/>
+    </RelativeLayout>
+
+</LinearLayout>

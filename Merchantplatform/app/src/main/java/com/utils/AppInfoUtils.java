@@ -80,4 +80,26 @@ public class AppInfoUtils {
         }
         return false;
     }
+
+    /**
+     * 获得版本名
+     * @param context
+     * @return
+     * @throws PackageManager.NameNotFoundException
+     */
+    public static String getVersionCode(Context context) throws PackageManager.NameNotFoundException {
+        String packageName = context.getPackageName();
+        return "" + (context.getPackageManager().getPackageInfo(packageName, 0).versionCode);
+    }
+
+    /**
+     * 获得版本号
+     * @param context
+     * @return
+     * @throws PackageManager.NameNotFoundException
+     */
+    public static String getVersionName(Context context) throws PackageManager.NameNotFoundException {
+        String packageName = context.getPackageName();
+        return "" + (context.getPackageManager().getPackageInfo(packageName, 0).versionName);
+    }
 }

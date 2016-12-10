@@ -95,6 +95,10 @@
             android:name="activity.MobileBindChangeActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name="activity.SoftwareProtocolActivity"
+            android:screenOrientation="portrait" />
+
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"

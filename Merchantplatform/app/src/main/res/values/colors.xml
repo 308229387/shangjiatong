@@ -17,4 +17,6 @@
 
     <color name="text_grays">#dfdfdf</color>
     <color name="whitedark">#efefef</color>
+    <color name="content_bg_color">#f9f9f9</color>
+    <color name="gray_ababab">#ababab</color>
 </resources>

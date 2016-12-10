@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.merchantplatform.R;
+import com.merchantplatform.activity.AboutActivity;
 import com.merchantplatform.activity.SettingActivity;
 import com.merchantplatform.activity.PersonalSettingActivity;
 import com.merchantplatform.activity.SettingFeedbackActivity;
@@ -20,7 +21,7 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
 
     private SettingActivity context;
     private TitleBar tb_setting_title;
-    private RelativeLayout rl_setting_push,rl_setting_feedback,rl_setting_binding;
+    private RelativeLayout rl_setting_push,rl_setting_feedback,rl_setting_binding,rl_setting_about;
 
     public SettingActivityModel(SettingActivity context){
         this.context = context;
@@ -31,6 +32,8 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
         rl_setting_push = (RelativeLayout) context.findViewById(R.id.rl_setting_push);
         rl_setting_feedback = (RelativeLayout) context.findViewById(R.id.rl_setting_feedback);
         rl_setting_binding = (RelativeLayout) context.findViewById(R.id.rl_setting_binding);
+        rl_setting_about = (RelativeLayout) context.findViewById(R.id.rl_setting_about);
+
     }
 
     public void initData(){
@@ -55,6 +58,7 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
         rl_setting_push.setOnClickListener(this);
         rl_setting_feedback.setOnClickListener(this);
         rl_setting_binding.setOnClickListener(this);
+        rl_setting_about.setOnClickListener(this);
     }
 
 
@@ -70,6 +74,9 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
             case R.id.rl_setting_binding:
                 goToSettingBindingActivity();
                 break;
+            case R.id.rl_setting_about:
+                goToSettingAboutActivity();
+                break;
         }
     }
 
@@ -83,5 +90,9 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
 
     private void goToSettingBindingActivity(){
         PageSwitchUtils.goToActivity(context,PersonalSettingActivity.class);
+    }
+
+    private void goToSettingAboutActivity(){
+        PageSwitchUtils.goToActivity(context,AboutActivity.class);
     }
 }

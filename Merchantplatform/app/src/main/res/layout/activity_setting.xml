@@ -78,4 +78,27 @@
             android:textSize="@dimen/common_text_size_16" />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/rl_setting_about"
+        android:layout_width="fill_parent"
+        android:layout_height="44dp">
+
+        <ImageView
+            android:id="@+id/iv_setting_about"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/iv_setting_about"
+            android:text="关于我们"
+            android:textColor="@color/black"
+            android:textSize="@dimen/common_text_size_16" />
+    </RelativeLayout>
+
 </LinearLayout>
