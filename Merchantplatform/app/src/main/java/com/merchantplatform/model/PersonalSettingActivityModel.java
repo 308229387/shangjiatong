@@ -26,7 +26,6 @@ public class PersonalSettingActivityModel extends BaseModel implements View.OnCl
     private TitleBar tb_binding_title;
     private RelativeLayout rl_binding_change_mobile;
     private TextView tv_binding_mobile,tv_now_binding_mobile;
-    private RelativeLayout rl_setting_exit;
 
     private String mobile;
 
@@ -39,7 +38,7 @@ public class PersonalSettingActivityModel extends BaseModel implements View.OnCl
         rl_binding_change_mobile = (RelativeLayout) context.findViewById(R.id.rl_binding_change_mobile);
         tv_binding_mobile = (TextView) context.findViewById(R.id.tv_binding_mobile);
         tv_now_binding_mobile = (TextView) context.findViewById(R.id.tv_now_binding_mobile);
-        rl_setting_exit = (RelativeLayout) context.findViewById(R.id.rl_setting_exit);
+
     }
 
 
@@ -75,8 +74,6 @@ public class PersonalSettingActivityModel extends BaseModel implements View.OnCl
 
     public void setListener(){
         rl_binding_change_mobile.setOnClickListener(this);
-        rl_setting_exit.setOnClickListener(this);
-
     }
 
 
@@ -85,8 +82,6 @@ public class PersonalSettingActivityModel extends BaseModel implements View.OnCl
         switch (v.getId()){
             case R.id.rl_binding_change_mobile:
                 goToMobileChangePage();
-                break;
-            case R.id.rl_setting_exit:
                 break;
         }
     }

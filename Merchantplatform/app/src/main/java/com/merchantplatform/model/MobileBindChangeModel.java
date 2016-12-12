@@ -61,7 +61,7 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
         //设置左侧图标
         tb_Change_title.setLeftImageResource(R.mipmap.title_back);
         //设置标题
-        tb_Change_title.setTitle("账号绑定");
+        tb_Change_title.setTitle("更改手机绑定");
         //设置标题颜色
         tb_Change_title.setTitleColor(Color.BLACK);
         //设置左侧点击事件

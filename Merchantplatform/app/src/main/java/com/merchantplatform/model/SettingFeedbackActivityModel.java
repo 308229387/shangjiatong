@@ -3,6 +3,8 @@ package com.merchantplatform.model;
 import android.app.Activity;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -106,6 +108,7 @@ public class SettingFeedbackActivityModel extends BaseModel{
     }
 
     public void setListener(){
+        et_contact.addTextChangedListener(contactChangeListener);
         iv_contact_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,6 +116,23 @@ public class SettingFeedbackActivityModel extends BaseModel{
             }
         });
     }
+
+    private TextWatcher contactChangeListener =  new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 
     public void destoryOperate(){
         try{
