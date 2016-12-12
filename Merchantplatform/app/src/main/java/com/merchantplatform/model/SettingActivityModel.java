@@ -40,9 +40,9 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
         //设置透明状态栏
         tb_setting_title.setImmersive(true);
         //设置背景颜色
-        tb_setting_title.setBackgroundColor(Color.parseColor("#64b4ff"));
-        //设置左侧文案
-        tb_setting_title.setLeftText("返回");
+        tb_setting_title.setBackgroundColor(Color.WHITE);
+        //设置左侧图标
+        tb_setting_title.setLeftImageResource(R.mipmap.title_back);
         //设置左侧点击事件
         tb_setting_title.setLeftClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +52,8 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
         });
         //设置标题
         tb_setting_title.setTitle("设置");
+        //设置主标题颜色
+        tb_setting_title.setTitleColor(Color.BLACK);
     }
 
     public void setListener(){

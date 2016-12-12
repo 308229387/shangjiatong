@@ -41,10 +41,11 @@ public class PersonalCenterModel extends BaseModel implements View.OnClickListen
         //设置透明状态栏
         tb_personal_title.setImmersive(true);
         //设置背景颜色
-        tb_personal_title.setBackgroundColor(Color.parseColor("#64b4ff"));
-
+        tb_personal_title.setBackgroundColor(Color.WHITE);
         //设置标题
         tb_personal_title.setTitle("我");
+        //设置标题颜色
+        tb_personal_title.setTitleColor(Color.BLACK);
     }
 
     public void setListener(){

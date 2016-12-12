@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.callback.DialogCallback;
 import com.dataStore.AppPrefersUtil;
@@ -30,6 +32,9 @@ public class SettingFeedbackActivityModel extends BaseModel{
 
     private TitleBar tb_feedback_title;
     private EditText et_content,et_contact;
+    private ImageView iv_contact_delete;
+    private TextView tv_contact_alert;
+
 
     private boolean mSaveFlag = true;//是否保存草稿标示 默认保存，发送成功不保存。
 
@@ -41,6 +46,8 @@ public class SettingFeedbackActivityModel extends BaseModel{
         tb_feedback_title = (TitleBar) context.findViewById(R.id.tb_feedback_title);
         et_content = (EditText) context.findViewById(R.id.et_content);
         et_contact = (EditText) context.findViewById(R.id.et_contact);
+        iv_contact_delete = (ImageView) context.findViewById(R.id.iv_contact_delete);
+        tv_contact_alert = (TextView) context.findViewById(R.id.tv_contact_alert);
     }
 
     public void initData(){
@@ -52,9 +59,9 @@ public class SettingFeedbackActivityModel extends BaseModel{
         //设置透明状态栏
         tb_feedback_title.setImmersive(true);
         //设置背景颜色
-        tb_feedback_title.setBackgroundColor(Color.parseColor("#64b4ff"));
-        //设置左侧文案
-        tb_feedback_title.setLeftText("返回");
+        tb_feedback_title.setBackgroundColor(Color.WHITE);
+        //设置左侧图标
+        tb_feedback_title.setLeftImageResource(R.mipmap.title_back);
         //设置左侧点击事件
         tb_feedback_title.setLeftClickListener(new View.OnClickListener() {
             @Override
@@ -63,8 +70,12 @@ public class SettingFeedbackActivityModel extends BaseModel{
                 context.onBackPressed();
             }
         });
+        //设置主标题颜色
+        tb_feedback_title.setTitleColor(Color.BLACK);
         //设置标题
         tb_feedback_title.setTitle("意见反馈");
+        //设置右侧文案颜色
+        tb_feedback_title.setActionTextColor(Color.BLACK);
         //设置右侧文案
         tb_feedback_title.addAction(new TitleBar.TextAction("提交") {
             @Override
@@ -80,6 +91,7 @@ public class SettingFeedbackActivityModel extends BaseModel{
          et_content.setSelection(hisContent.length());
      }
 
+
     private void gotoSubmit(){
         String content = et_content.getText().toString();
         String contact = et_contact.getText().toString();
@@ -91,6 +103,15 @@ public class SettingFeedbackActivityModel extends BaseModel{
         OkHttpUtils.get(Urls.PERSONAL_FEEDBACK)
                 .params("","")
                 .execute(new feedbackCallback(context));
+    }
+
+    public void setListener(){
+        iv_contact_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     public void destoryOperate(){

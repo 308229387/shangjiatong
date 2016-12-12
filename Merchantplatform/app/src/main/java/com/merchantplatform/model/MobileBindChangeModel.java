@@ -56,10 +56,14 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
     private void initTitleData() {
         //设置透明状态栏
         tb_Change_title.setImmersive(true);
-        //设置左侧文案
-        tb_Change_title.setLeftText("返回");
+        //设置背景颜色
+        tb_Change_title.setBackgroundColor(Color.WHITE);
+        //设置左侧图标
+        tb_Change_title.setLeftImageResource(R.mipmap.title_back);
         //设置标题
-        tb_Change_title.setTitle("设置");
+        tb_Change_title.setTitle("账号绑定");
+        //设置标题颜色
+        tb_Change_title.setTitleColor(Color.BLACK);
         //设置左侧点击事件
         tb_Change_title.setLeftClickListener(new View.OnClickListener() {
             @Override

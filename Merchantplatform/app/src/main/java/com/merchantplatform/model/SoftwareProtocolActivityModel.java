@@ -32,11 +32,9 @@ public class SoftwareProtocolActivityModel extends BaseModel {
         //设置透明状态栏
         tb_protocol_title.setImmersive(true);
         //设置背景颜色
-        tb_protocol_title.setBackgroundColor(Color.parseColor("#64b4ff"));
+        tb_protocol_title.setBackgroundColor(Color.WHITE);
         //设置左侧图标
         tb_protocol_title.setLeftImageResource(R.mipmap.title_back);
-        //设置左侧文案颜色
-        tb_protocol_title.setLeftTextColor(Color.WHITE);
         //设置左侧点击事件
         tb_protocol_title.setLeftClickListener(new View.OnClickListener() {
             @Override
@@ -46,5 +44,7 @@ public class SoftwareProtocolActivityModel extends BaseModel {
         });
         //设置标题
         tb_protocol_title.setTitle("软件协议");
+        //设置标题颜色
+        tb_protocol_title.setTitleColor(Color.BLACK);
     }
 }

@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/common_background_color">
 
     <com.ui.TitleBar
         android:id="@+id/tb_binding_title"
@@ -14,7 +15,7 @@
         android:id="@+id/rl_binding_change_mobile"
         android:layout_width="fill_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/common_list_item_selector">
 
         <View
@@ -39,7 +40,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:src="@mipmap/iv_arrow" />
+            android:src="@mipmap/iv_setting_arrow" />
 
         <TextView
             android:id="@+id/tv_now_binding_mobile"
@@ -59,6 +60,12 @@
         android:layout_height="0.5dip"
         android:background="@color/line_gray_color" />
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dip"
+        android:layout_marginTop="60dip"
+        android:background="@color/line_gray_color" />
+
     <!--退出登录-->
     <RelativeLayout
         android:id="@+id/rl_setting_exit"
@@ -69,7 +76,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
             android:layout_marginLeft="20dp"
             android:text="退出账号"
             android:textColor="@color/black"

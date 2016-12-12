@@ -20,6 +20,7 @@ public class SettingFeedbackActivity  extends BaseActivity<SettingFeedbackActivi
     private void init(){
         model.initView();
         model.initData();
+        model.setListener();
     }
 
     @Override

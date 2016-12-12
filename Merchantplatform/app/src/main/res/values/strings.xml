@@ -22,7 +22,7 @@
     <string name="no_internet">当前没有网络,稍后重试</string>
     <string name="mobile_notice"> 商家通提醒您:\n1.请务必绑定可联系的本人手机号！此手机号将成为您的客户及商家通客服联系您的第一方式.\n2.请妥善保管此手机号，交由他人使用可能导致您的客户流失.</string>
     <string name="feedback_input_hint">请填写您的宝贵意见，让58不断进步，谢谢！</string>
-    <string name="feedback_contact">(选填) 请填写有效的联系方式</string>
+    <string name="feedback_contact">请填写有效的联系方式</string>
     <string name="feedback_input_empty">您还没输入文字呢</string>
     <string name="feedback_submit_error">提交失败，意见反馈每天只能提交一次哦</string>
     <string name="feedback_submit_success">提交成功,58已经收到您的反馈，我们会尽快做出改进~</string>

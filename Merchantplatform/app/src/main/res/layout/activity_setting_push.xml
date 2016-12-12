@@ -2,23 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/common_background_color">
 
     <com.ui.TitleBar
         android:id="@+id/tb_push_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></com.ui.TitleBar>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="19dip"
-        android:background="#f9f9f9"/>
+        android:layout_height="wrap_content"/>
 
     <ScrollView
         android:id="@+id/sv_setting_push"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#f9f9f9">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:background="@color/white">
 
 　　　<LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +31,8 @@
          <com.ui.SettingToggleGroup
              android:id="@+id/sg_entry_group_items"
              android:layout_width="match_parent"
-             android:layout_height="wrap_content"/>
+             android:layout_height="wrap_content"
+             />
 
         <View
             android:layout_width="match_parent"

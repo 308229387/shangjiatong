@@ -55,11 +55,13 @@ public class FundingManageModel extends BaseModel {
         //设置透明状态栏
         tb_funding_title.setImmersive(true);
         //设置背景颜色
-        tb_funding_title.setBackgroundColor(Color.parseColor("#64b4ff"));
-        //设置左侧文案
-        tb_funding_title.setLeftText("返回");
+        tb_funding_title.setBackgroundColor(Color.WHITE);
+        //设置左侧图标
+        tb_funding_title.setLeftImageResource(R.mipmap.title_back);
         //设置标题
-        tb_funding_title.setTitle("资产管理");
+        tb_funding_title.setTitle("资金管理");
+        //设置标题颜色
+        tb_funding_title.setTitleColor(Color.BLACK);
 
     }
 

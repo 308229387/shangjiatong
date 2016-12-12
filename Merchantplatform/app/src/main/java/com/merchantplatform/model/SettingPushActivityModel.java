@@ -1,6 +1,7 @@
 package com.merchantplatform.model;
 
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.CompoundButton;
 
@@ -37,8 +38,12 @@ public class SettingPushActivityModel extends BaseModel{
     private void initTitleData() {
         //设置透明状态栏
         tb_push_title.setImmersive(true);
-        //设置左侧文案
-        tb_push_title.setLeftText("返回");
+        //设置背景颜色
+        tb_push_title.setBackgroundColor(Color.WHITE);
+        //设置左侧图标
+        tb_push_title.setLeftImageResource(R.mipmap.title_back);
+        //设置主标题颜色
+        tb_push_title.setTitleColor(Color.BLACK);
         //设置标题
         tb_push_title.setTitle("消息推送");
         //设置左侧点击事件
