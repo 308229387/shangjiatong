@@ -73,18 +73,20 @@
             android:screenOrientation="portrait" />
 
 
-
         <!--这个Activity不要启用单独的Process，否则支付SDK的回调不会执行-->
         <activity
-            android:name="activity.FundingManageActivity"
+            android:name=".activity.FundingManageActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="activity.SettingActivity"
+            android:name=".activity.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SettingFeedbackActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="activity.SettingPushActivity"
+            android:name=".activity.SettingPushActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -92,11 +94,11 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="activity.MobileBindChangeActivity"
+            android:name=".activity.MobileBindChangeActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="activity.SoftwareProtocolActivity"
+            android:name=".activity.SoftwareProtocolActivity"
             android:screenOrientation="portrait" />
 
         <service

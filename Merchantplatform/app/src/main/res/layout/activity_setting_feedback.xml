@@ -71,6 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dip"
+            android:background="@color/white"
             android:hint="@string/feedback_contact"
             android:maxLines="1"/>
 
