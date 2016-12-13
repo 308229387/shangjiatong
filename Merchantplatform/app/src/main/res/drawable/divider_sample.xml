@@ -3,5 +3,5 @@
     <size
         android:width="@dimen/divider_size"
         android:height="@dimen/divider_size" />
-    <solid android:color="@color/text_yellow" />
+    <solid android:color="@color/item_call_divider" />
 </shape>

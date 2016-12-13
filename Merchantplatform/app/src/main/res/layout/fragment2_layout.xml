@@ -8,21 +8,21 @@
     <LinearLayout
         android:id="@+id/layout_call_head"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:background="@color/colorPrimary"
-        android:gravity="center">
+        android:layout_height="70dp"
+        android:background="@color/tabbg_white">
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tb_switch_callType"
             android:layout_width="match_parent"
-            android:layout_height="25dp"
-            app:tabBackground="@drawable/tab_calltype_selector"
-            app:tabIndicatorColor="@color/text_yellow"
+            android:layout_height="match_parent"
+            android:minWidth="@dimen/tablayout_maxwidth"
+            app:tabBackground="@color/tabbg_white"
+            app:tabIndicatorColor="@color/tab_selected_text"
             app:tabIndicatorHeight="@dimen/tablayout_indicator_size"
             app:tabMaxWidth="@dimen/tablayout_maxwidth"
-            app:tabSelectedTextColor="@color/text_black"
+            app:tabSelectedTextColor="@color/tab_selected_text"
             app:tabTextAppearance="@style/TabLayoutTextStyle"
-            app:tabTextColor="@color/text_white" />
+            app:tabTextColor="@color/tab_unselected_text" />
 
     </LinearLayout>
 

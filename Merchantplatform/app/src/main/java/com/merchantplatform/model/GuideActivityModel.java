@@ -28,8 +28,6 @@ public class GuideActivityModel extends BaseModel {
     private Button button_bugly_test;
     private ImageView imageView_glide_test;
     private Button button_push;
-    private Button button_db_create;
-    private Button button_db_insert;
 
     public GuideActivityModel(Activity context) {
         this.context = context;
@@ -67,40 +65,9 @@ public class GuideActivityModel extends BaseModel {
                 context.startActivity(new Intent(context, PushActivity.class));
             }
         });
-        button_db_create = (Button) context.findViewById(R.id.button_db_create);
-        button_db_create.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createDataBase();
-            }
-        });
-        button_db_insert = (Button) context.findViewById(R.id.button_db_insert);
-        button_db_insert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                insertDbData();
-            }
-        });
     }
 
     public void showToast() {
         Toast.makeText(context, "test", Toast.LENGTH_LONG).show();
-    }
-
-    private void createDataBase() {
-        DbManager.getInstance(context);
-    }
-
-    private void insertDbData() {
-        CallDetail callDetail = new CallDetail();
-        callDetail.setId(System.currentTimeMillis());
-        callDetail.setBackTime(System.currentTimeMillis());
-        callDetail.setType(1);
-        callDetail.setPhone("18888888888");
-        callDetail.setLocal("北京");
-        callDetail.setCate("推广");
-        callDetail.setCallTime(System.currentTimeMillis());
-        callDetail.setEntryTime(System.currentTimeMillis());
-        CallDetailDaoOperate.saveData(context, callDetail);
     }
 }

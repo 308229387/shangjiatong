@@ -7,18 +7,19 @@ import com.db.dao.CallList;
 import org.greenrobot.greendao.query.QueryBuilder;
 import org.greenrobot.greendao.query.WhereCondition;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by 58 on 2016/12/10.
  */
 
 public class CallListDaoOperate {
+
     /**
      * @desc 添加数据至数据库，如果存在，将原来的数据覆盖
      **/
-    public static void saveData(Context context, CallList callList) {
-        DbManager.getDaoSession(context).getCallListDao().save(callList);
+    public static void insertOrReplace(Context context, CallList callList) {
+        DbManager.getDaoSession(context).getCallListDao().insertOrReplace(callList);
     }
 
     /**
@@ -50,18 +51,26 @@ public class CallListDaoOperate {
     }
 
     /**
+     * @desc 返回所有数据
+     **/
+    public static ArrayList<CallList> queryAll(Context context) {
+        QueryBuilder<CallList> builder = DbManager.getDaoSession(context).getCallListDao().queryBuilder();
+        return (ArrayList<CallList>) builder.list();
+    }
+
+    /**
      * @desc 按条件返回结果集
      **/
-    public static List<CallList> queryByCondition(Context context, WhereCondition whereCondition) {
+    public static ArrayList<CallList> queryByCondition(Context context, WhereCondition whereCondition, WhereCondition... condMore) {
         QueryBuilder<CallList> builder = DbManager.getDaoSession(context).getCallListDao().queryBuilder();
-        return builder.where(whereCondition).build().list();
+        return (ArrayList<CallList>) builder.where(whereCondition, condMore).list();
     }
 
     /**
      * @desc 查询限制条数的数据
      **/
-    public static List<CallList> queryLimitData(Context context, int limit) {
+    public static ArrayList<CallList> queryLimitData(Context context, int limit) {
         QueryBuilder<CallList> builder = DbManager.getDaoSession(context).getCallListDao().queryBuilder().limit(limit);
-        return builder.build().list();
+        return (ArrayList<CallList>) builder.list();
     }
 }

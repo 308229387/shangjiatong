@@ -11,12 +11,12 @@ import org.greenrobot.greendao.annotation.Generated;
 public class CallDetail {
 
     @Id
-    private long id;//从后台获取到的ID
+    private Long id;//从后台获取到的ID
     private String userId;//用户Id
     private String phone;//电话号码
     private String local;//归属地
     private String cate;//商业类别
-    private long callTime;//打电话时间
+    private String callTime;//打电话时间
     private long backTime;//请求接口的回传参数
     private long entryTime;//通话持续时长
     private int callResult;//电话操作结果(接通、未接通)，以此做聚合的区分条件
@@ -26,11 +26,11 @@ public class CallDetail {
     public CallDetail() {
     }
 
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -66,11 +66,11 @@ public class CallDetail {
         this.cate = cate;
     }
 
-    public long getCallTime() {
+    public String getCallTime() {
         return this.callTime;
     }
 
-    public void setCallTime(long callTime) {
+    public void setCallTime(String callTime) {
         this.callTime = callTime;
     }
 

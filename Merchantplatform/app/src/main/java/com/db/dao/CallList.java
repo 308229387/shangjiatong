@@ -3,6 +3,7 @@ package com.db.dao;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Unique;
 
 /**
  * Created by 58 on 2016/12/6.
@@ -11,7 +12,7 @@ import org.greenrobot.greendao.annotation.Generated;
 public class CallList {
 
     @Id(autoincrement = true)
-    private long id;
+    private Long id;
     private String userId;//用户Id
     private String phone;//电话号码
     private int phoneCount;//聚合后的次数
@@ -19,16 +20,16 @@ public class CallList {
     private int type;//电话类型（呼入呼出）
     private String local;//归属地
     private String cate;//商业类别
-    private long callTime;//打电话时间
+    private String callTime;//打电话时间
 
     public CallList() {
     }
 
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -88,11 +89,11 @@ public class CallList {
         this.cate = cate;
     }
 
-    public long getCallTime() {
+    public String getCallTime() {
         return this.callTime;
     }
 
-    public void setCallTime(long callTime) {
+    public void setCallTime(String callTime) {
         this.callTime = callTime;
     }
 }

@@ -9,7 +9,6 @@ import com.db.dao.CallList;
 import com.merchantplatform.R;
 import com.xrecyclerview.BaseRecyclerViewAdapter;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -24,14 +23,15 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
 
     @Override
     protected void bindDataToItemView(final CallRecordViewHolder callRecordViewHolder, final int position) {
-        callRecordViewHolder.setImageResource(R.id.iv_phoneState, position % 2 == 0 ? android.R.drawable.sym_call_incoming : android.R.drawable.sym_call_outgoing)
-                .setText(R.id.tv_phoneNum, getItem(position).getPhone())
-                .setText(R.id.tv_call_count, getItem(position).getPhoneCount() + "")
-                .setText(R.id.tv_phone_city, getItem(position).getLocal())
-                .setText(R.id.tv_call_type, getItem(position).getType() == 1 ? "呼入" : "呼出")
-                .setText(R.id.tv_call_time, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(getItem(position).getCallTime()))
-                .setTag(R.id.ll_callrecord_content, position)
-                .setOnLongClickListener(R.id.ll_callrecord_content, new OnContentLongClickListener())
+        CallList callList = getItem(position);
+        callRecordViewHolder
+                .setText(R.id.tv_phoneNum, callList.getPhone())
+                .setText(R.id.tv_call_count, "(" + getItem(position).getPhoneCount() + ")")
+                .setVisible(R.id.tv_call_count, callList.getPhoneCount() != 0)
+                .setImageResource(R.id.iv_phoneState, callList.getType() == 1 ? R.mipmap.item_call_in : R.mipmap.item_call_out)
+                .setText(R.id.tv_phone_city, callList.getLocal())
+                .setText(R.id.tv_call_cate, callList.getCate())
+                .setText(R.id.tv_call_time, callList.getCallTime() + "")
                 .setTag(R.id.iv_call_detail, position)
                 .setOnClickListener(R.id.iv_call_detail, new OnDetailClickListener())
                 .setTag(R.id.tv_delete, R.id.delete_tag_vh, callRecordViewHolder)
@@ -50,20 +50,11 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
         }
     }
 
-    private class OnContentLongClickListener implements View.OnLongClickListener {
-
-        @Override
-        public boolean onLongClick(View v) {
-            Toast.makeText(context, "position" + v.getTag(), Toast.LENGTH_SHORT).show();
-            return true;
-        }
-    }
-
     private class OnDetailClickListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(context, "position" + v.getTag(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "查看详情position" + v.getTag(), Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -12,7 +12,10 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.db.dao.gen.CallDetailDao;
+import com.db.dao.gen.CallListDao;
 import com.db.helper.CallDetailDaoOperate;
+import com.db.helper.CallListDaoOperate;
+import com.db.helper.DbManager;
 import com.merchantplatform.R;
 import com.merchantplatform.adapter.FragmentAdapter;
 import com.merchantplatform.fragment.CallRecordFragment;
@@ -27,9 +30,9 @@ import java.util.ArrayList;
 public class Fragment2Model extends BaseModel {
     private Fragment2 context;
     private View view;
+    private LinearLayout layout_call_head;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
-    private LinearLayout layout_call_head;
     private ArrayList<String> titles;
     private ArrayList<Fragment> fragments;
     private static final long aMonthSeconds = 25920000000L;
@@ -76,8 +79,10 @@ public class Fragment2Model extends BaseModel {
     }
 
     public void deleteLastMonthData() {
+        DbManager.getInstance(context.getContext());
         long lastMonthMillis = System.currentTimeMillis() - aMonthSeconds;
         CallDetailDaoOperate.deleteByCondition(context.getContext(), CallDetailDao.Properties.CallTime.le(lastMonthMillis));
+        CallListDaoOperate.deleteByCondition(context.getContext(), CallListDao.Properties.CallTime.le(lastMonthMillis));
     }
 
     public View getView() {
