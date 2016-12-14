@@ -1,8 +1,10 @@
 package com.merchantplatform.model;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
+import com.android.gmacs.fragment.ConversationListFragment;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.HomepageActivity;
 import com.merchantplatform.fragment.BaseFragment;
@@ -19,7 +21,9 @@ import com.ui.HomepageBottomButton;
 public class HomepageModel extends BaseModel implements View.OnClickListener {
     private HomepageActivity context;
     private HomepageBottomButton bottomButton1, bottomButton2, bottomButton3, bottomButton4;
-    private BaseFragment fragment1, fragment2, fragment3, fragment4, mFragment;
+    private BaseFragment fragment1, fragment2, fragment3, fragment4;
+    private ConversationListFragment conversationListFragment;
+    private Fragment mFragment;
 
     public HomepageModel(HomepageActivity context) {
         this.context = context;
@@ -54,11 +58,11 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
     }
 
     public void createFragment() {
-        fragment1 = new Fragment1();
+        conversationListFragment = new ConversationListFragment();
         fragment2 = new CallMessageFragment();
         fragment3 = new Fragment3();
         fragment4 = new PersonalCenterFragment();
-        mFragment = fragment1;
+        mFragment = conversationListFragment;
     }
 
     public void createFragmentManagerAndShow() {
@@ -66,17 +70,17 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         fragmentManager.beginTransaction().add(R.id.main_fragment, mFragment).commit();
     }
 
-    private void switchFragment(BaseFragment fragment) {
+    private void switchFragment(Fragment fragment) {
         if (mFragment != fragment)
             isNotShowing(fragment);
     }
 
-    private void isNotShowing(BaseFragment fragment) {
+    private void isNotShowing(Fragment fragment) {
         judgeFragmentAdded(fragment);
         mFragment = fragment;
     }
 
-    private void judgeFragmentAdded(BaseFragment fragment) {
+    private void judgeFragmentAdded(Fragment fragment) {
         if (!fragment.isAdded())
             context.getSupportFragmentManager().beginTransaction().hide(mFragment)
                     .add(R.id.main_fragment, fragment).commit();
@@ -84,7 +88,7 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
             context.getSupportFragmentManager().beginTransaction().hide(mFragment).show(fragment).commit();
     }
 
-    private void dealWithClick(HomepageBottomButton button, BaseFragment fragment) {
+    private void dealWithClick(HomepageBottomButton button, Fragment fragment) {
         selectThis(button);
         switchFragment(fragment);
     }
@@ -93,7 +97,7 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.homepage_bottom_button1:
-                dealWithClick(bottomButton1, fragment1);
+                dealWithClick(bottomButton1, conversationListFragment);
                 bottomButton1.setNum(20);
                 break;
             case R.id.homepage_bottom_button2:

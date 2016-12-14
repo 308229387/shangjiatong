@@ -30,7 +30,7 @@ public class LoginActivityModel extends BaseModel {
             public void onLogin58Finished(boolean b, String s, @Nullable LoginSDKBean loginSDKBean) {
                 Toast.makeText(context, "onLogin58Finished", Toast.LENGTH_LONG).show();
                 UserUtils.setUserId(context,loginSDKBean.getUserId());
-                new IMLoginUtils();
+                new IMLoginUtils(context);
             }
         };
     }

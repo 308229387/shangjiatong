@@ -15,6 +15,7 @@ import com.db.helper.DbManager;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.AboutActivity;
 import com.merchantplatform.activity.HomepageActivity;
+import com.merchantplatform.activity.LoginActivity;
 import com.merchantplatform.activity.MobileValidateActivity;
 import com.merchantplatform.activity.PushActivity;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -39,7 +40,7 @@ public class GuideActivityModel extends BaseModel {
         text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, HomepageActivity.class));
+                context.startActivity(new Intent(context, LoginActivity.class));
             }
         });
 

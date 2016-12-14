@@ -1,5 +1,6 @@
 package com.utils;
 
+import android.content.Intent;
 import android.support.annotation.Nullable;
 
 import com.callback.JsonCallback;
@@ -7,6 +8,8 @@ import com.common.gmacs.core.ClientManager;
 import com.common.gmacs.core.Gmacs;
 import com.common.gmacs.parse.message.GmacsUserInfo;
 import com.google.gson.Gson;
+import com.merchantplatform.activity.HomepageActivity;
+import com.merchantplatform.activity.LoginActivity;
 import com.merchantplatform.application.HyApplication;
 import com.okhttputils.OkHttpUtils;
 import com.response.ImGetTokenResponse;
@@ -24,6 +27,8 @@ import okhttp3.Response;
  */
 
 public class IMLoginUtils {
+    private LoginActivity context;
+
     String userId = LoginClient.getUserID(HyApplication.getApplication());
     String keyValue = "wb@D11ncE2Ym4xOJnSWknzi";
     String appId = "100217-wb@a2hvgoAwgHY";
@@ -35,7 +40,8 @@ public class IMLoginUtils {
     String tempUserId;
     ImGetTokenResponse tokenResponse;
 
-    public IMLoginUtils() {
+    public IMLoginUtils(LoginActivity context) {
+        this.context = context;
         calculationKey();
         getToken();
     }
@@ -107,7 +113,7 @@ public class IMLoginUtils {
                 @Override
                 public void done(int i, String s) {
                     if (i == 0) {
-                        ToastUtils.showToast("成功");
+                        context.startActivity(new Intent(context, HomepageActivity.class));
                     }
                 }
             });
