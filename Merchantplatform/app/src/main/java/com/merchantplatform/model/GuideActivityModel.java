@@ -15,6 +15,7 @@ import com.db.helper.DbManager;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.AboutActivity;
 import com.merchantplatform.activity.HomepageActivity;
+import com.merchantplatform.activity.MobileValidateActivity;
 import com.merchantplatform.activity.PushActivity;
 import com.tencent.bugly.crashreport.CrashReport;
 
@@ -46,7 +47,7 @@ public class GuideActivityModel extends BaseModel {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, AboutActivity.class));
+                context.startActivity(new Intent(context, MobileValidateActivity.class));
             }
         });
         button_bugly_test = (Button) context.findViewById(R.id.button_bugly_test);

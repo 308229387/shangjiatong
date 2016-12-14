@@ -44,4 +44,8 @@ public class Urls {
     public static final String RECHARGE_NOTIFY_URL = "http://paycenter.58.com";
 
     public static final String PERSONAL_FEEDBACK = "";
+
+    public static final String GET_VALIDE_CODE = "";
+
+    public static final String VALIDATE = "";
 }

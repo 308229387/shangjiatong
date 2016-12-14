@@ -14,6 +14,13 @@ public class MobileValidateActivity extends BaseActivity<MobileValidateActivityM
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mobile_validate);
+        init();
+    }
+
+    private void init(){
+        model.initView();
+        model.initData();
+        model.setListener();
     }
 
     @Override

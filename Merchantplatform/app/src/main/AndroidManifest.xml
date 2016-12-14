@@ -101,6 +101,10 @@
             android:name=".activity.SoftwareProtocolActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activity.MobileValidateActivity"
+            android:screenOrientation="portrait" />
+
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"

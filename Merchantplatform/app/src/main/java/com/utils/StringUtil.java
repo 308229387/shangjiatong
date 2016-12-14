@@ -238,4 +238,11 @@ public class StringUtil {
         System.out.println(m.matches() + "---");
         return m.matches();
     }
+
+    public static boolean isCode(String str) {
+        Pattern p = Pattern.compile("^[0-9]{6}$"); // 验证手机号
+        Matcher m = p.matcher(str);
+        boolean b = m.matches();
+        return b;
+    }
 }
