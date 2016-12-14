@@ -27,7 +27,7 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
         callRecordViewHolder
                 .setText(R.id.tv_phoneNum, callList.getPhone())
                 .setText(R.id.tv_call_count, "(" + getItem(position).getPhoneCount() + ")")
-                .setVisible(R.id.tv_call_count, callList.getPhoneCount() != 0)
+                .setVisible(R.id.tv_call_count, callList.getPhoneCount() >= 1)
                 .setImageResource(R.id.iv_phoneState, callList.getType() == 1 ? R.mipmap.item_call_in : R.mipmap.item_call_out)
                 .setText(R.id.tv_phone_city, callList.getLocal())
                 .setText(R.id.tv_call_cate, callList.getCate())

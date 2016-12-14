@@ -20,7 +20,7 @@
     <color name="content_bg_color">#f9f9f9</color>
     <color name="gray_ababab">#ababab</color>
 
-    <color name="item_call_bg">#F2F2F2</color>
+    <color name="item_call_bg">#FBFCFD</color>
     <color name="tabbg_white">#E5FFFFFF</color>
     <color name="tab_selected_text">#FF552E</color>
     <color name="tab_unselected_text">#A4AAB3</color>

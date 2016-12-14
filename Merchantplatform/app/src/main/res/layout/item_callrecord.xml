@@ -13,102 +13,97 @@
         android:id="@+id/ll_callrecord_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:gravity="center_vertical"
+        android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="6">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:orientation="vertical"
+            android:paddingRight="3dp">
 
-            <TextView
-                android:id="@+id/tv_phoneNum"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/item_phone_height"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:text="13211137622"
-                android:textColor="@color/item_call_phone"
-                android:textSize="@dimen/phoneNum_textsize" />
-
-            <TextView
-                android:id="@+id/tv_call_count"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/item_phone_height"
-                android:layout_alignTop="@+id/tv_phoneNum"
-                android:layout_marginLeft="3dp"
-                android:layout_toRightOf="@+id/tv_phoneNum"
-                android:text="(5)"
-                android:textColor="@color/item_call_phone"
-                android:textSize="@dimen/phoneNum_textsize" />
-
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignLeft="@+id/tv_phoneNum"
-                android:layout_below="@+id/tv_phoneNum"
-                android:layout_marginTop="5dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_height="@dimen/item_phone_height"
+                android:paddingLeft="12dp">
+
+                <TextView
+                    android:id="@+id/tv_phoneNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/item_call_phone"
+                    android:textSize="@dimen/phoneNum_textsize" />
+
+                <TextView
+                    android:id="@+id/tv_call_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="3dp"
+                    android:layout_toRightOf="@+id/tv_phoneNum"
+                    android:gravity="center"
+                    android:textColor="@color/item_call_phone"
+                    android:textSize="@dimen/phoneCount_textsize" />
+
+                <TextView
+                    android:id="@+id/tv_call_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="9dp"
+                    android:gravity="center"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="7dp"
+                android:paddingLeft="6dp">
 
                 <ImageView
                     android:id="@+id/iv_phoneState"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:src="@mipmap/item_call_in" />
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent" />
 
                 <TextView
                     android:id="@+id/tv_phone_city"
                     android:layout_width="wrap_content"
                     android:layout_height="14dp"
-                    android:layout_alignTop="@+id/iv_phoneState"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/iv_phoneState"
-                    android:text="北京"
+                    android:gravity="center"
                     android:textColor="@color/item_call_city"
-                    android:textSize="14sp" />
+                    android:textSize="11sp" />
 
                 <TextView
                     android:id="@+id/tv_call_cate"
                     android:layout_width="wrap_content"
                     android:layout_height="18dp"
-                    android:layout_alignTop="@+id/tv_phone_city"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/tv_phone_city"
                     android:background="@drawable/item_cate_background"
                     android:gravity="center"
-                    android:text="商务"
+                    android:paddingBottom="1dp"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="1dp"
                     android:textColor="@color/tab_unselected_text"
-                    android:textSize="14sp" />
+                    android:textSize="10sp" />
 
-            </LinearLayout>
+                <ImageView
+                    android:id="@+id/iv_call_detail"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@mipmap/item_goto_detail" />
 
-        </RelativeLayout>
+            </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/tv_call_time"
-                android:layout_width="wrap_content"
-                android:layout_height="15dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:text="12/03"
-                android:textSize="12sp" />
-
-            <ImageView
-                android:id="@+id/iv_call_detail"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/tv_call_time"
-                android:layout_marginRight="3dp"
-                android:layout_marginTop="6dp"
-                android:src="@mipmap/item_goto_detail" />
-
-        </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

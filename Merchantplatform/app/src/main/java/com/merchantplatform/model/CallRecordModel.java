@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.callback.DialogCallback;
 import com.db.dao.CallDetail;
 import com.db.dao.CallList;
+import com.db.dao.gen.CallDetailDao;
 import com.db.dao.gen.CallListDao;
 import com.db.helper.CallDetailDaoOperate;
 import com.db.helper.CallListDaoOperate;
@@ -239,51 +240,55 @@ public class CallRecordModel extends BaseModel {
     }
 
     private void saveNewDataToCallList(CallDetailResponse.bean bean) {
-        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(bean.getCallTime());
-        String date_Day = new SimpleDateFormat("yyyy-MM-dd").format(bean.getCallTime());
-        WhereCondition condition1 = CallListDao.Properties.UserId.eq(UserUtils.getUserId());
-        WhereCondition condition2 = CallListDao.Properties.Phone.eq(bean.getPhone());
-        WhereCondition condition3 = new WhereCondition.StringCondition("date(CALL_TIME)='" + date_Day + "'");
-        List<CallList> result = CallListDaoOperate.queryByCondition(context.getContext(), condition1, condition2, condition3);
-        if (result != null && result.size() > 0) {
-            if (bean.getType() == CALL_OUT_TYPE) {
-                for (CallList callList : result) {
-                    if (callList.getType() == CALL_OUT_TYPE) {
-                        callList.setPhoneCount(callList.getPhoneCount() + 1);
-                        CallListDaoOperate.updateData(context.getContext(), callList);
-                        break;
-                    }
-                }
-            } else if (bean.getType() == CALL_IN_TYPE) {
-                if (bean.getCallResult() == CALL_RESULT_OK) {
+        WhereCondition conditionId = CallDetailDao.Properties.Id.eq(bean.getId());
+        ArrayList<CallDetail> dataInDetail = CallDetailDaoOperate.queryByCondition(context.getContext(), conditionId);
+        if (dataInDetail.size() == 0) {
+            String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(bean.getCallTime());
+            String date_Day = new SimpleDateFormat("yyyy-MM-dd").format(bean.getCallTime());
+            WhereCondition condition1 = CallListDao.Properties.UserId.eq(UserUtils.getUserId());
+            WhereCondition condition2 = CallListDao.Properties.Phone.eq(bean.getPhone());
+            WhereCondition condition3 = new WhereCondition.StringCondition("date(CALL_TIME)='" + date_Day + "'");
+            ArrayList<CallList> result = CallListDaoOperate.queryByCondition(context.getContext(), condition1, condition2, condition3);
+            if (result != null && result.size() > 0) {
+                if (bean.getType() == CALL_OUT_TYPE) {
                     for (CallList callList : result) {
-                        if (callList.getCallResult() == CALL_RESULT_OK) {
+                        if (callList.getType() == CALL_OUT_TYPE) {
                             callList.setPhoneCount(callList.getPhoneCount() + 1);
                             CallListDaoOperate.updateData(context.getContext(), callList);
                             break;
                         }
                     }
-                } else if (bean.getCallResult() == CALL_RESULT_FALSE) {
-                    for (CallList callList : result) {
-                        if (callList.getCallResult() == CALL_RESULT_FALSE) {
-                            callList.setPhoneCount(callList.getPhoneCount() + 1);
-                            CallListDaoOperate.updateData(context.getContext(), callList);
-                            break;
+                } else if (bean.getType() == CALL_IN_TYPE) {
+                    if (bean.getCallResult() == CALL_RESULT_OK) {
+                        for (CallList callList : result) {
+                            if (callList.getCallResult() == CALL_RESULT_OK) {
+                                callList.setPhoneCount(callList.getPhoneCount() + 1);
+                                CallListDaoOperate.updateData(context.getContext(), callList);
+                                break;
+                            }
+                        }
+                    } else if (bean.getCallResult() == CALL_RESULT_FALSE) {
+                        for (CallList callList : result) {
+                            if (callList.getCallResult() == CALL_RESULT_FALSE) {
+                                callList.setPhoneCount(callList.getPhoneCount() + 1);
+                                CallListDaoOperate.updateData(context.getContext(), callList);
+                                break;
+                            }
                         }
                     }
                 }
+            } else {
+                CallList callList = new CallList();
+                callList.setUserId(UserUtils.getUserId());
+                callList.setPhone(bean.getPhone());
+                callList.setPhoneCount(0);
+                callList.setCallResult(bean.getCallResult());
+                callList.setType(bean.getType());
+                callList.setLocal(bean.getLocal());
+                callList.setCate(bean.getCate());
+                callList.setCallTime(date);
+                CallListDaoOperate.insertOrReplace(context.getContext(), callList);
             }
-        } else {
-            CallList callList = new CallList();
-            callList.setUserId(UserUtils.getUserId());
-            callList.setPhone(bean.getPhone());
-            callList.setPhoneCount(0);
-            callList.setCallResult(bean.getCallResult());
-            callList.setType(bean.getType());
-            callList.setLocal(bean.getLocal());
-            callList.setCate(bean.getCate());
-            callList.setCallTime(date);
-            CallListDaoOperate.insertOrReplace(context.getContext(), callList);
         }
     }
 
