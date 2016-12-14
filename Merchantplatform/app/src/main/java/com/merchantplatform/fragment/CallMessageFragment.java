@@ -12,7 +12,7 @@ import com.merchantplatform.model.Fragment2Model;
  * Created by SongYongmeng on 2016/11/24.
  */
 
-public class Fragment2 extends BaseFragment<Fragment2Model> {
+public class CallMessageFragment extends BaseFragment<Fragment2Model> {
 
     @Nullable
     @Override

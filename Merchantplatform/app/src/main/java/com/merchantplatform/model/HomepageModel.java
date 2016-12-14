@@ -7,7 +7,7 @@ import com.merchantplatform.R;
 import com.merchantplatform.activity.HomepageActivity;
 import com.merchantplatform.fragment.BaseFragment;
 import com.merchantplatform.fragment.Fragment1;
-import com.merchantplatform.fragment.Fragment2;
+import com.merchantplatform.fragment.CallMessageFragment;
 import com.merchantplatform.fragment.Fragment3;
 import com.merchantplatform.fragment.PersonalCenterFragment;
 import com.ui.HomepageBottomButton;
@@ -55,7 +55,7 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
 
     public void createFragment() {
         fragment1 = new Fragment1();
-        fragment2 = new Fragment2();
+        fragment2 = new CallMessageFragment();
         fragment3 = new Fragment3();
         fragment4 = new PersonalCenterFragment();
         mFragment = fragment1;

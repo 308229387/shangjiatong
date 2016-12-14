@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.xrecyclerview.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_swipelayout"
     android:layout_width="match_parent"
     android:layout_height="69dp"
-    android:background="@color/item_call_bg"
     android:orientation="horizontal"
     app:ios="true"
     app:leftSwipe="true"
@@ -18,7 +18,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="44dp"
+            android:layout_height="49dp"
             android:orientation="vertical"
             android:paddingRight="3dp">
 
@@ -32,7 +32,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:textColor="@color/item_call_phone"
                     android:textSize="@dimen/phoneNum_textsize" />
 
                 <TextView
@@ -42,7 +41,6 @@
                     android:layout_marginLeft="3dp"
                     android:layout_toRightOf="@+id/tv_phoneNum"
                     android:gravity="center"
-                    android:textColor="@color/item_call_phone"
                     android:textSize="@dimen/phoneCount_textsize" />
 
                 <TextView
@@ -58,14 +56,15 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_marginTop="7dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
                 android:paddingLeft="6dp">
 
                 <ImageView
                     android:id="@+id/iv_phoneState"
                     android:layout_width="20dp"
-                    android:layout_height="match_parent" />
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true" />
 
                 <TextView
                     android:id="@+id/tv_phone_city"
@@ -99,7 +98,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignParentRight="true"
-                    android:src="@mipmap/item_goto_detail" />
+                    android:src="@mipmap/iv_setting_arrow" />
 
             </RelativeLayout>
 

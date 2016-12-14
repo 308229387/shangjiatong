@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.db.dao.CallList;
 import com.merchantplatform.R;
+import com.utils.DateUtils;
 import com.xrecyclerview.BaseRecyclerViewAdapter;
 
 import java.util.ArrayList;
@@ -25,13 +26,16 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
     protected void bindDataToItemView(final CallRecordViewHolder callRecordViewHolder, final int position) {
         CallList callList = getItem(position);
         callRecordViewHolder
+                .setBackgroundResource(R.id.item_swipelayout, callList.getCallResult() == 10 ? R.color.item_call_bg : R.color.item_missed_call_bg)
                 .setText(R.id.tv_phoneNum, callList.getPhone())
+                .setTextColor(R.id.tv_phoneNum, callList.getCallResult() == 10 ? context.getResources().getColor(R.color.item_call_phone) : context.getResources().getColor(R.color.item_call_delete))
                 .setText(R.id.tv_call_count, "(" + getItem(position).getPhoneCount() + ")")
+                .setTextColor(R.id.tv_call_count, callList.getCallResult() == 10 ? context.getResources().getColor(R.color.item_call_phone) : context.getResources().getColor(R.color.item_call_delete))
                 .setVisible(R.id.tv_call_count, callList.getPhoneCount() >= 1)
                 .setImageResource(R.id.iv_phoneState, callList.getType() == 1 ? R.mipmap.item_call_in : R.mipmap.item_call_out)
                 .setText(R.id.tv_phone_city, callList.getLocal())
                 .setText(R.id.tv_call_cate, callList.getCate())
-                .setText(R.id.tv_call_time, callList.getCallTime() + "")
+                .setText(R.id.tv_call_time, DateUtils.displayByDateTime(callList.getCallTime()))
                 .setTag(R.id.iv_call_detail, position)
                 .setOnClickListener(R.id.iv_call_detail, new OnDetailClickListener())
                 .setTag(R.id.tv_delete, R.id.delete_tag_vh, callRecordViewHolder)

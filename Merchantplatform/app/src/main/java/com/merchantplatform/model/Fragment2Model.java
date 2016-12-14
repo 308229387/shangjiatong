@@ -11,16 +11,17 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
-import com.db.dao.gen.CallDetailDao;
-import com.db.dao.gen.CallListDao;
 import com.db.helper.CallDetailDaoOperate;
 import com.db.helper.CallListDaoOperate;
 import com.db.helper.DbManager;
 import com.merchantplatform.R;
 import com.merchantplatform.adapter.FragmentAdapter;
 import com.merchantplatform.fragment.CallRecordFragment;
-import com.merchantplatform.fragment.Fragment2;
+import com.merchantplatform.fragment.CallMessageFragment;
+import com.utils.DateUtils;
 import com.utils.DisplayUtils;
+
+import org.greenrobot.greendao.query.WhereCondition;
 
 import java.util.ArrayList;
 
@@ -28,7 +29,7 @@ import java.util.ArrayList;
  * Created by SongYongmeng on 2016/11/24.
  */
 public class Fragment2Model extends BaseModel {
-    private Fragment2 context;
+    private CallMessageFragment context;
     private View view;
     private LinearLayout layout_call_head;
     private TabLayout mTabLayout;
@@ -37,12 +38,12 @@ public class Fragment2Model extends BaseModel {
     private ArrayList<Fragment> fragments;
     private static final long aMonthSeconds = 25920000000L;
 
-    public Fragment2Model(Fragment2 context) {
+    public Fragment2Model(CallMessageFragment context) {
         this.context = context;
     }
 
     public void createView(LayoutInflater inflater, ViewGroup container) {
-        view = inflater.inflate(R.layout.fragment2_layout, container, false);
+        view = inflater.inflate(R.layout.fragment_call_message, container, false);
         layout_call_head = (LinearLayout) view.findViewById(R.id.layout_call_head);
         mTabLayout = (TabLayout) view.findViewById(R.id.tb_switch_callType);
         mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
@@ -80,9 +81,10 @@ public class Fragment2Model extends BaseModel {
 
     public void deleteLastMonthData() {
         DbManager.getInstance(context.getContext());
-        long lastMonthMillis = System.currentTimeMillis() - aMonthSeconds;
-        CallDetailDaoOperate.deleteByCondition(context.getContext(), CallDetailDao.Properties.CallTime.le(lastMonthMillis));
-        CallListDaoOperate.deleteByCondition(context.getContext(), CallListDao.Properties.CallTime.le(lastMonthMillis));
+        String lastMonthDate = DateUtils.getMonthAgo(1);
+        WhereCondition condition = new WhereCondition.StringCondition("date(CALL_TIME)<'" + lastMonthDate + "'");
+        CallDetailDaoOperate.deleteByCondition(context.getContext(), condition);
+        CallListDaoOperate.deleteByCondition(context.getContext(), condition);
     }
 
     public View getView() {

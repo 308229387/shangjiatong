@@ -27,7 +27,7 @@
     </style>
 
     <style name="TabLayoutTextStyle">
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="ToggleButton">

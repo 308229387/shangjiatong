@@ -23,6 +23,7 @@ import com.google.gson.reflect.TypeToken;
 import com.merchantplatform.R;
 import com.merchantplatform.application.HyApplication;
 import com.merchantplatform.bean.CallDetailResponse;
+import com.utils.DateUtils;
 import com.utils.UserUtils;
 import com.xrecyclerview.BaseRecyclerViewAdapter;
 import com.merchantplatform.adapter.CallRecordAdapter;
@@ -193,8 +194,8 @@ public class CallRecordModel extends BaseModel {
         }
 
         for (CallDetailResponse.bean bean : newData) {
-            saveNewDataToCallDetail(bean);
             saveNewDataToCallList(bean);
+            saveNewDataToCallDetail(bean);
         }
     }
 
@@ -231,7 +232,7 @@ public class CallRecordModel extends BaseModel {
         callDetail.setPhone(bean.getPhone());
         callDetail.setLocal(bean.getLocal());
         callDetail.setCate(bean.getCate());
-        callDetail.setCallTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(bean.getCallTime()));
+        callDetail.setCallTime(DateUtils.formatMillisToDateTime(bean.getCallTime()));
         callDetail.setBackTime(bean.getBackTime());
         callDetail.setEntryTime(bean.getEntryTime());
         callDetail.setCallResult(bean.getCallResult());
@@ -243,8 +244,8 @@ public class CallRecordModel extends BaseModel {
         WhereCondition conditionId = CallDetailDao.Properties.Id.eq(bean.getId());
         ArrayList<CallDetail> dataInDetail = CallDetailDaoOperate.queryByCondition(context.getContext(), conditionId);
         if (dataInDetail.size() == 0) {
-            String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(bean.getCallTime());
-            String date_Day = new SimpleDateFormat("yyyy-MM-dd").format(bean.getCallTime());
+            String date = DateUtils.formatMillisToDateTime(bean.getCallTime());
+            String date_Day = DateUtils.formatMillisToDate(bean.getCallTime());
             WhereCondition condition1 = CallListDao.Properties.UserId.eq(UserUtils.getUserId());
             WhereCondition condition2 = CallListDao.Properties.Phone.eq(bean.getPhone());
             WhereCondition condition3 = new WhereCondition.StringCondition("date(CALL_TIME)='" + date_Day + "'");

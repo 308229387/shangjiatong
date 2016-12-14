@@ -15,7 +15,6 @@
             android:id="@+id/tb_switch_callType"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:minWidth="@dimen/tablayout_maxwidth"
             app:tabBackground="@color/tabbg_white"
             app:tabIndicatorColor="@color/tab_selected_text"
             app:tabIndicatorHeight="@dimen/tablayout_indicator_size"
