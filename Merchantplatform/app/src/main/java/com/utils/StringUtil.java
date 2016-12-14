@@ -230,4 +230,12 @@ public class StringUtil {
         }
         return dest;
     }
+
+    public static boolean isMobileNO(String mobiles) {
+        Pattern p = Pattern
+                .compile("[1][358]\\d{9}");
+        Matcher m = p.matcher(mobiles);
+        System.out.println(m.matches() + "---");
+        return m.matches();
+    }
 }

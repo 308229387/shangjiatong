@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
@@ -108,14 +109,51 @@ public class SettingFeedbackActivityModel extends BaseModel{
     }
 
     public void setListener(){
+        et_content.addTextChangedListener(contentChangeListener);
         et_contact.addTextChangedListener(contactChangeListener);
         iv_contact_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                et_contact.setText("");
             }
         });
     }
+
+    private TextWatcher contentChangeListener = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            int length = s.length();
+            if(length > 0){
+                tb_feedback_title.removeAllActions();
+                tb_feedback_title.setActionTextColor(Color.RED);
+                tb_feedback_title.addAction(new TitleBar.TextAction("提交") {
+                    @Override
+                    public void performAction(View view) {
+                        gotoSubmit();
+                    }
+                });
+            }else{
+                tb_feedback_title.removeAllActions();
+                tb_feedback_title.setActionTextColor(Color.BLACK);
+                tb_feedback_title.addAction(new TitleBar.TextAction("提交") {
+                    @Override
+                    public void performAction(View view) {
+                        gotoSubmit();
+                    }
+                });
+            }
+        }
+    };
 
     private TextWatcher contactChangeListener =  new TextWatcher() {
         @Override
@@ -130,7 +168,20 @@ public class SettingFeedbackActivityModel extends BaseModel{
 
         @Override
         public void afterTextChanged(Editable s) {
+           int length = s.length();
+            if(length > 0){
+                iv_contact_delete.setVisibility(View.VISIBLE);
+            }else{
+                iv_contact_delete.setVisibility(View.GONE);
+            }
 
+            String phone = s.toString();
+
+            if(!TextUtils.isEmpty(phone) && !StringUtil.isMobileNO(phone)){
+                tv_contact_alert.setVisibility(View.VISIBLE);
+            }else{
+                tv_contact_alert.setVisibility(View.GONE);
+            }
         }
     };
 

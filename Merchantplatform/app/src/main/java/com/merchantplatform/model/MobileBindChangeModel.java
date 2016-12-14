@@ -9,11 +9,13 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.merchantplatform.R;
 import com.merchantplatform.activity.MobileBindChangeActivity;
 import com.ui.TitleBar;
 import com.utils.Constant;
+import com.utils.StringUtil;
 import com.utils.ToastUtils;
 import com.utils.UserUtils;
 
@@ -26,6 +28,7 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
 
     private TitleBar tb_Change_title;
     private EditText et_now_bind_mobile, et_now_validate_code, et_new_validate_mobile;
+    private TextView tv_new_mobile_alert;
     private Button btn_getCode, btn_submit;
 
     private String mobile;
@@ -44,6 +47,7 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
         et_now_validate_code = (EditText) context.findViewById(R.id.now_validate_code);
         et_new_validate_mobile = (EditText) context.findViewById(R.id.new_validate_mobile);
         btn_getCode = (Button) context.findViewById(R.id.btn_getCode);
+        tv_new_mobile_alert = (TextView) context.findViewById(R.id.tv_new_mobile_alert);
         btn_submit = (Button) context.findViewById(R.id.btn_submit);
     }
 
@@ -130,11 +134,14 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
 
         @Override
         public void afterTextChanged(Editable s) {
-            int length = s.length();
-            if(length == 11){
+            String phone = s.toString();
+
+            if(!TextUtils.isEmpty(phone) && !StringUtil.isMobileNO(phone)){
                 newPhoneSatisfy = true;
+                tv_new_mobile_alert.setVisibility(View.VISIBLE);
             }else{
                 newPhoneSatisfy = false;
+                tv_new_mobile_alert.setVisibility(View.GONE);
             }
             checkSubmitEnabled(validateCodeSatisfy,newPhoneSatisfy);
         }

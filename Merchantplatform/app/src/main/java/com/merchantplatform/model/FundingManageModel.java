@@ -59,7 +59,7 @@ public class FundingManageModel extends BaseModel {
         //设置左侧图标
         tb_funding_title.setLeftImageResource(R.mipmap.title_back);
         //设置标题
-        tb_funding_title.setTitle("资金管理");
+        tb_funding_title.setTitle("我的资金");
         //设置标题颜色
         tb_funding_title.setTitleColor(Color.BLACK);
 

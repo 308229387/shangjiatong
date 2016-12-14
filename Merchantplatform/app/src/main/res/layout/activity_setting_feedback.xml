@@ -73,7 +73,9 @@
             android:layout_marginLeft="15dip"
             android:background="@color/white"
             android:hint="@string/feedback_contact"
-            android:maxLines="1"/>
+            android:maxLines="1"
+            android:inputType="number"
+            android:maxLength="11"/>
 
         <ImageView
             android:id="@+id/iv_contact_delete"
@@ -82,7 +84,8 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dip"
-            android:background="@mipmap/iv_edit_delete"/>
+            android:background="@mipmap/iv_edit_delete"
+            android:visibility="gone"/>
 
         <View
             android:layout_width="match_parent"
@@ -101,6 +104,7 @@
         android:layout_marginLeft="15dip"
         android:text="输入有误，请输入正确手机号码"
         android:textSize="@dimen/common_text_size_12"
-        android:textColor="@color/red"/>
+        android:textColor="@color/red"
+        android:visibility="gone"/>
 
 </LinearLayout>

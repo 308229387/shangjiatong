@@ -10,8 +10,12 @@ import com.merchantplatform.activity.SettingActivity;
 import com.merchantplatform.activity.PersonalSettingActivity;
 import com.merchantplatform.activity.SettingFeedbackActivity;
 import com.merchantplatform.activity.SettingPushActivity;
+import com.ui.ActionSheet.NormalActionSheet;
 import com.ui.TitleBar;
 import com.utils.PageSwitchUtils;
+import com.utils.ToastUtils;
+
+import java.util.Arrays;
 
 /**
  * Created by 58 on 2016/12/8.
@@ -21,7 +25,9 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
 
     private SettingActivity context;
     private TitleBar tb_setting_title;
-    private RelativeLayout rl_setting_push,rl_setting_feedback,rl_setting_binding,rl_setting_about,rl_setting_exit;;
+    private RelativeLayout rl_setting_push,rl_setting_feedback,rl_setting_binding,rl_setting_about,rl_setting_exit;
+
+    private String[] otherLables = new String[]{"退出登录"};
 
     public SettingActivityModel(SettingActivity context){
         this.context = context;
@@ -81,9 +87,11 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
                 goToSettingAboutActivity();
                 break;
             case R.id.rl_setting_exit:
+                logout();
                 break;
         }
     }
+
 
     private void goToSettingPushActivity(){
         PageSwitchUtils.goToActivity(context,SettingPushActivity.class);
@@ -99,5 +107,18 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
 
     private void goToSettingAboutActivity(){
         PageSwitchUtils.goToActivity(context,AboutActivity.class);
+    }
+
+    private void logout() {
+        NormalActionSheet as = new NormalActionSheet(context);
+        as.builder().setTitle("是否确定退出登录").setItems(Arrays.asList(otherLables)).
+                setListener(new NormalActionSheet.OnNormalItemClickListener() {
+                    @Override
+                    public void onClick(String value) {
+                        if (value.equals("退出登录")) {
+                            ToastUtils.showToast("tuichudengl");
+                        }
+                    }
+                }).show();
     }
 }
