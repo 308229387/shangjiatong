@@ -8,6 +8,8 @@ import android.os.Process;
 import android.view.View;
 
 import com.android.gmacs.GmacsEventBusIndex;
+import com.android.gmacs.activity.GmacsChatActivity;
+import com.android.gmacs.activity.GmacsContactDetailInfoActivity;
 import com.android.gmacs.core.GmacsManager;
 import com.android.gmacs.dragback.ParallaxBackActivityHelper;
 import com.android.gmacs.view.GmacsDialog;
@@ -55,8 +57,8 @@ public class IMInitAppUtils {
             setEnvironment();
             setInfo();
             GmacsUiUtil.setAppMainClassName(GuideActivity.class.getName());
-            GmacsUiUtil.setChatClassName(HomepageActivity.class.getName());//liaotianxiangqing
-            GmacsUiUtil.setContactDetailInfoActivityClassName(WChatContactDetailInfoActivity.class.getName());//用户详情
+            GmacsUiUtil.setChatClassName(GmacsChatActivity.class.getName());//liaotianxiangqing
+            GmacsUiUtil.setContactDetailInfoActivityClassName(GmacsContactDetailInfoActivity.class.getName());//用户详情
 
             EmojiManager.getInstance().setEmojiPaser(FaceConversionUtil.getInstace());
             GifManager.getInstance().setGifParser(GifUtil.getInstance());
