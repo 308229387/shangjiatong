@@ -28,7 +28,7 @@ import java.util.ArrayList;
 /**
  * Created by SongYongmeng on 2016/11/24.
  */
-public class Fragment2Model extends BaseModel {
+public class CallMessageModel extends BaseModel {
     private CallMessageFragment context;
     private View view;
     private LinearLayout layout_call_head;
@@ -36,9 +36,8 @@ public class Fragment2Model extends BaseModel {
     private ViewPager mViewPager;
     private ArrayList<String> titles;
     private ArrayList<Fragment> fragments;
-    private static final long aMonthSeconds = 25920000000L;
 
-    public Fragment2Model(CallMessageFragment context) {
+    public CallMessageModel(CallMessageFragment context) {
         this.context = context;
     }
 

@@ -6,13 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.merchantplatform.model.Fragment2Model;
+import com.merchantplatform.model.CallMessageModel;
 
 /**
  * Created by SongYongmeng on 2016/11/24.
  */
 
-public class CallMessageFragment extends BaseFragment<Fragment2Model> {
+public class CallMessageFragment extends BaseFragment<CallMessageModel> {
 
     @Nullable
     @Override
@@ -43,7 +43,7 @@ public class CallMessageFragment extends BaseFragment<Fragment2Model> {
     }
 
     @Override
-    protected Fragment2Model createModel() {
-        return new Fragment2Model(this);
+    protected CallMessageModel createModel() {
+        return new CallMessageModel(this);
     }
 }
