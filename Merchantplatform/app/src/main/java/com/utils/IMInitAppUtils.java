@@ -133,7 +133,7 @@ public class IMInitAppUtils {
                 break;
             }
         }
-        String packageName = getPackageName();
+        String packageName = application.getPackageName();
         return processName.equals(packageName);
     }
 }
