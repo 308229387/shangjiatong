@@ -21,7 +21,7 @@ public class Urls {
     /**
      * im获取登陆token
      */
-    public static final String IM_TOKEN = "http://ppuswapapi.58.com:9875/swap/im";
+    public static final String IM_TOKEN = "http://10.9.192.190:9875/swap/im";
     /**
      * 400电话请求增量数据接口
      */
