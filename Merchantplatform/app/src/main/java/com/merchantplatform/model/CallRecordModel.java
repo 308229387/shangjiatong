@@ -1,12 +1,19 @@
 package com.merchantplatform.model;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.CallLog.Calls;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.callback.DialogCallback;
 import com.db.dao.CallDetail;
@@ -17,8 +24,11 @@ import com.db.helper.CallDetailDaoOperate;
 import com.db.helper.CallListDaoOperate;
 import com.merchantplatform.R;
 import com.merchantplatform.bean.CallDetailResponse;
+import com.merchantplatform.bean.UserCallRecordBean;
 import com.okhttputils.OkHttpUtils;
+import com.orhanobut.logger.Logger;
 import com.utils.DateUtils;
+import com.utils.PermissionUtils;
 import com.utils.Urls;
 import com.utils.UserUtils;
 import com.xrecyclerview.BaseRecyclerViewAdapter;
@@ -29,7 +39,9 @@ import com.xrecyclerview.XRecyclerView;
 
 import org.greenrobot.greendao.query.WhereCondition;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import okhttp3.Request;
 import okhttp3.Response;
@@ -42,7 +54,7 @@ public class CallRecordModel extends BaseModel {
 
     private CallRecordFragment context;
     private View view;
-    private XRecyclerView xrv_callrecord;
+    private XRecyclerView mXRecyclerView;
     private View emptyView;
     private CallRecordAdapter mAdapter;
     private ArrayList<CallList> listData;
@@ -58,18 +70,18 @@ public class CallRecordModel extends BaseModel {
 
     public void initView(LayoutInflater inflater, ViewGroup container) {
         view = inflater.inflate(R.layout.fragment_call_record, container, false);
-        xrv_callrecord = (XRecyclerView) view.findViewById(R.id.xrv_callrecord);
+        mXRecyclerView = (XRecyclerView) view.findViewById(R.id.xrv_callrecord);
         emptyView = view.findViewById(R.id.layout_call_empty);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context.getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        xrv_callrecord.setLayoutManager(layoutManager);
-        xrv_callrecord.setRefreshProgressStyle(ProgressStyle.BallPulse);
-        xrv_callrecord.setLoadingMoreProgressStyle(ProgressStyle.SquareSpin);
-        xrv_callrecord.setEmptyView(emptyView);
+        mXRecyclerView.setLayoutManager(layoutManager);
+        mXRecyclerView.setRefreshProgressStyle(ProgressStyle.BallPulse);
+        mXRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.SquareSpin);
+        mXRecyclerView.setEmptyView(emptyView);
     }
 
     public void setListener() {
-        xrv_callrecord.setLoadingListener(new RecyclerViewLoadingListener());
+        mXRecyclerView.setLoadingListener(new RecyclerViewLoadingListener());
         emptyView.setOnClickListener(new OnClickEmptyViewListener());
     }
 
@@ -85,8 +97,8 @@ public class CallRecordModel extends BaseModel {
     private void initData() {
         listData = new ArrayList<>();
         mAdapter = new CallRecordAdapter(context.getContext(), listData, tabIndex);
-        xrv_callrecord.setAdapter(mAdapter);
-        xrv_callrecord.refresh();//刚进来的时候可以直接刷新
+        mXRecyclerView.setAdapter(mAdapter);
+        mXRecyclerView.refresh();
     }
 
     private void setAdapterListener() {
@@ -102,16 +114,12 @@ public class CallRecordModel extends BaseModel {
         @Override
         public void onRefresh() {
             listData.clear();
-            listData.addAll(getRefreshData());
-            mAdapter.notifyDataSetChanged();
-            xrv_callrecord.refreshComplete();
+            getNewData();
         }
 
         @Override
         public void onLoadMore() {
-            listData.addAll(loadMoreData());
-            mAdapter.notifyDataSetChanged();
-            xrv_callrecord.loadMoreComplete();
+            loadMoreData();
         }
     }
 
@@ -119,30 +127,38 @@ public class CallRecordModel extends BaseModel {
 
         @Override
         public void onClick(View v) {
-            xrv_callrecord.refresh();
-        }
-    }
-
-    private ArrayList<CallList> getRefreshData() {
-        getNewData();
-        if (tabIndex == 0) {
-            WhereCondition condition = CallListDao.Properties.CallResult.eq("20");
-            return CallListDaoOperate.queryLimitDataByCondition(context.getContext(), 20, condition);
-        } else {
-            return CallListDaoOperate.queryLimitData(context.getContext(), 20);
+            mXRecyclerView.refresh();
         }
     }
 
     private void getNewData() {
         long maxBackTime = CallDetailDaoOperate.queryMaxBackTime(context.getContext());
         if (maxBackTime == 0) {
-            getNetResponseData("0", "1");
+            getRefreshResponseData("0");
         } else {
-            getNetResponseData(maxBackTime + "", "1");
+            getRefreshResponseData(maxBackTime + "");
         }
     }
 
-    private ArrayList<CallList> loadMoreData() {
+    private void loadMoreData() {
+        if (!canGetMoreListDataFromDB()) {
+            getLoadMoreData();
+        }
+    }
+
+    private boolean canGetMoreListDataFromDB() {
+        ArrayList<CallList> moreList = getMoreListDataFromDB();
+        if (moreList != null && moreList.size() > 0) {
+            listData.addAll(moreList);
+            mAdapter.notifyDataSetChanged();
+            mXRecyclerView.loadMoreComplete();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private ArrayList<CallList> getMoreListDataFromDB() {
         ArrayList<CallList> moreList;
         if (tabIndex == 0) {
             WhereCondition condition = CallListDao.Properties.CallResult.eq("20");
@@ -150,23 +166,44 @@ public class CallRecordModel extends BaseModel {
         } else {
             moreList = CallListDaoOperate.queryOffsetLimitData(context.getContext(), listData.size(), 20);
         }
-        if (moreList != null && moreList.size() > 0) {
-            return moreList;
-        } else {
-            getLoadMoreData();
-            return loadMoreData();
-        }
+        return moreList;
     }
 
     private void getLoadMoreData() {
         long minBackTime = CallDetailDaoOperate.queryMinBackTime(context.getContext());
-        getNetResponseData(minBackTime + "", "0");
+        getLoadMoreResponseData(minBackTime + "");
     }
 
-    private void getNetResponseData(String backTime, String refreshType) {
+    private void getLoadMoreResponseData(String backTime) {
         OkHttpUtils.get(Urls.PHONE_INCREASE_DATA)
                 .params("backTime", backTime)
-                .params("refreshType", refreshType)
+                .params("refreshType", "0")
+                .execute(new getPhoneLoadMoreDataResponse(context.getActivity()));
+    }
+
+    private class getPhoneLoadMoreDataResponse extends DialogCallback<CallDetailResponse> {
+
+        public getPhoneLoadMoreDataResponse(Activity activity) {
+            super(activity);
+        }
+
+        @Override
+        public void onResponse(boolean isFromCache, CallDetailResponse callDetailResponse, Request request, @Nullable Response response) {
+            if (callDetailResponse.getData() == null || callDetailResponse.getData().size() == 0) {
+                mXRecyclerView.setNoMore(true);
+            } else {
+                saveNewDataToDB(callDetailResponse);
+                listData.addAll(getMoreListDataFromDB());
+                mAdapter.notifyDataSetChanged();
+                mXRecyclerView.loadMoreComplete();
+            }
+        }
+    }
+
+    private void getRefreshResponseData(String backTime) {
+        OkHttpUtils.get(Urls.PHONE_INCREASE_DATA)
+                .params("backTime", backTime)
+                .params("refreshType", "1")
                 .execute(new getPhoneIncreaseDataResponse(context.getActivity()));
     }
 
@@ -178,10 +215,26 @@ public class CallRecordModel extends BaseModel {
 
         @Override
         public void onResponse(boolean isFromCache, CallDetailResponse callDetailResponse, Request request, @Nullable Response response) {
-            for (CallDetailResponse.bean bean : callDetailResponse.getData()) {
-                saveNewDataToCallList(bean);
-                saveNewDataToCallDetail(bean);
-            }
+            saveNewDataToDB(callDetailResponse);
+            listData.addAll(getNewListDataFromDB());
+            mAdapter.notifyDataSetChanged();
+            mXRecyclerView.refreshComplete();
+        }
+    }
+
+    private ArrayList<CallList> getNewListDataFromDB() {
+        if (tabIndex == 0) {
+            WhereCondition condition = CallListDao.Properties.CallResult.eq("20");
+            return CallListDaoOperate.queryLimitDataByCondition(context.getContext(), 20, condition);
+        } else {
+            return CallListDaoOperate.queryLimitData(context.getContext(), 20);
+        }
+    }
+
+    private void saveNewDataToDB(CallDetailResponse callDetailResponse) {
+        for (CallDetailResponse.bean bean : callDetailResponse.getData()) {
+            saveNewDataToCallList(bean);
+            saveNewDataToCallDetail(bean);
         }
     }
 
@@ -252,7 +305,7 @@ public class CallRecordModel extends BaseModel {
         CallList callList = new CallList();
         callList.setUserId(UserUtils.getUserId());
         callList.setPhone(bean.getPhone());
-        callList.setPhoneCount(0);
+        callList.setPhoneCount(1);
         callList.setCallResult(bean.getCallResult());
         callList.setType(bean.getType());
         callList.setLocal(bean.getLocal());
@@ -280,7 +333,55 @@ public class CallRecordModel extends BaseModel {
 
         @Override
         public void onItemClick(View view, int position) {
-            Toast.makeText(context.getContext(), "position" + position, Toast.LENGTH_SHORT).show();
+            makeACall(position);
+        }
+    }
+
+    private void makeACall(final int position) {
+        if (Build.VERSION.SDK_INT >= 23) {
+            PermissionUtils.requestPermission(context.getActivity(), PermissionUtils.CODE_READ_CALL_LOG, new PermissionUtils.PermissionGrant() {
+                @Override
+                public void onPermissionGranted(int requestCode) {
+                    if (requestCode == PermissionUtils.CODE_READ_CALL_LOG) {
+                        invokeCall(position);
+                    }
+                }
+            });
+        } else {
+            if (ActivityCompat.checkSelfPermission(context.getContext(), Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            invokeCall(position);
+        }
+    }
+
+    private void invokeCall(int position) {
+        String phoneNum = listData.get(position).getPhone();
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + phoneNum));
+        context.startActivity(intent);
+        getUserCallLog(listData.get(position).getPhone());
+    }
+
+    private void getUserCallLog(String phoneNum) {
+        if (ActivityCompat.checkSelfPermission(context.getContext(), Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Cursor cursor = context.getContext().getContentResolver().query(Calls.CONTENT_URI, new String[]{Calls.NUMBER, Calls.DATE, Calls.DURATION}, null, null, Calls.DEFAULT_SORT_ORDER);
+        if (cursor != null && cursor.moveToFirst()) {
+            int i = 0;
+            do {
+                String numberInCursor = cursor.getString(cursor.getColumnIndex(Calls.NUMBER));
+                if (numberInCursor.equals(phoneNum)) {
+                    UserCallRecordBean userCallRecordBean = new UserCallRecordBean();
+                    long beginTime = Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow(Calls.DATE)));
+                    long duration = Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow(Calls.DURATION))) * 1000;
+                    userCallRecordBean.setRecordState(duration == 0 ? 20 : 10);
+                    userCallRecordBean.setBeginTime(beginTime);
+                    userCallRecordBean.setEndTime(beginTime + duration);
+                    break;
+                }
+            } while (i++ < 2 && cursor.moveToNext());
+            cursor.close();
         }
     }
 }

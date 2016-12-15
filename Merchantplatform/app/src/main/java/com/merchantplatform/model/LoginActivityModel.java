@@ -1,9 +1,11 @@
 package com.merchantplatform.model;
 
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.merchantplatform.R;
+import com.merchantplatform.activity.HomepageActivity;
 import com.merchantplatform.activity.LoginActivity;
 import com.utils.IMLoginUtils;
 import com.utils.UserUtils;
@@ -28,9 +30,9 @@ public class LoginActivityModel extends BaseModel {
         callback = new SimpleLoginCallback() {
             @Override
             public void onLogin58Finished(boolean b, String s, @Nullable LoginSDKBean loginSDKBean) {
-                Toast.makeText(context, "onLogin58Finished", Toast.LENGTH_LONG).show();
-                UserUtils.setUserId(context,loginSDKBean.getUserId());
-                new IMLoginUtils(context);
+                UserUtils.setUserId(context, loginSDKBean.getUserId());
+                context.startActivity(new Intent(context, HomepageActivity.class));
+//                new IMLoginUtils(context);
             }
         };
     }

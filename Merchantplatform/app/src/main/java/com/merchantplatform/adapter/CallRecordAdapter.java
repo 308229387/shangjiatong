@@ -34,7 +34,7 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
                 .setTextColor(R.id.tv_phoneNum, callList.getCallResult() == 10 ? context.getResources().getColor(R.color.item_call_phone) : context.getResources().getColor(R.color.item_call_delete))
                 .setText(R.id.tv_call_count, "(" + getItem(position).getPhoneCount() + ")")
                 .setTextColor(R.id.tv_call_count, callList.getCallResult() == 10 ? context.getResources().getColor(R.color.item_call_phone) : context.getResources().getColor(R.color.item_call_delete))
-                .setVisible(R.id.tv_call_count, callList.getPhoneCount() >= 1)
+                .setVisible(R.id.tv_call_count, callList.getPhoneCount() > 1)
                 .setVisible(R.id.iv_phoneState, callList.getCallResult() == 10)
                 .setImageResource(R.id.iv_phoneState, callList.getType() == 1 ? R.mipmap.item_call_in : R.mipmap.item_call_out)
                 .setText(R.id.tv_phone_city, callList.getLocal())

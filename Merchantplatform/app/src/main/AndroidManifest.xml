@@ -19,6 +19,8 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!--读系统日志权限-->
     <uses-permission android:name="android.permission.READ_LOGS" />
+    <!--读取通话记录-->
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
 
     <!--调用者的包名申请权限必须-->
     <permission
@@ -29,8 +31,7 @@
     <uses-permission android:name="getui.permission.GetuiService.com.merchantplatform" />
     <permission
         android:name="getui.permission.GetuiService.com.merchantplatform"
-        android:protectionLevel="normal" >
-    </permission>
+        android:protectionLevel="normal" />
 
     <application
         android:name=".application.HyApplication"
@@ -44,6 +45,14 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter>
+                <data android:scheme="growing.c94ea84d8a44973f" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
 
@@ -129,6 +138,7 @@
         <meta-data
             android:name="PUSH_APPSECRET"
             android:value="p8WERCFG2o54ekCbK1QKLA" />
+
         <provider
             android:name="com.igexin.download.DownloadProvider"
             android:authorities="downloads.com.merchantplatform"
@@ -136,7 +146,7 @@
             android:process=":pushservice" />
         <receiver
             android:name="com.wuba.wbpush.receiver.GeTuiReceiver"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.igexin.sdk.action.Ql3Q1vsnTL6910GpSQf2p4" />
             </intent-filter>
