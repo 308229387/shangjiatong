@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.telephony.TelephonyManager;
 
 import java.util.List;
 
@@ -101,5 +102,17 @@ public class AppInfoUtils {
     public static String getVersionName(Context context) throws PackageManager.NameNotFoundException {
         String packageName = context.getPackageName();
         return "" + (context.getPackageManager().getPackageInfo(packageName, 0).versionName);
+    }
+
+    /**
+     * 获取设备号
+     * @param context
+     * @return
+     */
+    public static String getIMEI(Context context){
+        String IMEINumber = "";
+        TelephonyManager TelephonyMgr = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+        IMEINumber = TelephonyMgr.getDeviceId();
+        return IMEINumber == null ? "-" :IMEINumber;
     }
 }

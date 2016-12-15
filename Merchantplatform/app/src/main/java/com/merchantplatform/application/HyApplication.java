@@ -29,6 +29,8 @@ public class HyApplication extends MultiDexApplication {
     private static HyApplication application;
     private List<Activity> activityList = new LinkedList<>();
 
+    private boolean isStartDownService; // 是否正在进行版本更新
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -107,6 +109,14 @@ public class HyApplication extends MultiDexApplication {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(application);
+    }
+
+    public boolean isStartDownService() {
+        return isStartDownService;
+    }
+
+    public void setStartDownService(boolean isStartDownService) {
+        this.isStartDownService = isStartDownService;
     }
 
 }
