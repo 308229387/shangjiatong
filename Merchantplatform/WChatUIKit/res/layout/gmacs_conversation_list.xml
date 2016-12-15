@@ -3,26 +3,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#fff">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/title_back" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="6.5dp"
+            android:layout_centerHorizontal="true"
+            android:textSize="18dp"
+            android:textColor="#030303"
+            android:text="最新消息"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/customer_service" />
+
+
+    </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/ll_conversation_hiddenview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"/>
+        android:layout_below="@+id/title_bar"
+        android:orientation="vertical" />
 
     <ListView
         android:id="@+id/lv_conversation_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/ll_conversation_hiddenview"
-        android:listSelector="@color/transparent"
         android:divider="@null"
-        android:scrollbars="none"/>
+        android:listSelector="@color/transparent"
+        android:scrollbars="none" />
 
     <LinearLayout
         android:id="@+id/ll_conversation_list_empty_prompt"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/lv_conversation_list"
-        android:orientation="vertical"/>
+        android:orientation="vertical" />
 
 </RelativeLayout>

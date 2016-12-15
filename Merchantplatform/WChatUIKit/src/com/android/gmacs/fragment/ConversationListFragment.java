@@ -56,6 +56,7 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
     protected ImageView mConnectionStatusImageView;
 
     protected ArrayList<Talk> mTalks = new ArrayList<>();
+    private RelativeLayout titleBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -89,6 +90,7 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
 
     @Override
     protected void initView() {
+        titleBar = (RelativeLayout) getView().findViewById(R.id.title_bar);
         mListView = (ListView) getView().findViewById(R.id.lv_conversation_list);
         mTalkListEmptyPromptView = (LinearLayout) getView().findViewById(R.id.ll_conversation_list_empty_prompt);
         mHiddenView = (LinearLayout) getView().findViewById(R.id.ll_conversation_hiddenview);
@@ -113,6 +115,7 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
         }
         mListView.addHeaderView(mHeaderView);
     }
+
 
     @Override
     protected void initData() {
