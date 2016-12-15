@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
-apply plugin: 'com.growingio.android'
 
 def outputPath = "../jenkinspackage/"
 
@@ -26,8 +25,6 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true //支持多dex
-        resValue("string", "growingio_project_id", "8f94949c9d9a0ba9")
-        resValue("string", "growingio_url_scheme", "growing.c94ea84d8a44973f")
     }
 
     signingConfigs {
@@ -129,5 +126,4 @@ dependencies {
     debugCompile 'com.wuba.wuxian.sdk:login:2.3.9-NOLEGO-debug-SNAPSHOT-2'
     releaseCompile 'com.wuba.wuxian.sdk:login:2.3.9-NOLEGO'
     compile 'com.wuba.wchat:WChatLib-release:1.2.1.48'
-    compile 'com.growingio.android:vds-android-agent:0.9.100@aar'
 }

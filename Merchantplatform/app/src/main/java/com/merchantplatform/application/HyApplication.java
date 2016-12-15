@@ -10,7 +10,6 @@ import com.merchantplatform.BuildConfig;
 import com.okhttputils.OkHttpUtils;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.utils.Constant;
-import com.utils.GrowingIoInitUtils;
 import com.utils.IMInitAppUtils;
 import com.utils.LoginRegisterUtils;
 import com.utils.WPushInitUtils;
@@ -43,7 +42,6 @@ public class HyApplication extends MultiDexApplication {
         initOkHttp();
         initLogin();
         initIM();
-        initGrowingIo();
         initBugly();
         initStetho();
     }
@@ -66,10 +64,6 @@ public class HyApplication extends MultiDexApplication {
 
     public void initIM() {
         new IMInitAppUtils(application);
-    }
-
-    private void initGrowingIo() {
-        new GrowingIoInitUtils(application);
     }
 
     private void initBugly() {
