@@ -1,8 +1,6 @@
 package com.push.bean;
 
-/**
- * Created by linyueyang on 15/9/30.
- */
+
 public class PushSqlBean extends PushBean {
     private int id; // 存入本地数据库时需要
     private String userId;
