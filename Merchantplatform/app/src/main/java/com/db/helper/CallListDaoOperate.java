@@ -3,6 +3,7 @@ package com.db.helper;
 import android.content.Context;
 
 import com.db.dao.CallList;
+import com.db.dao.gen.CallListDao;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 import org.greenrobot.greendao.query.WhereCondition;
@@ -70,15 +71,31 @@ public class CallListDaoOperate {
      * @desc 查询限制条数的数据
      **/
     public static ArrayList<CallList> queryLimitData(Context context, int limit) {
-        QueryBuilder<CallList> builder = DbManager.getDaoSession(context).getCallListDao().queryBuilder().limit(limit);
-        return (ArrayList<CallList>) builder.list();
+        QueryBuilder<CallList> builder = DbManager.getDaoSession(context).getCallListDao().queryBuilder();
+        return (ArrayList<CallList>) builder.orderDesc(CallListDao.Properties.CallTime).limit(limit).list();
     }
 
     /**
-     * @desc 按条件返回限制条数结果集
+     * @desc 查询限制条数的数据（带偏移量）
+     **/
+    public static ArrayList<CallList> queryOffsetLimitData(Context context, int offset, int limit) {
+        QueryBuilder<CallList> builder = DbManager.getDaoSession(context).getCallListDao().queryBuilder();
+        return (ArrayList<CallList>) builder.orderDesc(CallListDao.Properties.CallTime).offset(offset).limit(limit).list();
+    }
+
+    /**
+     * @desc 按条件返回最新的限制条数结果集
      **/
     public static ArrayList<CallList> queryLimitDataByCondition(Context context, int limit, WhereCondition whereCondition, WhereCondition... condMore) {
         QueryBuilder<CallList> builder = DbManager.getDaoSession(context).getCallListDao().queryBuilder();
-        return (ArrayList<CallList>) builder.where(whereCondition, condMore).limit(limit).list();
+        return (ArrayList<CallList>) builder.where(whereCondition, condMore).orderDesc(CallListDao.Properties.CallTime).limit(limit).list();
+    }
+
+    /**
+     * @desc 按条件返回最新的限制条数结果集（带偏移量）
+     **/
+    public static ArrayList<CallList> queryOffsetLimitDataByCondition(Context context, int offset, int limit, WhereCondition whereCondition, WhereCondition... condMore) {
+        QueryBuilder<CallList> builder = DbManager.getDaoSession(context).getCallListDao().queryBuilder();
+        return (ArrayList<CallList>) builder.where(whereCondition, condMore).orderDesc(CallListDao.Properties.CallTime).offset(offset).limit(limit).list();
     }
 }

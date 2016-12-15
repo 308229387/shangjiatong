@@ -1,7 +1,6 @@
 package com.merchantplatform.model;
 
 import android.app.Activity;
-import android.content.res.AssetManager;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -16,12 +15,11 @@ import com.db.dao.gen.CallDetailDao;
 import com.db.dao.gen.CallListDao;
 import com.db.helper.CallDetailDaoOperate;
 import com.db.helper.CallListDaoOperate;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.merchantplatform.R;
-import com.merchantplatform.application.HyApplication;
 import com.merchantplatform.bean.CallDetailResponse;
+import com.okhttputils.OkHttpUtils;
 import com.utils.DateUtils;
+import com.utils.Urls;
 import com.utils.UserUtils;
 import com.xrecyclerview.BaseRecyclerViewAdapter;
 import com.merchantplatform.adapter.CallRecordAdapter;
@@ -30,14 +28,8 @@ import com.xrecyclerview.ProgressStyle;
 import com.xrecyclerview.XRecyclerView;
 
 import org.greenrobot.greendao.query.WhereCondition;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.Request;
 import okhttp3.Response;
@@ -110,15 +102,16 @@ public class CallRecordModel extends BaseModel {
         @Override
         public void onRefresh() {
             listData.clear();
-            getRefreshData();
-            listData.addAll(refreshNewData());
+            listData.addAll(getRefreshData());
             mAdapter.notifyDataSetChanged();
             xrv_callrecord.refreshComplete();
         }
 
         @Override
         public void onLoadMore() {
-//            getLoadMoreData();
+            listData.addAll(loadMoreData());
+            mAdapter.notifyDataSetChanged();
+            xrv_callrecord.loadMoreComplete();
         }
     }
 
@@ -130,12 +123,8 @@ public class CallRecordModel extends BaseModel {
         }
     }
 
-    private void getRefreshData() {
-        long maxBackTime = CallDetailDaoOperate.queryMaxBackTime(context.getContext());
-        getNetResponseData(maxBackTime + "", "1");
-    }
-
-    private ArrayList<CallList> refreshNewData() {
+    private ArrayList<CallList> getRefreshData() {
+        getNewData();
         if (tabIndex == 0) {
             WhereCondition condition = CallListDao.Properties.CallResult.eq("20");
             return CallListDaoOperate.queryLimitDataByCondition(context.getContext(), 20, condition);
@@ -144,16 +133,41 @@ public class CallRecordModel extends BaseModel {
         }
     }
 
-    private void getLoadMoreData() {
+    private void getNewData() {
+        long maxBackTime = CallDetailDaoOperate.queryMaxBackTime(context.getContext());
+        if (maxBackTime == 0) {
+            getNetResponseData("0", "1");
+        } else {
+            getNetResponseData(maxBackTime + "", "1");
+        }
+    }
 
+    private ArrayList<CallList> loadMoreData() {
+        ArrayList<CallList> moreList;
+        if (tabIndex == 0) {
+            WhereCondition condition = CallListDao.Properties.CallResult.eq("20");
+            moreList = CallListDaoOperate.queryOffsetLimitDataByCondition(context.getContext(), listData.size(), 20, condition);
+        } else {
+            moreList = CallListDaoOperate.queryOffsetLimitData(context.getContext(), listData.size(), 20);
+        }
+        if (moreList != null && moreList.size() > 0) {
+            return moreList;
+        } else {
+            getLoadMoreData();
+            return loadMoreData();
+        }
+    }
+
+    private void getLoadMoreData() {
+        long minBackTime = CallDetailDaoOperate.queryMinBackTime(context.getContext());
+        getNetResponseData(minBackTime + "", "0");
     }
 
     private void getNetResponseData(String backTime, String refreshType) {
-        /*OkHttpUtils.get(Urls.PHONE_INCREASE_DATA)
+        OkHttpUtils.get(Urls.PHONE_INCREASE_DATA)
                 .params("backTime", backTime)
                 .params("refreshType", refreshType)
-                .execute(new getPhoneIncreaseDataResponse(context.getActivity()));*/
-        onResponse();
+                .execute(new getPhoneIncreaseDataResponse(context.getActivity()));
     }
 
     private class getPhoneIncreaseDataResponse extends DialogCallback<CallDetailResponse> {
@@ -164,66 +178,11 @@ public class CallRecordModel extends BaseModel {
 
         @Override
         public void onResponse(boolean isFromCache, CallDetailResponse callDetailResponse, Request request, @Nullable Response response) {
-            CallRecordModel.this.onResponse();
-        }
-    }
-
-    private void onResponse() {
-        String jsonString = getJsonFromAssets();
-        List<CallDetailResponse.bean> newData = null;
-        try {
-            JSONObject jsonObject = new JSONObject(jsonString);
-            JSONObject jsonResult = jsonObject.optJSONObject("result");
-            newData = jsonToObjectList(jsonResult.optString("data"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        for (CallDetailResponse.bean bean : newData) {
-            saveNewDataToCallList(bean);
-            saveNewDataToCallDetail(bean);
-        }
-    }
-
-    private String getJsonFromAssets() {
-        StringBuilder stringBuilder = new StringBuilder();
-        AssetManager assetManager = HyApplication.getApplication().getAssets();
-        BufferedReader bf;
-        try {
-            bf = new BufferedReader(new InputStreamReader(assetManager.open("json.json")));
-            String line;
-            while ((line = bf.readLine()) != null) {
-                stringBuilder.append(line);
+            for (CallDetailResponse.bean bean : callDetailResponse.getData()) {
+                saveNewDataToCallList(bean);
+                saveNewDataToCallDetail(bean);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-        return stringBuilder.toString();
-    }
-
-    public List<CallDetailResponse.bean> jsonToObjectList(String json) {
-        try {
-            return new Gson().fromJson(json, new TypeToken<List<CallDetailResponse.bean>>() {
-            }.getType());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private void saveNewDataToCallDetail(CallDetailResponse.bean bean) {
-        CallDetail callDetail = new CallDetail();
-        callDetail.setId(bean.getId());
-        callDetail.setUserId(UserUtils.getUserId());
-        callDetail.setPhone(bean.getPhone());
-        callDetail.setLocal(bean.getLocal());
-        callDetail.setCate(bean.getCate());
-        callDetail.setCallTime(DateUtils.formatMillisToDateTime(bean.getCallTime()));
-        callDetail.setBackTime(bean.getBackTime());
-        callDetail.setEntryTime(bean.getEntryTime());
-        callDetail.setCallResult(bean.getCallResult());
-        callDetail.setType(bean.getType());
-        CallDetailDaoOperate.insertOrReplace(context.getContext(), callDetail);
     }
 
     private void saveNewDataToCallList(CallDetailResponse.bean bean) {
@@ -300,6 +259,21 @@ public class CallRecordModel extends BaseModel {
         callList.setCate(bean.getCate());
         callList.setCallTime(DateUtils.formatMillisToDateTime(bean.getCallTime()));
         CallListDaoOperate.insertOrReplace(context.getContext(), callList);
+    }
+
+    private void saveNewDataToCallDetail(CallDetailResponse.bean bean) {
+        CallDetail callDetail = new CallDetail();
+        callDetail.setId(bean.getId());
+        callDetail.setUserId(UserUtils.getUserId());
+        callDetail.setPhone(bean.getPhone());
+        callDetail.setLocal(bean.getLocal());
+        callDetail.setCate(bean.getCate());
+        callDetail.setCallTime(DateUtils.formatMillisToDateTime(bean.getCallTime()));
+        callDetail.setBackTime(bean.getBackTime());
+        callDetail.setEntryTime(bean.getEntryTime());
+        callDetail.setCallResult(bean.getCallResult());
+        callDetail.setType(bean.getType());
+        CallDetailDaoOperate.insertOrReplace(context.getContext(), callDetail);
     }
 
     private class OnCallItemClickListener implements BaseRecyclerViewAdapter.OnItemClickListener {

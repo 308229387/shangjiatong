@@ -72,8 +72,8 @@ public class CallDetailDaoOperate {
      * @desc 查询限制条数的数据
      **/
     public static ArrayList<CallDetail> queryLimitData(Context context, int limit) {
-        QueryBuilder<CallDetail> builder = DbManager.getDaoSession(context).getCallDetailDao().queryBuilder().limit(limit);
-        return (ArrayList<CallDetail>) builder.list();
+        QueryBuilder<CallDetail> builder = DbManager.getDaoSession(context).getCallDetailDao().queryBuilder();
+        return (ArrayList<CallDetail>) builder.limit(limit).list();
     }
 
     /**
