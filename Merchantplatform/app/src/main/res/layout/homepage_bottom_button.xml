@@ -5,32 +5,45 @@
     android:gravity="center"
     android:orientation="vertical">
 
-        <RelativeLayout
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/tab_drawable"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:padding="5dp">
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="3dp"
+             />
 
-            <TextView
-                android:id="@+id/tab_menu_setting"
-                style="@style/tab_menu_text"
-                android:drawableTop="@drawable/tab_menu_setting"
-                android:text="@string/tab_menu_alert" />
+        <TextView
+            android:id="@+id/tab_menu_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textSize="12sp"
+            android:layout_below="@id/tab_drawable"
+            android:layout_centerHorizontal="true"
+            android:text="@string/tab_menu_alert" />
 
-            <TextView
-                android:id="@+id/tab_menu_red_num"
-                style="@style/tab_menu_bgnum"
-                android:layout_toRightOf="@+id/tab_menu_setting"
-                android:text="99+"
-                />
 
-            <ImageView
-                android:id="@+id/tab_menu_red_hot"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:layout_marginLeft="-5dp"
-                android:layout_toRightOf="@id/tab_menu_setting"
-                android:visibility="gone"
-                android:src="@mipmap/partner_red" />
+        <TextView
+            android:id="@+id/tab_menu_red_num"
+            android:visibility="gone"
+            style="@style/tab_menu_bgnum"
+            android:layout_toRightOf="@id/tab_drawable"
+            android:text="99+" />
 
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/tab_menu_red_hot"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginLeft="-5dp"
+            android:layout_toRightOf="@id/tab_drawable"
+            android:src="@mipmap/partner_red"
+            android:visibility="gone" />
+
+    </RelativeLayout>
 </LinearLayout>

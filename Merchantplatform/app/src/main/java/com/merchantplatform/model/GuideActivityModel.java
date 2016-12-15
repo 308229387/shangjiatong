@@ -42,7 +42,7 @@ public class GuideActivityModel extends BaseModel {
         text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, LoginActivity.class));
+                context.startActivity(new Intent(context, HomepageActivity.class));
             }
         });
 

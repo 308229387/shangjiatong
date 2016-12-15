@@ -8,40 +8,40 @@
         android:id="@+id/main_fragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
-    </FrameLayout>
+        android:layout_weight="1"></FrameLayout>
 
-    <LinearLayout
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#c8c8c8" />
+
+    <RelativeLayout
         android:id="@+id/ly_tab_menu"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@color/bg_white"
-        android:orientation="horizontal">
+        android:background="@color/bg_white">
 
         <com.ui.HomepageBottomButton
             android:id="@+id/homepage_bottom_button1"
-            android:layout_width="0dp"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"></com.ui.HomepageBottomButton>
+
+            android:layout_marginLeft="35dp"></com.ui.HomepageBottomButton>
 
         <com.ui.HomepageBottomButton
             android:id="@+id/homepage_bottom_button2"
-            android:layout_width="0dp"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"></com.ui.HomepageBottomButton>
+            android:layout_centerHorizontal="true"></com.ui.HomepageBottomButton>
 
-        <com.ui.HomepageBottomButton
-            android:id="@+id/homepage_bottom_button3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"></com.ui.HomepageBottomButton>
 
         <com.ui.HomepageBottomButton
             android:id="@+id/homepage_bottom_button4"
-            android:layout_width="0dp"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"></com.ui.HomepageBottomButton>
-    </LinearLayout>
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="35dp"></com.ui.HomepageBottomButton>
+    </RelativeLayout>
 
 
 </LinearLayout>

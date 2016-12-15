@@ -20,7 +20,7 @@ import com.ui.HomepageBottomButton;
 
 public class HomepageModel extends BaseModel implements View.OnClickListener {
     private HomepageActivity context;
-    private HomepageBottomButton bottomButton1, bottomButton2, bottomButton3, bottomButton4;
+    private HomepageBottomButton bottomButton1, bottomButton2, bottomButton4;
     private BaseFragment fragment1, fragment2, fragment3, fragment4;
     private ConversationListFragment conversationListFragment;
     private Fragment mFragment;
@@ -32,15 +32,25 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
     public void init() {
         bottomButton1 = (HomepageBottomButton) context.findViewById(R.id.homepage_bottom_button1);
         bottomButton2 = (HomepageBottomButton) context.findViewById(R.id.homepage_bottom_button2);
-        bottomButton3 = (HomepageBottomButton) context.findViewById(R.id.homepage_bottom_button3);
         bottomButton4 = (HomepageBottomButton) context.findViewById(R.id.homepage_bottom_button4);
+        setListener();
+        setInfo();
     }
 
-    public void setListener() {
+    private void setListener() {
         bottomButton1.setOnClickListener(this);
         bottomButton2.setOnClickListener(this);
-        bottomButton3.setOnClickListener(this);
         bottomButton4.setOnClickListener(this);
+    }
+
+    public void setInfo() {
+        bottomButton1.setSelectedState();
+        bottomButton1.setTextInfo("消息");
+        bottomButton2.setTextInfo("电话");
+        bottomButton4.setTextInfo("我");
+        bottomButton1.setDrawableInfo(R.drawable.tab_menu_setting);
+        bottomButton2.setDrawableInfo(R.drawable.tab_menu_call);
+        bottomButton4.setDrawableInfo(R.drawable.tab_menu_mine);
     }
 
     private void selectThis(HomepageBottomButton v) {
@@ -53,7 +63,6 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
     private void registerState() {
         bottomButton1.registerState();
         bottomButton2.registerState();
-        bottomButton3.registerState();
         bottomButton4.registerState();
     }
 
@@ -98,14 +107,9 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.homepage_bottom_button1:
                 dealWithClick(bottomButton1, conversationListFragment);
-                bottomButton1.setNum(20);
                 break;
             case R.id.homepage_bottom_button2:
                 dealWithClick(bottomButton2, fragment2);
-                bottomButton2.setShowRedHot();
-                break;
-            case R.id.homepage_bottom_button3:
-                dealWithClick(bottomButton3, fragment3);
                 break;
             case R.id.homepage_bottom_button4:
                 dealWithClick(bottomButton4, fragment4);

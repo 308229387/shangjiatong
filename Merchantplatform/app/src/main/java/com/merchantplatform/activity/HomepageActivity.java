@@ -19,7 +19,7 @@ public class HomepageActivity extends BaseActivity<HomepageModel> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
         model.init();
-        model.setListener();
+
         model.createFragment();
         model.createFragmentManagerAndShow();
     }

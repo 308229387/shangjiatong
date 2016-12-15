@@ -20,7 +20,8 @@ import com.merchantplatform.activity.HomepageActivity;
 public class HomepageBottomButton extends FrameLayout {
     private View view;
     private ImageView redHot;
-    private TextView imageLayout;
+    private ImageView imageLayout;
+    private TextView textLayout;
     private TextView redNum;
     private HomepageActivity context;
 
@@ -34,7 +35,8 @@ public class HomepageBottomButton extends FrameLayout {
     }
 
     private void initLayout() {
-        imageLayout = (TextView) view.findViewById(R.id.tab_menu_setting);
+        imageLayout = (ImageView) view.findViewById(R.id.tab_drawable);
+        textLayout = (TextView) view.findViewById(R.id.tab_menu_setting);
         redHot = (ImageView) view.findViewById(R.id.tab_menu_red_hot);
         redNum = (TextView) view.findViewById(R.id.tab_menu_red_num);
     }
@@ -46,6 +48,7 @@ public class HomepageBottomButton extends FrameLayout {
 
     public void registerState() {
         imageLayout.setSelected(false);
+        textLayout.setTextColor(getResources().getColor(R.color.home_bottom_not_color));
     }
 
     public void setNum(int num) {
@@ -55,9 +58,20 @@ public class HomepageBottomButton extends FrameLayout {
 
     public void setSelectedState() {
         imageLayout.setSelected(true);
+        if (imageLayout.isSelected())
+            textLayout.setTextColor(getResources().getColor(R.color.home_bottom_color));
+
     }
 
     public void setShowRedHot() {
         redHot.setVisibility(VISIBLE);
+    }
+
+    public void setTextInfo(String text) {
+        textLayout.setText(text);
+    }
+
+    public void setDrawableInfo(int drawable) {
+        imageLayout.setBackgroundDrawable(getResources().getDrawable(drawable));
     }
 }
