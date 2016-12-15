@@ -2,9 +2,7 @@ package com.merchantplatform.model;
 
 import android.app.Activity;
 import android.content.res.AssetManager;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,21 +54,17 @@ public class CallRecordModel extends BaseModel {
     private View emptyView;
     private CallRecordAdapter mAdapter;
     private ArrayList<CallList> listData;
-    private final int CALL_IN_TYPE = 1;
-    private final int CALL_OUT_TYPE = 2;
-    private final int CALL_RESULT_OK = 10;
-    private final int CALL_RESULT_FALSE = 20;
+    private int tabIndex;
+    private static final int CALL_IN_TYPE = 1;
+    private static final int CALL_OUT_TYPE = 2;
+    private static final int CALL_RESULT_OK = 10;
+    private static final int CALL_RESULT_FAILURE = 20;
 
     public CallRecordModel(CallRecordFragment context) {
         this.context = context;
     }
 
-    public void createView(LayoutInflater inflater, ViewGroup container) {
-        initView(inflater, container);
-        setListener();
-    }
-
-    private void initView(LayoutInflater inflater, ViewGroup container) {
+    public void initView(LayoutInflater inflater, ViewGroup container) {
         view = inflater.inflate(R.layout.fragment_call_record, container, false);
         xrv_callrecord = (XRecyclerView) view.findViewById(R.id.xrv_callrecord);
         emptyView = view.findViewById(R.id.layout_call_empty);
@@ -80,13 +74,15 @@ public class CallRecordModel extends BaseModel {
         xrv_callrecord.setRefreshProgressStyle(ProgressStyle.BallPulse);
         xrv_callrecord.setLoadingMoreProgressStyle(ProgressStyle.SquareSpin);
         xrv_callrecord.setEmptyView(emptyView);
-        Drawable dividerDrawable = ContextCompat.getDrawable(context.getContext(), R.drawable.divider_sample);
-        xrv_callrecord.addItemDecoration(xrv_callrecord.new DividerItemDecoration(dividerDrawable));//Item之间添加分割线
     }
 
-    private void setListener() {
+    public void setListener() {
         xrv_callrecord.setLoadingListener(new RecyclerViewLoadingListener());
         emptyView.setOnClickListener(new OnClickEmptyViewListener());
+    }
+
+    public void setTabIndex(int tabIndex) {
+        this.tabIndex = tabIndex;
     }
 
     public void initAdapter() {
@@ -96,7 +92,7 @@ public class CallRecordModel extends BaseModel {
 
     private void initData() {
         listData = new ArrayList<>();
-        mAdapter = new CallRecordAdapter(context.getContext(), listData);
+        mAdapter = new CallRecordAdapter(context.getContext(), listData, tabIndex);
         xrv_callrecord.setAdapter(mAdapter);
         xrv_callrecord.refresh();//刚进来的时候可以直接刷新
     }
@@ -115,7 +111,7 @@ public class CallRecordModel extends BaseModel {
         public void onRefresh() {
             listData.clear();
             getRefreshData();
-            listData.addAll(CallListDaoOperate.queryLimitData(context.getContext(), 20));
+            listData.addAll(refreshNewData());
             mAdapter.notifyDataSetChanged();
             xrv_callrecord.refreshComplete();
         }
@@ -139,26 +135,17 @@ public class CallRecordModel extends BaseModel {
         getNetResponseData(maxBackTime + "", "1");
     }
 
+    private ArrayList<CallList> refreshNewData() {
+        if (tabIndex == 0) {
+            WhereCondition condition = CallListDao.Properties.CallResult.eq("20");
+            return CallListDaoOperate.queryLimitDataByCondition(context.getContext(), 20, condition);
+        } else {
+            return CallListDaoOperate.queryLimitData(context.getContext(), 20);
+        }
+    }
+
     private void getLoadMoreData() {
-//        ArrayList<CallList> callLists = CallListDaoOperate.queryLimitData(context.getContext(), 20);
-//        if (callLists != null && callLists.size() > 0) {
-//            listData.addAll(callLists);
-//        } else {
-////            getNetResponseData();
-//        }
-//
-//        if (listData.size() > 50) {
-//            xrv_callrecord.setNoMore(true);
-//        } else {
-//            new Handler().postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-////                    getNetResponseData();
-//                    mAdapter.notifyDataSetChanged();
-//                    xrv_callrecord.loadMoreComplete();
-//                }
-//            }, 1000);
-//        }
+
     }
 
     private void getNetResponseData(String backTime, String refreshType) {
@@ -240,56 +227,79 @@ public class CallRecordModel extends BaseModel {
     }
 
     private void saveNewDataToCallList(CallDetailResponse.bean bean) {
-        WhereCondition conditionId = CallDetailDao.Properties.Id.eq(bean.getId());
-        ArrayList<CallDetail> dataInDetail = CallDetailDaoOperate.queryByCondition(context.getContext(), conditionId);
-        if (dataInDetail.size() == 0) {
-            String date = DateUtils.formatMillisToDateTime(bean.getCallTime());
-            String date_Day = DateUtils.formatMillisToDate(bean.getCallTime());
-            WhereCondition condition1 = CallListDao.Properties.UserId.eq(UserUtils.getUserId());
-            WhereCondition condition2 = CallListDao.Properties.Phone.eq(bean.getPhone());
-            WhereCondition condition3 = new WhereCondition.StringCondition("date(CALL_TIME)='" + date_Day + "'");
-            ArrayList<CallList> result = CallListDaoOperate.queryByCondition(context.getContext(), condition1, condition2, condition3);
+        if (!isExistInDetail(bean)) {
+            ArrayList<CallList> result = getDataFromList(bean);
             if (result != null && result.size() > 0) {
                 if (bean.getType() == CALL_OUT_TYPE) {
-                    for (CallList callList : result) {
-                        if (callList.getType() == CALL_OUT_TYPE) {
-                            callList.setPhoneCount(callList.getPhoneCount() + 1);
-                            CallListDaoOperate.updateData(context.getContext(), callList);
-                            break;
-                        }
-                    }
+                    updateOutGoingCall(result);
                 } else if (bean.getType() == CALL_IN_TYPE) {
                     if (bean.getCallResult() == CALL_RESULT_OK) {
-                        for (CallList callList : result) {
-                            if (callList.getCallResult() == CALL_RESULT_OK) {
-                                callList.setPhoneCount(callList.getPhoneCount() + 1);
-                                CallListDaoOperate.updateData(context.getContext(), callList);
-                                break;
-                            }
-                        }
-                    } else if (bean.getCallResult() == CALL_RESULT_FALSE) {
-                        for (CallList callList : result) {
-                            if (callList.getCallResult() == CALL_RESULT_FALSE) {
-                                callList.setPhoneCount(callList.getPhoneCount() + 1);
-                                CallListDaoOperate.updateData(context.getContext(), callList);
-                                break;
-                            }
-                        }
+                        updateInCallOk(result);
+                    } else if (bean.getCallResult() == CALL_RESULT_FAILURE) {
+                        updateInCallFailure(result);
                     }
                 }
             } else {
-                CallList callList = new CallList();
-                callList.setUserId(UserUtils.getUserId());
-                callList.setPhone(bean.getPhone());
-                callList.setPhoneCount(0);
-                callList.setCallResult(bean.getCallResult());
-                callList.setType(bean.getType());
-                callList.setLocal(bean.getLocal());
-                callList.setCate(bean.getCate());
-                callList.setCallTime(date);
-                CallListDaoOperate.insertOrReplace(context.getContext(), callList);
+                insertNewData(bean);
             }
         }
+    }
+
+    private boolean isExistInDetail(CallDetailResponse.bean bean) {
+        WhereCondition conditionId = CallDetailDao.Properties.Id.eq(bean.getId());
+        ArrayList<CallDetail> dataInDetail = CallDetailDaoOperate.queryByCondition(context.getContext(), conditionId);
+        return dataInDetail.size() > 0;
+    }
+
+    private ArrayList<CallList> getDataFromList(CallDetailResponse.bean bean) {
+        String date_Day = DateUtils.formatMillisToDate(bean.getCallTime());
+        WhereCondition condition1 = CallListDao.Properties.UserId.eq(UserUtils.getUserId());
+        WhereCondition condition2 = CallListDao.Properties.Phone.eq(bean.getPhone());
+        WhereCondition condition3 = new WhereCondition.StringCondition("date(CALL_TIME)='" + date_Day + "'");
+        return CallListDaoOperate.queryByCondition(context.getContext(), condition1, condition2, condition3);
+    }
+
+    private void updateOutGoingCall(ArrayList<CallList> result) {
+        for (CallList callList : result) {
+            if (callList.getType() == CALL_OUT_TYPE) {
+                callList.setPhoneCount(callList.getPhoneCount() + 1);
+                CallListDaoOperate.updateData(context.getContext(), callList);
+                break;
+            }
+        }
+    }
+
+    private void updateInCallOk(ArrayList<CallList> result) {
+        for (CallList callList : result) {
+            if (callList.getCallResult() == CALL_RESULT_OK) {
+                callList.setPhoneCount(callList.getPhoneCount() + 1);
+                CallListDaoOperate.updateData(context.getContext(), callList);
+                break;
+            }
+        }
+    }
+
+    private void updateInCallFailure(ArrayList<CallList> result) {
+        for (CallList callList : result) {
+            if (callList.getCallResult() == CALL_RESULT_FAILURE) {
+                callList.setPhoneCount(callList.getPhoneCount() + 1);
+                CallListDaoOperate.updateData(context.getContext(), callList);
+                break;
+            }
+        }
+    }
+
+    private void insertNewData(CallDetailResponse.bean bean) {
+        CallList callList = new CallList();
+        callList.setUserId(UserUtils.getUserId());
+        callList.setPhone(bean.getPhone());
+        callList.setPhoneCount(0);
+        callList.setCallResult(bean.getCallResult());
+        callList.setType(bean.getType());
+        callList.setLocal(bean.getLocal());
+        callList.setCate(bean.getCate());
+        callList.setCallTime(DateUtils.formatMillisToDateTime(bean.getCallTime()));
+        CallListDaoOperate.insertOrReplace(context.getContext(), callList);
     }
 
     private class OnCallItemClickListener implements BaseRecyclerViewAdapter.OnItemClickListener {

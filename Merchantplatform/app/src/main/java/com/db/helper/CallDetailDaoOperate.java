@@ -61,6 +61,14 @@ public class CallDetailDaoOperate {
     }
 
     /**
+     * @desc 按条件返回限制条数结果集
+     **/
+    public static ArrayList<CallDetail> queryLimitByCondition(Context context, int limit, WhereCondition whereCondition) {
+        QueryBuilder<CallDetail> builder = DbManager.getDaoSession(context).getCallDetailDao().queryBuilder();
+        return (ArrayList<CallDetail>) builder.where(whereCondition).limit(limit).list();
+    }
+
+    /**
      * @desc 查询限制条数的数据
      **/
     public static ArrayList<CallDetail> queryLimitData(Context context, int limit) {

@@ -55,8 +55,8 @@ public class CallMessageModel extends BaseModel {
         titles.add("通话记录");
         mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(0)));
         mTabLayout.addTab(mTabLayout.newTab().setText(titles.get(1)));
-        fragments.add(new CallRecordFragment());
-        fragments.add(new CallRecordFragment());
+        fragments.add(CallRecordFragment.newInstance(0));
+        fragments.add(CallRecordFragment.newInstance(1));
     }
 
     public void setHeaderHeight() {

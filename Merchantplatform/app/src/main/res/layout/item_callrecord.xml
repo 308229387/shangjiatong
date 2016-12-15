@@ -3,22 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/item_swipelayout"
     android:layout_width="match_parent"
-    android:layout_height="69dp"
+    android:layout_height="70dp"
     android:orientation="horizontal"
     app:ios="true"
     app:leftSwipe="true"
     app:swipeEnable="true">
 
-    <LinearLayout
-        android:id="@+id/ll_callrecord_content"
+    <RelativeLayout
+        android:id="@+id/rl_callrecord_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="49dp"
+            android:layout_centerVertical="true"
             android:orientation="vertical"
             android:paddingRight="3dp">
 
@@ -104,7 +103,13 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/divider_sample" />
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/tv_delete"

@@ -10,20 +10,45 @@ import com.merchantplatform.model.CallRecordModel;
 
 public class CallRecordFragment extends BaseFragment<CallRecordModel> {
 
+    private int tabIndex;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            tabIndex = bundle.getInt("tabIndex");
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        initializationLayout(inflater, container);
+        initialize(inflater, container);
+        setTabIndex(tabIndex);
         initAdapter();
         return model.getView();
     }
 
-    private void initializationLayout(LayoutInflater inflater, ViewGroup container) {
-        model.createView(inflater, container);
+    private void initialize(LayoutInflater inflater, ViewGroup container) {
+        model.initView(inflater, container);
+        model.setListener();
+    }
+
+    private void setTabIndex(int tabIndex) {
+        model.setTabIndex(tabIndex);
     }
 
     private void initAdapter() {
         model.initAdapter();
+    }
+
+    public static CallRecordFragment newInstance(int tabIndex) {
+        Bundle args = new Bundle();
+        args.putInt("tabIndex", tabIndex);
+        CallRecordFragment callRecordFragment = new CallRecordFragment();
+        callRecordFragment.setArguments(args);
+        return callRecordFragment;
     }
 
     @Override

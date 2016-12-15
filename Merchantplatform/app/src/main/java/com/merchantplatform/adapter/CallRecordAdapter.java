@@ -18,15 +18,18 @@ import java.util.ArrayList;
 
 public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRecordAdapter.CallRecordViewHolder> {
 
-    public CallRecordAdapter(Context context, ArrayList<CallList> mList) {
+    private int tabIndex;
+
+    public CallRecordAdapter(Context context, ArrayList<CallList> mList, int tabIndex) {
         super(context, mList);
+        this.tabIndex = tabIndex;
     }
 
     @Override
     protected void bindDataToItemView(final CallRecordViewHolder callRecordViewHolder, final int position) {
         CallList callList = getItem(position);
         callRecordViewHolder
-                .setBackgroundResource(R.id.item_swipelayout, callList.getCallResult() == 10 ? R.color.item_call_bg : R.color.item_missed_call_bg)
+                .setBackgroundResource(R.id.item_swipelayout, (callList.getCallResult() == 20 && tabIndex == 1) ? R.color.item_missed_call_bg : R.color.item_call_bg)
                 .setText(R.id.tv_phoneNum, callList.getPhone())
                 .setTextColor(R.id.tv_phoneNum, callList.getCallResult() == 10 ? context.getResources().getColor(R.color.item_call_phone) : context.getResources().getColor(R.color.item_call_delete))
                 .setText(R.id.tv_call_count, "(" + getItem(position).getPhoneCount() + ")")
