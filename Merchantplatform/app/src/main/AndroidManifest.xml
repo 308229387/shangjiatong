@@ -105,6 +105,9 @@
             android:name=".activity.MobileValidateActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activity.SystemMessageActivity"
+            android:screenOrientation="portrait" />
         <service
             android:name=".service.AppDownloadService"
             android:enabled="true"

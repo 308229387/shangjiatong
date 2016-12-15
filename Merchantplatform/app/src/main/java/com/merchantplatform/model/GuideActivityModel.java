@@ -18,6 +18,7 @@ import com.merchantplatform.activity.HomepageActivity;
 import com.merchantplatform.activity.LoginActivity;
 import com.merchantplatform.activity.MobileValidateActivity;
 import com.merchantplatform.activity.PushActivity;
+import com.merchantplatform.activity.SystemMessageActivity;
 import com.tencent.bugly.crashreport.CrashReport;
 
 /**
@@ -28,6 +29,7 @@ public class GuideActivityModel extends BaseModel {
     private TextView text;
     private Button button;
     private Button button_bugly_test;
+    private Button button_message;
     private ImageView imageView_glide_test;
     private Button button_push;
 
@@ -56,6 +58,13 @@ public class GuideActivityModel extends BaseModel {
             @Override
             public void onClick(View v) {
                 CrashReport.testJavaCrash();
+            }
+        });
+        button_message =  (Button) context.findViewById(R.id.button_message);
+        button_message.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, SystemMessageActivity.class));
             }
         });
         imageView_glide_test = (ImageView) context.findViewById(R.id.imageView_glide_test);

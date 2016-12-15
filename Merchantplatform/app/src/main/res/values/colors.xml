@@ -41,4 +41,7 @@
     <color name="actionsheet_black">#000000</color>
     <color name="actionsheet_white">#FFFFFF</color>
     <color name="actionsheet_pressed">#CCCCCC</color>
+
+    <color name="t_gray">#808080</color>
+    <color name="light_text_color">#808080</color>
 </resources>

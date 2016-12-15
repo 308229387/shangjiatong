@@ -27,6 +27,13 @@
         android:layout_below="@id/button_click"
         android:text="崩溃一下"
         android:textSize="15sp" />
+    <Button
+        android:id="@+id/button_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_bugly_test"
+        android:text="系统消息"
+        android:textSize="15sp" />
 
     <ImageView
         android:id="@+id/imageView_glide_test"
