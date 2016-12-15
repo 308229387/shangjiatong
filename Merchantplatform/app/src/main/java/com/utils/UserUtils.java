@@ -28,11 +28,10 @@ public class UserUtils {
     }
 
     public static String getUserId() {
-//        if (TextUtils.isEmpty(userId)) {
-//            userId = HyApplication.getApplication().getSharedPreferences(USER_SP_NAME, 0).getString(USER_ID, "");
-//        }
-//        return userId;
-        return "25010891";
+        if (TextUtils.isEmpty(userId)) {
+            userId = HyApplication.getApplication().getSharedPreferences(USER_SP_NAME, 0).getString(USER_ID, "");
+        }
+        return userId;
     }
 
     public static void setFace(Context context, String face) {
