@@ -85,23 +85,25 @@
             android:id="@+id/tv_conversation_msg_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+
             android:ellipsize="end"
             android:maxLines="1"
             android:includeFontPadding="false"
             android:textColor="@color/conversation_list_msg"
             android:textSize="@dimen/conversation_list_msg" />
-    </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_conversation_msg_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/ll_conversation_name_time"
-        android:layout_toStartOf="@+id/ll_conversation_name_time"
-        android:background="@drawable/gmacs_bg_bubble"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="@dimen/conversation_list_msg_count_text_size" />
+        <TextView
+            android:id="@+id/tv_conversation_msg_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/ll_conversation_name_time"
+            android:layout_toStartOf="@+id/ll_conversation_name_time"
+            android:background="@drawable/gmacs_bg_bubble"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/conversation_list_msg_count_text_size" />
+    </LinearLayout>
 
     <View
         android:id="@+id/v_conversation_divider"
