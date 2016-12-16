@@ -239,6 +239,7 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gmacs_activity_chat);
+        setBackEnable(false);
     }
 
     @Override

@@ -3,6 +3,8 @@ package com.utils;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 
+import com.android.gmacs.core.GmacsManager;
+import com.android.gmacs.msg.MessageNotifyHelper;
 import com.callback.JsonCallback;
 import com.common.gmacs.core.ClientManager;
 import com.common.gmacs.core.Gmacs;
@@ -112,9 +114,10 @@ public class IMLoginUtils {
 
                 @Override
                 public void done(int i, String s) {
-                    if (i == 0) {
+                    GmacsManager.getInstance().startGmacs(new MessageNotifyHelper());
+
                         context.startActivity(new Intent(context, HomepageActivity.class));
-                    }
+
                 }
             });
         }

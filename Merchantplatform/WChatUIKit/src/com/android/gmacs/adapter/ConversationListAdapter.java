@@ -105,7 +105,7 @@ public class ConversationListAdapter extends BaseAdapter {
      * @return
      */
     protected int defaultAvatarRes(int gender) {
-        return R.drawable.gmacs_ic_default_avatar;
+        return R.drawable.iv_boy_user;
     }
 
     public void updateOtherInfoLayout(View otherInfoLayout, Talk talk) {
@@ -147,7 +147,7 @@ public class ConversationListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder vh;
         if (convertView == null) {
-            convertView = li.inflate(R.layout.gmacs_conversation_list_item, null);
+            convertView = li.inflate(R.layout.gmacs_new_conversation_list_item, null);
             vh = new ViewHolder();
             vh.iv_user_avatar = (NetworkImageView) convertView.findViewById(R.id.iv_avatar);
             vh.tv_name = (TextView) convertView.findViewById(R.id.tv_conversation_name);

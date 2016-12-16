@@ -100,7 +100,7 @@
     <string name="drawShape_Circle">Circle</string>
     <string name="drawShape_Rect">Rect</string>
     <!-- 头像样式 -->
-    <string name="drawShape">@string/drawShape_Rect</string>
+    <string name="drawShape">@string/drawShape_Circle</string>
 
     <!-- 地图 -->
     <string name="locate_failed">定位失败</string>
