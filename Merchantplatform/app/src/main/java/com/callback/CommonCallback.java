@@ -22,8 +22,7 @@ public abstract class CommonCallback<T> extends AbsCallback<T> {
             request.headers("ppu", LoginClient.doGetPPUOperate(HyApplication.getApplication()))
                     .headers("version", AppInfoUtils.getVersionCode(HyApplication.getApplication()))
                     .headers("imei", AppInfoUtils.getIMEI(HyApplication.getApplication()))
-                    .headers("platform", "1")
-                    .headers("token", "");
+                    .headers("platform", "1");
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

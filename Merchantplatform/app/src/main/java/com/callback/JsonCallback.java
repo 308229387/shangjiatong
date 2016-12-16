@@ -47,7 +47,6 @@ public abstract class JsonCallback<T> extends CommonCallback<T> {
         JSONObject jsonObject = new JSONObject(responseData);
         final String msg = jsonObject.optString("msg", "");
         final int code = jsonObject.optInt("status", 0);
-        final String token = jsonObject.optString("token");
         final String data = jsonObject.optString("result", "");
         switch (code) {
             case 0:
