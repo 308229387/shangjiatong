@@ -1,5 +1,7 @@
 package com.merchantplatform.model;
 
+import android.app.Activity;
+import android.support.annotation.Nullable;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,12 +9,18 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.callback.DialogCallback;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.FundingManageActivity;
 import com.merchantplatform.activity.SettingActivity;
 import com.merchantplatform.fragment.PersonalCenterFragment;
+import com.okhttputils.OkHttpUtils;
 import com.utils.DisplayUtils;
 import com.utils.PageSwitchUtils;
+import com.utils.Urls;
+
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by SongYongmeng on 2016/11/24.
@@ -48,6 +56,10 @@ public class PersonalCenterModel extends BaseModel implements View.OnClickListen
             }
     }
 
+    public void initData(){
+        getUserInfo();
+    }
+
     public void setListener(){
         rl_personal_funding.setOnClickListener(this);
         rl_personal_setting.setOnClickListener(this);
@@ -56,6 +68,11 @@ public class PersonalCenterModel extends BaseModel implements View.OnClickListen
     public View getView() {
 
         return view;
+    }
+
+    private void getUserInfo(){
+        OkHttpUtils.get(Urls.PERSONAL_CENTER)
+                .execute(new userInfoCallback(context.getActivity()));
     }
 
     @Override
@@ -76,6 +93,18 @@ public class PersonalCenterModel extends BaseModel implements View.OnClickListen
 
     private void goToSettingActivity(){
         PageSwitchUtils.goToActivity(context.getActivity(),SettingActivity.class);
+    }
+
+    private class userInfoCallback extends DialogCallback<String>{
+
+        public userInfoCallback(Activity activity) {
+            super(activity);
+        }
+
+        @Override
+        public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
+
+        }
     }
 
 }

@@ -6,6 +6,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.telephony.TelephonyManager;
 
@@ -49,10 +51,8 @@ public class AppInfoUtils {
      */
     public static boolean isNetworkConnected(Context context) {
         if (context != null) {
-            ConnectivityManager mConnectivityManager = (ConnectivityManager) context
-                    .getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo mNetworkInfo = mConnectivityManager
-                    .getActiveNetworkInfo();
+            ConnectivityManager mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
             if (mNetworkInfo != null) {
                 return mNetworkInfo.isAvailable();
             }
@@ -110,9 +110,32 @@ public class AppInfoUtils {
      * @return
      */
     public static String getIMEI(Context context){
-        String IMEINumber = "";
-        TelephonyManager TelephonyMgr = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
-        IMEINumber = TelephonyMgr.getDeviceId();
-        return IMEINumber == null ? "-" :IMEINumber;
+        TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        String imeiCode ="-";
+        try {
+            imeiCode=manager.getDeviceId();
+        }catch(Exception e){
+            imeiCode=getMacAddress(context);
+        }
+
+        return imeiCode;
     }
+
+    /**
+     * 获取手机MAC地址
+     * 只有手机开启wifi才能获取到mac地址
+     */
+    public static String getMacAddress(Context context){
+        String result = "-";
+        if(isNetworkConnected(context)) {
+            WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+            WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+            result = wifiInfo.getMacAddress();
+            return result;
+        }
+        return result;
+    }
+
+
+
 }

@@ -25,6 +25,7 @@ public class PersonalCenterFragment extends BaseFragment<PersonalCenterModel> {
         model.createView(inflater, container);
         model.initView();
         model.setHeaderHeight();
+        model.initData();
         model.setListener();
     }
 

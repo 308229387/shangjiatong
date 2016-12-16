@@ -19,6 +19,10 @@ public class Urls {
      */
     public static final String URL_METHOD = BASE_URL + "test";
     /**
+     * 基础Url_APP_MYCENTER
+     */
+    public static final String BASE_URL_MYCENTER =BASE_URL_APP + " mycenter/";
+    /**
      * im获取登陆token
      */
     public static final String IM_TOKEN = "http://10.9.192.190:9875/swap/im";
@@ -48,4 +52,8 @@ public class Urls {
     public static final String GET_VALIDE_CODE = "";
 
     public static final String VALIDATE = "";
+    /**
+     * 个人中心获取用户基本信息
+     */
+    public static final String PERSONAL_CENTER = BASE_URL_MYCENTER + "userbasicinfo";
 }

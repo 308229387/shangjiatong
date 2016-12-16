@@ -6,9 +6,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
@@ -19,8 +21,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static android.R.attr.permission;
+
 /**
  * Created by 58 on 2016/11/28.
+ * ---->checkSelfPermission(@NonNull Context context, @NonNull String permission) ，
+ *                                         主要用于检测某个权限是否已经被授予，
+ *                                        方法返回值为PackageManager.PERMISSION_DENIED或者PackageManager.PERMISSION_GRANTED。
+ *                                        当返回DENIED就需要进行申请授权了。
+ *
+ * ----> requestPermissions(final @NonNull Activity activity,final @NonNull String[] permissions, final int requestCode),
+ *                                        主要用于申请某个权限
+ *                                        该方法是异步的，第一个参数是Context；
+ *                                        第二个参数是需要申请的权限的字符串数组；
+ *                                        第三个参数为requestCode，主要用于回调的时候检测。
+ *
+ * --->shouldShowRequestPermissionRationale(@NonNull Activity activity,@NonNull String permission)
+ *                                        主要用于给用户一个申请权限的解释，
+ *                                        该方法只有在用户在上一次已经拒绝过你的这个权限申请。
+ *                                        也就是说，用户已经拒绝一次了，你又弹个授权框，你需要给用户一个解释，为什么要授权，则使用该方法。
+ *
+ * ---->onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,@NonNull int[] grantResults)
+ *                                       首先验证requestCode定位到你的申请，
+ *                                       然后验证grantResults对应于申请的结果，这里的数组对应于申请时的第二个权限字符串数组。
+ *                                       如果你同时申请两个权限，那么grantResults的length就为2，分别记录你两个权限的申请结果
+ *
  */
 
 public class PermissionUtils {
@@ -80,7 +105,7 @@ public class PermissionUtils {
         final String requestPermission = requestPermissions[requestCode];
         int checkSelfPermission;
         try {
-            checkSelfPermission = ActivityCompat.checkSelfPermission(activity, requestPermission);
+            checkSelfPermission = ContextCompat.checkSelfPermission(activity, requestPermission);
         } catch (RuntimeException e) {
             Toast.makeText(activity, "请开启此权限", Toast.LENGTH_SHORT).show();
             return;
@@ -216,7 +241,7 @@ public class PermissionUtils {
             String requestPermission = requestPermissions[i];
             int checkSelfPermission = -1;
             try {
-                checkSelfPermission = ActivityCompat.checkSelfPermission(activity, requestPermission);
+                checkSelfPermission = ContextCompat.checkSelfPermission(activity, requestPermission);
             } catch (RuntimeException e) {
                 Toast.makeText(activity, "请开启这些权限：", Toast.LENGTH_SHORT).show();
                 return null;
@@ -235,4 +260,23 @@ public class PermissionUtils {
         }
         return permissions;
     }
+
+
+    /**
+     * 获取手机IMEI设备号
+     * @param activity
+     */
+    public static void getIMEIPermission(Activity activity){
+
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+            if (ContextCompat.checkSelfPermission(activity, PERMISSION_READ_PHONE_STATE) == PackageManager.PERMISSION_DENIED) {
+                ActivityCompat.requestPermissions(activity, new String[]{PERMISSION_READ_PHONE_STATE}, CODE_READ_PHONE_STATE);
+            }else{
+                AppInfoUtils.getIMEI(activity);
+            }
+        }else{
+            AppInfoUtils.getIMEI(activity);
+        }
+    }
+
 }

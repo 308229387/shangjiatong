@@ -31,8 +31,8 @@ public class LoginActivityModel extends BaseModel {
             @Override
             public void onLogin58Finished(boolean b, String s, @Nullable LoginSDKBean loginSDKBean) {
                 UserUtils.setUserId(context, loginSDKBean.getUserId());
-//                context.startActivity(new Intent(context, HomepageActivity.class));
-                new IMLoginUtils(context);
+                context.startActivity(new Intent(context, HomepageActivity.class));
+//                new IMLoginUtils(context);
             }
         };
     }
