@@ -9,7 +9,7 @@ import com.dataStore.SettingPushPreferUtil;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.SettingPushActivity;
 import com.ui.SettingToggleGroup;
-import com.ui.TitleBar;
+import com.Utils.TitleBar;
 
 /**
  * Created by 58 on 2016/12/9.

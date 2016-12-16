@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.merchantplatform.R;
 import com.merchantplatform.activity.MobileBindChangeActivity;
-import com.ui.TitleBar;
+import com.Utils.TitleBar;
 import com.utils.Constant;
 import com.utils.StringUtil;
 import com.utils.ToastUtils;

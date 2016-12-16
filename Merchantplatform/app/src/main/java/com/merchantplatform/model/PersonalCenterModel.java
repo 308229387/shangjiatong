@@ -1,12 +1,9 @@
 package com.merchantplatform.model;
 
-import android.graphics.Color;
-import android.os.Build;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -14,7 +11,6 @@ import com.merchantplatform.R;
 import com.merchantplatform.activity.FundingManageActivity;
 import com.merchantplatform.activity.SettingActivity;
 import com.merchantplatform.fragment.PersonalCenterFragment;
-import com.ui.TitleBar;
 import com.utils.DisplayUtils;
 import com.utils.PageSwitchUtils;
 

@@ -16,7 +16,7 @@ import com.dataStore.AppPrefersUtil;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.SettingFeedbackActivity;
 import com.okhttputils.OkHttpUtils;
-import com.ui.TitleBar;
+import com.Utils.TitleBar;
 import com.utils.KeyboardUtil;
 import com.utils.StringUtil;
 import com.utils.ToastUtils;

@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.merchantplatform.R;
 import com.merchantplatform.activity.SoftwareProtocolActivity;
-import com.ui.TitleBar;
+import com.Utils.TitleBar;
 
 /**
  * Created by 58 on 2016/12/10.

@@ -14,7 +14,7 @@ import com.callback.DialogCallback;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.MobileValidateActivity;
 import com.okhttputils.OkHttpUtils;
-import com.ui.TitleBar;
+import com.Utils.TitleBar;
 import com.utils.StringUtil;
 import com.utils.ToastUtils;
 import com.utils.Urls;

@@ -22,7 +22,7 @@ import com.pay58.sdk.api.Pay58ResultCallback;
 import com.pay58.sdk.common.Common;
 import com.pay58.sdk.common.PayResult;
 import com.pay58.sdk.order.Order;
-import com.ui.TitleBar;
+import com.Utils.TitleBar;
 import com.utils.AppInfoUtils;
 import com.utils.Urls;
 import com.utils.UserUtils;

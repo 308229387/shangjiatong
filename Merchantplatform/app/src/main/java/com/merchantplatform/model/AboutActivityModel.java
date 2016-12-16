@@ -1,6 +1,5 @@
 package com.merchantplatform.model;
 
-import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.view.View;
@@ -10,10 +9,9 @@ import android.widget.TextView;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.AboutActivity;
 import com.merchantplatform.activity.SoftwareProtocolActivity;
-import com.ui.TitleBar;
+import com.Utils.TitleBar;
 import com.utils.AppInfoUtils;
 import com.utils.PageSwitchUtils;
-import com.utils.ToastUtils;
 
 /**
  * Created by 58 on 2016/11/25.

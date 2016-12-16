@@ -10,7 +10,7 @@ import com.merchantplatform.activity.AboutActivity;
 import com.merchantplatform.activity.SystemMessageActivity;
 import com.merchantplatform.adapter.SystemMessageAdapter;
 import com.push.bean.PushSqlBean;
-import com.ui.TitleBar;
+import com.Utils.TitleBar;
 import com.utils.PageSwitchUtils;
 
 import java.util.ArrayList;

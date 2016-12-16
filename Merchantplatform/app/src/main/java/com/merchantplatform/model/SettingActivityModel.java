@@ -11,7 +11,7 @@ import com.merchantplatform.activity.PersonalSettingActivity;
 import com.merchantplatform.activity.SettingFeedbackActivity;
 import com.merchantplatform.activity.SettingPushActivity;
 import com.ui.ActionSheet.NormalActionSheet;
-import com.ui.TitleBar;
+import com.Utils.TitleBar;
 import com.utils.PageSwitchUtils;
 import com.utils.ToastUtils;
 

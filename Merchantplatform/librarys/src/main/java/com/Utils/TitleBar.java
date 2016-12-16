@@ -1,4 +1,4 @@
-package com.ui;
+package com.Utils;
 
 import android.content.Context;
 import android.content.res.Resources;

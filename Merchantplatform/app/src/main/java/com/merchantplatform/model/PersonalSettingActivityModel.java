@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.MobileBindChangeActivity;
 import com.merchantplatform.activity.PersonalSettingActivity;
-import com.ui.TitleBar;
+import com.Utils.TitleBar;
 import com.utils.Constant;
 import com.utils.PageSwitchUtils;
 import com.utils.UserUtils;

@@ -1,4 +1,4 @@
-package com.ui;
+package com.Utils;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -18,7 +18,7 @@ import android.net.Uri;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import com.merchantplatform.R;
+import com.librarys.R;
 
 
 public class CircleImageView extends ImageView {
