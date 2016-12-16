@@ -110,6 +110,7 @@
         <activity
             android:name=".activity.SystemMessageActivity"
             android:screenOrientation="portrait" />
+
         <service
             android:name=".service.AppDownloadService"
             android:enabled="true"
@@ -144,11 +145,18 @@
             android:authorities="downloads.com.merchantplatform"
             android:exported="true"
             android:process=":pushservice" />
+
         <receiver
             android:name="com.wuba.wbpush.receiver.GeTuiReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.igexin.sdk.action.Ql3Q1vsnTL6910GpSQf2p4" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".receiver.PhoneReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />/>
             </intent-filter>
         </receiver>
 

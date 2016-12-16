@@ -41,8 +41,8 @@ public class CallDetailDaoOperate {
     /**
      * @desc 根据条件删除
      **/
-    public static void deleteByCondition(Context context, WhereCondition condition) {
-        DbManager.getDaoSession(context).getCallDetailDao().queryBuilder().where(condition).buildDelete().executeDeleteWithoutDetachingEntities();
+    public static void deleteByCondition(Context context, WhereCondition condition, WhereCondition... condMore) {
+        DbManager.getDaoSession(context).getCallDetailDao().queryBuilder().where(condition, condMore).buildDelete().executeDeleteWithoutDetachingEntities();
     }
 
     /**
@@ -55,17 +55,17 @@ public class CallDetailDaoOperate {
     /**
      * @desc 按条件返回结果集
      **/
-    public static ArrayList<CallDetail> queryByCondition(Context context, WhereCondition whereCondition) {
+    public static ArrayList<CallDetail> queryByCondition(Context context, WhereCondition whereCondition, WhereCondition... condMore) {
         QueryBuilder<CallDetail> builder = DbManager.getDaoSession(context).getCallDetailDao().queryBuilder();
-        return (ArrayList<CallDetail>) builder.where(whereCondition).list();
+        return (ArrayList<CallDetail>) builder.where(whereCondition, condMore).list();
     }
 
     /**
      * @desc 按条件返回限制条数结果集
      **/
-    public static ArrayList<CallDetail> queryLimitByCondition(Context context, int limit, WhereCondition whereCondition) {
+    public static ArrayList<CallDetail> queryLimitByCondition(Context context, int limit, WhereCondition whereCondition, WhereCondition... condMore) {
         QueryBuilder<CallDetail> builder = DbManager.getDaoSession(context).getCallDetailDao().queryBuilder();
-        return (ArrayList<CallDetail>) builder.where(whereCondition).limit(limit).list();
+        return (ArrayList<CallDetail>) builder.where(whereCondition, condMore).limit(limit).list();
     }
 
     /**
@@ -81,7 +81,7 @@ public class CallDetailDaoOperate {
      **/
     public static long queryMaxBackTime(Context context) {
         QueryBuilder<CallDetail> builder = DbManager.getDaoSession(context).getCallDetailDao().queryBuilder();
-        List<CallDetail> list = builder.where(new WhereCondition.StringCondition("IS_DELETED='false'")).orderDesc(CallDetailDao.Properties.BackTime).limit(1).list();
+        List<CallDetail> list = builder.where(new WhereCondition.StringCondition("IS_DELETED='0'")).orderDesc(CallDetailDao.Properties.BackTime).limit(1).list();
         if (list != null && list.size() > 0)
             return list.get(0).getBackTime();
         else
@@ -93,7 +93,7 @@ public class CallDetailDaoOperate {
      **/
     public static long queryMinBackTime(Context context) {
         QueryBuilder<CallDetail> builder = DbManager.getDaoSession(context).getCallDetailDao().queryBuilder();
-        List<CallDetail> list = builder.where(new WhereCondition.StringCondition("IS_DELETED='false'")).orderAsc(CallDetailDao.Properties.BackTime).limit(1).list();
+        List<CallDetail> list = builder.where(new WhereCondition.StringCondition("IS_DELETED='0'")).orderAsc(CallDetailDao.Properties.BackTime).limit(1).list();
         if (list != null && list.size() > 0)
             return list.get(0).getBackTime();
         else

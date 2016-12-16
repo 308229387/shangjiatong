@@ -21,6 +21,10 @@ public class DateUtils {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(timeInMillis);
     }
 
+    public static String formatDateTimeToDate(String dateTime) {
+        return dateTime.split(" ")[0];
+    }
+
     public static String getMonthAgo(int months) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MONTH, -months);

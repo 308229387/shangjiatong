@@ -8,8 +8,9 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.CallLog.Calls;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.db.helper.CallListDaoOperate;
 import com.merchantplatform.R;
 import com.merchantplatform.bean.CallDetailResponse;
 import com.merchantplatform.bean.UserCallRecordBean;
+import com.merchantplatform.receiver.PhoneReceiver;
 import com.okhttputils.OkHttpUtils;
 import com.orhanobut.logger.Logger;
 import com.utils.DateUtils;
@@ -39,9 +41,7 @@ import com.xrecyclerview.XRecyclerView;
 
 import org.greenrobot.greendao.query.WhereCondition;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import okhttp3.Request;
 import okhttp3.Response;
@@ -63,6 +63,7 @@ public class CallRecordModel extends BaseModel {
     private static final int CALL_OUT_TYPE = 2;
     private static final int CALL_RESULT_OK = 10;
     private static final int CALL_RESULT_FAILURE = 20;
+    private int clickPosition;
 
     public CallRecordModel(CallRecordFragment context) {
         this.context = context;
@@ -133,11 +134,7 @@ public class CallRecordModel extends BaseModel {
 
     private void getNewData() {
         long maxBackTime = CallDetailDaoOperate.queryMaxBackTime(context.getContext());
-        if (maxBackTime == 0) {
-            getRefreshResponseData("0");
-        } else {
-            getRefreshResponseData(maxBackTime + "");
-        }
+        getRefreshResponseData(maxBackTime + "");
     }
 
     private void loadMoreData() {
@@ -338,7 +335,8 @@ public class CallRecordModel extends BaseModel {
     }
 
     private void makeACall(final int position) {
-        if (Build.VERSION.SDK_INT >= 23) {
+        clickPosition = position;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PermissionUtils.requestPermission(context.getActivity(), PermissionUtils.CODE_READ_CALL_LOG, new PermissionUtils.PermissionGrant() {
                 @Override
                 public void onPermissionGranted(int requestCode) {
@@ -348,40 +346,97 @@ public class CallRecordModel extends BaseModel {
                 }
             });
         } else {
-            if (ActivityCompat.checkSelfPermission(context.getContext(), Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
             invokeCall(position);
         }
     }
 
     private void invokeCall(int position) {
+        PhoneReceiver.addToMonitor(interaction);
+        upLoadUserCallLog(getUserCallLog(clickPosition));
         String phoneNum = listData.get(position).getPhone();
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + phoneNum));
         context.startActivity(intent);
-        getUserCallLog(listData.get(position).getPhone());
     }
 
-    private void getUserCallLog(String phoneNum) {
-        if (ActivityCompat.checkSelfPermission(context.getContext(), Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
-            return;
+    PhoneReceiver.BRInteraction interaction = new PhoneReceiver.BRInteraction() {
+        @Override
+        public void sendAction(String action) { //监听电话状态
+            Logger.e("监听到了事件");
+            if (action.equals(PhoneReceiver.CALL_OVER)) {//挂机
+                Logger.e("监听到了挂机");
+            } else if (action.equals(PhoneReceiver.CALL_UP)) {//接听
+                Logger.e("监听到了接听");
+            } else if (action.equals(PhoneReceiver.CALL_OUT)) { //呼出
+                Logger.e("监听到了呼出");
+            }
+        }
+    };
+
+    private void upLoadUserCallLog(UserCallRecordBean usercallRecordBean) {
+        if (usercallRecordBean != null) {
+            OkHttpUtils.post(Urls.PHONE_UPLOAD_DATA)
+                    .params("backTime", usercallRecordBean.getBackTime() + "")
+                    .params("refreshType", "1")
+                    .params("ids", usercallRecordBean.getIds())
+                    .params("beginTime", usercallRecordBean.getBeginTime() + "")
+                    .params("endTime", usercallRecordBean.getEndTime() + "")
+                    .params("recordState", usercallRecordBean.getRecordState() + "")
+                    .execute(new getPhoneIncreaseDataResponse(context.getActivity()));
+        }
+    }
+
+    private UserCallRecordBean getUserCallLog(int position) {
+        if (ContextCompat.checkSelfPermission(context.getContext(), Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
+            return null;
         }
         Cursor cursor = context.getContext().getContentResolver().query(Calls.CONTENT_URI, new String[]{Calls.NUMBER, Calls.DATE, Calls.DURATION}, null, null, Calls.DEFAULT_SORT_ORDER);
         if (cursor != null && cursor.moveToFirst()) {
             int i = 0;
             do {
                 String numberInCursor = cursor.getString(cursor.getColumnIndex(Calls.NUMBER));
-                if (numberInCursor.equals(phoneNum)) {
+                if (numberInCursor.equals(listData.get(position).getPhone())) {
                     UserCallRecordBean userCallRecordBean = new UserCallRecordBean();
                     long beginTime = Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow(Calls.DATE)));
                     long duration = Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow(Calls.DURATION))) * 1000;
+                    userCallRecordBean.setBackTime(CallDetailDaoOperate.queryMaxBackTime(context.getContext()));
+                    userCallRecordBean.setIds(getIdsFromDetail(getDetailByList(listData.get(position))));
                     userCallRecordBean.setRecordState(duration == 0 ? 20 : 10);
                     userCallRecordBean.setBeginTime(beginTime);
                     userCallRecordBean.setEndTime(beginTime + duration);
-                    break;
+                    return userCallRecordBean;
                 }
             } while (i++ < 2 && cursor.moveToNext());
             cursor.close();
         }
+        return null;
+    }
+
+    private ArrayList<CallDetail> getDetailByList(CallList callList) {
+        String date_Day = DateUtils.formatDateTimeToDate(callList.getCallTime());
+        WhereCondition conditionId = CallDetailDao.Properties.UserId.eq(UserUtils.getUserId());
+        WhereCondition conditionDate = new WhereCondition.StringCondition("date(CALL_TIME)='" + date_Day + "'");
+        WhereCondition conditionIsDeleted = CallDetailDao.Properties.IsDeleted.eq(false);
+        WhereCondition conditionPhone = CallDetailDao.Properties.Phone.eq(callList.getPhone());
+        return CallDetailDaoOperate.queryByCondition(context.getContext(), conditionId, conditionDate, conditionIsDeleted, conditionPhone);
+    }
+
+    private String getIdsFromDetail(ArrayList<CallDetail> callDetails) {
+        String ids = "";
+        for (int i = 0; i < callDetails.size(); i++) {
+            ids += callDetails.get(i).getId() + "|";
+        }
+        return ids.substring(0, ids.length() - 1);
+    }
+
+    public void onRequestPermissionsResult(int requestCode, @NonNull int[] grantResults) {
+        if (requestCode == PermissionUtils.CODE_READ_CALL_LOG) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                invokeCall(clickPosition);
+            }
+        }
+    }
+
+    public void destroyFragment() {
+        PhoneReceiver.releaseMonitor(interaction);
     }
 }

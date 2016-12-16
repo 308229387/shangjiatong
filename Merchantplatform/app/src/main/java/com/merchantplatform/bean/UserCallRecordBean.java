@@ -5,9 +5,27 @@ package com.merchantplatform.bean;
  */
 
 public class UserCallRecordBean {
+    private long backTime;
+    private String ids;
     private long beginTime;
     private long endTime;
     private int recordState;
+
+    public long getBackTime() {
+        return backTime;
+    }
+
+    public void setBackTime(long backTime) {
+        this.backTime = backTime;
+    }
+
+    public String getIds() {
+        return ids;
+    }
+
+    public void setIds(String ids) {
+        this.ids = ids;
+    }
 
     public long getBeginTime() {
         return beginTime;

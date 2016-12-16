@@ -32,11 +32,6 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
                 .setBackgroundResource(R.id.item_swipelayout, (callList.getCallResult() == 20 && tabIndex == 1) ? R.color.item_missed_call_bg : R.color.item_call_bg)
                 .setText(R.id.tv_phoneNum, callList.getPhone())
                 .setTextColor(R.id.tv_phoneNum, callList.getCallResult() == 10 ? context.getResources().getColor(R.color.item_call_phone) : context.getResources().getColor(R.color.item_call_delete))
-                .setText(R.id.tv_call_count, "(" + getItem(position).getPhoneCount() + ")")
-                .setTextColor(R.id.tv_call_count, callList.getCallResult() == 10 ? context.getResources().getColor(R.color.item_call_phone) : context.getResources().getColor(R.color.item_call_delete))
-                .setVisible(R.id.tv_call_count, callList.getPhoneCount() > 1)
-                .setVisible(R.id.iv_phoneState, callList.getCallResult() == 10)
-                .setImageResource(R.id.iv_phoneState, callList.getType() == 1 ? R.mipmap.item_call_in : R.mipmap.item_call_out)
                 .setText(R.id.tv_phone_city, callList.getLocal())
                 .setText(R.id.tv_call_cate, callList.getCate())
                 .setText(R.id.tv_call_time, DateUtils.displayByDateTime(callList.getCallTime()))
@@ -45,6 +40,21 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
                 .setTag(R.id.tv_delete, R.id.delete_tag_vh, callRecordViewHolder)
                 .setTag(R.id.tv_delete, R.id.delete_tag_position, position)
                 .setOnClickListener(R.id.tv_delete, new OnDeleteItemClickListener());
+        if (callList.getPhoneCount() > 1) {
+            callRecordViewHolder
+                    .setText(R.id.tv_call_count, "(" + getItem(position).getPhoneCount() + ")")
+                    .setTextColor(R.id.tv_call_count, callList.getCallResult() == 10 ? context.getResources().getColor(R.color.item_call_phone) : context.getResources().getColor(R.color.item_call_delete))
+                    .setVisible(R.id.tv_call_count, true);
+        } else {
+            callRecordViewHolder.setVisible(R.id.tv_call_count, false);
+        }
+        if (callList.getCallResult() == 10) {
+            callRecordViewHolder
+                    .setVisible(R.id.iv_phoneState, true)
+                    .setImageResource(R.id.iv_phoneState, callList.getType() == 1 ? R.mipmap.item_call_in : R.mipmap.item_call_out);
+        } else {
+            callRecordViewHolder.setVisible(R.id.iv_phoneState, false);
+        }
     }
 
     @Override
