@@ -79,7 +79,7 @@
     <!-- SendMsgLayout 一堆按钮距离屏幕底部的高度 -->
     <dimen name="im_chat_buttons_margin_bottom">9dip</dimen>
     <!-- SendMsgLayout 一堆按钮margin Left / Right -->
-    <dimen name="im_chat_buttons_margin_left_right">3dip</dimen>
+    <dimen name="im_chat_buttons_margin_left_right">15dip</dimen>
     <dimen name="im_chat_edittext_size">@dimen/size_b_b</dimen>
 
     <!-- Dialog dimens-->
