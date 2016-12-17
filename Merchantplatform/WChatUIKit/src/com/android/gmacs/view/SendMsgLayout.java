@@ -115,7 +115,8 @@ public class SendMsgLayout extends LinearLayout implements OnClickListener, OnIn
             mSendVoice.setVisibility(View.GONE);
         }
         if (gmacsChatActivity.sendEmojiEnable()) {
-            mSendEmojiButton.setVisibility(View.VISIBLE);
+//            mSendEmojiButton.setVisibility(View.VISIBLE);
+            mSendEmojiButton.setVisibility(View.GONE);
         } else {
             mSendEmojiButton.setVisibility(View.GONE);
         }
@@ -331,7 +332,8 @@ public class SendMsgLayout extends LinearLayout implements OnClickListener, OnIn
 
     public void setSendEmojiEnable(boolean enable) {
         if (enable) {
-            mSendEmojiButton.setVisibility(View.VISIBLE);
+//            mSendEmojiButton.setVisibility(View.VISIBLE);
+            mSendEmojiButton.setVisibility(View.GONE);
         } else {
             mSendEmojiButton.setVisibility(View.GONE);
         }
