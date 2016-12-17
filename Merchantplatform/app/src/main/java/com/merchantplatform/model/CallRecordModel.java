@@ -212,7 +212,9 @@ public class CallRecordModel extends BaseModel {
 
         @Override
         public void onResponse(boolean isFromCache, CallDetailResponse callDetailResponse, Request request, @Nullable Response response) {
-            saveNewDataToDB(callDetailResponse);
+            if (callDetailResponse != null && callDetailResponse.getData() != null) {
+                saveNewDataToDB(callDetailResponse);
+            }
             listData.addAll(getNewListDataFromDB());
             mAdapter.notifyDataSetChanged();
             mXRecyclerView.refreshComplete();
@@ -391,21 +393,18 @@ public class CallRecordModel extends BaseModel {
         }
         Cursor cursor = context.getContext().getContentResolver().query(Calls.CONTENT_URI, new String[]{Calls.NUMBER, Calls.DATE, Calls.DURATION}, null, null, Calls.DEFAULT_SORT_ORDER);
         if (cursor != null && cursor.moveToFirst()) {
-            int i = 0;
-            do {
-                String numberInCursor = cursor.getString(cursor.getColumnIndex(Calls.NUMBER));
-                if (numberInCursor.equals(listData.get(position).getPhone())) {
-                    UserCallRecordBean userCallRecordBean = new UserCallRecordBean();
-                    long beginTime = Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow(Calls.DATE)));
-                    long duration = Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow(Calls.DURATION))) * 1000;
-                    userCallRecordBean.setBackTime(CallDetailDaoOperate.queryMaxBackTime(context.getContext()));
-                    userCallRecordBean.setIds(getIdsFromDetail(getDetailByList(listData.get(position))));
-                    userCallRecordBean.setRecordState(duration == 0 ? 20 : 10);
-                    userCallRecordBean.setBeginTime(beginTime);
-                    userCallRecordBean.setEndTime(beginTime + duration);
-                    return userCallRecordBean;
-                }
-            } while (i++ < 2 && cursor.moveToNext());
+            String numberInCursor = cursor.getString(cursor.getColumnIndex(Calls.NUMBER));
+            if (numberInCursor.equals(listData.get(position).getPhone())) {
+                UserCallRecordBean userCallRecordBean = new UserCallRecordBean();
+                long beginTime = Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow(Calls.DATE)));
+                long duration = Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow(Calls.DURATION))) * 1000;
+                userCallRecordBean.setBackTime(CallDetailDaoOperate.queryMaxBackTime(context.getContext()));
+                userCallRecordBean.setIds(getIdsFromDetail(getDetailByList(listData.get(position))));
+                userCallRecordBean.setRecordState(duration == 0 ? 20 : 10);
+                userCallRecordBean.setBeginTime(beginTime);
+                userCallRecordBean.setEndTime(beginTime + duration);
+                return userCallRecordBean;
+            }
             cursor.close();
         }
         return null;
