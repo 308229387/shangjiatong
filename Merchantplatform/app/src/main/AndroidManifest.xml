@@ -41,6 +41,11 @@
         android:theme="@style/AppTheme"
         tools:replace="name,icon,label,theme,allowBackup">
 
+        <!-- 友盟统计相关参数-->
+
+        <meta-data android:value="5853c23af29d987cde0015b7" android:name="UMENG_APPKEY"/>
+        <meta-data android:value="${CHANNEL_VALUE}" android:name="UMENG_CHANNEL"/>
+
         <activity android:name=".activity.GuideActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
