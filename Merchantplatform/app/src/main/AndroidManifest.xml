@@ -3,32 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.merchantplatform">
 
-    <!--网络权限-->
+    <!-- 网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <!--SD卡读权限-->
+    <!-- SD卡读权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!--SD卡写权限-->
+    <!-- SD卡写权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- 在SDCard中创建与删除文件权限 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <!--腾讯Bugly请求权限-->
+    <!-- 腾讯Bugly请求权限 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!--访问网络状态权限-->
+    <!-- 访问网络状态权限 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!--访问wifi状态权限-->
+    <!-- 访问wifi状态权限 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!--读系统日志权限-->
+    <!-- 读系统日志权限 -->
     <uses-permission android:name="android.permission.READ_LOGS" />
-    <!--读取通话记录-->
+    <!-- 读取通话记录 -->
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
 
-    <!--调用者的包名申请权限必须-->
+    <!-- 调用者的包名申请权限必须 -->
     <permission
         android:name="com.merchantplatform.permission.MIPUSH_RECEIVE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="com.merchantplatform.permission.MIPUSH_RECEIVE" />
-    <!--接入个推新增的申请权限-->
+    <!-- 接入个推新增的申请权限 -->
     <uses-permission android:name="getui.permission.GetuiService.com.merchantplatform" />
+
     <permission
         android:name="getui.permission.GetuiService.com.merchantplatform"
         android:protectionLevel="normal" />
@@ -43,32 +45,34 @@
 
         <!-- 友盟统计相关参数-->
 
-        <meta-data android:value="5853c23af29d987cde0015b7" android:name="UMENG_APPKEY"/>
-        <meta-data android:value="${CHANNEL_VALUE}" android:name="UMENG_CHANNEL"/>
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5853c23af29d987cde0015b7" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${CHANNEL_VALUE}" />
 
         <activity android:name=".activity.GuideActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <intent-filter>
                 <data android:scheme="growing.c94ea84d8a44973f" />
+
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.HomepageActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.AboutActivity"
             android:screenOrientation="portrait" />
@@ -79,39 +83,31 @@
             android:name=".activity.NewsActivity"
             android:screenOrientation="portrait" />
 
-
-        <!--这个Activity不要启用单独的Process，否则支付SDK的回调不会执行-->
+        <!-- 这个Activity不要启用单独的Process，否则支付SDK的回调不会执行 -->
         <activity
             android:name=".activity.FundingManageActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.SettingActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SettingFeedbackActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.SettingPushActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.PersonalSettingActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.MobileBindChangeActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.SoftwareProtocolActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.MobileValidateActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.SystemMessageActivity"
             android:screenOrientation="portrait" />
@@ -120,21 +116,19 @@
             android:name=".service.AppDownloadService"
             android:enabled="true"
             android:exported="false" />
-
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
-        <!--渠道商编号-->
+        <!-- 渠道商编号 -->
         <meta-data
             android:name="CHANNEL_ID"
             android:value="${CHANNEL_VALUE}" />
-
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="LtuUAAHpPannZfSGztqxGrBtO0IPZqhG" />
 
-        <!-- WPush 配置个推参数-->
+        <!-- WPush 配置个推参数 -->
         <meta-data
             android:name="PUSH_APPID"
             android:value="Ql3Q1vsnTL6910GpSQf2p4" />
@@ -158,13 +152,13 @@
                 <action android:name="com.igexin.sdk.action.Ql3Q1vsnTL6910GpSQf2p4" />
             </intent-filter>
         </receiver>
-
         <receiver android:name=".receiver.PhoneReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.PHONE_STATE" />/>
+                <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
 
+        <activity android:name=".activity.CallDetailActivity" />
     </application>
 
 </manifest>

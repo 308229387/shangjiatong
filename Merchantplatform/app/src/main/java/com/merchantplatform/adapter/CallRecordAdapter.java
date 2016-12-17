@@ -1,14 +1,23 @@
 package com.merchantplatform.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.db.dao.CallDetail;
 import com.db.dao.CallList;
+import com.db.dao.gen.CallDetailDao;
+import com.db.helper.CallDetailDaoOperate;
 import com.merchantplatform.R;
+import com.merchantplatform.activity.CallDetailActivity;
+import com.merchantplatform.bean.CallDetailListBean;
 import com.utils.DateUtils;
+import com.utils.UserUtils;
 import com.xrecyclerview.BaseRecyclerViewAdapter;
+
+import org.greenrobot.greendao.query.WhereCondition;
 
 import java.util.ArrayList;
 
@@ -72,15 +81,75 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(context, "查看详情position" + v.getTag(), Toast.LENGTH_SHORT).show();
+            int position = (int) v.getTag();
+            goToCallDetail(position);
         }
+    }
+
+    private void goToCallDetail(int position) {
+        String phoneNum = mList.get(position).getPhone();
+        String local = mList.get(position).getLocal();
+        String cate = mList.get(position).getCate();
+        String date = DateUtils.formatDateTimeToDate(mList.get(position).getCallTime());
+        ArrayList<CallDetail> detailData = getDetailByList(mList.get(position));
+        ArrayList<CallDetailListBean> detailList = getDetailList(detailData);
+        Bundle bundle = new Bundle();
+        bundle.putString("phoneNum", phoneNum);
+        bundle.putString("local", local);
+        bundle.putString("cate", cate);
+        bundle.putString("date", date);
+        bundle.putParcelableArrayList("detailList", detailList);
+        Intent intent = new Intent(context, CallDetailActivity.class);
+        intent.putExtra("detailList", bundle);
+        context.startActivity(intent);
+    }
+
+    private ArrayList<CallDetailListBean> getDetailList(ArrayList<CallDetail> detailData) {
+        if (detailData != null && detailData.size() > 0) {
+            ArrayList<CallDetailListBean> detailList = new ArrayList<>();
+            for (CallDetail callDetail : detailData) {
+                CallDetailListBean listBean = new CallDetailListBean();
+                listBean.setTime(DateUtils.formatDateTimeToTime(callDetail.getCallTime()));
+                listBean.setType(callDetail.getType());
+                listBean.setDuration(callDetail.getEntryTime());
+                detailList.add(listBean);
+            }
+            return detailList;
+        }
+        return null;
     }
 
     private class OnDeleteItemClickListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
-            deleteItem((CallRecordViewHolder) v.getTag(R.id.delete_tag_vh), (Integer) v.getTag(R.id.delete_tag_position));
+            int position = (Integer) v.getTag(R.id.delete_tag_position);
+            deleteItem((CallRecordViewHolder) v.getTag(R.id.delete_tag_vh), position);
+            setDeletedFlagInDB(position);
+            mList.remove(position);
+        }
+    }
+
+    private void setDeletedFlagInDB(int position) {
+        ArrayList<CallDetail> arrayList = getDetailByList(mList.get(position));
+        for (CallDetail callDetail : arrayList) {
+            callDetail.setIsDeleted(true);
+            CallDetailDaoOperate.updateData(context, callDetail);
+        }
+    }
+
+    private ArrayList<CallDetail> getDetailByList(CallList callList) {
+        String date_Day = DateUtils.formatDateTimeToDate(callList.getCallTime());
+        WhereCondition conditionId = CallDetailDao.Properties.UserId.eq(UserUtils.getUserId());
+        WhereCondition conditionDate = new WhereCondition.StringCondition("date(CALL_TIME)='" + date_Day + "'");
+        WhereCondition conditionIsDeleted = CallDetailDao.Properties.IsDeleted.eq(false);
+        WhereCondition conditionPhone = CallDetailDao.Properties.Phone.eq(callList.getPhone());
+        WhereCondition conditionType = CallDetailDao.Properties.Type.eq(callList.getType());
+        if (callList.getType() == 1) {
+            WhereCondition conditionResult = CallDetailDao.Properties.CallResult.eq(callList.getCallResult());
+            return CallDetailDaoOperate.queryByCondition(context, conditionId, conditionDate, conditionIsDeleted, conditionPhone, conditionType, conditionResult);
+        } else {
+            return CallDetailDaoOperate.queryByCondition(context, conditionId, conditionDate, conditionIsDeleted, conditionPhone, conditionType);
         }
     }
 }

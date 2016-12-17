@@ -25,6 +25,10 @@ public class DateUtils {
         return dateTime.split(" ")[0];
     }
 
+    public static String formatDateTimeToTime(String dateTime) {
+        return dateTime.split(" ")[1];
+    }
+
     public static String getMonthAgo(int months) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MONTH, -months);
@@ -52,11 +56,11 @@ public class DateUtils {
         today.set(Calendar.SECOND, 0);
         current.setTime(dateParser);
         if (current.after(today)) {
-            String time = dateTime.split(" ")[1];
+            String time = formatDateTimeToTime(dateTime);
             int index = time.charAt(0) == 0 ? 1 : 0;
             return time.substring(index, time.length() - 3);
         } else {
-            String date = dateTime.split(" ")[0];
+            String date = formatDateTimeToDate(dateTime);
             int index = date.indexOf("-") + 1;
             return date.substring(index, date.length()).replace("-", "/");
         }

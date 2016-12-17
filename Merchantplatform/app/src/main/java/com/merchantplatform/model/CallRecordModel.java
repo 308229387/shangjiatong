@@ -43,6 +43,7 @@ import org.greenrobot.greendao.query.WhereCondition;
 
 import java.util.ArrayList;
 
+import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -190,11 +191,21 @@ public class CallRecordModel extends BaseModel {
                 mXRecyclerView.setNoMore(true);
             } else {
                 saveNewDataToDB(callDetailResponse);
-                listData.addAll(getMoreListDataFromDB());
-                mAdapter.notifyDataSetChanged();
-                mXRecyclerView.loadMoreComplete();
+                loadMoreDataFromDB();
             }
         }
+
+        @Override
+        public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+            super.onError(isFromCache, call, response, e);
+            loadMoreDataFromDB();
+        }
+    }
+
+    private void loadMoreDataFromDB() {
+        listData.addAll(getMoreListDataFromDB());
+        mAdapter.notifyDataSetChanged();
+        mXRecyclerView.loadMoreComplete();
     }
 
     private void getRefreshResponseData(String backTime) {
@@ -215,10 +226,20 @@ public class CallRecordModel extends BaseModel {
             if (callDetailResponse != null && callDetailResponse.getData() != null) {
                 saveNewDataToDB(callDetailResponse);
             }
-            listData.addAll(getNewListDataFromDB());
-            mAdapter.notifyDataSetChanged();
-            mXRecyclerView.refreshComplete();
+            loadRefreshDataFromDB();
         }
+
+        @Override
+        public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+            super.onError(isFromCache, call, response, e);
+            loadRefreshDataFromDB();
+        }
+    }
+
+    private void loadRefreshDataFromDB() {
+        listData.addAll(getNewListDataFromDB());
+        mAdapter.notifyDataSetChanged();
+        mXRecyclerView.refreshComplete();
     }
 
     private ArrayList<CallList> getNewListDataFromDB() {
@@ -425,14 +446,6 @@ public class CallRecordModel extends BaseModel {
             ids += callDetails.get(i).getId() + "|";
         }
         return ids.substring(0, ids.length() - 1);
-    }
-
-    public void onRequestPermissionsResult(int requestCode, @NonNull int[] grantResults) {
-        if (requestCode == PermissionUtils.CODE_READ_CALL_LOG) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                invokeCall(clickPosition);
-            }
-        }
     }
 
     public void destroyFragment() {
