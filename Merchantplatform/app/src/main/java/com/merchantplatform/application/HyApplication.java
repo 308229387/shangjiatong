@@ -9,6 +9,7 @@ import com.facebook.stetho.Stetho;
 import com.merchantplatform.BuildConfig;
 import com.okhttputils.OkHttpUtils;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.umeng.LogUmengAgent;
 import com.utils.Constant;
 import com.utils.IMInitAppUtils;
 import com.utils.LoginRegisterUtils;
@@ -44,6 +45,7 @@ public class HyApplication extends MultiDexApplication {
         initIM();
         initBugly();
         initStetho();
+        initUmeng();
     }
 
     private void setApplicationContext() {
@@ -79,6 +81,10 @@ public class HyApplication extends MultiDexApplication {
                         .build());
     }
 
+    private void initUmeng() {
+        LogUmengAgent.init(application);
+    }
+
     public void addActivity(Activity activity) {
         if (!activityList.contains(activity))
             activityList.add(activity);
@@ -112,5 +118,7 @@ public class HyApplication extends MultiDexApplication {
     public void setStartDownService(boolean isStartDownService) {
         this.isStartDownService = isStartDownService;
     }
+
+
 
 }

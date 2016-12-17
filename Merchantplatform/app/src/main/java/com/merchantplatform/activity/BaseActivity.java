@@ -12,6 +12,7 @@ import android.view.WindowManager;
 
 import com.merchantplatform.application.HyApplication;
 import com.merchantplatform.model.BaseModel;
+import com.umeng.analytics.MobclickAgent;
 import com.utils.AppInfoUtils;
 
 /**
@@ -73,6 +74,17 @@ public abstract class BaseActivity<T extends BaseModel> extends AppCompatActivit
 
     private void remove(Activity context) {
         HyApplication.getInstance().removeActivity(context);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
 }
