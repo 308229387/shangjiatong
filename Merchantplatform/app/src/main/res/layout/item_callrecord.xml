@@ -70,27 +70,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="14dp"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="7dp"
+                    android:layout_marginLeft="2dp"
                     android:layout_toRightOf="@+id/iv_phoneState"
                     android:gravity="center"
                     android:textColor="@color/item_call_city"
-                    android:textSize="11sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tv_call_cate"
                     android:layout_width="wrap_content"
-                    android:layout_height="18dp"
+                    android:layout_height="14dp"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_toRightOf="@+id/tv_phone_city"
-                    android:background="@drawable/item_cate_background"
                     android:gravity="center"
-                    android:paddingBottom="1dp"
-                    android:paddingLeft="3dp"
-                    android:paddingRight="3dp"
-                    android:paddingTop="1dp"
                     android:textColor="@color/tab_unselected_text"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
                 <ImageView
                     android:id="@+id/iv_call_detail"

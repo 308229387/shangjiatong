@@ -12,7 +12,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="172dp">
+        android:layout_height="172dp"
+        android:background="@color/white">
 
         <com.Utils.CircleImageView
             android:id="@+id/iv_call_detail_user"
@@ -29,7 +30,7 @@
             android:layout_below="@+id/iv_call_detail_user"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="18dp"
-            android:textColor="@color/item_call_delete"
+            android:textColor="@color/black"
             android:textSize="20sp" />
 
         <LinearLayout
@@ -44,18 +45,20 @@
             <TextView
                 android:id="@+id/tv_call_detail_local"
                 android:layout_width="wrap_content"
-                android:layout_height="14dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:gravity="center"
                 android:textColor="@color/item_call_city"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tv_call_detail_cate"
                 android:layout_width="wrap_content"
-                android:layout_height="14dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:gravity="center"
                 android:textColor="@color/item_call_city"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
         </LinearLayout>
     </RelativeLayout>
@@ -82,7 +85,7 @@
         <TextView
             android:id="@+id/tv_call_detail_date"
             android:layout_width="wrap_content"
-            android:layout_height="16dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:textColor="@color/item_call_phone"
             android:textSize="16sp" />

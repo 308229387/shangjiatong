@@ -33,6 +33,7 @@ public class CallRecordFragment extends BaseFragment<CallRecordModel> {
     private void initialize(LayoutInflater inflater, ViewGroup container) {
         model.initView(inflater, container);
         model.setListener();
+        model.registPhoneBroadcast();
     }
 
     private void setTabIndex(int tabIndex) {

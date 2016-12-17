@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.CallLog.Calls;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -64,7 +63,7 @@ public class CallRecordModel extends BaseModel {
     private static final int CALL_OUT_TYPE = 2;
     private static final int CALL_RESULT_OK = 10;
     private static final int CALL_RESULT_FAILURE = 20;
-    private int clickPosition;
+    private CallList clickCallList;
 
     public CallRecordModel(CallRecordFragment context) {
         this.context = context;
@@ -85,6 +84,10 @@ public class CallRecordModel extends BaseModel {
     public void setListener() {
         mXRecyclerView.setLoadingListener(new RecyclerViewLoadingListener());
         emptyView.setOnClickListener(new OnClickEmptyViewListener());
+    }
+
+    public void registPhoneBroadcast() {
+        PhoneReceiver.addToMonitor(interaction);
     }
 
     public void setTabIndex(int tabIndex) {
@@ -358,7 +361,7 @@ public class CallRecordModel extends BaseModel {
     }
 
     private void makeACall(final int position) {
-        clickPosition = position;
+        clickCallList = listData.get(position);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PermissionUtils.requestPermission(context.getActivity(), PermissionUtils.CODE_READ_CALL_LOG, new PermissionUtils.PermissionGrant() {
                 @Override
@@ -374,11 +377,33 @@ public class CallRecordModel extends BaseModel {
     }
 
     private void invokeCall(int position) {
-        PhoneReceiver.addToMonitor(interaction);
-        upLoadUserCallLog(getUserCallLog(clickPosition));
+//        deleteThisRecord(position);
         String phoneNum = listData.get(position).getPhone();
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + phoneNum));
         context.startActivity(intent);
+    }
+
+    private void deleteThisRecord(int position) {
+        deleteFromCallList(position);
+        deleteFromCallDetail(position);
+        deleteFromAdapterList(position);
+    }
+
+    private void deleteFromCallList(int position) {
+        CallListDaoOperate.deleteData(context.getContext(), listData.get(position));
+    }
+
+    private void deleteFromCallDetail(int position) {
+        ArrayList<CallDetail> details = getDetailByList(listData.get(position));
+        for (CallDetail detail : details) {
+            detail.setIsDeleted(true);
+            CallDetailDaoOperate.updateData(context.getContext(), detail);
+        }
+    }
+
+    private void deleteFromAdapterList(int position) {
+        listData.remove(position);
+        mAdapter.notifyDataSetChanged();
     }
 
     PhoneReceiver.BRInteraction interaction = new PhoneReceiver.BRInteraction() {
@@ -392,6 +417,12 @@ public class CallRecordModel extends BaseModel {
             } else if (action.equals(PhoneReceiver.CALL_OUT)) { //呼出
                 Logger.e("监听到了呼出");
             }
+        }
+
+        @Override
+        public void afterCallOut() {
+            Logger.e("检测到了去电后挂断");
+            //upLoadUserCallLog(getUserCallLog(clickCallList));
         }
     };
 
@@ -408,19 +439,19 @@ public class CallRecordModel extends BaseModel {
         }
     }
 
-    private UserCallRecordBean getUserCallLog(int position) {
+    private UserCallRecordBean getUserCallLog(CallList clickCallList) {
         if (ContextCompat.checkSelfPermission(context.getContext(), Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
             return null;
         }
         Cursor cursor = context.getContext().getContentResolver().query(Calls.CONTENT_URI, new String[]{Calls.NUMBER, Calls.DATE, Calls.DURATION}, null, null, Calls.DEFAULT_SORT_ORDER);
         if (cursor != null && cursor.moveToFirst()) {
             String numberInCursor = cursor.getString(cursor.getColumnIndex(Calls.NUMBER));
-            if (numberInCursor.equals(listData.get(position).getPhone())) {
+            if (numberInCursor.equals(clickCallList.getPhone())) {
                 UserCallRecordBean userCallRecordBean = new UserCallRecordBean();
                 long beginTime = Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow(Calls.DATE)));
                 long duration = Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow(Calls.DURATION))) * 1000;
                 userCallRecordBean.setBackTime(CallDetailDaoOperate.queryMaxBackTime(context.getContext()));
-                userCallRecordBean.setIds(getIdsFromDetail(getDetailByList(listData.get(position))));
+                userCallRecordBean.setIds(getIdsFromDetail(getDetailByList(clickCallList)));
                 userCallRecordBean.setRecordState(duration == 0 ? 20 : 10);
                 userCallRecordBean.setBeginTime(beginTime);
                 userCallRecordBean.setEndTime(beginTime + duration);
@@ -437,7 +468,13 @@ public class CallRecordModel extends BaseModel {
         WhereCondition conditionDate = new WhereCondition.StringCondition("date(CALL_TIME)='" + date_Day + "'");
         WhereCondition conditionIsDeleted = CallDetailDao.Properties.IsDeleted.eq(false);
         WhereCondition conditionPhone = CallDetailDao.Properties.Phone.eq(callList.getPhone());
-        return CallDetailDaoOperate.queryByCondition(context.getContext(), conditionId, conditionDate, conditionIsDeleted, conditionPhone);
+        WhereCondition conditionType = CallDetailDao.Properties.Type.eq(callList.getType());
+        if (callList.getType() == 1) {
+            WhereCondition conditionResult = CallDetailDao.Properties.CallResult.eq(callList.getCallResult());
+            return CallDetailDaoOperate.queryByCondition(context.getContext(), conditionId, conditionDate, conditionIsDeleted, conditionPhone, conditionType, conditionResult);
+        } else {
+            return CallDetailDaoOperate.queryByCondition(context.getContext(), conditionId, conditionDate, conditionIsDeleted, conditionPhone, conditionType);
+        }
     }
 
     private String getIdsFromDetail(ArrayList<CallDetail> callDetails) {

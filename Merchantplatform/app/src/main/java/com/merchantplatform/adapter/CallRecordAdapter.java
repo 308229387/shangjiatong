@@ -42,7 +42,7 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
                 .setText(R.id.tv_phoneNum, callList.getPhone())
                 .setTextColor(R.id.tv_phoneNum, callList.getCallResult() == 10 ? context.getResources().getColor(R.color.item_call_phone) : context.getResources().getColor(R.color.item_call_delete))
                 .setText(R.id.tv_phone_city, callList.getLocal())
-                .setText(R.id.tv_call_cate, callList.getCate())
+                .setText(R.id.tv_call_cate, "咨询类别-" + callList.getCate())
                 .setText(R.id.tv_call_time, DateUtils.displayByDateTime(callList.getCallTime()))
                 .setTag(R.id.iv_call_detail, position)
                 .setOnClickListener(R.id.iv_call_detail, new OnDetailClickListener())

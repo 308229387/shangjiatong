@@ -54,25 +54,23 @@ public class CallDetailModel extends BaseModel {
     }
 
     public void initAdapter() {
-        detailList = new ArrayList<>();
         detailAdapter = new CallDetailAdapter(context, detailList);
         rv_call_detail.setAdapter(detailAdapter);
     }
 
     public void initData(Intent intent) {
         if (intent != null) {
-            String phoneNum = intent.getStringExtra("phoneNum");
-            String local = intent.getStringExtra("local");
-            String cate = intent.getStringExtra("cate");
-            String date = intent.getStringExtra("date");
             Bundle bundle = intent.getBundleExtra("detailList");
+            String phoneNum = bundle.getString("phoneNum");
+            String local = bundle.getString("local");
+            String cate = bundle.getString("cate");
+            String date = bundle.getString("date");
             ArrayList<CallDetailListBean> detailListBeen = bundle.getParcelableArrayList("detailList");
             tv_call_detail_phone.setText(phoneNum);
             tv_call_detail_local.setText(local);
-            tv_call_detail_cate.setText(cate);
+            tv_call_detail_cate.setText("咨询类别-" + cate);
             tv_call_detail_date.setText(date);
-            detailList.addAll(detailListBeen);
-            detailAdapter.notifyDataSetChanged();
+            detailList = detailListBeen;
         }
     }
 

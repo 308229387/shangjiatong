@@ -11,7 +11,7 @@ public class CallDetailActivity extends BaseActivity<CallDetailModel> {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_call_record);
+        setContentView(R.layout.activity_call_detail);
         initView();
         initData(getIntent());
     }
@@ -23,8 +23,8 @@ public class CallDetailActivity extends BaseActivity<CallDetailModel> {
     }
 
     private void initData(Intent intent) {
-        model.initAdapter();
         model.initData(intent);
+        model.initAdapter();
     }
 
     @Override
