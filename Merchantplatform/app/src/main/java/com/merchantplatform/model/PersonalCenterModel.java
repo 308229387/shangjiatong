@@ -32,7 +32,7 @@ import okhttp3.Response;
 public class PersonalCenterModel extends BaseModel implements View.OnClickListener{
     private PersonalCenterFragment context;
     private View view;
-    private TextView tv_Personal_center,tv_personal_userPhone;
+    private TextView tv_personal_userPhone;
     private CircleImageView iv_personal_user;
     private RelativeLayout rl_personal_funding, rl_personal_setting;
 
@@ -46,20 +46,10 @@ public class PersonalCenterModel extends BaseModel implements View.OnClickListen
     }
 
     public void initView(){
-        tv_Personal_center = (TextView) view.findViewById(R.id.tv_Personal_center);
         tv_personal_userPhone = (TextView) view.findViewById(R.id.tv_personal_userPhone);
         iv_personal_user = (CircleImageView) view.findViewById(R.id.iv_personal_user);
         rl_personal_funding = (RelativeLayout) view.findViewById(R.id.rl_personal_funding);
         rl_personal_setting = (RelativeLayout) view.findViewById(R.id.rl_personal_setting);
-    }
-
-
-    public void setHeaderHeight() {
-            int height = DisplayUtils.getStatusBarHeight(context.getActivity());
-            int more = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, context.getResources().getDisplayMetrics());
-            if (tv_Personal_center != null) {
-                tv_Personal_center.setPadding(0, height + more, 0, 0);
-            }
     }
 
     public void initData(){

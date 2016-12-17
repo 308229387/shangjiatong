@@ -48,12 +48,12 @@ public class LoginActivityModel extends BaseModel {
                 if (isSuccess && loginSDKBean != null) {
                     loginPassrotSuccess();
                     UserUtils.setUserId(context, loginSDKBean.getUserId());
+                    //new IMLoginUtils(context);
                 }
 
                 if (isPassportLoginFail(loginSDKBean)) {
                     context.finish();
                 }
-//                new IMLoginUtils(context);
             }
         };
     }

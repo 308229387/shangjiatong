@@ -24,7 +24,6 @@ public class PersonalCenterFragment extends BaseFragment<PersonalCenterModel> {
     private void initializationLayout(LayoutInflater inflater, ViewGroup container) {
         model.createView(inflater, container);
         model.initView();
-        model.setHeaderHeight();
         model.initData();
         model.setListener();
     }

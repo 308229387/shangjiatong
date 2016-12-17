@@ -7,6 +7,7 @@ import android.view.Window;
 
 
 import com.okhttputils.request.BaseRequest;
+import com.utils.ToastUtils;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -59,5 +60,11 @@ public abstract class DialogCallback<T> extends JsonCallback<T> {
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
+    }
+
+    @Override
+    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+        super.onError(isFromCache, call, response, e);
+        ToastUtils.showToast(e.getMessage());
     }
 }
