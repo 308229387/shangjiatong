@@ -115,9 +115,6 @@ public class IMLoginUtils {
                 @Override
                 public void done(int i, String s) {
                     GmacsManager.getInstance().startGmacs(new MessageNotifyHelper());
-
-                        context.startActivity(new Intent(context, HomepageActivity.class));
-
                 }
             });
         }
