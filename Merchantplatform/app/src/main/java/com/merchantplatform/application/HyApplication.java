@@ -101,6 +101,18 @@ public class HyApplication extends MultiDexApplication {
             activityList.remove(context);
     }
 
+    public void removeOtherActivity(Activity context) {
+        try {
+            for (Activity activity : activityList) {
+                if (activity != context) {
+                    activity.finish();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static Context getApplication() {
         return application;
     }

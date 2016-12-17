@@ -245,4 +245,14 @@ public class StringUtil {
         boolean b = m.matches();
         return b;
     }
+
+    /**  比较两个Version的大小*/
+    public static boolean compareVersion(String version,String curVersion){
+        return Integer.parseInt(version) > Integer.parseInt(curVersion);
+    }
+
+    /**  比较两个Version的大小*/
+    public static boolean compareVersion(int version,int curVersion){
+        return version > curVersion;
+    }
 }

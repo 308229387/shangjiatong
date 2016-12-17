@@ -1,18 +1,31 @@
 package com.merchantplatform.model;
 
+import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
 import com.android.gmacs.fragment.ConversationListFragment;
+import com.callback.DialogCallback;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.HomepageActivity;
+import com.merchantplatform.bean.GlobalResponse;
 import com.merchantplatform.fragment.BaseFragment;
 import com.merchantplatform.fragment.Fragment1;
 import com.merchantplatform.fragment.CallMessageFragment;
 import com.merchantplatform.fragment.Fragment3;
 import com.merchantplatform.fragment.PersonalCenterFragment;
+import com.merchantplatform.service.AppDownloadService;
+import com.okhttputils.OkHttpUtils;
 import com.ui.HomepageBottomButton;
+import com.utils.AppInfoUtils;
+import com.utils.StringUtil;
+import com.utils.Urls;
+
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by SongYongmeng on 2016/11/24.
@@ -102,6 +115,11 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         switchFragment(fragment);
     }
 
+    public void getGlobalParams(){
+        OkHttpUtils.get(Urls.GLOBAL_PARAMS)
+                .execute(new globalCallback(context));
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -116,6 +134,31 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
                 break;
             default:
                 break;
+        }
+    }
+
+    private class globalCallback extends DialogCallback<GlobalResponse>{
+
+        public globalCallback(Activity activity) {
+            super(activity);
+        }
+
+        @Override
+        public void onResponse(boolean isFromCache, GlobalResponse globalResponse, Request request, @Nullable Response response) {
+            if(globalResponse != null){
+                String appUrl = globalResponse.getData().getAppUrl();
+                String version = globalResponse.getData().getVersion();
+                try {
+                   int  currentVersionNum = Integer.parseInt(AppInfoUtils.getVersionCode(context));
+                   int  versionNum = Integer.parseInt(version);
+                    boolean isUpdate = StringUtil.compareVersion(versionNum,currentVersionNum);
+                    if(isUpdate){
+                        AppDownloadService.startService(context, appUrl);
+                    }
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 

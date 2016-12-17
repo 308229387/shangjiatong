@@ -75,4 +75,13 @@ public class Urls {
      * 退出登录
      */
     public static final String LOGOUT = BASE_URL_GLOBAL + "logout";
+    /**
+     * 登录
+     */
+    public static final String LOGIN = BASE_URL_GLOBAL + "login";
+    /**
+     * 获取app全局参数
+     */
+   public static final String GLOBAL_PARAMS= BASE_URL_GLOBAL + "params";
+
 }

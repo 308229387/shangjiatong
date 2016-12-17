@@ -21,6 +21,7 @@ import com.Utils.TitleBar;
 import com.utils.PageSwitchUtils;
 import com.utils.ToastUtils;
 import com.utils.Urls;
+import com.wuba.loginsdk.external.LoginClient;
 
 import java.util.Arrays;
 
@@ -127,6 +128,7 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
                     public void onClick(String value) {
                         if (value.equals("退出登录")) {
                             logout();
+                            setLogoutStateToPPU();
                             goToLogin();
                         }
                     }
@@ -137,6 +139,10 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
     private void logout(){
         OkHttpUtils.get(Urls.LOGOUT)
                 .execute(new logoutCallback(context));
+    }
+
+    private void setLogoutStateToPPU() {
+        LoginClient.doLogoutOperate(context);
     }
 
     private void goToLogin() {
@@ -153,5 +159,7 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
 
         }
     }
+
+
 
 }

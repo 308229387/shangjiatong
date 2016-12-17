@@ -266,11 +266,21 @@ public class PermissionUtils {
      * 获取手机IMEI设备号
      * @param activity
      */
-    public static void getIMEIPermission(Activity activity){
+    public static void getIMEIPermission(final Activity activity){
 
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
             if (ContextCompat.checkSelfPermission(activity, PERMISSION_READ_PHONE_STATE) == PackageManager.PERMISSION_DENIED) {
-                ActivityCompat.requestPermissions(activity, new String[]{PERMISSION_READ_PHONE_STATE}, CODE_READ_PHONE_STATE);
+                if (ActivityCompat.shouldShowRequestPermissionRationale(activity, PERMISSION_READ_PHONE_STATE)) {
+                    showMessageOKCancel(activity, "说明：" + PERMISSION_READ_PHONE_STATE, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions(activity, new String[]{PERMISSION_READ_PHONE_STATE}, CODE_READ_PHONE_STATE);
+                        }
+                    });
+                } else {
+                    ActivityCompat.requestPermissions(activity, new String[]{PERMISSION_READ_PHONE_STATE}, CODE_READ_PHONE_STATE);
+                }
+
             }else{
                 AppInfoUtils.getIMEI(activity);
             }

@@ -23,6 +23,7 @@ import com.utils.PageSwitchUtils;
 import com.utils.StringUtil;
 import com.utils.ToastUtils;
 import com.utils.Urls;
+import com.utils.UserUtils;
 
 import okhttp3.Request;
 import okhttp3.Response;
@@ -174,7 +175,7 @@ public class MobileValidateActivityModel extends BaseModel implements View.OnCli
     }
 
     private void setValidate(){
-//        UserUtils.hasValidate(context);
+        UserUtils.hasValidate(context);
     }
 
     private class getCodeCallback extends DialogCallback<GetCodeResponse>{
@@ -188,14 +189,15 @@ public class MobileValidateActivityModel extends BaseModel implements View.OnCli
         public void onResponse(boolean isFromCache, GetCodeResponse getCodeResponse, Request request, @Nullable Response response) {
             String status = getCodeResponse.getData().getStatus();
             String message = getCodeResponse.getData().getMsg();
+            if (!TextUtils.isEmpty(status) && !TextUtils.isEmpty(message)) {
+                if (TextUtils.equals(status, SUCCESS)) {
+                    ToastUtils.makeImgAndTextToast(context, context.getString(R.string.validate_code_already_send), R.mipmap.validate_done, Toast.LENGTH_SHORT).show();
+                    countdown();
+                } else if (TextUtils.equals(status, FAILURE)) {
+                    ToastUtils.makeImgAndTextToast(context, message, R.mipmap.validate_done, Toast.LENGTH_SHORT).show();
+                }
+            }
 
-            if(TextUtils.equals(status, SUCCESS)){
-                ToastUtils.makeImgAndTextToast(context, context.getString(R.string.validate_code_already_send), R.mipmap.validate_done, Toast.LENGTH_SHORT).show();
-                countdown();
-            }
-            else if(TextUtils.equals(status,FAILURE) && !TextUtils.isEmpty(message)){
-                ToastUtils.makeImgAndTextToast(context, message, R.mipmap.validate_done, Toast.LENGTH_SHORT).show();
-            }
 
         }
     }

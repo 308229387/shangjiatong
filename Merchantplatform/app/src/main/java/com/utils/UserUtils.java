@@ -13,10 +13,12 @@ import com.merchantplatform.application.HyApplication;
 public class UserUtils {
     private static final String USER_SP_NAME = "user";
     private static final String USER_ID = "userId";
+    private static final String USER_VALIDATE = "validate";
     private static final String USER_FACE = "face";
     private static final String USER_NAME = "name";
     private static final String USER_MOBILE = "mobile";
     private static String userId = "";
+    public static int hasValidate = 0; //默认未认证，1代表已经认证
     private static String face = "";
     private static String name = "";
     private static String mobile = "";
@@ -32,6 +34,29 @@ public class UserUtils {
             userId = HyApplication.getApplication().getSharedPreferences(USER_SP_NAME, 0).getString(USER_ID, "");
         }
         return userId;
+    }
+
+    /**
+     * 手机号已验证
+     * @param context
+     */
+    public static void hasValidate(Context context){
+        SharedPreferences sp = context.getSharedPreferences(USER_SP_NAME, 0);
+        hasValidate = 1;
+        sp.edit().putInt(USER_VALIDATE, hasValidate).commit();
+    }
+    /**
+     * 手机号是否得到验证
+     * @param context
+     * @return
+     */
+    public static boolean isValidate(Context context){
+        hasValidate = context.getSharedPreferences(USER_SP_NAME, 0).getInt(USER_VALIDATE, 0);
+
+        if(hasValidate == 1){
+            return true;
+        }
+        return false;
     }
 
     public static void setFace(Context context, String face) {
