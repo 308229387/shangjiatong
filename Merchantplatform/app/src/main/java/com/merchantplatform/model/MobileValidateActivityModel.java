@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,9 +13,13 @@ import android.widget.Toast;
 
 import com.callback.DialogCallback;
 import com.merchantplatform.R;
+import com.merchantplatform.activity.HomepageActivity;
 import com.merchantplatform.activity.MobileValidateActivity;
+import com.merchantplatform.bean.BindMobileResponse;
+import com.merchantplatform.bean.GetCodeResponse;
 import com.okhttputils.OkHttpUtils;
 import com.Utils.TitleBar;
+import com.utils.PageSwitchUtils;
 import com.utils.StringUtil;
 import com.utils.ToastUtils;
 import com.utils.Urls;
@@ -34,6 +39,8 @@ public class MobileValidateActivityModel extends BaseModel implements View.OnCli
     private EditText validate_mobile ,validate_code;
     private Button validate_getcode,commit;
 
+    private static final String FAILURE = "1";//异常
+    private  static final String SUCCESS = "0";//成功
     private int countDownTime;
 
     private Handler handler = new Handler();
@@ -97,9 +104,9 @@ public class MobileValidateActivityModel extends BaseModel implements View.OnCli
         }
     }
 
-    private void getCode(String mobile){
-        OkHttpUtils.get(Urls.GET_VALIDE_CODE)
-                .params("","")
+    private void getCode(String phone){
+        OkHttpUtils.get(Urls.GET_VALIDATE_CODE)
+                .params("phone",phone)
                 .execute(new getCodeCallback(context));
     }
 
@@ -140,35 +147,60 @@ public class MobileValidateActivityModel extends BaseModel implements View.OnCli
             ToastUtils.makeImgAndTextToast(context, "请输入正确的验证码", R.mipmap.validate_error, Toast.LENGTH_SHORT).show();
         }
         else{
-            validate();
+            validate(mobiletext,codetext);
         }
 
     }
 
-    private  void validate(){
+    private  void validate(String phone,String code){
         OkHttpUtils.get(Urls.VALIDATE)
-                .params("","")
-                .params("","")
+                .params("phone",phone)
+                .params("code",code)
                 .execute(new validateCallback(context));
     }
 
     private void validateSuccess(){
+        goToHomePage();
+        finishSelf();
+        setValidate();
+    }
+
+    private void goToHomePage(){
+        PageSwitchUtils.goToActivity(context, HomepageActivity.class);
+    }
+
+    private void finishSelf(){
         context.finish();
     }
 
-    private class getCodeCallback extends DialogCallback<String>{
+    private void setValidate(){
+//        UserUtils.hasValidate(context);
+    }
+
+    private class getCodeCallback extends DialogCallback<GetCodeResponse>{
 
         public getCodeCallback(Activity activity) {
             super(activity);
         }
 
+
         @Override
-        public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
+        public void onResponse(boolean isFromCache, GetCodeResponse getCodeResponse, Request request, @Nullable Response response) {
+            String status = getCodeResponse.getData().getStatus();
+            String message = getCodeResponse.getData().getMsg();
+
+            if(TextUtils.equals(status, SUCCESS)){
+                ToastUtils.makeImgAndTextToast(context, context.getString(R.string.validate_code_already_send), R.mipmap.validate_done, Toast.LENGTH_SHORT).show();
+                countdown();
+            }
+            else if(TextUtils.equals(status,FAILURE) && !TextUtils.isEmpty(message)){
+                ToastUtils.makeImgAndTextToast(context, message, R.mipmap.validate_done, Toast.LENGTH_SHORT).show();
+            }
 
         }
     }
 
-    private class validateCallback extends DialogCallback<String>{
+    private class validateCallback extends DialogCallback<BindMobileResponse>{
 
 
         public validateCallback(Activity activity) {
@@ -176,8 +208,16 @@ public class MobileValidateActivityModel extends BaseModel implements View.OnCli
         }
 
         @Override
-        public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
+        public void onResponse(boolean isFromCache, BindMobileResponse bindMobileResponse, Request request, @Nullable Response response) {
+            String status = bindMobileResponse.getData().getStatus();
+            String message = bindMobileResponse.getData().getMsg();
 
+            if(TextUtils.equals(status,SUCCESS)){
+                validateSuccess();
+            } else{
+                if(!TextUtils.isEmpty(message))
+                ToastUtils.makeImgAndTextToast(context, message, R.mipmap.validate_error, 0).show();
+            }
         }
     }
 }

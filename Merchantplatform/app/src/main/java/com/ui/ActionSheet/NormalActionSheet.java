@@ -94,7 +94,7 @@ public class NormalActionSheet extends ActionSheet {
 
                 ColorStateList csl = mContext.getResources().getColorStateList(R.color.alertdialog_text);
                 textView.setTextColor(csl);
-                textView.setTextSize(mContext.getResources().getDimension(R.dimen.common_text_size_10));
+                textView.setTextSize(mContext.getResources().getDimension(R.dimen.common_text_size_9));
                 // 高度
                 float scale = mContext.getResources().getDisplayMetrics().density;
                 int height = (int)(45 * scale + 0.5F);

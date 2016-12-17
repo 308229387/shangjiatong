@@ -15,6 +15,7 @@ import com.callback.DialogCallback;
 import com.dataStore.AppPrefersUtil;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.SettingFeedbackActivity;
+import com.merchantplatform.bean.FeedbackResponse;
 import com.okhttputils.OkHttpUtils;
 import com.Utils.TitleBar;
 import com.utils.KeyboardUtil;
@@ -104,7 +105,8 @@ public class SettingFeedbackActivityModel extends BaseModel{
         }
 
         OkHttpUtils.get(Urls.PERSONAL_FEEDBACK)
-                .params("","")
+                .params("suggest",content)
+                .params("phone",contact)
                 .execute(new feedbackCallback(context));
     }
 
@@ -199,29 +201,22 @@ public class SettingFeedbackActivityModel extends BaseModel{
         }
     }
 
-    private class feedbackCallback extends DialogCallback<String>{
+    private class feedbackCallback extends DialogCallback<FeedbackResponse>{
         public feedbackCallback(Activity activity) {
             super(activity);
         }
 
         @Override
-        public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
-            ToastUtils.showToast(context.getString(R.string.feedback_submit_success));
-            if (tb_feedback_title != null) {
-                mSaveFlag = false;
-                context.finish();
-            }
-        }
-
-        @Override
-        public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-            if (e == null) {
-                ToastUtils.showToast(context.getString(R.string.feedback_submit_error));
-            } else {
-                ToastUtils.showToast(e.getMessage());
+        public void onResponse(boolean isFromCache, FeedbackResponse feedbackResponse, Request request, @Nullable Response response) {
+            if(feedbackResponse != null){
+               String message = feedbackResponse.getData().getMsg();
+               if(!StringUtil.isEmpty(message)){
+                   ToastUtils.showToast(message);
+                   mSaveFlag = false;
+                   context.finish();
+               }
             }
 
-            context.finish();
         }
     }
 

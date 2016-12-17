@@ -19,9 +19,13 @@ public class Urls {
      */
     public static final String URL_METHOD = BASE_URL + "test";
     /**
-     * 基础Url_APP_MYCENTER
+     * 基础Url_APP_mycenter
      */
-    public static final String BASE_URL_MYCENTER =BASE_URL_APP + " mycenter/";
+    public static final String BASE_URL_MYCENTER =BASE_URL_APP + "mycenter/";
+    /**
+     * 基础url_app_global
+     */
+    public static final String BASE_URL_GLOBAL = BASE_URL_APP + "global/";
     /**
      * im获取登陆token
      */
@@ -47,13 +51,28 @@ public class Urls {
      */
     public static final String RECHARGE_NOTIFY_URL = "http://paycenter.58.com";
 
-    public static final String PERSONAL_FEEDBACK = "";
-
-    public static final String GET_VALIDE_CODE = "";
-
-    public static final String VALIDATE = "";
     /**
      * 个人中心获取用户基本信息
      */
     public static final String PERSONAL_CENTER = BASE_URL_MYCENTER + "userbasicinfo";
+    /**
+     * 个人中心提交意见反馈
+     */
+    public static final String PERSONAL_FEEDBACK = BASE_URL_MYCENTER + "suggest";
+    /**
+     * 获取短信验证码
+     */
+    public static final String GET_VALIDATE_CODE = BASE_URL_GLOBAL +"sendcode";
+    /**
+     * 首次绑定手机号
+     */
+    public static final String VALIDATE =  BASE_URL_MYCENTER + "bindphone";
+    /**
+     * 更改绑定手机号
+     */
+    public static final String UPDATE_MOBILE = BASE_URL_MYCENTER + "updatephone";
+    /**
+     * 退出登录
+     */
+    public static final String LOGOUT = BASE_URL_GLOBAL + "logout";
 }

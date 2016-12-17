@@ -8,4 +8,34 @@ import java.io.Serializable;
 
 public class UserInfoResponse implements Serializable {
 
+    private bean data;
+
+    public bean getData() {
+        return data;
+    }
+
+    public void setData(bean data) {
+        this.data = data;
+    }
+
+    public class bean implements Serializable{
+        private String phone;
+        private String sex;
+
+        public String getSex() {
+            return sex;
+        }
+
+        public void setSex(String sex) {
+            this.sex = sex;
+        }
+
+        public String getPhone() {
+            return phone;
+        }
+
+        public void setPhone(String phone) {
+            this.phone = phone;
+        }
+    }
 }

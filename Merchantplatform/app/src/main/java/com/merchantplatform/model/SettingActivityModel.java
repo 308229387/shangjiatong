@@ -1,21 +1,31 @@
 package com.merchantplatform.model;
 
+import android.app.Activity;
 import android.graphics.Color;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.alipay.sdk.util.LogUtils;
+import com.callback.DialogCallback;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.AboutActivity;
+import com.merchantplatform.activity.LoginActivity;
 import com.merchantplatform.activity.SettingActivity;
 import com.merchantplatform.activity.PersonalSettingActivity;
 import com.merchantplatform.activity.SettingFeedbackActivity;
 import com.merchantplatform.activity.SettingPushActivity;
+import com.okhttputils.OkHttpUtils;
 import com.ui.ActionSheet.NormalActionSheet;
 import com.Utils.TitleBar;
 import com.utils.PageSwitchUtils;
 import com.utils.ToastUtils;
+import com.utils.Urls;
 
 import java.util.Arrays;
+
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by 58 on 2016/12/8.
@@ -87,7 +97,7 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
                 goToSettingAboutActivity();
                 break;
             case R.id.rl_setting_exit:
-                logout();
+                exit();
                 break;
         }
     }
@@ -109,16 +119,39 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
         PageSwitchUtils.goToActivity(context,AboutActivity.class);
     }
 
-    private void logout() {
+    private void exit() {
         NormalActionSheet as = new NormalActionSheet(context);
         as.builder().setTitle("是否确定退出登录").setItems(Arrays.asList(otherLables)).
                 setListener(new NormalActionSheet.OnNormalItemClickListener() {
                     @Override
                     public void onClick(String value) {
                         if (value.equals("退出登录")) {
-                            ToastUtils.showToast("tuichudengl");
+                            logout();
+                            goToLogin();
                         }
                     }
                 }).show();
     }
+
+
+    private void logout(){
+        OkHttpUtils.get(Urls.LOGOUT)
+                .execute(new logoutCallback(context));
+    }
+
+    private void goToLogin() {
+        PageSwitchUtils.goToActivity(context, LoginActivity.class);
+    }
+
+    private class logoutCallback extends DialogCallback<String> {
+
+        public logoutCallback(Activity activity) {
+            super(activity);
+        }
+        @Override
+        public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
+
+        }
+    }
+
 }

@@ -9,15 +9,19 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.Utils.CircleImageView;
 import com.callback.DialogCallback;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.FundingManageActivity;
 import com.merchantplatform.activity.SettingActivity;
+import com.merchantplatform.bean.UserInfoResponse;
 import com.merchantplatform.fragment.PersonalCenterFragment;
 import com.okhttputils.OkHttpUtils;
 import com.utils.DisplayUtils;
 import com.utils.PageSwitchUtils;
+import com.utils.StringUtil;
 import com.utils.Urls;
+import com.utils.UserUtils;
 
 import okhttp3.Request;
 import okhttp3.Response;
@@ -29,6 +33,7 @@ public class PersonalCenterModel extends BaseModel implements View.OnClickListen
     private PersonalCenterFragment context;
     private View view;
     private TextView tv_Personal_center,tv_personal_userPhone;
+    private CircleImageView iv_personal_user;
     private RelativeLayout rl_personal_funding, rl_personal_setting;
 
 
@@ -43,6 +48,7 @@ public class PersonalCenterModel extends BaseModel implements View.OnClickListen
     public void initView(){
         tv_Personal_center = (TextView) view.findViewById(R.id.tv_Personal_center);
         tv_personal_userPhone = (TextView) view.findViewById(R.id.tv_personal_userPhone);
+        iv_personal_user = (CircleImageView) view.findViewById(R.id.iv_personal_user);
         rl_personal_funding = (RelativeLayout) view.findViewById(R.id.rl_personal_funding);
         rl_personal_setting = (RelativeLayout) view.findViewById(R.id.rl_personal_setting);
     }
@@ -95,15 +101,31 @@ public class PersonalCenterModel extends BaseModel implements View.OnClickListen
         PageSwitchUtils.goToActivity(context.getActivity(),SettingActivity.class);
     }
 
-    private class userInfoCallback extends DialogCallback<String>{
+    private class userInfoCallback extends DialogCallback<UserInfoResponse>{
 
         public userInfoCallback(Activity activity) {
             super(activity);
         }
 
         @Override
-        public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
+        public void onResponse(boolean isFromCache, UserInfoResponse userInfoResponse, Request request, @Nullable Response response) {
+            if(userInfoResponse != null){
+                String phone = userInfoResponse.getData().getPhone();
+                String sex = userInfoResponse.getData().getSex();
 
+                if(!StringUtil.isEmpty(phone)){
+                    tv_personal_userPhone.setText(phone);
+                    UserUtils.setMobile(context.getContext(),phone);
+                }
+
+                if(!StringUtil.isEmpty(sex)){
+                    if(StringUtil.isEqual("2",sex)){
+                        iv_personal_user.setImageResource(R.mipmap.iv_girl_user);
+                    }else{
+                        iv_personal_user.setImageResource(R.mipmap.iv_boy_user);
+                    }
+                }
+            }
         }
     }
 

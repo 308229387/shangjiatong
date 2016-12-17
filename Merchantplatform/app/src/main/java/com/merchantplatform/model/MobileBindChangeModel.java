@@ -1,8 +1,11 @@
 package com.merchantplatform.model;
 
+
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -10,14 +13,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.Utils.TitleBar;
+import com.callback.DialogCallback;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.MobileBindChangeActivity;
-import com.Utils.TitleBar;
-import com.utils.Constant;
+import com.merchantplatform.bean.GetCodeResponse;
+import com.merchantplatform.bean.UpdateMobileResponse;
+import com.okhttputils.OkHttpUtils;
 import com.utils.StringUtil;
 import com.utils.ToastUtils;
+import com.utils.Urls;
 import com.utils.UserUtils;
+
+import okhttp3.Request;
+import okhttp3.Response;
+
 
 /**
  * Created by 58 on 2016/12/9.
@@ -30,6 +42,9 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
     private EditText et_now_bind_mobile, et_now_validate_code, et_new_validate_mobile;
     private TextView tv_new_mobile_alert;
     private Button btn_getCode, btn_submit;
+
+    private static final String FAILURE = "1";//重复获取验证码
+    private  static final String SUCCESS = "0";//成功
 
     private String mobile;
 
@@ -53,8 +68,8 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
 
     public void initData(){
         initTitleData();
-        getMobile();
         setNowBindMobile();
+        setSubmitState();
     }
 
     private void initTitleData() {
@@ -77,9 +92,6 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
         });
     }
 
-    private void getMobile(){
-        mobile = context.getIntent().getStringExtra(Constant.MOBILE);
-    }
 
     private void setNowBindMobile(){
         if (TextUtils.isEmpty(mobile)) {
@@ -170,6 +182,7 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_getCode://获取验证码
+                getCode(et_now_bind_mobile.getText().toString());
                 break;
             case R.id.btn_submit://提交
                 submit();
@@ -177,13 +190,27 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
         }
     }
 
+    private void getCode(String phone){
+        OkHttpUtils.get(Urls.GET_VALIDATE_CODE)
+                .params("phone",phone)
+                .execute(new getCodeCallback(context));
+    }
+
     private void submit(){
         if(TextUtils.equals(et_now_bind_mobile.getText().toString(),et_new_validate_mobile.getText().toString())){
             ToastUtils.makeImgAndTextToast(context, "两次修改的手机号不能一致", R.mipmap.validate_error, 0).show();
             return ;
         }else{
-
+            updateMobile(et_now_bind_mobile.getText().toString(), et_new_validate_mobile.getText().toString(), et_now_validate_code.getText().toString());
         }
+    }
+
+    private void updateMobile(String mobile,String newPhone,String code ){
+        OkHttpUtils.get(Urls.UPDATE_MOBILE)
+                .params("oldPhone", mobile)
+                .params("phone", newPhone)
+                .params("code", code)
+                .execute(new updateMobileCallback(context));
     }
 
     private void startCountDown(){
@@ -208,6 +235,51 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
 
         }
     };
+
+
+    private class getCodeCallback extends DialogCallback<GetCodeResponse>{
+
+        public getCodeCallback(Activity activity) {
+            super(activity);
+        }
+
+
+        @Override
+        public void onResponse(boolean isFromCache, GetCodeResponse getCodeResponse, Request request, @Nullable Response response) {
+            String status = getCodeResponse.getData().getStatus();
+            String message = getCodeResponse.getData().getMsg();
+
+            if(TextUtils.equals(status, SUCCESS)){
+                ToastUtils.makeImgAndTextToast(context, context.getString(R.string.validate_code_already_send), R.mipmap.validate_done, Toast.LENGTH_SHORT).show();
+                startCountDown(); //  开始倒计时
+            }
+            else if(TextUtils.equals(status,FAILURE) && !TextUtils.isEmpty(message)){
+                ToastUtils.makeImgAndTextToast(context, message, R.mipmap.validate_done, Toast.LENGTH_SHORT).show();
+            }
+
+        }
+    }
+
+    private class updateMobileCallback extends DialogCallback<UpdateMobileResponse> {
+
+
+        public updateMobileCallback(Activity activity) {
+            super(activity);
+        }
+
+        @Override
+        public void onResponse(boolean isFromCache, UpdateMobileResponse updateMobileResponse, Request request, @Nullable Response response) {
+            String status = updateMobileResponse.getData().getStatus();
+            String message = updateMobileResponse.getData().getMsg();
+            if(TextUtils.equals(status,SUCCESS)){//成功
+                ToastUtils.makeImgAndTextToast(context,"更改成功",R.mipmap.validate_done, Toast.LENGTH_SHORT).show();
+              context.onBackPressed();
+            }else{
+                ToastUtils.makeImgAndTextToast(context,message,R.mipmap.validate_error,Toast.LENGTH_SHORT).show();
+            }
+        }
+
+    }
 
 
 }

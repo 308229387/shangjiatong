@@ -34,8 +34,7 @@
             android:layout_below="@id/iv_personal_user"
             android:layout_centerHorizontal="true"
             android:textSize="@dimen/common_text_size_18"
-            android:textColor="@color/black"
-            android:text="13211183735" />
+            android:textColor="@color/black" />
 
     </RelativeLayout>
 
