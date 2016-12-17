@@ -89,7 +89,7 @@
                 android:id="@+id/now_validate_code_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="验证手机号码"
+                android:text="手机验证号码"
                 android:textColor="@color/black"
                 android:textSize="@dimen/common_text_size_16" />
 

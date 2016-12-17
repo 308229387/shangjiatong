@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="15dp"
             android:text="消息推送"
             android:textColor="@color/black"
             android:textSize="@dimen/common_text_size_16" />
@@ -56,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="15dp"
             android:text="意见反馈"
             android:textColor="@color/black"
             android:textSize="@dimen/common_text_size_16" />
@@ -85,7 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="15dp"
             android:text="账号绑定"
             android:textColor="@color/black"
             android:textSize="@dimen/common_text_size_16" />
@@ -115,7 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="15dp"
             android:text="关于我们"
             android:textColor="@color/black"
             android:textSize="@dimen/common_text_size_16" />

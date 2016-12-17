@@ -18,6 +18,7 @@ import com.merchantplatform.activity.SettingFeedbackActivity;
 import com.merchantplatform.bean.FeedbackResponse;
 import com.okhttputils.OkHttpUtils;
 import com.Utils.TitleBar;
+import com.ta.utdid2.android.utils.StringUtils;
 import com.utils.KeyboardUtil;
 import com.utils.StringUtil;
 import com.utils.ToastUtils;
@@ -93,6 +94,16 @@ public class SettingFeedbackActivityModel extends BaseModel{
          String hisContent = AppPrefersUtil.getInstance().getFeedBackContent();
          et_content.setText(hisContent);
          et_content.setSelection(hisContent.length());
+         if(!StringUtils.isEmpty(hisContent)){
+             tb_feedback_title.removeAllActions();
+             tb_feedback_title.setActionTextColor(Color.RED);
+             tb_feedback_title.addAction(new TitleBar.TextAction("提交") {
+                 @Override
+                 public void performAction(View view) {
+                     gotoSubmit();
+                 }
+             });
+         }
      }
 
 
