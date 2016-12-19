@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
 import android.provider.CallLog.Calls;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -121,7 +122,6 @@ public class CallRecordModel extends BaseModel {
 
         @Override
         public void onRefresh() {
-            listData.clear();
             getNewData();
         }
 
@@ -243,6 +243,7 @@ public class CallRecordModel extends BaseModel {
     }
 
     private void loadRefreshDataFromDB() {
+        listData.clear();
         listData.addAll(getNewListDataFromDB());
         mAdapter.notifyDataSetChanged();
         mXRecyclerView.refreshComplete();
@@ -405,10 +406,20 @@ public class CallRecordModel extends BaseModel {
         }
     }
 
-    private void deleteThisRecord(int position) {
-        deleteFromCallList(position);
-        deleteFromCallDetail(position);
+    private void deleteThisRecord(final int position) {
         deleteFromAdapterList(position);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                deleteFromCallList(position);
+                deleteFromCallDetail(position);
+            }
+        }, 2000);
+    }
+
+    private void deleteFromAdapterList(int position) {
+        listData.remove(position);
+        mAdapter.notifyDataSetChanged();
     }
 
     private void deleteFromCallList(int position) {
@@ -421,11 +432,6 @@ public class CallRecordModel extends BaseModel {
             detail.setIsDeleted(true);
             CallDetailDaoOperate.updateData(context.getContext(), detail);
         }
-    }
-
-    private void deleteFromAdapterList(int position) {
-        listData.remove(position);
-        mAdapter.notifyDataSetChanged();
     }
 
     private void upLoadUserCallLog(UserCallRecordBean usercallRecordBean) {
@@ -480,11 +486,15 @@ public class CallRecordModel extends BaseModel {
     }
 
     private String getIdsFromDetail(ArrayList<CallDetail> callDetails) {
-        String ids = "";
-        for (int i = 0; i < callDetails.size(); i++) {
-            ids += callDetails.get(i).getId() + "|";
+        if (callDetails != null && callDetails.size() > 0) {
+            String ids = "";
+            for (int i = 0; i < callDetails.size(); i++) {
+                ids += callDetails.get(i).getId() + "|";
+            }
+            return ids.substring(0, ids.length() - 1);
+        } else {
+            return "";
         }
-        return ids.substring(0, ids.length() - 1);
     }
 
     public void destroyFragment() {
