@@ -19,6 +19,7 @@ public class CallDetailActivity extends BaseActivity<CallDetailModel> {
     private void initView() {
         model.initView();
         model.setTitleBar();
+        model.setRecyclerView();
         model.setListener();
     }
 

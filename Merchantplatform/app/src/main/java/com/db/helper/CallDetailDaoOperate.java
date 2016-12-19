@@ -25,20 +25,6 @@ public class CallDetailDaoOperate {
     }
 
     /**
-     * @desc 从数据库中删除
-     **/
-    public static void deleteData(Context context, CallDetail callDetail) {
-        DbManager.getDaoSession(context).getCallDetailDao().delete(callDetail);
-    }
-
-    /**
-     * @desc 根据主键删除
-     **/
-    public static void deleteByKey(Context context, long key) {
-        DbManager.getDaoSession(context).getCallDetailDao().deleteByKey(key);
-    }
-
-    /**
      * @desc 根据条件删除
      **/
     public static void deleteByCondition(Context context, WhereCondition condition, WhereCondition... condMore) {
@@ -53,27 +39,11 @@ public class CallDetailDaoOperate {
     }
 
     /**
-     * @desc 按条件返回结果集
+     * @desc 按条件返回按时间排序的结果集
      **/
     public static ArrayList<CallDetail> queryByCondition(Context context, WhereCondition whereCondition, WhereCondition... condMore) {
         QueryBuilder<CallDetail> builder = DbManager.getDaoSession(context).getCallDetailDao().queryBuilder();
-        return (ArrayList<CallDetail>) builder.where(whereCondition, condMore).list();
-    }
-
-    /**
-     * @desc 按条件返回限制条数结果集
-     **/
-    public static ArrayList<CallDetail> queryLimitByCondition(Context context, int limit, WhereCondition whereCondition, WhereCondition... condMore) {
-        QueryBuilder<CallDetail> builder = DbManager.getDaoSession(context).getCallDetailDao().queryBuilder();
-        return (ArrayList<CallDetail>) builder.where(whereCondition, condMore).limit(limit).list();
-    }
-
-    /**
-     * @desc 查询限制条数的数据
-     **/
-    public static ArrayList<CallDetail> queryLimitData(Context context, int limit) {
-        QueryBuilder<CallDetail> builder = DbManager.getDaoSession(context).getCallDetailDao().queryBuilder();
-        return (ArrayList<CallDetail>) builder.limit(limit).list();
+        return (ArrayList<CallDetail>) builder.where(whereCondition, condMore).orderDesc(CallDetailDao.Properties.CallTime).list();
     }
 
     /**

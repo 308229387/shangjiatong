@@ -29,6 +29,11 @@ public class DateUtils {
         return dateTime.split(" ")[1];
     }
 
+    public static String formatTimeToDisplayTime(String time) {
+        int startIndex = time.charAt(0) == '0' ? 1 : 0;
+        return time.substring(startIndex, time.length() - 3);
+    }
+
     public static String getMonthAgo(int months) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MONTH, -months);

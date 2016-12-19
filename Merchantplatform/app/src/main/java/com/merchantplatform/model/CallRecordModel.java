@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.CallLog.Calls;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -27,7 +28,6 @@ import com.merchantplatform.bean.CallDetailResponse;
 import com.merchantplatform.bean.UserCallRecordBean;
 import com.merchantplatform.receiver.PhoneReceiver;
 import com.okhttputils.OkHttpUtils;
-import com.orhanobut.logger.Logger;
 import com.utils.DateUtils;
 import com.utils.PermissionUtils;
 import com.utils.Urls;
@@ -56,6 +56,7 @@ public class CallRecordModel extends BaseModel {
     private View view;
     private XRecyclerView mXRecyclerView;
     private View emptyView;
+    private TabLayout mTabLayout;
     private CallRecordAdapter mAdapter;
     private ArrayList<CallList> listData;
     private int tabIndex;
@@ -63,13 +64,15 @@ public class CallRecordModel extends BaseModel {
     private static final int CALL_OUT_TYPE = 2;
     private static final int CALL_RESULT_OK = 10;
     private static final int CALL_RESULT_FAILURE = 20;
-    private CallList clickCallList;
+    private int clickPosition;
+    private boolean isCallOut = false;
 
     public CallRecordModel(CallRecordFragment context) {
         this.context = context;
     }
 
     public void initView(LayoutInflater inflater, ViewGroup container) {
+        mTabLayout = (TabLayout) context.getActivity().findViewById(R.id.tb_switch_callType);
         view = inflater.inflate(R.layout.fragment_call_record, container, false);
         mXRecyclerView = (XRecyclerView) view.findViewById(R.id.xrv_callrecord);
         emptyView = view.findViewById(R.id.layout_call_empty);
@@ -361,7 +364,7 @@ public class CallRecordModel extends BaseModel {
     }
 
     private void makeACall(final int position) {
-        clickCallList = listData.get(position);
+        clickPosition = position;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PermissionUtils.requestPermission(context.getActivity(), PermissionUtils.CODE_READ_CALL_LOG, new PermissionUtils.PermissionGrant() {
                 @Override
@@ -377,10 +380,29 @@ public class CallRecordModel extends BaseModel {
     }
 
     private void invokeCall(int position) {
-//        deleteThisRecord(position);
         String phoneNum = listData.get(position).getPhone();
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + phoneNum));
         context.startActivity(intent);
+    }
+
+    PhoneReceiver.BRInteraction interaction = new PhoneReceiver.BRInteraction() {
+        @Override
+        public void sendAction(String action) { //监听电话状态
+            if (mTabLayout.getSelectedTabPosition() == tabIndex) {
+                monitorCallOut(action);
+            }
+        }
+    };
+
+    private void monitorCallOut(String action) {
+        if (action.equals(PhoneReceiver.CALL_OUT)) { //呼出
+            isCallOut = true;
+        }
+        if (isCallOut && action.equals(PhoneReceiver.CALL_OVER)) {//挂机
+            isCallOut = false;
+            upLoadUserCallLog(getUserCallLog(clickPosition));
+            deleteThisRecord(clickPosition);
+        }
     }
 
     private void deleteThisRecord(int position) {
@@ -406,26 +428,6 @@ public class CallRecordModel extends BaseModel {
         mAdapter.notifyDataSetChanged();
     }
 
-    PhoneReceiver.BRInteraction interaction = new PhoneReceiver.BRInteraction() {
-        @Override
-        public void sendAction(String action) { //监听电话状态
-            Logger.e("监听到了事件");
-            if (action.equals(PhoneReceiver.CALL_OVER)) {//挂机
-                Logger.e("监听到了挂机");
-            } else if (action.equals(PhoneReceiver.CALL_UP)) {//接听
-                Logger.e("监听到了接听");
-            } else if (action.equals(PhoneReceiver.CALL_OUT)) { //呼出
-                Logger.e("监听到了呼出");
-            }
-        }
-
-        @Override
-        public void afterCallOut() {
-            Logger.e("检测到了去电后挂断");
-            //upLoadUserCallLog(getUserCallLog(clickCallList));
-        }
-    };
-
     private void upLoadUserCallLog(UserCallRecordBean usercallRecordBean) {
         if (usercallRecordBean != null) {
             OkHttpUtils.post(Urls.PHONE_UPLOAD_DATA)
@@ -439,19 +441,19 @@ public class CallRecordModel extends BaseModel {
         }
     }
 
-    private UserCallRecordBean getUserCallLog(CallList clickCallList) {
+    private UserCallRecordBean getUserCallLog(int clickPosition) {
         if (ContextCompat.checkSelfPermission(context.getContext(), Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
             return null;
         }
         Cursor cursor = context.getContext().getContentResolver().query(Calls.CONTENT_URI, new String[]{Calls.NUMBER, Calls.DATE, Calls.DURATION}, null, null, Calls.DEFAULT_SORT_ORDER);
         if (cursor != null && cursor.moveToFirst()) {
             String numberInCursor = cursor.getString(cursor.getColumnIndex(Calls.NUMBER));
-            if (numberInCursor.equals(clickCallList.getPhone())) {
+            if (numberInCursor.equals(listData.get(clickPosition).getPhone())) {
                 UserCallRecordBean userCallRecordBean = new UserCallRecordBean();
                 long beginTime = Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow(Calls.DATE)));
                 long duration = Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow(Calls.DURATION))) * 1000;
                 userCallRecordBean.setBackTime(CallDetailDaoOperate.queryMaxBackTime(context.getContext()));
-                userCallRecordBean.setIds(getIdsFromDetail(getDetailByList(clickCallList)));
+                userCallRecordBean.setIds(getIdsFromDetail(getDetailByList(listData.get(clickPosition))));
                 userCallRecordBean.setRecordState(duration == 0 ? 20 : 10);
                 userCallRecordBean.setBeginTime(beginTime);
                 userCallRecordBean.setEndTime(beginTime + duration);

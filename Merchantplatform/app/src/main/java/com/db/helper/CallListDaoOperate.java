@@ -31,13 +31,6 @@ public class CallListDaoOperate {
     }
 
     /**
-     * @desc 根据主键删除
-     **/
-    public static void deleteByKey(Context context, long key) {
-        DbManager.getDaoSession(context).getCallListDao().deleteByKey(key);
-    }
-
-    /**
      * @desc 根据条件删除
      **/
     public static void deleteByCondition(Context context, WhereCondition condition) {
@@ -49,14 +42,6 @@ public class CallListDaoOperate {
      **/
     public static void updateData(Context context, CallList callList) {
         DbManager.getDaoSession(context).getCallListDao().update(callList);
-    }
-
-    /**
-     * @desc 返回所有数据
-     **/
-    public static ArrayList<CallList> queryAll(Context context) {
-        QueryBuilder<CallList> builder = DbManager.getDaoSession(context).getCallListDao().queryBuilder();
-        return (ArrayList<CallList>) builder.list();
     }
 
     /**

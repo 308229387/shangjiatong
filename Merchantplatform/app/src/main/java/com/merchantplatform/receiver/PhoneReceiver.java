@@ -16,7 +16,6 @@ public class PhoneReceiver extends BroadcastReceiver {
     public static final String CALL_OVER = "call_over";
     public static final String CALL_UP = "call_up";
     public static final String CALL_OUT = "call_out";
-    private static boolean IS_OUTGOING = false;
 
     public static ArrayList<BRInteraction> interactionList = new ArrayList<>();
 
@@ -31,8 +30,7 @@ public class PhoneReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)) { //如果是去电
-            IS_OUTGOING = true;
-            Logger.e("去电" + intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER));
+
         } else {
             TelephonyManager tm = (TelephonyManager) context.getSystemService(Service.TELEPHONY_SERVICE); //获取电话服务管理类
             tm.listen(listener, PhoneStateListener.LISTEN_CALL_STATE); //侦听呼叫状态改变事件
@@ -48,11 +46,6 @@ public class PhoneReceiver extends BroadcastReceiver {
                     for (BRInteraction interaction : interactionList) { //通知所有监听电话已经挂断
                         if (interaction != null) {
                             interaction.sendAction(CALL_OVER);
-                        }
-                        if (interaction != null && IS_OUTGOING) {
-                            interaction.afterCallOut();
-                            Logger.e("去电然后挂断");
-                            IS_OUTGOING = false;
                         }
                     }
                     break;
@@ -76,7 +69,5 @@ public class PhoneReceiver extends BroadcastReceiver {
 
     public interface BRInteraction {
         void sendAction(String action);
-
-        void afterCallOut();
     }
 }
