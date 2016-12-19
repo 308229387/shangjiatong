@@ -13,7 +13,7 @@
     <color name="orange">#FFFA800A</color>
     <color name="transparent">#00000000</color>
     <color name="blue">#FF4C8ED8</color>
-    <color name="transparent_half">#0e000000</color>
+    <color name="transparent_half">#fff</color>
     <color name="blue_A1ADC4">#FFA1ADC4</color>
     <color name="black_353535">#FF353535</color>
     <color name="light_blue">#FF1395DA</color>
@@ -89,7 +89,7 @@
     <color name="send_msg_layout_divider">@color/gray_a5a5a5</color>
 
     <!-- 标题栏颜色-->
-    <color name="title_bar_background">#FF1395DA</color>
+    <color name="title_bar_background">#fff</color>
     <color name="location_msg_background">#6A6A6A</color>
 
     <!-- Captcha tip -->
