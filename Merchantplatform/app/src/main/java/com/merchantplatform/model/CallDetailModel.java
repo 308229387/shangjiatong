@@ -2,14 +2,13 @@ package com.merchantplatform.model;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.Utils.TitleBar;
 import com.merchantplatform.R;
@@ -32,6 +31,7 @@ public class CallDetailModel extends BaseModel {
     private RecyclerView rv_call_detail;
     private CallDetailAdapter detailAdapter;
     private ArrayList<CallDetailListBean> detailList;
+    private String phoneNum;
 
     public CallDetailModel(CallDetailActivity context) {
         this.context = context;
@@ -68,7 +68,7 @@ public class CallDetailModel extends BaseModel {
     public void initData(Intent intent) {
         if (intent != null) {
             Bundle bundle = intent.getBundleExtra("detailList");
-            String phoneNum = bundle.getString("phoneNum");
+            phoneNum = bundle.getString("phoneNum");
             String local = bundle.getString("local");
             String cate = bundle.getString("cate");
             String date = bundle.getString("date");
@@ -99,7 +99,8 @@ public class CallDetailModel extends BaseModel {
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(context, "打电话", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + phoneNum));
+            context.startActivity(intent);
         }
     }
 }
