@@ -1,5 +1,6 @@
 package com.android.gmacs.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import com.common.gmacs.parse.talk.Talk;
 import com.common.gmacs.utils.GLog;
 import com.common.gmacs.utils.GmacsUiUtil;
 import com.common.gmacs.utils.NetworkUtil;
+import com.common.gmacs.utils.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -32,6 +34,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
 
 /**
  * Created by YanQi on 2015/12/7.
@@ -51,6 +54,7 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
     /**
      * Connection status bar
      */
+    protected View systemHead;
     protected LinearLayout mConnectionStatusHeaderView;
     protected TextView mConnectionStatusTextView;
     protected ImageView mConnectionStatusImageView;
@@ -93,6 +97,11 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
         titleBar = (RelativeLayout) getView().findViewById(R.id.title_bar);
         mListView = (ListView) getView().findViewById(R.id.lv_conversation_list);
         mTalkListEmptyPromptView = (LinearLayout) getView().findViewById(R.id.ll_conversation_list_empty_prompt);
+
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(
+                Context.LAYOUT_INFLATER_SERVICE);
+        systemHead = inflater.inflate(R.layout.system_notification_layout, null);
+
         mHiddenView = (LinearLayout) getView().findViewById(R.id.ll_conversation_hiddenview);
         mHeaderView = new LinearLayout(getActivity());
         mHeaderView.setOrientation(LinearLayout.VERTICAL);
@@ -114,6 +123,19 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
             mListView.addHeaderView(mConnectionStatusHeaderViewContainer);
         }
         mListView.addHeaderView(mHeaderView);
+        new android.os.Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mListView.addHeaderView(systemHead);
+                systemHead.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ToastUtil.showToast("aa");
+                    }
+                });
+            }
+        }, 5000);
+
     }
 
 
@@ -126,6 +148,18 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
         EventBus.getDefault().register(this);
         TalkLogic.getInstance().getRecentTalks();
     }
+
+//    public void systemNotification() {
+//        Talk systemNotification = new Talk();
+//        mTalks.add(0, systemNotification);
+//        systemNotification.mTalkOtherUserName = "系统通知";
+//        systemNotification.mTalkOtherUserId = "1";
+//        systemNotification.mTalkOtherUserAvatar = "https://www.baidu.com/img/bd_logo1.png";
+//        systemNotification.mTalkOtherDeviceId = "2";
+//        systemNotification.mTalkOtherOpenId = "4";
+//        systemNotification.
+//                mTalkAdapter.notifyDataSetChanged();
+//    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
