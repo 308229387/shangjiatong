@@ -32,6 +32,7 @@
     <color name="item_call_divider">#E0E0E4</color>
     <color name="item_call_emptytext">#A4AAB3</color>
     <color name="item_call_delete">#FF552E</color>
+    <color name="call_detail_call">#3DCA50</color>
 
     <color name="common_background_color">#F2F2F2</color>
 

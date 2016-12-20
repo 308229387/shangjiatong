@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.merchantplatform.R;
 import com.merchantplatform.bean.CallDetailListBean;
+import com.utils.DateUtils;
 import com.xrecyclerview.BaseRecyclerViewAdapter;
 
 import java.util.ArrayList;
@@ -22,7 +23,8 @@ public class CallDetailAdapter extends BaseRecyclerViewAdapter<CallDetailListBea
 
     @Override
     protected void bindDataToItemView(CallDetailViewHolder callDetailViewHolder, int position) {
-        callDetailViewHolder.setText(R.id.item_call_detail_time, mList.get(position).getTime())
+        String callTime = mList.get(position).getTime();
+        callDetailViewHolder.setText(R.id.item_call_detail_time, DateUtils.formatTimeToDisplayTime(callTime))
                 .setText(R.id.item_call_detail_type, mList.get(position).getType() == 1 ? "呼入电话" : "呼出电话")
                 .setText(R.id.item_call_detail_duration, mList.get(position).getDuration() + "秒钟");
     }
