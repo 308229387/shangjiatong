@@ -45,6 +45,8 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
     private ConversationListAdapter mTalkAdapter;
     private LinearLayout mHiddenView, mHeaderView, mConnectionStatusHeaderViewContainer;
     private boolean isBackground;
+    private TextView redDot;
+    private TextView systemText;
 
     /**
      * 为其添加子视图, 在会话列表为空时, 可以显示友好提示
@@ -101,7 +103,15 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
         systemHead = inflater.inflate(R.layout.system_notification_list_layout, null);
-
+        redDot = (TextView) systemHead.findViewById(R.id.tv_conversation_msg_count);
+        systemText = (TextView) systemHead.findViewById(R.id.tv_conversation_msg_text);
+        systemHead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redDot.setVisibility(View.GONE);
+                startActivity(new Intent(getActivity(), SystemNotificationActivity.class));
+            }
+        });
         mHiddenView = (LinearLayout) getView().findViewById(R.id.ll_conversation_hiddenview);
         mHeaderView = new LinearLayout(getActivity());
         mHeaderView.setOrientation(LinearLayout.VERTICAL);
@@ -127,17 +137,15 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
             @Override
             public void run() {
                 mListView.addHeaderView(systemHead);
-                systemHead.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(getActivity(),SystemNotificationActivity.class));
-                    }
-                });
             }
         }, 5000);
 
     }
 
+    public void ShowSystemInfo(String string) {
+        redDot.setVisibility(View.VISIBLE);
+        systemText.setText(string);
+    }
 
     @Override
     protected void initData() {
@@ -148,18 +156,6 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
         EventBus.getDefault().register(this);
         TalkLogic.getInstance().getRecentTalks();
     }
-
-//    public void systemNotification() {
-//        Talk systemNotification = new Talk();
-//        mTalks.add(0, systemNotification);
-//        systemNotification.mTalkOtherUserName = "系统通知";
-//        systemNotification.mTalkOtherUserId = "1";
-//        systemNotification.mTalkOtherUserAvatar = "https://www.baidu.com/img/bd_logo1.png";
-//        systemNotification.mTalkOtherDeviceId = "2";
-//        systemNotification.mTalkOtherOpenId = "4";
-//        systemNotification.
-//                mTalkAdapter.notifyDataSetChanged();
-//    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

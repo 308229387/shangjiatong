@@ -10,6 +10,7 @@ import com.db.dao.CallDetail;
 import com.db.dao.CallList;
 import com.db.dao.gen.CallDetailDao;
 import com.db.helper.CallDetailDaoOperate;
+import com.db.helper.CallListDaoOperate;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.CallDetailActivity;
 import com.merchantplatform.bean.CallDetailListBean;
@@ -104,6 +105,21 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
         context.startActivity(intent);
     }
 
+    private ArrayList<CallDetail> getDetailByList(CallList callList) {
+        String date_Day = DateUtils.formatDateTimeToDate(callList.getCallTime());
+        WhereCondition conditionUserId = CallDetailDao.Properties.UserId.eq(UserUtils.getUserId());
+        WhereCondition conditionDate = new WhereCondition.StringCondition("date(CALL_TIME)='" + date_Day + "'");
+        WhereCondition conditionPhone = CallDetailDao.Properties.Phone.eq(callList.getPhone());
+        WhereCondition conditionType = CallDetailDao.Properties.Type.eq(callList.getType());
+        WhereCondition conditionIsDeleted = CallDetailDao.Properties.IsDeleted.eq(false);
+        if (callList.getType() == 1) {
+            WhereCondition conditionResult = CallDetailDao.Properties.CallResult.eq(callList.getCallResult());
+            return CallDetailDaoOperate.queryByCondition(context, conditionUserId, conditionDate, conditionPhone, conditionType, conditionIsDeleted, conditionResult);
+        } else {
+            return CallDetailDaoOperate.queryByCondition(context, conditionUserId, conditionDate, conditionPhone, conditionType, conditionIsDeleted);
+        }
+    }
+
     private ArrayList<CallDetailListBean> getDetailList(ArrayList<CallDetail> detailData) {
         if (detailData != null && detailData.size() > 0) {
             ArrayList<CallDetailListBean> detailList = new ArrayList<>();
@@ -124,9 +140,9 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
         @Override
         public void onClick(View v) {
             int position = (Integer) v.getTag(R.id.delete_tag_position);
-            deleteItem((CallRecordViewHolder) v.getTag(R.id.delete_tag_vh), position);
             setDeletedFlagInDB(position);
-            mList.remove(position);
+            deleteFromCallList(position);
+            deleteItem((CallRecordViewHolder) v.getTag(R.id.delete_tag_vh), position);
         }
     }
 
@@ -138,18 +154,7 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
         }
     }
 
-    private ArrayList<CallDetail> getDetailByList(CallList callList) {
-        String date_Day = DateUtils.formatDateTimeToDate(callList.getCallTime());
-        WhereCondition conditionId = CallDetailDao.Properties.UserId.eq(UserUtils.getUserId());
-        WhereCondition conditionDate = new WhereCondition.StringCondition("date(CALL_TIME)='" + date_Day + "'");
-        WhereCondition conditionIsDeleted = CallDetailDao.Properties.IsDeleted.eq(false);
-        WhereCondition conditionPhone = CallDetailDao.Properties.Phone.eq(callList.getPhone());
-        WhereCondition conditionType = CallDetailDao.Properties.Type.eq(callList.getType());
-        if (callList.getType() == 1) {
-            WhereCondition conditionResult = CallDetailDao.Properties.CallResult.eq(callList.getCallResult());
-            return CallDetailDaoOperate.queryByCondition(context, conditionId, conditionDate, conditionIsDeleted, conditionPhone, conditionType, conditionResult);
-        } else {
-            return CallDetailDaoOperate.queryByCondition(context, conditionId, conditionDate, conditionIsDeleted, conditionPhone, conditionType);
-        }
+    private void deleteFromCallList(int position) {
+        CallListDaoOperate.deleteData(context, mList.get(position));
     }
 }

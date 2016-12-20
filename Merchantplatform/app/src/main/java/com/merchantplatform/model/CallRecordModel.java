@@ -60,13 +60,13 @@ public class CallRecordModel extends BaseModel {
     private TabLayout mTabLayout;
     private CallRecordAdapter mAdapter;
     private ArrayList<CallList> listData;
-    private int tabIndex;
     private static final int CALL_IN_TYPE = 1;
     private static final int CALL_OUT_TYPE = 2;
     private static final int CALL_RESULT_OK = 10;
     private static final int CALL_RESULT_FAILURE = 20;
-    private int clickPosition;
+    private int tabIndex;
     private boolean isCallOut = false;
+    private CallList clickCallList;
 
     public CallRecordModel(CallRecordFragment context) {
         this.context = context;
@@ -145,30 +145,24 @@ public class CallRecordModel extends BaseModel {
     }
 
     private void loadMoreData() {
-        if (!canGetMoreListDataFromDB()) {
-            getLoadMoreData();
-        }
-    }
-
-    private boolean canGetMoreListDataFromDB() {
         ArrayList<CallList> moreList = getMoreListDataFromDB();
         if (moreList != null && moreList.size() > 0) {
             listData.addAll(moreList);
             mAdapter.notifyDataSetChanged();
             mXRecyclerView.loadMoreComplete();
-            return true;
         } else {
-            return false;
+            getLoadMoreData();
         }
     }
 
     private ArrayList<CallList> getMoreListDataFromDB() {
         ArrayList<CallList> moreList;
+        WhereCondition conditionUserId = CallListDao.Properties.UserId.eq(UserUtils.getUserId());
         if (tabIndex == 0) {
-            WhereCondition condition = CallListDao.Properties.CallResult.eq("20");
-            moreList = CallListDaoOperate.queryOffsetLimitDataByCondition(context.getContext(), listData.size(), 20, condition);
+            WhereCondition conditionCallResult = CallListDao.Properties.CallResult.eq("20");
+            moreList = CallListDaoOperate.queryOffsetLimitDataByCondition(context.getContext(), listData.size(), 20, conditionCallResult, conditionUserId);
         } else {
-            moreList = CallListDaoOperate.queryOffsetLimitData(context.getContext(), listData.size(), 20);
+            moreList = CallListDaoOperate.queryOffsetLimitDataByCondition(context.getContext(), listData.size(), 20, conditionUserId);
         }
         return moreList;
     }
@@ -250,11 +244,12 @@ public class CallRecordModel extends BaseModel {
     }
 
     private ArrayList<CallList> getNewListDataFromDB() {
+        WhereCondition conditionUserId = CallListDao.Properties.UserId.eq(UserUtils.getUserId());
         if (tabIndex == 0) {
-            WhereCondition condition = CallListDao.Properties.CallResult.eq("20");
-            return CallListDaoOperate.queryLimitDataByCondition(context.getContext(), 20, condition);
+            WhereCondition conditionCallResult = CallListDao.Properties.CallResult.eq("20");
+            return CallListDaoOperate.queryLimitDataByCondition(context.getContext(), 20, conditionCallResult, conditionUserId);
         } else {
-            return CallListDaoOperate.queryLimitData(context.getContext(), 20);
+            return CallListDaoOperate.queryLimitDataByCondition(context.getContext(), 20, conditionUserId);
         }
     }
 
@@ -279,23 +274,24 @@ public class CallRecordModel extends BaseModel {
                     }
                 }
             } else {
-                insertNewData(bean);
+                insertNewDataIntoList(bean);
             }
         }
     }
 
     private boolean isExistInDetail(CallDetailResponse.bean bean) {
         WhereCondition conditionId = CallDetailDao.Properties.Id.eq(bean.getId());
-        ArrayList<CallDetail> dataInDetail = CallDetailDaoOperate.queryByCondition(context.getContext(), conditionId);
-        return dataInDetail.size() > 0;
+        WhereCondition conditionUserId = CallDetailDao.Properties.UserId.eq(UserUtils.getUserId());
+        ArrayList<CallDetail> dataInDetail = CallDetailDaoOperate.queryByCondition(context.getContext(), conditionId, conditionUserId);
+        return dataInDetail != null && dataInDetail.size() > 0;
     }
 
     private ArrayList<CallList> getDataFromList(CallDetailResponse.bean bean) {
         String date_Day = DateUtils.formatMillisToDate(bean.getCallTime());
-        WhereCondition condition1 = CallListDao.Properties.UserId.eq(UserUtils.getUserId());
-        WhereCondition condition2 = CallListDao.Properties.Phone.eq(bean.getPhone());
-        WhereCondition condition3 = new WhereCondition.StringCondition("date(CALL_TIME)='" + date_Day + "'");
-        return CallListDaoOperate.queryByCondition(context.getContext(), condition1, condition2, condition3);
+        WhereCondition conditionUserId = CallListDao.Properties.UserId.eq(UserUtils.getUserId());
+        WhereCondition conditionPhone = CallListDao.Properties.Phone.eq(bean.getPhone());
+        WhereCondition conditionCallTime = new WhereCondition.StringCondition("date(CALL_TIME)='" + date_Day + "'");
+        return CallListDaoOperate.queryByCondition(context.getContext(), conditionUserId, conditionPhone, conditionCallTime);
     }
 
     private void updateOutGoingCall(ArrayList<CallList> result) {
@@ -310,7 +306,7 @@ public class CallRecordModel extends BaseModel {
 
     private void updateInCallOk(ArrayList<CallList> result) {
         for (CallList callList : result) {
-            if (callList.getCallResult() == CALL_RESULT_OK) {
+            if (callList.getType() == CALL_IN_TYPE && callList.getCallResult() == CALL_RESULT_OK) {
                 callList.setPhoneCount(callList.getPhoneCount() + 1);
                 CallListDaoOperate.updateData(context.getContext(), callList);
                 break;
@@ -320,7 +316,7 @@ public class CallRecordModel extends BaseModel {
 
     private void updateInCallFailure(ArrayList<CallList> result) {
         for (CallList callList : result) {
-            if (callList.getCallResult() == CALL_RESULT_FAILURE) {
+            if (callList.getType() == CALL_IN_TYPE && callList.getCallResult() == CALL_RESULT_FAILURE) {
                 callList.setPhoneCount(callList.getPhoneCount() + 1);
                 CallListDaoOperate.updateData(context.getContext(), callList);
                 break;
@@ -328,7 +324,7 @@ public class CallRecordModel extends BaseModel {
         }
     }
 
-    private void insertNewData(CallDetailResponse.bean bean) {
+    private void insertNewDataIntoList(CallDetailResponse.bean bean) {
         CallList callList = new CallList();
         callList.setUserId(UserUtils.getUserId());
         callList.setPhone(bean.getPhone());
@@ -365,7 +361,7 @@ public class CallRecordModel extends BaseModel {
     }
 
     private void makeACall(final int position) {
-        clickPosition = position;
+        clickCallList = listData.get(position);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PermissionUtils.requestPermission(context.getActivity(), PermissionUtils.CODE_READ_CALL_LOG, new PermissionUtils.PermissionGrant() {
                 @Override
@@ -388,9 +384,14 @@ public class CallRecordModel extends BaseModel {
 
     PhoneReceiver.BRInteraction interaction = new PhoneReceiver.BRInteraction() {
         @Override
-        public void sendAction(String action) { //监听电话状态
+        public void sendAction(final String action) {
             if (mTabLayout.getSelectedTabPosition() == tabIndex) {
-                monitorCallOut(action);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        monitorCallOut(action);
+                    }
+                }, 2000);
             }
         }
     };
@@ -401,33 +402,28 @@ public class CallRecordModel extends BaseModel {
         }
         if (isCallOut && action.equals(PhoneReceiver.CALL_OVER)) {//挂机
             isCallOut = false;
-            upLoadUserCallLog(getUserCallLog(clickPosition));
-            deleteThisRecord(clickPosition);
+            deleteThisRecord(clickCallList);
+            upLoadUserCallLog(getUserCallLog(clickCallList));
         }
     }
 
-    private void deleteThisRecord(final int position) {
-        deleteFromAdapterList(position);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                deleteFromCallList(position);
-                deleteFromCallDetail(position);
-            }
-        }, 2000);
+    private void deleteThisRecord(CallList clickCallList) {
+        deleteFromAdapterList(clickCallList);
+        deleteFromCallList(clickCallList);
+        deleteFromCallDetail(clickCallList);
     }
 
-    private void deleteFromAdapterList(int position) {
-        listData.remove(position);
+    private void deleteFromAdapterList(CallList clickCallList) {
+        listData.remove(clickCallList);
         mAdapter.notifyDataSetChanged();
     }
 
-    private void deleteFromCallList(int position) {
-        CallListDaoOperate.deleteData(context.getContext(), listData.get(position));
+    private void deleteFromCallList(CallList clickCallList) {
+        CallListDaoOperate.deleteData(context.getContext(), clickCallList);
     }
 
-    private void deleteFromCallDetail(int position) {
-        ArrayList<CallDetail> details = getDetailByList(listData.get(position));
+    private void deleteFromCallDetail(CallList clickCallList) {
+        ArrayList<CallDetail> details = getDetailByList(clickCallList);
         for (CallDetail detail : details) {
             detail.setIsDeleted(true);
             CallDetailDaoOperate.updateData(context.getContext(), detail);
@@ -447,19 +443,19 @@ public class CallRecordModel extends BaseModel {
         }
     }
 
-    private UserCallRecordBean getUserCallLog(int clickPosition) {
+    private UserCallRecordBean getUserCallLog(CallList clickCallList) {
         if (ContextCompat.checkSelfPermission(context.getContext(), Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
             return null;
         }
         Cursor cursor = context.getContext().getContentResolver().query(Calls.CONTENT_URI, new String[]{Calls.NUMBER, Calls.DATE, Calls.DURATION}, null, null, Calls.DEFAULT_SORT_ORDER);
         if (cursor != null && cursor.moveToFirst()) {
             String numberInCursor = cursor.getString(cursor.getColumnIndex(Calls.NUMBER));
-            if (numberInCursor.equals(listData.get(clickPosition).getPhone())) {
+            if (numberInCursor.equals(clickCallList.getPhone())) {
                 UserCallRecordBean userCallRecordBean = new UserCallRecordBean();
                 long beginTime = Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow(Calls.DATE)));
                 long duration = Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow(Calls.DURATION))) * 1000;
                 userCallRecordBean.setBackTime(CallDetailDaoOperate.queryMaxBackTime(context.getContext()));
-                userCallRecordBean.setIds(getIdsFromDetail(getDetailByList(listData.get(clickPosition))));
+                userCallRecordBean.setIds(getIdsFromDetail(getDetailByList(clickCallList)));
                 userCallRecordBean.setRecordState(duration == 0 ? 20 : 10);
                 userCallRecordBean.setBeginTime(beginTime);
                 userCallRecordBean.setEndTime(beginTime + duration);
@@ -472,16 +468,15 @@ public class CallRecordModel extends BaseModel {
 
     private ArrayList<CallDetail> getDetailByList(CallList callList) {
         String date_Day = DateUtils.formatDateTimeToDate(callList.getCallTime());
-        WhereCondition conditionId = CallDetailDao.Properties.UserId.eq(UserUtils.getUserId());
+        WhereCondition conditionUserId = CallDetailDao.Properties.UserId.eq(UserUtils.getUserId());
         WhereCondition conditionDate = new WhereCondition.StringCondition("date(CALL_TIME)='" + date_Day + "'");
-        WhereCondition conditionIsDeleted = CallDetailDao.Properties.IsDeleted.eq(false);
         WhereCondition conditionPhone = CallDetailDao.Properties.Phone.eq(callList.getPhone());
         WhereCondition conditionType = CallDetailDao.Properties.Type.eq(callList.getType());
         if (callList.getType() == 1) {
             WhereCondition conditionResult = CallDetailDao.Properties.CallResult.eq(callList.getCallResult());
-            return CallDetailDaoOperate.queryByCondition(context.getContext(), conditionId, conditionDate, conditionIsDeleted, conditionPhone, conditionType, conditionResult);
+            return CallDetailDaoOperate.queryByCondition(context.getContext(), conditionUserId, conditionDate, conditionPhone, conditionType, conditionResult);
         } else {
-            return CallDetailDaoOperate.queryByCondition(context.getContext(), conditionId, conditionDate, conditionIsDeleted, conditionPhone, conditionType);
+            return CallDetailDaoOperate.queryByCondition(context.getContext(), conditionUserId, conditionDate, conditionPhone, conditionType);
         }
     }
 
