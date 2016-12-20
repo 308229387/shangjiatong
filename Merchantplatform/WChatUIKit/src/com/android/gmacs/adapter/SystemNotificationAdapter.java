@@ -42,6 +42,9 @@ public class SystemNotificationAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.system_notification_item, parent, false);
+            holder.title = (TextView) convertView.findViewById(R.id.system_notification_title);
+            holder.time = (TextView) convertView.findViewById(R.id.time);
+            holder.text = (TextView) convertView.findViewById(R.id.system_notification_text);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -50,6 +53,8 @@ public class SystemNotificationAdapter extends BaseAdapter {
     }
 
     private static class ViewHolder {
-
+        private TextView time;
+        private TextView title;
+        private TextView text;
     }
 }
