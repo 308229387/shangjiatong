@@ -16,6 +16,7 @@ import com.dataStore.AppPrefersUtil;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.SettingFeedbackActivity;
 import com.merchantplatform.bean.FeedbackResponse;
+import com.merchantplatform.bean.TempResponse;
 import com.okhttputils.OkHttpUtils;
 import com.Utils.TitleBar;
 import com.ta.utdid2.android.utils.StringUtils;
@@ -23,6 +24,8 @@ import com.utils.KeyboardUtil;
 import com.utils.StringUtil;
 import com.utils.ToastUtils;
 import com.utils.Urls;
+
+import org.json.JSONObject;
 
 import okhttp3.Call;
 import okhttp3.Request;
@@ -212,22 +215,21 @@ public class SettingFeedbackActivityModel extends BaseModel{
         }
     }
 
-    private class feedbackCallback extends DialogCallback<FeedbackResponse>{
+    private class feedbackCallback extends DialogCallback<TempResponse>{
         public feedbackCallback(Activity activity) {
             super(activity);
         }
 
         @Override
-        public void onResponse(boolean isFromCache, FeedbackResponse feedbackResponse, Request request, @Nullable Response response) {
-            if(feedbackResponse != null){
-               String message = feedbackResponse.getData().getMsg();
-               if(!StringUtil.isEmpty(message)){
-                   ToastUtils.showToast(message);
-                   mSaveFlag = false;
-                   context.finish();
+        public void onResponse(boolean isFromCache, TempResponse tempResponse, Request request, @Nullable Response response) {
+               if(tempResponse != null){
+                   String message = tempResponse.getMsg();
+                   if(!StringUtil.isEmpty(message)){
+                       ToastUtils.showToast(message);
+                       mSaveFlag = false;
+                       context.finish();
+                   }
                }
-            }
-
         }
     }
 

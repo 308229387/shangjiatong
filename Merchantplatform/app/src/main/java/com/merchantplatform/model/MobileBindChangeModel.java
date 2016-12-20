@@ -20,6 +20,7 @@ import com.callback.DialogCallback;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.MobileBindChangeActivity;
 import com.merchantplatform.bean.GetCodeResponse;
+import com.merchantplatform.bean.TempResponse;
 import com.merchantplatform.bean.UpdateMobileResponse;
 import com.okhttputils.OkHttpUtils;
 import com.ui.dialog.CommonDialog;
@@ -265,7 +266,7 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
     };
 
 
-    private class getCodeCallback extends DialogCallback<GetCodeResponse>{
+    private class getCodeCallback extends DialogCallback<TempResponse>{
 
         public getCodeCallback(Activity activity) {
             super(activity);
@@ -273,18 +274,19 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
 
 
         @Override
-        public void onResponse(boolean isFromCache, GetCodeResponse getCodeResponse, Request request, @Nullable Response response) {
-            String status = getCodeResponse.getData().getStatus();
-            String message = getCodeResponse.getData().getMsg();
-
-            if(TextUtils.equals(status, SUCCESS)){
-                ToastUtils.makeImgAndTextToast(context, context.getString(R.string.validate_code_already_send), R.mipmap.validate_done, Toast.LENGTH_SHORT).show();
-                startCountDown(); //  开始倒计时
+        public void onResponse(boolean isFromCache, TempResponse tempResponse, Request request, @Nullable Response response) {
+            if (tempResponse != null) {
+                String status = tempResponse.getStatus();
+                String message = tempResponse.getMsg();
+                if (!TextUtils.isEmpty(status) && !TextUtils.isEmpty(message)) {
+                    if (TextUtils.equals(status, SUCCESS)) {
+                        ToastUtils.makeImgAndTextToast(context, context.getString(R.string.validate_code_already_send), R.mipmap.validate_done, Toast.LENGTH_SHORT).show();
+                        startCountDown(); //  开始倒计时
+                    } else {
+                        ToastUtils.makeImgAndTextToast(context, message, R.mipmap.validate_done, Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
-            else if(TextUtils.equals(status,FAILURE) && !TextUtils.isEmpty(message)){
-                ToastUtils.makeImgAndTextToast(context, message, R.mipmap.validate_done, Toast.LENGTH_SHORT).show();
-            }
-
         }
     }
 

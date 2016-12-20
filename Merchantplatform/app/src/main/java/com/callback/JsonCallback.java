@@ -38,7 +38,7 @@ public abstract class JsonCallback<T> extends CommonCallback<T> {
         this.type = type;
     }
 
-    //该方法是子线程处理，不能做ui相关的工作
+    //该方法是子线程处理　　，不能做ui相关的工作
     @Override
     public T parseNetworkResponse(Response response) throws Exception {
         String responseData = response.body().string();
@@ -59,10 +59,18 @@ public abstract class JsonCallback<T> extends CommonCallback<T> {
                  * 对于返回参数，先支持 String，然后优先支持class类型的字节码，最后支持type类型的参数
                  */
 
-                if (data.equals("")) return (T) responseData;
-                if (clazz == String.class) return (T) data;
-                if (clazz != null) return new Gson().fromJson(data, clazz);
-                if (type != null) return new Gson().fromJson(data, type);
+                if (!TextUtils.isEmpty(data)){
+                    if (clazz == String.class) return (T) data;
+                    if (clazz != null) return new Gson().fromJson(data, clazz);
+                    if (type != null) return new Gson().fromJson(data, type);
+                }else{
+                    if (clazz != null) return new Gson().fromJson(responseData, clazz);
+                }
+
+                break;
+
+            case 6000: //业务异常(返回异常状态,data为空)
+                if (clazz != null) return new Gson().fromJson(responseData, clazz);
                 break;
             case 100:
                 throw new IllegalStateException(msg);

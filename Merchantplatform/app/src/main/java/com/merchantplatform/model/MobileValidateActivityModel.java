@@ -17,6 +17,7 @@ import com.merchantplatform.activity.HomepageActivity;
 import com.merchantplatform.activity.MobileValidateActivity;
 import com.merchantplatform.bean.BindMobileResponse;
 import com.merchantplatform.bean.GetCodeResponse;
+import com.merchantplatform.bean.TempResponse;
 import com.okhttputils.OkHttpUtils;
 import com.Utils.TitleBar;
 import com.ui.dialog.ConfirmDialog;
@@ -41,7 +42,6 @@ public class MobileValidateActivityModel extends BaseModel implements View.OnCli
     private EditText validate_mobile ,validate_code;
     private Button validate_getcode,commit;
 
-    private static final String FAILURE = "1";//异常
     private  static final String SUCCESS = "0";//成功
     private int countDownTime;
 
@@ -183,7 +183,7 @@ public class MobileValidateActivityModel extends BaseModel implements View.OnCli
         UserUtils.hasValidate(context);
     }
 
-    private class getCodeCallback extends DialogCallback<GetCodeResponse>{
+    private class getCodeCallback extends DialogCallback<TempResponse>{
 
         public getCodeCallback(Activity activity) {
             super(activity);
@@ -191,23 +191,23 @@ public class MobileValidateActivityModel extends BaseModel implements View.OnCli
 
 
         @Override
-        public void onResponse(boolean isFromCache, GetCodeResponse getCodeResponse, Request request, @Nullable Response response) {
-            String status = getCodeResponse.getData().getStatus();
-            String message = getCodeResponse.getData().getMsg();
-            if (!TextUtils.isEmpty(status) && !TextUtils.isEmpty(message)) {
-                if (TextUtils.equals(status, SUCCESS)) {
-                    ToastUtils.makeImgAndTextToast(context, context.getString(R.string.validate_code_already_send), R.mipmap.validate_done, Toast.LENGTH_SHORT).show();
-                    countdown();
-                } else if (TextUtils.equals(status, FAILURE)) {
-                    ToastUtils.makeImgAndTextToast(context, message, R.mipmap.validate_done, Toast.LENGTH_SHORT).show();
-                }
-            }
-
-
+        public void onResponse(boolean isFromCache, TempResponse tempResponse, Request request, @Nullable Response response) {
+          if(tempResponse != null){
+              String status = tempResponse.getStatus();
+              String message = tempResponse.getMsg();
+              if (!TextUtils.isEmpty(status) && !TextUtils.isEmpty(message)) {
+                  if (TextUtils.equals(status, SUCCESS)) {
+                      ToastUtils.makeImgAndTextToast(context, context.getString(R.string.validate_code_already_send), R.mipmap.validate_done, Toast.LENGTH_SHORT).show();
+                      countdown();
+                  } else {
+                      ToastUtils.makeImgAndTextToast(context, message, R.mipmap.validate_done, Toast.LENGTH_SHORT).show();
+                  }
+              }
+          }
         }
     }
 
-    private class validateCallback extends DialogCallback<BindMobileResponse>{
+    private class validateCallback extends DialogCallback<TempResponse>{
 
 
         public validateCallback(Activity activity) {
@@ -215,15 +215,15 @@ public class MobileValidateActivityModel extends BaseModel implements View.OnCli
         }
 
         @Override
-        public void onResponse(boolean isFromCache, BindMobileResponse bindMobileResponse, Request request, @Nullable Response response) {
-            String status = bindMobileResponse.getData().getStatus();
-            String message = bindMobileResponse.getData().getMsg();
+        public void onResponse(boolean isFromCache, TempResponse tempResponse, Request request, @Nullable Response response) {
+            String status = tempResponse.getStatus();
+            String message = tempResponse.getMsg();
 
             if(TextUtils.equals(status,SUCCESS)){
                 validateSuccess();
             } else{
                 if(!TextUtils.isEmpty(message))
-                ToastUtils.makeImgAndTextToast(context, message, R.mipmap.validate_error, 0).show();
+                    ToastUtils.makeImgAndTextToast(context, message, R.mipmap.validate_error, 0).show();
             }
         }
     }
