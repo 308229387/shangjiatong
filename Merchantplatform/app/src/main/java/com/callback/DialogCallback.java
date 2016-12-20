@@ -1,18 +1,15 @@
 package com.callback;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.support.annotation.Nullable;
-import android.view.Window;
 
-
+import com.loadview.ShapeLoadingDialog;
 import com.merchantplatform.R;
 import com.merchantplatform.application.HyApplication;
 import com.okhttputils.request.BaseRequest;
 import com.ui.dialog.LogoutDialog;
 import com.utils.ToastUtils;
 
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import okhttp3.Call;
@@ -22,16 +19,18 @@ import okhttp3.Response;
  * 描    述：对于网络请求是否需要弹出进度对话框
  */
 public abstract class DialogCallback<T> extends JsonCallback<T> {
-    private ProgressDialog dialog;
+    private ShapeLoadingDialog shapeLoadingDialog;
 
     protected boolean isToast = false;
 
     private void initDialog(Activity activity) {
-        dialog = new ProgressDialog(activity);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setMessage("请求网络中...");
+
+        shapeLoadingDialog = new ShapeLoadingDialog(activity);
+//        dialog = new ProgressDialog(activity);
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setCanceledOnTouchOutside(false);
+//        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//        dialog.setMessage("请求网络中...");
     }
 
     public DialogCallback(Activity activity) {
@@ -53,8 +52,8 @@ public abstract class DialogCallback<T> extends JsonCallback<T> {
     public void onBefore(BaseRequest request) {
         super.onBefore(request);
         //网络请求前显示对话框
-        if (dialog != null && !dialog.isShowing()) {
-            dialog.show();
+        if (shapeLoadingDialog != null && !shapeLoadingDialog.isShowing()) {
+            shapeLoadingDialog.show();
         }
     }
 
@@ -77,8 +76,8 @@ public abstract class DialogCallback<T> extends JsonCallback<T> {
     public void onAfter(boolean isFromCache, @Nullable T t, Call call, @Nullable Response response, @Nullable Exception e) {
         super.onAfter(isFromCache, t, call, response, e);
         //网络请求结束后关闭对话框
-        if (dialog != null && dialog.isShowing()) {
-            dialog.dismiss();
+        if (shapeLoadingDialog != null && shapeLoadingDialog.isShowing()) {
+            shapeLoadingDialog.dismiss();
         }
         if(e!= null){
             if (e.getMessage().equals(PPU_UNVALID)) {
