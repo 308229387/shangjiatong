@@ -1,4 +1,4 @@
-package com.ui.actionSheet;
+package com.ui.actionsheet;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
