@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.gmacs.R;
+import com.android.gmacs.activity.SystemNotificationActivity;
 import com.android.gmacs.adapter.ConversationListAdapter;
 import com.android.gmacs.event.RecentTalksEvent;
 import com.android.gmacs.logic.TalkLogic;
@@ -34,7 +35,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Handler;
 
 /**
  * Created by YanQi on 2015/12/7.
@@ -100,7 +100,7 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
-        systemHead = inflater.inflate(R.layout.system_notification_layout, null);
+        systemHead = inflater.inflate(R.layout.system_notification_list_layout, null);
 
         mHiddenView = (LinearLayout) getView().findViewById(R.id.ll_conversation_hiddenview);
         mHeaderView = new LinearLayout(getActivity());
@@ -130,7 +130,7 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
                 systemHead.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ToastUtil.showToast("aa");
+                        startActivity(new Intent(getActivity(),SystemNotificationActivity.class));
                     }
                 });
             }
