@@ -2,7 +2,9 @@ package com.utils;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.merchantplatform.application.HyApplication;
 import com.push.WPushListener;
 import com.wuba.wbpush.Push;
 
@@ -31,7 +33,13 @@ public class WPushInitUtils implements  Push.MessageListener,
         Push.getInstance().enableDebug(context, true); //线下Debug模式true，正式为false
         Push.getInstance().registerPush(context, Constant.WPUSH_APP_ID, Constant.WPUSH_APP_KEY, AppInfoUtils.getChannelId(context));
 //        Push.getInstance().binderUserID(""); //绑定/解绑用户信息:非空串,绑定指定的userID,空串(“”),解绑userID
-//        Push.getInstance().binderAlias(""); //绑定/解绑别名:非空串,绑定指定的alias ,空串(“”),解绑alias。
+
+        StringBuilder temp = new StringBuilder();
+        temp.append(UserUtils.getUserId() + "_");
+        temp.append(AppInfoUtils.getIMEI(HyApplication.getApplication()));
+        String a = temp.toString();
+        Log.i("song",a);
+        Push.getInstance().binderAlias(a); //绑定/解绑别名:非空串,绑定指定的alias ,空串(“”),解绑alias。
     }
 
     public void setPushListener(WPushListener listener) {
