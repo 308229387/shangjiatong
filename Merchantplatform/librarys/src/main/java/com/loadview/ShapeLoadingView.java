@@ -36,7 +36,7 @@ public class ShapeLoadingView extends View {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        setBackgroundColor(getResources().getColor(R.color.view_bg, null));
+        setBackgroundColor(getResources().getColor(R.color.view_bg));
     }
 
     private Paint mPaint;
@@ -49,7 +49,7 @@ public class ShapeLoadingView extends View {
         if (getVisibility() == GONE) {
             return;
         }
-        mPaint.setColor(getResources().getColor(color, null));
+        mPaint.setColor(getResources().getColor(color));
 
         Path path = new Path();
         path.addCircle(dip2px(redis), dip2px(redis), dip2px(redis), Path.Direction.CW);
