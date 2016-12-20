@@ -14,12 +14,14 @@ import com.merchantplatform.activity.SettingActivity;
 import com.merchantplatform.activity.PersonalSettingActivity;
 import com.merchantplatform.activity.SettingFeedbackActivity;
 import com.merchantplatform.activity.SettingPushActivity;
+import com.merchantplatform.bean.TempResponse;
 import com.okhttputils.OkHttpUtils;
-import com.ui.actionSheet.NormalActionSheet;
+import com.ui.actionsheet.NormalActionSheet;
 import com.Utils.TitleBar;
 import com.utils.PageSwitchUtils;
 import com.utils.Urls;
 import com.wuba.loginsdk.external.LoginClient;
+import com.wuba.wbpush.Push;
 
 import java.util.Arrays;
 
@@ -127,6 +129,7 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
                         if (value.equals("退出登录")) {
                             logout();
                             setLogoutStateToPPU();
+                            setWPushBindsAlias();
                             goToLogin();
                         }
                     }
@@ -143,21 +146,24 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
         LoginClient.doLogoutOperate(context);
     }
 
+    private void setWPushBindsAlias(){
+        Push.getInstance().binderAlias("");
+    }
+
     private void goToLogin() {
         PageSwitchUtils.goToActivity(context, LoginActivity.class);
     }
 
-    private class logoutCallback extends DialogCallback<String> {
+    private class logoutCallback extends DialogCallback<TempResponse> {
 
         public logoutCallback(Activity activity) {
             super(activity);
         }
+
         @Override
-        public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
+        public void onResponse(boolean isFromCache, TempResponse tempResponse, Request request, @Nullable Response response) {
 
         }
     }
-
-
 
 }
