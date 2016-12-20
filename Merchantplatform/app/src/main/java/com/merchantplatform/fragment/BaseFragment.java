@@ -1,10 +1,8 @@
 package com.merchantplatform.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import com.merchantplatform.model.BaseModel;
-import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by SongYongmeng on 2016/11/24.
@@ -26,15 +24,4 @@ public abstract class BaseFragment<T extends BaseModel> extends android.support.
 
     protected abstract T createModel();
 
-
-    public void onResume() {
-        super.onResume();
-        //Log.e("---",this.getClass().toString());
-        MobclickAgent.onPageStart(this.getClass().toString()); //统计页面，"MainScreen"为页面名称，可自定义
-    }
-    public void onPause() {
-        super.onPause();
-        //Log.e("---",this.getClass().toString());
-        MobclickAgent.onPageEnd(this.getClass().toString());
-    }
 }
