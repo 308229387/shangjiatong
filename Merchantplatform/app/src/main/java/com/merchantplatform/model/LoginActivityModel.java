@@ -126,7 +126,9 @@ public class LoginActivityModel extends BaseModel {
 
         @Override
         public void onResponse(boolean isFromCache, LoginResponse loginResponse, okhttp3.Request request, @Nullable Response response) {
-            LoginSuccess(loginResponse);
+            if(loginResponse != null){
+                LoginSuccess(loginResponse);
+            }
         }
     }
 

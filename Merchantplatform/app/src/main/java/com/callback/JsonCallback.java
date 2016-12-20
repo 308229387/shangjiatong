@@ -22,6 +22,10 @@ public abstract class JsonCallback<T> extends CommonCallback<T> {
     private Class<T> clazz;
     private Type type;
 
+    protected static  final String PPU_UNVALID = "ppu_unvalid";  //PPU过期
+
+    protected static final String SINGLE_DEVICE_LOGIN = "single_device_login"; //触发单设备登录机制
+
     public JsonCallback() {
         this.clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
@@ -63,7 +67,7 @@ public abstract class JsonCallback<T> extends CommonCallback<T> {
             case 100:
                 throw new IllegalStateException(msg);
             case 200:
-                throw new IllegalStateException(msg);
+                throw new IllegalStateException(PPU_UNVALID);
             case 300:
                 throw new IllegalStateException(msg);
             case 400:
@@ -71,7 +75,7 @@ public abstract class JsonCallback<T> extends CommonCallback<T> {
             case 500:
                 throw new IllegalStateException(msg);
             case 600:
-                throw new IllegalStateException(msg);
+                throw new IllegalStateException(SINGLE_DEVICE_LOGIN);
             default:
                 throw new IllegalStateException("未知错误");
         }

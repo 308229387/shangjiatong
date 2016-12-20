@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.alipay.sdk.util.LogUtils;
 import com.callback.DialogCallback;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.AboutActivity;
@@ -16,10 +15,9 @@ import com.merchantplatform.activity.PersonalSettingActivity;
 import com.merchantplatform.activity.SettingFeedbackActivity;
 import com.merchantplatform.activity.SettingPushActivity;
 import com.okhttputils.OkHttpUtils;
-import com.ui.ActionSheet.NormalActionSheet;
+import com.ui.actionSheet.NormalActionSheet;
 import com.Utils.TitleBar;
 import com.utils.PageSwitchUtils;
-import com.utils.ToastUtils;
 import com.utils.Urls;
 import com.wuba.loginsdk.external.LoginClient;
 

@@ -16,6 +16,14 @@
     <dimen name="personal_center_entry_title_padding">6dip</dimen>
     <dimen name="personal_center_entry_height">48.0dip</dimen>
 
+    <dimen name="dialog_corner_radius">4dp</dimen>
+    <dimen name="dialog_content_min_height">40dp</dimen>
+    <dimen name="dialog_content_vertical_padding">30dp</dimen>
+    <dimen name="dialog_content_horizontal_padding">10dp</dimen>
+    <dimen name="dialog_btn_bar_height">40dp</dimen>
+
+    <dimen name="common_divider_line_height">0.5dip</dimen>
+
 
     <dimen name="common_text_size_32">32sp</dimen>
     <dimen name="common_text_size_30">30sp</dimen>

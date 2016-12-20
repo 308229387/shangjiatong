@@ -148,17 +148,21 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
             if(globalResponse != null){
                 String appUrl = globalResponse.getData().getAppUrl();
                 String version = globalResponse.getData().getVersion();
-                try {
-                   int  currentVersionNum = Integer.parseInt(AppInfoUtils.getVersionCode(context));
-                   int  versionNum = Integer.parseInt(version);
-                    boolean isUpdate = StringUtil.compareVersion(versionNum,currentVersionNum);
-                    if(isUpdate){
-                        AppDownloadService.startService(context, appUrl);
-                    }
-                } catch (PackageManager.NameNotFoundException e) {
-                    e.printStackTrace();
-                }
+                updateVersion(appUrl, version);
             }
+        }
+    }
+
+    private void updateVersion(String appUrl, String version) {
+        try {
+           int  currentVersionNum = Integer.parseInt(AppInfoUtils.getVersionCode(context));
+           int  versionNum = Integer.parseInt(version);
+            boolean isUpdate = StringUtil.compareVersion(versionNum,currentVersionNum);
+            if(isUpdate){
+                AppDownloadService.startService(context, appUrl);
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
         }
     }
 

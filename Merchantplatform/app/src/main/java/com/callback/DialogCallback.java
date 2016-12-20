@@ -6,7 +6,10 @@ import android.support.annotation.Nullable;
 import android.view.Window;
 
 
+import com.merchantplatform.R;
+import com.merchantplatform.application.HyApplication;
 import com.okhttputils.request.BaseRequest;
+import com.ui.dialog.LogoutDialog;
 import com.utils.ToastUtils;
 
 import java.lang.reflect.ParameterizedType;
@@ -20,6 +23,8 @@ import okhttp3.Response;
  */
 public abstract class DialogCallback<T> extends JsonCallback<T> {
     private ProgressDialog dialog;
+
+    protected boolean isToast = false;
 
     private void initDialog(Activity activity) {
         dialog = new ProgressDialog(activity);
@@ -54,17 +59,38 @@ public abstract class DialogCallback<T> extends JsonCallback<T> {
     }
 
     @Override
+    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+        super.onError(isFromCache, call, response, e);
+        if(e != null){
+            if(e.getMessage().equals(PPU_UNVALID)
+                    || e.getMessage().equals(SINGLE_DEVICE_LOGIN)){
+                isToast = true;
+            }
+
+            if(!isToast){
+                ToastUtils.showToast(e.getMessage());
+            }
+        }
+    }
+
+    @Override
     public void onAfter(boolean isFromCache, @Nullable T t, Call call, @Nullable Response response, @Nullable Exception e) {
         super.onAfter(isFromCache, t, call, response, e);
         //网络请求结束后关闭对话框
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
+        if(e!= null){
+            if (e.getMessage().equals(PPU_UNVALID)) {
+                new LogoutDialog(HyApplication.getApplication().getString(R.string.ppu_expired));
+            }
+
+            if(e.getMessage().equals(SINGLE_DEVICE_LOGIN)){
+                new LogoutDialog(HyApplication.getApplication().getString(R.string.force_exit));
+            }
+        }
+
     }
 
-    @Override
-    public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-        super.onError(isFromCache, call, response, e);
-        ToastUtils.showToast(e.getMessage());
-    }
+
 }

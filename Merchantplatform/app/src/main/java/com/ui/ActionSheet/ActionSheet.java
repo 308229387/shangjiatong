@@ -1,4 +1,4 @@
-package com.ui.ActionSheet;
+package com.ui.actionSheet;
 
 import android.app.Dialog;
 import android.content.Context;

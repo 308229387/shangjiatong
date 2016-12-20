@@ -20,6 +20,13 @@ public class SoftwareProtocolActivity extends BaseActivity<SoftwareProtocolActiv
     private void init(){
         model.initView();
         model.initData();
+        model.initIntorductionPage();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        model.destoryWebView();
     }
 
     @Override

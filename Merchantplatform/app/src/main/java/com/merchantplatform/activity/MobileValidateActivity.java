@@ -24,6 +24,11 @@ public class MobileValidateActivity extends BaseActivity<MobileValidateActivityM
     }
 
     @Override
+    public void onBackPressed() {
+        model.confirmBack();
+    }
+
+    @Override
     public MobileValidateActivityModel createModel() {
         return new MobileValidateActivityModel(this);
     }

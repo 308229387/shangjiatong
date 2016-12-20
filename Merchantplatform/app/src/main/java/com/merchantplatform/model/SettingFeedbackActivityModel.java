@@ -80,7 +80,7 @@ public class SettingFeedbackActivityModel extends BaseModel{
         //设置标题
         tb_feedback_title.setTitle("意见反馈");
         //设置右侧文案颜色
-        tb_feedback_title.setActionTextColor(Color.BLACK);
+        tb_feedback_title.setActionTextColor(Color.GRAY);
         //设置右侧文案
         tb_feedback_title.addAction(new TitleBar.TextAction("提交") {
             @Override
@@ -157,7 +157,7 @@ public class SettingFeedbackActivityModel extends BaseModel{
                 });
             }else{
                 tb_feedback_title.removeAllActions();
-                tb_feedback_title.setActionTextColor(Color.BLACK);
+                tb_feedback_title.setActionTextColor(Color.GRAY);
                 tb_feedback_title.addAction(new TitleBar.TextAction("提交") {
                     @Override
                     public void performAction(View view) {

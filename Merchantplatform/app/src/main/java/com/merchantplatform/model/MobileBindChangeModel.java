@@ -22,6 +22,7 @@ import com.merchantplatform.activity.MobileBindChangeActivity;
 import com.merchantplatform.bean.GetCodeResponse;
 import com.merchantplatform.bean.UpdateMobileResponse;
 import com.okhttputils.OkHttpUtils;
+import com.ui.dialog.CommonDialog;
 import com.utils.StringUtil;
 import com.utils.ToastUtils;
 import com.utils.Urls;
@@ -51,6 +52,8 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
     private boolean newPhoneSatisfy;
     private boolean validateCodeSatisfy;
     int time = 60;
+
+    private CommonDialog mConfirmDialog ;
 
     public MobileBindChangeModel(MobileBindChangeActivity context){
         this.context = context;
@@ -201,8 +204,33 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
             ToastUtils.makeImgAndTextToast(context, "两次修改的手机号不能一致", R.mipmap.validate_error, 0).show();
             return ;
         }else{
-            updateMobile(et_now_bind_mobile.getText().toString(), et_new_validate_mobile.getText().toString(), et_now_validate_code.getText().toString());
+            initConfirmChangeDialog();
         }
+    }
+
+    public void initConfirmChangeDialog() {
+
+        if (mConfirmDialog != null && mConfirmDialog.isShowing()) {
+            mConfirmDialog.dismiss();
+        }
+        mConfirmDialog = new CommonDialog(context);
+        mConfirmDialog.setCancelable(false);
+        mConfirmDialog.setCanceledOnTouchOutside(false);
+        mConfirmDialog.setContent("确定要把手机号修改为:"+et_new_validate_mobile.getText().toString());
+        mConfirmDialog.setOnDialogClickListener(new CommonDialog.OnDialogClickListener() {
+            @Override
+            public void onDialogClickSure() {
+                mConfirmDialog.dismiss();
+                updateMobile(et_now_bind_mobile.getText().toString(), et_new_validate_mobile.getText().toString(), et_now_validate_code.getText().toString());
+            }
+
+            @Override
+            public void onDialogClickCancel() {
+                mConfirmDialog.dismiss();
+            }
+
+        });
+        mConfirmDialog.show();
     }
 
     private void updateMobile(String mobile,String newPhone,String code ){

@@ -2,6 +2,8 @@ package com.merchantplatform.model;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,47 +21,29 @@ import com.merchantplatform.activity.LoginActivity;
 import com.merchantplatform.activity.MobileValidateActivity;
 import com.merchantplatform.activity.PushActivity;
 import com.merchantplatform.activity.SystemMessageActivity;
+import com.merchantplatform.application.HyApplication;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.utils.PageSwitchUtils;
+import com.utils.UserUtils;
+import com.wuba.loginsdk.external.LoginClient;
 
 /**
  * Created by SongYongmeng on 2016/11/22.
  */
 public class GuideActivityModel extends BaseModel {
     private Activity context;
-    private TextView text;
-    private Button button;
-    private Button button_bugly_test;
     private Button button_message;
     private ImageView imageView_glide_test;
     private Button button_push;
+
+    private static final long DELAYED_TIMES = 3 * 1000;
+    private Handler handler = new Handler();
 
     public GuideActivityModel(Activity context) {
         this.context = context;
     }
 
     public void initLayout() {
-        text = (TextView) context.findViewById(R.id.text_click);
-        text.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                context.startActivity(new Intent(context, LoginActivity.class));
-            }
-        });
-
-        button = (Button) context.findViewById(R.id.button_click);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                context.startActivity(new Intent(context, MobileValidateActivity.class));
-            }
-        });
-        button_bugly_test = (Button) context.findViewById(R.id.button_bugly_test);
-        button_bugly_test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CrashReport.testJavaCrash();
-            }
-        });
         button_message =  (Button) context.findViewById(R.id.button_message);
         button_message.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +62,35 @@ public class GuideActivityModel extends BaseModel {
         });
     }
 
-    public void showToast() {
-        Toast.makeText(context, "test", Toast.LENGTH_LONG).show();
+    public void waitAndGo() {
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                goToWhere();
+            }
+        }, DELAYED_TIMES);
+    }
+
+    private void goToWhere(){
+        judgeHowManyComeAfterGo();
+        finish();
+    }
+
+    private void judgeHowManyComeAfterGo() {
+        if (neverCome()) {
+            PageSwitchUtils.goToActivity(context, LoginActivity.class);
+        } else {
+            PageSwitchUtils.goToActivity(context, HomepageActivity.class);
+        }
+    }
+
+    private boolean neverCome(){
+        return TextUtils.isEmpty(UserUtils.getUserId())
+                || !UserUtils.isValidate(context)
+                || TextUtils.isEmpty(LoginClient.doGetPPUOperate(HyApplication.getApplication()));
+    }
+
+    private void finish() {
+        context.finish();
     }
 }

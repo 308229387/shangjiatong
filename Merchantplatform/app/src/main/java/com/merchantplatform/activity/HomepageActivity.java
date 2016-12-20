@@ -2,6 +2,7 @@ package com.merchantplatform.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.view.KeyEvent;
 
 import com.merchantplatform.R;
 import com.merchantplatform.model.HomepageModel;
@@ -22,6 +23,14 @@ public class HomepageActivity extends BaseActivity<HomepageModel> {
         model.createFragment();
         model.createFragmentManagerAndShow();
         model.getGlobalParams();
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK)
+            moveTaskToBack(false);
+        return false;
     }
 
     @Override

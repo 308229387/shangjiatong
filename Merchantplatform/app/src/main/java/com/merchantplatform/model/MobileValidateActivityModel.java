@@ -19,6 +19,7 @@ import com.merchantplatform.bean.BindMobileResponse;
 import com.merchantplatform.bean.GetCodeResponse;
 import com.okhttputils.OkHttpUtils;
 import com.Utils.TitleBar;
+import com.ui.dialog.ConfirmDialog;
 import com.utils.PageSwitchUtils;
 import com.utils.StringUtil;
 import com.utils.ToastUtils;
@@ -94,6 +95,10 @@ public class MobileValidateActivityModel extends BaseModel implements View.OnCli
                commit();
                break;
        }
+    }
+
+    public void confirmBack(){
+        new ConfirmDialog(context,"确定要退出手机验证么");
     }
 
     private void getValidateCode(){

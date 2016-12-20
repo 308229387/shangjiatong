@@ -36,4 +36,7 @@
     <string name="update_download_apk_file_path_empty">安装包路径名为空！</string>
 
     <string name="validate_code_already_send">验证码已发送,请耐心等待</string>
+
+    <string name="force_exit">账号在其他手机登录，您已被迫下线.\n请注意密码安全。</string>
+    <string name="ppu_expired">PPU过期，请重新登录</string>
 </resources>

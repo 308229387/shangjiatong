@@ -21,6 +21,8 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
     <!-- 读取通话记录 -->
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <!-- 全局dialog属性-->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <!-- 调用者的包名申请权限必须 -->
     <permission
@@ -104,6 +106,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SoftwareProtocolActivity"
+            android:process=":webhelp"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MobileValidateActivity"
