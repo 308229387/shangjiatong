@@ -39,6 +39,9 @@ import com.merchantplatform.fragment.CallRecordFragment;
 import com.xrecyclerview.ProgressStyle;
 import com.xrecyclerview.XRecyclerView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.greenrobot.greendao.query.WhereCondition;
 
 import java.util.ArrayList;
@@ -92,6 +95,10 @@ public class CallRecordModel extends BaseModel {
 
     public void registPhoneBroadcast() {
         PhoneReceiver.addToMonitor(interaction);
+    }
+
+    public void registEventBus() {
+        EventBus.getDefault().register(context);
     }
 
     public void setTabIndex(int tabIndex) {
@@ -408,11 +415,14 @@ public class CallRecordModel extends BaseModel {
     }
 
     private void deleteThisRecord(CallList clickCallList) {
-        deleteFromAdapterList(clickCallList);
-        deleteFromCallList(clickCallList);
-        deleteFromCallDetail(clickCallList);
+        if (clickCallList.getType() == 1 && clickCallList.getCallResult() == 20) {
+            EventBus.getDefault().post(clickCallList);
+            deleteFromCallList(clickCallList);
+            deleteFromCallDetail(clickCallList);
+        }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
     private void deleteFromAdapterList(CallList clickCallList) {
         listData.remove(clickCallList);
         mAdapter.notifyDataSetChanged();
@@ -492,7 +502,11 @@ public class CallRecordModel extends BaseModel {
         }
     }
 
-    public void destroyFragment() {
+    public void releasePhoneMonitor() {
         PhoneReceiver.releaseMonitor(interaction);
+    }
+
+    public void unregistEventBus() {
+        EventBus.getDefault().unregister(context);
     }
 }

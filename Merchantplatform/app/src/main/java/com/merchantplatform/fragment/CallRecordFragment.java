@@ -34,6 +34,7 @@ public class CallRecordFragment extends BaseFragment<CallRecordModel> {
         model.initView(inflater, container);
         model.setListener();
         model.registPhoneBroadcast();
+        model.registEventBus();
     }
 
     private void setTabIndex(int tabIndex) {
@@ -55,7 +56,8 @@ public class CallRecordFragment extends BaseFragment<CallRecordModel> {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        model.destroyFragment();
+        model.releasePhoneMonitor();
+        model.unregistEventBus();
     }
 
     @Override
