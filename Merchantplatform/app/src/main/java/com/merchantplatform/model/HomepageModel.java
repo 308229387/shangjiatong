@@ -53,6 +53,7 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         bottomButton4 = (HomepageBottomButton) context.findViewById(R.id.homepage_bottom_button4);
         setListener();
         setInfo();
+        registerEventBus();
     }
 
     private void setListener() {
@@ -69,6 +70,10 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         bottomButton1.setDrawableInfo(R.drawable.tab_menu_setting);
         bottomButton2.setDrawableInfo(R.drawable.tab_menu_call);
         bottomButton4.setDrawableInfo(R.drawable.tab_menu_mine);
+    }
+
+    private void registerEventBus() {
+        EventBus.getDefault().register(context);
     }
 
     private void selectThis(HomepageBottomButton v) {

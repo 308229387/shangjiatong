@@ -108,6 +108,11 @@
         <activity
             android:name=".activity.SystemMessageActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SystemNotificationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/GmacsTheme"
+            android:windowSoftInputMode="stateUnspecified|adjustResize"/>
 
         <service
             android:name=".service.AppDownloadService"

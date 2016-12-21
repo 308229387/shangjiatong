@@ -14,9 +14,9 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.Utils.JumpSystemNotificationAction;
 import com.Utils.SystemNotification;
 import com.android.gmacs.R;
-import com.android.gmacs.activity.SystemNotificationActivity;
 import com.android.gmacs.adapter.ConversationListAdapter;
 import com.android.gmacs.event.RecentTalksEvent;
 import com.android.gmacs.logic.TalkLogic;
@@ -110,7 +110,7 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
             @Override
             public void onClick(View v) {
                 redDot.setVisibility(View.GONE);
-                startActivity(new Intent(getActivity(), SystemNotificationActivity.class));
+                EventBus.getDefault().post(new JumpSystemNotificationAction("jump"));
             }
         });
         mHiddenView = (LinearLayout) getView().findViewById(R.id.ll_conversation_hiddenview);

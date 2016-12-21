@@ -1,20 +1,14 @@
 package com.merchantplatform.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.KeyEvent;
 
-import com.common.gmacs.utils.ToastUtil;
-import com.db.dao.SystemNotificationDetial;
-import com.db.helper.SystemNotificationOperate;
 import com.merchantplatform.R;
+import com.Utils.JumpSystemNotificationAction;
 import com.merchantplatform.model.HomepageModel;
-import com.Utils.SystemNotification;
-import com.utils.ToastUtils;
 
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.ArrayList;
 
 /**
  * Created by SongYongmeng on 2016/11/24.
@@ -24,7 +18,6 @@ import java.util.ArrayList;
 public class HomepageActivity extends BaseActivity<HomepageModel> {
 
     @Override
-    @Subscribe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
@@ -47,5 +40,9 @@ public class HomepageActivity extends BaseActivity<HomepageModel> {
         return new HomepageModel(this);
     }
 
+    @Subscribe
+    public void onEvent(JumpSystemNotificationAction action) {
+        startActivity(new Intent(HomepageActivity.this, SystemNotificationActivity.class));
+    }
 
 }
