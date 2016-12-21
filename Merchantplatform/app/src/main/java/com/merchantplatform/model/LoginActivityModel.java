@@ -107,7 +107,7 @@ public class LoginActivityModel extends BaseModel {
             public void run() {
                 HyApplication.getInstance().removeOtherActivity(context);
             }
-        }, 1500);
+        }, 1000);
     }
 
     public void registerCallback() {

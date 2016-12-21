@@ -17,7 +17,7 @@
         android:layout_marginLeft="15dip"
         android:text="内容描述"
         android:textSize="@dimen/common_text_size_16"
-        android:textColor="@color/black"/>
+        android:textColor="#4A4A4A"/>
 
     <View
         android:layout_width="match_parent"
@@ -57,7 +57,7 @@
         android:layout_marginLeft="15dip"
         android:text="联系方式（选填）"
         android:textSize="@dimen/common_text_size_16"
-        android:textColor="@color/black"/>
+        android:textColor="#4A4A4A"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
