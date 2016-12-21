@@ -68,9 +68,9 @@ public class SystemMessageAdapter extends BaseAdapter{
             holder = (ViewHolder)convertView.getTag();
         }
         PushSqlBean  messageBean = beans.get(position);
-        int msgCate = messageBean.getMsgCate();
+        String msgCate = messageBean.getType();
         switch(msgCate){
-            case 100:
+            case "100":
                 holder.tv_qd_result.setText("退单成功通知");
                 holder.tv_noouejd.setVisibility(View.GONE);
                 holder.tv_order_number.setVisibility(View.GONE);
@@ -78,7 +78,7 @@ public class SystemMessageAdapter extends BaseAdapter{
                 holder.view.setVisibility(View.GONE);
                 holder.rl_more.setVisibility(View.GONE);
                 break;
-            case 101:
+            case "101":
 //                holder.tv_time.setText(TimeUtils.formatDateTime(messageBean.getTime()));
                 holder.tv_qd_result.setText("国庆不打烊，商机不间断");
                 holder.tv_noouejd.setVisibility(View.GONE);

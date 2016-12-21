@@ -73,10 +73,10 @@ public class SystemMessageActivityModel extends BaseModel{
 
     private void initListData(){
         PushSqlBean bean1 = new PushSqlBean();
-        bean1.setMsgCate(100);
+        bean1.setTitle("100");
         beans.add(bean1);
         PushSqlBean bean2 = new PushSqlBean();
-        bean2.setMsgCate(101);
+        bean2.setTitle("101");
         beans.add(bean2);
         adapter.setDataSources(beans);
     }
@@ -86,8 +86,8 @@ public class SystemMessageActivityModel extends BaseModel{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 PushSqlBean bean = beans.get(position);
-                int msgCate = bean.getMsgCate();
-                if(msgCate == 101){
+                String msgCate = bean.getType();
+                if(msgCate.equals("100")){
                     PageSwitchUtils.goToActivity(context, AboutActivity.class);
                 }
             }
