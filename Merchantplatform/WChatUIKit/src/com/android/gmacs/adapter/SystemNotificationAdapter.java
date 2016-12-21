@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.gmacs.R;
@@ -45,6 +46,7 @@ public class SystemNotificationAdapter extends BaseAdapter {
             holder.title = (TextView) convertView.findViewById(R.id.system_notification_title);
             holder.time = (TextView) convertView.findViewById(R.id.time);
             holder.text = (TextView) convertView.findViewById(R.id.system_notification_text);
+            holder.arrow = (ImageView) convertView.findViewById(R.id.system_notification_arrow);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -56,5 +58,6 @@ public class SystemNotificationAdapter extends BaseAdapter {
         private TextView time;
         private TextView title;
         private TextView text;
+        private ImageView arrow;
     }
 }
