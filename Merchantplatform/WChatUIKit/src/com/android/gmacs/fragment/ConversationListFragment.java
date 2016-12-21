@@ -138,13 +138,10 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
 
     }
 
-    public void ShowSystemInfo(String string) {
-        redDot.setVisibility(View.VISIBLE);
-        systemText.setText(string);
-    }
-
     @Subscribe
     public void onEvent(SystemNotification temp) {
+        systemText.setText(temp.getDescribe());
+        redDot.setVisibility(View.VISIBLE);
         ToastUtil.showToast(temp.getTitle() + "fragment");
     }
 
