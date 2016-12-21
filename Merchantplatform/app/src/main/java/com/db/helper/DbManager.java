@@ -8,6 +8,7 @@ import com.db.dao.gen.CallDetailDao;
 import com.db.dao.gen.CallListDao;
 import com.db.dao.gen.DaoMaster;
 import com.db.dao.gen.DaoSession;
+import com.db.dao.gen.SystemNotificationDetialDao;
 import com.utils.Constant;
 
 /**
@@ -85,6 +86,6 @@ public class DbManager extends DaoMaster.OpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        MigrationHelper.migrate(db, CallDetailDao.class, CallListDao.class);
+        MigrationHelper.migrate(db, CallDetailDao.class, CallListDao.class, SystemNotificationDetialDao.class);
     }
 }

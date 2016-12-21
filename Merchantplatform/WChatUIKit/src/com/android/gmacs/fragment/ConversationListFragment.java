@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.Utils.SystemNotification;
 import com.android.gmacs.R;
 import com.android.gmacs.activity.SystemNotificationActivity;
 import com.android.gmacs.adapter.ConversationListAdapter;
@@ -133,18 +134,18 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
             mListView.addHeaderView(mConnectionStatusHeaderViewContainer);
         }
         mListView.addHeaderView(mHeaderView);
-        new android.os.Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mListView.addHeaderView(systemHead);
-            }
-        }, 5000);
+        mListView.addHeaderView(systemHead);
 
     }
 
     public void ShowSystemInfo(String string) {
         redDot.setVisibility(View.VISIBLE);
         systemText.setText(string);
+    }
+
+    @Subscribe
+    public void onEvent(SystemNotification temp) {
+        ToastUtil.showToast(temp.getTitle() + "fragment");
     }
 
     @Override
@@ -379,4 +380,6 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
                 break;
         }
     }
+
+
 }

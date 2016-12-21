@@ -1,12 +1,20 @@
 package com.merchantplatform.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
+import android.os.Handler;
 import android.view.KeyEvent;
 
+import com.common.gmacs.utils.ToastUtil;
+import com.db.dao.SystemNotificationDetial;
+import com.db.helper.SystemNotificationOperate;
 import com.merchantplatform.R;
 import com.merchantplatform.model.HomepageModel;
-import com.ui.HomepageBottomButton;
+import com.Utils.SystemNotification;
+import com.utils.ToastUtils;
+
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
 
 /**
  * Created by SongYongmeng on 2016/11/24.
@@ -16,6 +24,7 @@ import com.ui.HomepageBottomButton;
 public class HomepageActivity extends BaseActivity<HomepageModel> {
 
     @Override
+    @Subscribe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
@@ -37,4 +46,6 @@ public class HomepageActivity extends BaseActivity<HomepageModel> {
     public HomepageModel createModel() {
         return new HomepageModel(this);
     }
+
+
 }

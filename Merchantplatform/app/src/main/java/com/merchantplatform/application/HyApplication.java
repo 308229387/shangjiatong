@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
+import com.db.helper.DbManager;
 import com.facebook.stetho.Stetho;
 import com.merchantplatform.BuildConfig;
 import com.okhttputils.OkHttpUtils;
@@ -46,6 +47,11 @@ public class HyApplication extends MultiDexApplication {
         initBugly();
         initStetho();
         initUmeng();
+        initGreenDao();
+    }
+
+    private void initGreenDao() {
+        DbManager.getInstance(application);
     }
 
     private void setApplicationContext() {
@@ -130,7 +136,6 @@ public class HyApplication extends MultiDexApplication {
     public void setStartDownService(boolean isStartDownService) {
         this.isStartDownService = isStartDownService;
     }
-
 
 
 }

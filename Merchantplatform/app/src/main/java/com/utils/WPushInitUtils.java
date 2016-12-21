@@ -3,8 +3,11 @@ package com.utils;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.Utils.SystemNotification;
 import com.wuba.wbpush.Push;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -12,10 +15,10 @@ import org.json.JSONObject;
  * Created by 58 on 2016/11/29.
  */
 
-public class WPushInitUtils implements  Push.MessageListener,
+public class WPushInitUtils implements Push.MessageListener,
         Push.PushErrorListener,
         Push.DeviceIDAvalibleListener,
-        Push.NotificationClickedListener{
+        Push.NotificationClickedListener {
 
     public WPushInitUtils(Context context) {
         Push.getInstance().registerMessageListener(this);//消息到达监听器
@@ -35,13 +38,22 @@ public class WPushInitUtils implements  Push.MessageListener,
 
     /**
      * 收到的Push消息
+     *
      * @param pushMessage
      */
     @Override
     public void OnMessage(Push.PushMessage pushMessage) {
+        Gson temp = new Gson();
+        SystemNotification temp1 = temp.fromJson(pushMessage.messageContent, SystemNotification.class);
 
+        if (temp1.getType()==103) {
+
+        }
+        EventBus.getDefault().post(temp1);
+
+        Log.i("song", pushMessage.messageContent);
         String messageContent = pushMessage.messageContent;
-        String messageID=pushMessage.messageID;
+        String messageID = pushMessage.messageID;
         try {
             JSONObject jsonObject = new JSONObject(messageContent);
 
@@ -57,16 +69,19 @@ public class WPushInitUtils implements  Push.MessageListener,
         String msgString = null;
         if (pushMessage.messageInfos != null) {
             msgString = String.format("messgeID:%s messageType:%s messaegContent:%s pushType:%s",
-                    pushMessage.messageID,type,pushMessage.messageContent,pushMessage.messageInfos.get("pushType"));
+                    pushMessage.messageID, type, pushMessage.messageContent, pushMessage.messageInfos.get("pushType"));
         } else {
             msgString = String.format("messgeID:%s messageType:%s messaegContent:%s",
                     pushMessage.messageID, type, pushMessage.messageContent);
         }
         Log.d("PushUtils", "onMessage-pushMessage:" + msgString);
+
+
     }
 
     /**
      * 点击通知事件监听
+     *
      * @param messageId
      */
     @Override
@@ -77,4 +92,6 @@ public class WPushInitUtils implements  Push.MessageListener,
     public void onError(int errorCode, String errorString) {
 
     }
+
+
 }

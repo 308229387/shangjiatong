@@ -2,6 +2,7 @@ package com.merchantplatform.model;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,6 +10,7 @@ import android.view.View;
 
 import com.android.gmacs.fragment.ConversationListFragment;
 import com.callback.DialogCallback;
+import com.common.gmacs.utils.ToastUtil;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.HomepageActivity;
 import com.merchantplatform.bean.GlobalResponse;
@@ -23,6 +25,9 @@ import com.ui.HomepageBottomButton;
 import com.utils.AppInfoUtils;
 import com.utils.StringUtil;
 import com.utils.Urls;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import okhttp3.Request;
 import okhttp3.Response;
@@ -115,7 +120,7 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         switchFragment(fragment);
     }
 
-    public void getGlobalParams(){
+    public void getGlobalParams() {
         OkHttpUtils.get(Urls.GLOBAL_PARAMS)
                 .execute(new globalCallback(context));
     }
@@ -137,7 +142,7 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         }
     }
 
-    private class globalCallback extends DialogCallback<GlobalResponse>{
+    private class globalCallback extends DialogCallback<GlobalResponse> {
 
         public globalCallback(Activity activity) {
             super(activity);
@@ -145,7 +150,7 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
 
         @Override
         public void onResponse(boolean isFromCache, GlobalResponse globalResponse, Request request, @Nullable Response response) {
-            if(globalResponse != null){
+            if (globalResponse != null) {
                 String appUrl = globalResponse.getData().getAppUrl();
                 String version = globalResponse.getData().getVersion();
                 updateVersion(appUrl, version);
@@ -155,15 +160,16 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
 
     private void updateVersion(String appUrl, String version) {
         try {
-           int  currentVersionNum = Integer.parseInt(AppInfoUtils.getVersionCode(context));
-           int  versionNum = Integer.parseInt(version);
-            boolean isUpdate = StringUtil.compareVersion(versionNum,currentVersionNum);
-            if(isUpdate){
+            int currentVersionNum = Integer.parseInt(AppInfoUtils.getVersionCode(context));
+            int versionNum = Integer.parseInt(version);
+            boolean isUpdate = StringUtil.compareVersion(versionNum, currentVersionNum);
+            if (isUpdate) {
                 AppDownloadService.startService(context, appUrl);
             }
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
     }
+
 
 }

@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 
 import com.db.helper.CallDetailDaoOperate;
 import com.db.helper.CallListDaoOperate;
-import com.db.helper.DbManager;
 import com.merchantplatform.R;
 import com.merchantplatform.adapter.FragmentAdapter;
 import com.merchantplatform.fragment.CallRecordFragment;
@@ -79,7 +78,6 @@ public class CallMessageModel extends BaseModel {
     }
 
     public void deleteLastMonthData() {
-        DbManager.getInstance(context.getContext());
         String lastMonthDate = DateUtils.getMonthAgo(1);
         WhereCondition condition = new WhereCondition.StringCondition("date(CALL_TIME)<'" + lastMonthDate + "'");
         CallDetailDaoOperate.deleteByCondition(context.getContext(), condition);
