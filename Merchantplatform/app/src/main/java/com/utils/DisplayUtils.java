@@ -36,6 +36,11 @@ public class DisplayUtils {
         return (int) px;
     }
 
+    public static int spToPx(float sp, Resources resources) {
+        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, resources.getDisplayMetrics());
+        return (int) px;
+    }
+
     /**
      * 应用是否在前台
      *

@@ -20,6 +20,7 @@ public class CallMessageFragment extends BaseFragment<CallMessageModel> {
         initializationLayout(inflater, container);
         creatFragment();
         setupViewPager();
+        setTabLayoutListener();
         return model.getView();
     }
 
@@ -34,6 +35,10 @@ public class CallMessageFragment extends BaseFragment<CallMessageModel> {
 
     private void setupViewPager() {
         model.setupViewPager();
+    }
+
+    private void setTabLayoutListener() {
+        model.setTabLayoutListener();
     }
 
     @Override

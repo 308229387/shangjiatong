@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.provider.CallLog.Calls;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -29,6 +28,7 @@ import com.merchantplatform.bean.CallDetailResponse;
 import com.merchantplatform.bean.UserCallRecordBean;
 import com.merchantplatform.receiver.PhoneReceiver;
 import com.okhttputils.OkHttpUtils;
+import com.tablayout.SlidingTabLayout;
 import com.utils.DateUtils;
 import com.utils.PermissionUtils;
 import com.utils.Urls;
@@ -40,8 +40,6 @@ import com.xrecyclerview.ProgressStyle;
 import com.xrecyclerview.XRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 import org.greenrobot.greendao.query.WhereCondition;
 
 import java.util.ArrayList;
@@ -60,7 +58,7 @@ public class CallRecordModel extends BaseModel {
     private View view;
     private XRecyclerView mXRecyclerView;
     private View emptyView;
-    private TabLayout mTabLayout;
+    private SlidingTabLayout mTabLayout;
     private CallRecordAdapter mAdapter;
     private ArrayList<CallList> listData;
     private static final int CALL_IN_TYPE = 1;
@@ -76,7 +74,7 @@ public class CallRecordModel extends BaseModel {
     }
 
     public void initView(LayoutInflater inflater, ViewGroup container) {
-        mTabLayout = (TabLayout) context.getActivity().findViewById(R.id.tb_switch_callType);
+        mTabLayout = (SlidingTabLayout) context.getActivity().findViewById(R.id.tb_switch_callType);
         view = inflater.inflate(R.layout.fragment_call_record, container, false);
         mXRecyclerView = (XRecyclerView) view.findViewById(R.id.xrv_callrecord);
         emptyView = view.findViewById(R.id.layout_call_empty);
@@ -392,7 +390,7 @@ public class CallRecordModel extends BaseModel {
     PhoneReceiver.BRInteraction interaction = new PhoneReceiver.BRInteraction() {
         @Override
         public void sendAction(final String action) {
-            if (mTabLayout.getSelectedTabPosition() == tabIndex) {
+            if (mTabLayout.getCurrentTab() == tabIndex) {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
