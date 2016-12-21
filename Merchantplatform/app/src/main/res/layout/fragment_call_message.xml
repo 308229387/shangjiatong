@@ -9,19 +9,20 @@
         android:id="@+id/layout_call_head"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="@color/tabbg_white">
+        android:background="@color/tabbg_white"
+        android:gravity="center">
 
-        <android.support.design.widget.TabLayout
+        <com.tablayout.SlidingTabLayout
             android:id="@+id/tb_switch_callType"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            app:tabBackground="@color/tabbg_white"
-            app:tabIndicatorColor="@color/tab_selected_text"
-            app:tabIndicatorHeight="@dimen/tablayout_indicator_size"
-            app:tabMaxWidth="@dimen/tablayout_maxwidth"
-            app:tabSelectedTextColor="@color/tab_selected_text"
-            app:tabTextAppearance="@style/TabLayoutTextStyle"
-            app:tabTextColor="@color/tab_unselected_text" />
+            android:background="@color/tabbg_white"
+            app:tl_indicator_color="@color/tab_selected_text"
+            app:tl_indicator_height="@dimen/tablayout_indicator_size"
+            app:tl_indicator_width_equal_title="true"
+            app:tl_textSelectColor="@color/tab_selected_text"
+            app:tl_textUnselectColor="@color/tab_unselected_text"
+            app:tl_textsize="20sp" />
 
     </LinearLayout>
 

@@ -20,7 +20,6 @@ public class AboutActivityModel extends BaseModel{
     private AboutActivity context;
 
     private TitleBar titleBar;
-    private ImageView mEditView;
     private TextView tv_version;
     private TextView tv_protocol;
 

@@ -29,7 +29,7 @@
             android:layout_marginLeft="15dp"
             android:text="消息推送"
             android:textColor="@color/black"
-            android:textSize="@dimen/common_text_size_16" />
+            android:textSize="@dimen/common_text_size_17" />
 
         <ImageView
             android:layout_width="24dp"
@@ -59,7 +59,7 @@
             android:layout_marginLeft="15dp"
             android:text="意见反馈"
             android:textColor="@color/black"
-            android:textSize="@dimen/common_text_size_16" />
+            android:textSize="@dimen/common_text_size_17" />
 
         <ImageView
             android:layout_width="24dp"
@@ -88,7 +88,7 @@
             android:layout_marginLeft="15dp"
             android:text="账号绑定"
             android:textColor="@color/black"
-            android:textSize="@dimen/common_text_size_16" />
+            android:textSize="@dimen/common_text_size_17" />
 
         <ImageView
             android:layout_width="24dp"
@@ -118,7 +118,7 @@
             android:layout_marginLeft="15dp"
             android:text="关于我们"
             android:textColor="@color/black"
-            android:textSize="@dimen/common_text_size_16" />
+            android:textSize="@dimen/common_text_size_17" />
 
         <ImageView
             android:layout_width="24dp"
@@ -154,7 +154,7 @@
             android:layout_marginLeft="20dp"
             android:text="退出账号"
             android:textColor="@color/black"
-            android:textSize="@dimen/common_text_size_16"/>
+            android:textSize="@dimen/common_text_size_17"/>
 
     </RelativeLayout>
 

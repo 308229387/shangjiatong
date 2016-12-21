@@ -32,6 +32,7 @@
     <dimen name="common_text_size_21">21sp</dimen>
     <dimen name="common_text_size_20">20sp</dimen>
     <dimen name="common_text_size_18">18sp</dimen>
+    <dimen name="common_text_size_17">17sp</dimen>
     <dimen name="common_text_size_16">16sp</dimen>
     <dimen name="common_text_size_15">15sp</dimen>
     <dimen name="common_text_size_14">14sp</dimen>

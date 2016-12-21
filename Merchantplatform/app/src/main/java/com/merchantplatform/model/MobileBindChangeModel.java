@@ -19,7 +19,6 @@ import com.Utils.TitleBar;
 import com.callback.DialogCallback;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.MobileBindChangeActivity;
-import com.merchantplatform.bean.GetCodeResponse;
 import com.merchantplatform.bean.TempResponse;
 import com.merchantplatform.bean.UpdateMobileResponse;
 import com.okhttputils.OkHttpUtils;
@@ -45,7 +44,6 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
     private TextView tv_new_mobile_alert;
     private Button btn_getCode, btn_submit;
 
-    private static final String FAILURE = "1";//重复获取验证码
     private  static final String SUCCESS = "0";//成功
 
     private String mobile;
@@ -152,12 +150,13 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
         public void afterTextChanged(Editable s) {
             String phone = s.toString();
 
-            if(!TextUtils.isEmpty(phone) && !StringUtil.isMobileNO(phone)){
+            if(!TextUtils.isEmpty(phone) && StringUtil.isMobileNO(phone)){
                 newPhoneSatisfy = true;
-                tv_new_mobile_alert.setVisibility(View.VISIBLE);
+                tv_new_mobile_alert.setVisibility(View.GONE);
             }else{
                 newPhoneSatisfy = false;
-                tv_new_mobile_alert.setVisibility(View.GONE);
+                tv_new_mobile_alert.setVisibility(View.VISIBLE);
+
             }
             checkSubmitEnabled(validateCodeSatisfy,newPhoneSatisfy);
         }
@@ -166,18 +165,18 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
     private void checkSubmitEnabled(boolean validateCodeSatisfy, boolean newPhoneSatisfy) {
         if(validateCodeSatisfy && newPhoneSatisfy){
             btn_submit.setEnabled(true);
-            btn_submit.setTextColor(Color.parseColor("#FFFFFF"));
+            btn_submit.setTextColor(Color.parseColor("#FDC9C0"));
             btn_submit.setBackgroundResource(R.drawable.submit_btn_bg);
         }else{
             btn_submit.setEnabled(false);
-            btn_submit.setTextColor(Color.parseColor("#FDC9C0"));
+            btn_submit.setTextColor(Color.parseColor("#FFFFFF"));
             btn_submit.setBackgroundResource(R.drawable.submit_bg_gray);
         }
     }
 
     private void setSubmitState(){
         btn_submit.setEnabled(false);
-        btn_submit.setTextColor(Color.parseColor("#FDC9C0"));
+        btn_submit.setTextColor(Color.parseColor("#FFFFFF"));
         btn_submit.setBackgroundResource(R.drawable.submit_bg_gray);
     }
 
@@ -235,7 +234,7 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
     }
 
     private void updateMobile(String mobile,String newPhone,String code ){
-        OkHttpUtils.get(Urls.UPDATE_MOBILE)
+        OkHttpUtils.get(Urls.VALIDATE)
                 .params("oldPhone", mobile)
                 .params("phone", newPhone)
                 .params("code", code)
@@ -283,7 +282,7 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
                         ToastUtils.makeImgAndTextToast(context, context.getString(R.string.validate_code_already_send), R.mipmap.validate_done, Toast.LENGTH_SHORT).show();
                         startCountDown(); //  开始倒计时
                     } else {
-                        ToastUtils.makeImgAndTextToast(context, message, R.mipmap.validate_done, Toast.LENGTH_SHORT).show();
+                        ToastUtils.showToast(message);
                     }
                 }
             }
@@ -305,7 +304,7 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
                 ToastUtils.makeImgAndTextToast(context,"更改成功",R.mipmap.validate_done, Toast.LENGTH_SHORT).show();
               context.onBackPressed();
             }else{
-                ToastUtils.makeImgAndTextToast(context,message,R.mipmap.validate_error,Toast.LENGTH_SHORT).show();
+                ToastUtils.showToast(message);
             }
         }
 
