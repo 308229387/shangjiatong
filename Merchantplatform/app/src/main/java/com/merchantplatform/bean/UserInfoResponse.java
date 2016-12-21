@@ -19,8 +19,17 @@ public class UserInfoResponse implements Serializable {
     }
 
     public class bean implements Serializable{
+        private String bindPhone;
         private String phone;
         private String sex;
+
+        public String getBindPhone() {
+            return bindPhone;
+        }
+
+        public void setBindPhone(String bindPhone) {
+            this.bindPhone = bindPhone;
+        }
 
         public String getSex() {
             return sex;

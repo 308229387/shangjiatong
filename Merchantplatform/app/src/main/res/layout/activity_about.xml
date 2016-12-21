@@ -33,7 +33,7 @@
             android:layout_marginTop="15dp"
             android:text="58商家通"
             android:textColor="@color/black"
-            android:textSize="@dimen/common_text_size_18" />
+            android:textSize="@dimen/common_text_size_17" />
 
         <TextView
             android:id="@+id/tv_version"

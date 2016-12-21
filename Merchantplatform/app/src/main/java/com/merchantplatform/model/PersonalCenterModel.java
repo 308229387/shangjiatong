@@ -17,6 +17,7 @@ import com.merchantplatform.activity.SettingActivity;
 import com.merchantplatform.bean.UserInfoResponse;
 import com.merchantplatform.fragment.PersonalCenterFragment;
 import com.okhttputils.OkHttpUtils;
+import com.ta.utdid2.android.utils.StringUtils;
 import com.utils.DisplayUtils;
 import com.utils.PageSwitchUtils;
 import com.utils.StringUtil;
@@ -100,12 +101,16 @@ public class PersonalCenterModel extends BaseModel implements View.OnClickListen
         @Override
         public void onResponse(boolean isFromCache, UserInfoResponse userInfoResponse, Request request, @Nullable Response response) {
             if(userInfoResponse != null){
+                String bindPhone = userInfoResponse.getData().getBindPhone();
                 String phone = userInfoResponse.getData().getPhone();
                 String sex = userInfoResponse.getData().getSex();
 
                 if(!StringUtil.isEmpty(phone)){
                     tv_personal_userPhone.setText(phone);
-                    UserUtils.setMobile(context.getContext(),phone);
+                }
+
+                if(!StringUtils.isEmpty(bindPhone)){
+                    UserUtils.setMobile(context.getContext(),bindPhone);
                 }
 
                 if(!StringUtil.isEmpty(sex)){

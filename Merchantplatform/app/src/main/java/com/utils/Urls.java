@@ -9,7 +9,7 @@ public class Urls {
     /**
      * 基础Url
      */
-    public static final String BASE_URL = "http://hyapp.58.com/";
+    public static final String BASE_URL = "https://hyapp.58.com/";
     /**
      * 基础Url_APP
      */
@@ -67,10 +67,6 @@ public class Urls {
      * 首次绑定手机号
      */
     public static final String VALIDATE =  BASE_URL_MYCENTER + "bindphone";
-    /**
-     * 更改绑定手机号
-     */
-    public static final String UPDATE_MOBILE = BASE_URL_MYCENTER + "updatephone";
     /**
      * 退出登录
      */

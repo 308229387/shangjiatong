@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/personal_center_entry_title_padding"
         android:textColor="@color/gray_dark"
-        android:textSize="@dimen/common_text_size_16"/>
+        android:textSize="@dimen/common_text_size_17"/>
 
     <View
         android:layout_width="0.0dip"
