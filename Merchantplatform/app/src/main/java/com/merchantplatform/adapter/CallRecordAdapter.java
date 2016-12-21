@@ -40,9 +40,9 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
     protected void bindDataToItemView(final CallRecordViewHolder callRecordViewHolder, final int position) {
         CallList callList = getItem(position);
         callRecordViewHolder
-                .setBackgroundResource(R.id.item_swipelayout, (callList.getCallResult() == 20 && tabIndex == 1) ? R.color.item_missed_call_bg : R.color.item_call_bg)
+                .setBackgroundResource(R.id.item_swipelayout, (callList.getType() == 1 && callList.getCallResult() == 20 && tabIndex == 1) ? R.color.item_missed_call_bg : R.color.item_call_bg)
                 .setText(R.id.tv_phoneNum, callList.getPhone())
-                .setTextColor(R.id.tv_phoneNum, callList.getCallResult() == 10 ? context.getResources().getColor(R.color.item_call_phone) : context.getResources().getColor(R.color.item_call_delete))
+                .setTextColor(R.id.tv_phoneNum, (callList.getType() == 1 && callList.getCallResult() == 20) ? context.getResources().getColor(R.color.item_call_delete) : context.getResources().getColor(R.color.item_call_phone))
                 .setText(R.id.tv_phone_city, callList.getLocal())
                 .setText(R.id.tv_call_cate, "咨询类别-" + callList.getCate())
                 .setText(R.id.tv_call_time, DateUtils.displayByDateTime(callList.getCallTime()))
@@ -54,17 +54,17 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
         if (callList.getPhoneCount() > 1) {
             callRecordViewHolder
                     .setText(R.id.tv_call_count, "(" + getItem(position).getPhoneCount() + ")")
-                    .setTextColor(R.id.tv_call_count, callList.getCallResult() == 10 ? context.getResources().getColor(R.color.item_call_phone) : context.getResources().getColor(R.color.item_call_delete))
+                    .setTextColor(R.id.tv_call_count, (callList.getType() == 1 && callList.getCallResult() == 20) ? context.getResources().getColor(R.color.item_call_delete) : context.getResources().getColor(R.color.item_call_phone))
                     .setVisible(R.id.tv_call_count, true);
         } else {
             callRecordViewHolder.setVisible(R.id.tv_call_count, false);
         }
-        if (callList.getCallResult() == 10) {
+        if (callList.getType() == 1 && callList.getCallResult() == 20) {
+            callRecordViewHolder.setVisible(R.id.iv_phoneState, false);
+        } else {
             callRecordViewHolder
                     .setVisible(R.id.iv_phoneState, true)
                     .setImageResource(R.id.iv_phoneState, callList.getType() == 1 ? R.mipmap.item_call_in : R.mipmap.item_call_out);
-        } else {
-            callRecordViewHolder.setVisible(R.id.iv_phoneState, false);
         }
     }
 
@@ -89,6 +89,7 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
     }
 
     private void goToCallDetail(int position) {
+        Long clickCallId = mList.get(position).getId();
         String phoneNum = mList.get(position).getPhone();
         String local = mList.get(position).getLocal();
         String cate = mList.get(position).getCate();
@@ -96,6 +97,7 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
         ArrayList<CallDetail> detailData = getDetailByList(mList.get(position));
         ArrayList<CallDetailListBean> detailList = getDetailList(detailData);
         Bundle bundle = new Bundle();
+        bundle.putLong("clickCallId", clickCallId);
         bundle.putString("phoneNum", phoneNum);
         bundle.putString("local", local);
         bundle.putString("cate", cate);

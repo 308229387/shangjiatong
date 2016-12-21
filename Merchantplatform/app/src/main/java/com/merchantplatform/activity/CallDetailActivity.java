@@ -14,6 +14,7 @@ public class CallDetailActivity extends BaseActivity<CallDetailModel> {
         setContentView(R.layout.activity_call_detail);
         initView();
         initData(getIntent());
+        registPhoneBroadcast();
     }
 
     private void initView() {
@@ -26,6 +27,16 @@ public class CallDetailActivity extends BaseActivity<CallDetailModel> {
     private void initData(Intent intent) {
         model.initData(intent);
         model.initAdapter();
+    }
+
+    private void registPhoneBroadcast() {
+        model.registPhoneBroadcast();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        model.releasePhoneMonitor();
     }
 
     @Override

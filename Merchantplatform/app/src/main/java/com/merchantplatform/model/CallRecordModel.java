@@ -164,8 +164,9 @@ public class CallRecordModel extends BaseModel {
         ArrayList<CallList> moreList;
         WhereCondition conditionUserId = CallListDao.Properties.UserId.eq(UserUtils.getUserId());
         if (tabIndex == 0) {
-            WhereCondition conditionCallResult = CallListDao.Properties.CallResult.eq("20");
-            moreList = CallListDaoOperate.queryOffsetLimitDataByCondition(context.getContext(), listData.size(), 20, conditionCallResult, conditionUserId);
+            WhereCondition conditionType = CallListDao.Properties.Type.eq(1);
+            WhereCondition conditionCallResult = CallListDao.Properties.CallResult.eq(20);
+            moreList = CallListDaoOperate.queryOffsetLimitDataByCondition(context.getContext(), listData.size(), 20, conditionUserId, conditionType, conditionCallResult);
         } else {
             moreList = CallListDaoOperate.queryOffsetLimitDataByCondition(context.getContext(), listData.size(), 20, conditionUserId);
         }
@@ -251,8 +252,9 @@ public class CallRecordModel extends BaseModel {
     private ArrayList<CallList> getNewListDataFromDB() {
         WhereCondition conditionUserId = CallListDao.Properties.UserId.eq(UserUtils.getUserId());
         if (tabIndex == 0) {
-            WhereCondition conditionCallResult = CallListDao.Properties.CallResult.eq("20");
-            return CallListDaoOperate.queryLimitDataByCondition(context.getContext(), 20, conditionCallResult, conditionUserId);
+            WhereCondition conditionType = CallListDao.Properties.Type.eq(1);
+            WhereCondition conditionCallResult = CallListDao.Properties.CallResult.eq(20);
+            return CallListDaoOperate.queryLimitDataByCondition(context.getContext(), 20, conditionUserId, conditionType, conditionCallResult);
         } else {
             return CallListDaoOperate.queryLimitDataByCondition(context.getContext(), 20, conditionUserId);
         }

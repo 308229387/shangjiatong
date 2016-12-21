@@ -13,6 +13,16 @@ import java.util.Date;
 
 public class DateUtils {
 
+    public static String getCurrentDateTime() {
+        long currentMillis = System.currentTimeMillis();
+        return formatMillisToDateTime(currentMillis);
+    }
+
+    public static String getCurrentDate() {
+        long currentMillis = System.currentTimeMillis();
+        return formatMillisToDate(currentMillis);
+    }
+
     public static String formatMillisToDate(long timeInMillis) {
         return new SimpleDateFormat("yyyy-MM-dd").format(timeInMillis);
     }
