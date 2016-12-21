@@ -25,7 +25,6 @@ public class GuideActivityModel extends BaseModel {
     private Activity context;
     private Button button_message;
     private ImageView imageView_glide_test;
-    private Button button_push;
 
     private static final long DELAYED_TIMES = 3 * 1000;
     private Handler handler = new Handler();
@@ -44,13 +43,6 @@ public class GuideActivityModel extends BaseModel {
         });
         imageView_glide_test = (ImageView) context.findViewById(R.id.imageView_glide_test);
         Glide.with(context).load("http://img.58cdn.com.cn/logo/58/252_84/logo-o.png?v=2").into(imageView_glide_test);
-        button_push = (Button) context.findViewById(R.id.button_push);
-        button_push.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                context.startActivity(new Intent(context, PushActivity.class));
-            }
-        });
     }
 
     public void waitAndGo() {
