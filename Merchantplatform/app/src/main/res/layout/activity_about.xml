@@ -54,7 +54,7 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:layout_above="@+id/tv_copyRight"
-        android:layout_marginBottom="30dip"
+        android:layout_marginBottom="40dip"
         android:text="《58商家通用户协议》"
         android:textSize="14sp"
         android:textColor="#FE5832"/>
