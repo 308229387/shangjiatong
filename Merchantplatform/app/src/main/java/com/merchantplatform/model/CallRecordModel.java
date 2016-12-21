@@ -423,8 +423,10 @@ public class CallRecordModel extends BaseModel {
     }
 
     public void deleteFromAdapterList(CallList clickCallList) {
-        listData.remove(clickCallList);
-        mAdapter.notifyDataSetChanged();
+        if (clickCallList != null) {
+            listData.remove(clickCallList);
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     private void deleteFromCallList(CallList clickCallList) {
