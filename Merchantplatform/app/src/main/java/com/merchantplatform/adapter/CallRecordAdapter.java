@@ -18,6 +18,7 @@ import com.utils.DateUtils;
 import com.utils.UserUtils;
 import com.xrecyclerview.BaseRecyclerViewAdapter;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.greendao.query.WhereCondition;
 
 import java.util.ArrayList;
@@ -142,7 +143,8 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
             int position = (Integer) v.getTag(R.id.delete_tag_position);
             setDeletedFlagInDB(position);
             deleteFromCallList(position);
-            deleteItem((CallRecordViewHolder) v.getTag(R.id.delete_tag_vh), position);
+            closeDelMenu((CallRecordViewHolder) v.getTag(R.id.delete_tag_vh), position);
+            EventBus.getDefault().post(mList.get(position));
         }
     }
 

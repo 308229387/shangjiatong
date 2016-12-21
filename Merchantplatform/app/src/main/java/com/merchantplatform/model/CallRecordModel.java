@@ -422,8 +422,7 @@ public class CallRecordModel extends BaseModel {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    private void deleteFromAdapterList(CallList clickCallList) {
+    public void deleteFromAdapterList(CallList clickCallList) {
         listData.remove(clickCallList);
         mAdapter.notifyDataSetChanged();
     }

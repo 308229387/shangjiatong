@@ -45,16 +45,8 @@ public abstract class BaseRecyclerViewAdapter<T, VH extends BaseRecyclerViewAdap
         bindItemViewClickListener(vh, position);
     }
 
-    protected void deleteItem(VH vh, int position) {
-        deleteItem(position);
+    protected void closeDelMenu(VH vh, int position) {
         ((SwipeMenuLayout) vh.itemView).quickClose();
-    }
-
-    protected void deleteItem(int position) {
-        if (position >= 0 && position < mList.size()) {
-            mList.remove(position);
-            notifyDataSetChanged();
-        }
     }
 
     protected abstract void bindDataToItemView(VH vh, int position);
