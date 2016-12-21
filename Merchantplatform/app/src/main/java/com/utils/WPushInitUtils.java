@@ -1,14 +1,12 @@
 package com.utils;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.Log;
 
-import com.merchantplatform.application.HyApplication;
-import com.push.WPushListener;
 import com.wuba.wbpush.Push;
 
-import java.util.ArrayList;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by 58 on 2016/11/29.
@@ -19,13 +17,7 @@ public class WPushInitUtils implements  Push.MessageListener,
         Push.DeviceIDAvalibleListener,
         Push.NotificationClickedListener{
 
-    private WPushListener pushListener;
-    private String mDeviceID;
-    private ArrayList<Push.PushMessage> mPushMessageList ;
-
     public WPushInitUtils(Context context) {
-        mDeviceID = null;
-        mPushMessageList = new ArrayList<>();
         Push.getInstance().registerMessageListener(this);//消息到达监听器
         Push.getInstance().setErrorListener(this);//设置错误监听器
         Push.getInstance().setDeviceIDAvalibleListener(this);//设置设备ID监听器
@@ -34,35 +26,11 @@ public class WPushInitUtils implements  Push.MessageListener,
         Push.getInstance().registerPush(context, Constant.WPUSH_APP_ID, Constant.WPUSH_APP_KEY, AppInfoUtils.getChannelId(context));
 //        Push.getInstance().binderUserID(""); //绑定/解绑用户信息:非空串,绑定指定的userID,空串(“”),解绑userID
 
-        StringBuilder temp = new StringBuilder();
-        temp.append(UserUtils.getUserId() + "_");
-        temp.append(AppInfoUtils.getIMEI(HyApplication.getApplication()));
-        String a = temp.toString();
-        Log.i("song",a);
-        Push.getInstance().binderAlias(a); //绑定/解绑别名:非空串,绑定指定的alias ,空串(“”),解绑alias。
-    }
-
-    public void setPushListener(WPushListener listener) {
-        pushListener = listener;
-        if (!TextUtils.isEmpty(mDeviceID) && pushListener != null) {
-            pushListener.onDeviceIDAvalible(mDeviceID);
-        }
-        synchronized (mPushMessageList) {
-            for (int i = 0; i < mPushMessageList.size();i++) {
-                pushListener.OnMessage(mPushMessageList.get(i));
-            }
-            mPushMessageList.clear();
-        }
     }
 
 
     @Override
     public void onDeviceIDAvalible(String deviceID) {
-        if (pushListener != null) {
-            pushListener.onDeviceIDAvalible(deviceID);
-        }else {
-            mDeviceID = deviceID;
-        }
     }
 
     /**
@@ -71,14 +39,30 @@ public class WPushInitUtils implements  Push.MessageListener,
      */
     @Override
     public void OnMessage(Push.PushMessage pushMessage) {
-        //注意如果pushListener为空，则需要上层存储次消息
-        if (pushListener != null) {
-            pushListener.OnMessage(pushMessage);
-        }else {
-            synchronized (mPushMessageList) {
-                mPushMessageList.add(pushMessage);
-            }
+
+        String messageContent = pushMessage.messageContent;
+        String messageID=pushMessage.messageID;
+        try {
+            JSONObject jsonObject = new JSONObject(messageContent);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+//         //应用在后台，不需要刷新UI,通知栏提示新消息
+//        if(!AppInfoUtils.isRunningForeground(HyApplication.getApplication())){
+//            WPushNotify.notification(messageContent);
+//        }
+
+        String type = pushMessage.messageType == Push.MessageType.Notify ? "Notify" : "PassThrough";
+        String msgString = null;
+        if (pushMessage.messageInfos != null) {
+            msgString = String.format("messgeID:%s messageType:%s messaegContent:%s pushType:%s",
+                    pushMessage.messageID,type,pushMessage.messageContent,pushMessage.messageInfos.get("pushType"));
+        } else {
+            msgString = String.format("messgeID:%s messageType:%s messaegContent:%s",
+                    pushMessage.messageID, type, pushMessage.messageContent);
+        }
+        Log.d("PushUtils", "onMessage-pushMessage:" + msgString);
     }
 
     /**
@@ -87,15 +71,10 @@ public class WPushInitUtils implements  Push.MessageListener,
      */
     @Override
     public void onNotificationClicked(String messageId) {
-        if (pushListener != null) {
-            pushListener.onNotificationClicked(messageId);
-        }
     }
 
     @Override
     public void onError(int errorCode, String errorString) {
-        if (pushListener != null) {
-            pushListener.onError(errorCode, errorString);
-        }
+
     }
 }

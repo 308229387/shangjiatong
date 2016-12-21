@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.callback.DialogCallback;
@@ -14,6 +15,7 @@ import com.merchantplatform.activity.MobileValidateActivity;
 import com.merchantplatform.application.HyApplication;
 import com.merchantplatform.bean.LoginResponse;
 import com.okhttputils.OkHttpUtils;
+import com.utils.AppInfoUtils;
 import com.utils.IMLoginUtils;
 import com.utils.PageSwitchUtils;
 import com.utils.Urls;
@@ -23,6 +25,7 @@ import com.wuba.loginsdk.external.LoginClient;
 import com.wuba.loginsdk.external.Request;
 import com.wuba.loginsdk.external.SimpleLoginCallback;
 import com.wuba.loginsdk.model.LoginSDKBean;
+import com.wuba.wbpush.Push;
 
 import okhttp3.Response;
 
@@ -49,6 +52,12 @@ public class LoginActivityModel extends BaseModel {
                     loginPassrotSuccess();
                     UserUtils.setUserId(context, loginSDKBean.getUserId());
                     //new IMLoginUtils(context);
+                    StringBuilder temp = new StringBuilder();
+                    temp.append(UserUtils.getUserId() + "_");
+                    temp.append(AppInfoUtils.getIMEI(HyApplication.getApplication()));
+                    String a = temp.toString();
+                    Log.i("song",a);
+                    Push.getInstance().binderAlias(a); //绑定/解绑别名:非空串,绑定指定的alias ,空串(“”),解绑alias。
                 }
 
                 if (isPassportLoginFail(loginSDKBean)) {

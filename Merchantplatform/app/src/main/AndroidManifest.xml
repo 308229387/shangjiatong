@@ -23,7 +23,6 @@
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <!-- 全局dialog属性-->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
-
     <!-- 调用者的包名申请权限必须 -->
     <permission
         android:name="com.merchantplatform.permission.MIPUSH_RECEIVE"
@@ -36,6 +35,7 @@
     <permission
         android:name="getui.permission.GetuiService.com.merchantplatform"
         android:protectionLevel="normal" />
+
 
     <application
         android:name=".application.HyApplication"
@@ -77,12 +77,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.AboutActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.PushActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.NewsActivity"
             android:screenOrientation="portrait" />
 
         <!-- 这个Activity不要启用单独的Process，否则支付SDK的回调不会执行 -->
@@ -130,7 +124,6 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="LtuUAAHpPannZfSGztqxGrBtO0IPZqhG" />
-
         <!-- WPush 配置个推参数 -->
         <meta-data
             android:name="PUSH_APPID"
@@ -155,6 +148,7 @@
                 <action android:name="com.igexin.sdk.action.Ql3Q1vsnTL6910GpSQf2p4" />
             </intent-filter>
         </receiver>
+
         <receiver android:name=".receiver.PhoneReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PHONE_STATE" />
