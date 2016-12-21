@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -192,7 +193,7 @@ public class MobileValidateActivityModel extends BaseModel implements View.OnCli
 
         @Override
         public void onResponse(boolean isFromCache, TempResponse tempResponse, Request request, @Nullable Response response) {
-          if(tempResponse != null){
+            if(tempResponse != null){
               String status = tempResponse.getStatus();
               String message = tempResponse.getMsg();
               if (!TextUtils.isEmpty(status) && !TextUtils.isEmpty(message)) {
@@ -200,7 +201,7 @@ public class MobileValidateActivityModel extends BaseModel implements View.OnCli
                       ToastUtils.makeImgAndTextToast(context, context.getString(R.string.validate_code_already_send), R.mipmap.validate_done, Toast.LENGTH_SHORT).show();
                       countdown();
                   } else {
-                      ToastUtils.makeImgAndTextToast(context, message, R.mipmap.validate_done, Toast.LENGTH_SHORT).show();
+                      ToastUtils.showToast(message);
                   }
               }
           }
@@ -218,7 +219,6 @@ public class MobileValidateActivityModel extends BaseModel implements View.OnCli
         public void onResponse(boolean isFromCache, TempResponse tempResponse, Request request, @Nullable Response response) {
             String status = tempResponse.getStatus();
             String message = tempResponse.getMsg();
-
             if(TextUtils.equals(status,SUCCESS)){
                 validateSuccess();
             } else{

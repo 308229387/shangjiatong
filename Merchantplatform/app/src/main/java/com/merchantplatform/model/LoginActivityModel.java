@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.callback.DialogCallback;
@@ -15,6 +17,7 @@ import com.merchantplatform.activity.MobileValidateActivity;
 import com.merchantplatform.application.HyApplication;
 import com.merchantplatform.bean.LoginResponse;
 import com.okhttputils.OkHttpUtils;
+import com.ui.dialog.CommonDialog;
 import com.utils.AppInfoUtils;
 import com.utils.IMLoginUtils;
 import com.utils.PageSwitchUtils;
@@ -27,6 +30,7 @@ import com.wuba.loginsdk.external.SimpleLoginCallback;
 import com.wuba.loginsdk.model.LoginSDKBean;
 import com.wuba.wbpush.Push;
 
+import okhttp3.Call;
 import okhttp3.Response;
 
 /**
@@ -38,6 +42,7 @@ public class LoginActivityModel extends BaseModel {
 
     private String VALIDATED = "1";
 
+    private CommonDialog loginErrorDialog;
 
     public LoginActivityModel(LoginActivity context) {
         this.context = context;
@@ -139,6 +144,45 @@ public class LoginActivityModel extends BaseModel {
                 LoginSuccess(loginResponse);
             }
         }
+
+        @Override
+        public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+            if(e!= null && !TextUtils.isEmpty(e.getMessage())){
+                if(e.getMessage().equals(PPU_UNVALID)){
+                    initLoginErrorDialog(context.getString(R.string.ppu_expired));
+                }else if(e.getMessage().equals(SINGLE_DEVICE_LOGIN)){
+                    initLoginErrorDialog(context.getString(R.string.force_exit));
+                }else{
+                   initLoginErrorDialog(e.getMessage());
+                }
+            }
+        }
+    }
+
+    private void initLoginErrorDialog(String message){
+        if (loginErrorDialog != null && loginErrorDialog.isShowing()) {
+            loginErrorDialog.dismiss();
+        }
+        loginErrorDialog = new CommonDialog(context);
+        loginErrorDialog.setCancelable(false);
+        loginErrorDialog.setCanceledOnTouchOutside(false);
+        loginErrorDialog.setContent(message);
+        loginErrorDialog.setBtnSureVisible(View.GONE);
+        loginErrorDialog.setBtnCancelText("确定");
+        loginErrorDialog.setOnDialogClickListener(new CommonDialog.OnDialogClickListener() {
+            @Override
+            public void onDialogClickSure() {
+
+            }
+
+            @Override
+            public void onDialogClickCancel() {
+                loginErrorDialog.dismiss();
+                context.finish();
+            }
+
+        });
+        loginErrorDialog.show();
     }
 
 }

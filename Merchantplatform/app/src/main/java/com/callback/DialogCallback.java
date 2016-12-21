@@ -11,6 +11,8 @@ import com.ui.dialog.LogoutDialog;
 import com.utils.ToastUtils;
 
 import java.lang.reflect.Type;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import okhttp3.Call;
 import okhttp3.Response;
@@ -22,6 +24,7 @@ public abstract class DialogCallback<T> extends JsonCallback<T> {
     private ShapeLoadingDialog shapeLoadingDialog;
 
     protected boolean isToast = false;
+    private  Boolean isShow = false;
 
     private void initDialog(Activity activity) {
 
@@ -80,15 +83,29 @@ public abstract class DialogCallback<T> extends JsonCallback<T> {
             shapeLoadingDialog.dismiss();
         }
         if(e!= null){
-            if (e.getMessage().equals(PPU_UNVALID)) {
+            if (e.getMessage().equals(PPU_UNVALID) && !isShow) {
+                isShow = true;
                 new LogoutDialog(HyApplication.getApplication().getString(R.string.ppu_expired));
+                exitTimeRunTask();
             }
 
-            if(e.getMessage().equals(SINGLE_DEVICE_LOGIN)){
+            if(e.getMessage().equals(SINGLE_DEVICE_LOGIN) && !isShow){
+                isShow = true;
                 new LogoutDialog(HyApplication.getApplication().getString(R.string.force_exit));
+                exitTimeRunTask();
             }
         }
 
+    }
+
+    private void exitTimeRunTask() {
+        Timer isDialogShow  = new Timer();
+        isDialogShow.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                isShow = false;
+            }
+        }, 3000);
     }
 
 

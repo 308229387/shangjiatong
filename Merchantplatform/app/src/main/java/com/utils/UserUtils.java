@@ -97,4 +97,11 @@ public class UserUtils {
         }
         return mobile;
     }
+
+    public static void clearUserInfo(Context context){
+        context.getSharedPreferences(USER_SP_NAME, 0).edit().putString(USER_ID, "").commit();
+        context.getSharedPreferences(USER_SP_NAME, 0).edit().putInt(USER_VALIDATE, 0).commit();
+        userId = "";
+        hasValidate= 0;
+    }
 }

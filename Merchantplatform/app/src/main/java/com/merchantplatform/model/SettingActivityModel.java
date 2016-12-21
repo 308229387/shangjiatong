@@ -1,6 +1,7 @@
 package com.merchantplatform.model;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.ui.actionsheet.NormalActionSheet;
 import com.Utils.TitleBar;
 import com.utils.PageSwitchUtils;
 import com.utils.Urls;
+import com.utils.UserUtils;
 import com.wuba.loginsdk.external.LoginClient;
 import com.wuba.wbpush.Push;
 
@@ -127,13 +129,18 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
                     @Override
                     public void onClick(String value) {
                         if (value.equals("退出登录")) {
-                            logout();
-                            setLogoutStateToPPU();
-                            setWPushBindsAlias();
-                            goToLogin();
+                            logoutOperate();
                         }
                     }
                 }).show();
+    }
+
+    private void logoutOperate() {
+        logout();
+        setLogoutStateToPPU();
+        setWPushBindsAlias();
+        clearUserInfo();
+        goToLogin();
     }
 
 
@@ -148,6 +155,10 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
 
     private void setWPushBindsAlias(){
         Push.getInstance().binderAlias("");
+    }
+
+    private void clearUserInfo(){
+        UserUtils.clearUserInfo(context);
     }
 
     private void goToLogin() {

@@ -6,6 +6,10 @@ import android.view.View;
 
 import com.merchantplatform.activity.LoginActivity;
 import com.merchantplatform.application.HyApplication;
+import com.utils.LogoutInintUtils;
+import com.utils.UserUtils;
+import com.wuba.loginsdk.external.LoginClient;
+import com.wuba.wbpush.Push;
 
 /**
  * Created by 58 on 2016/12/19.
@@ -18,7 +22,7 @@ public class LogoutDialog {
     public LogoutDialog(String message) {
 
         if (mLogoutDialog != null && mLogoutDialog.isShowing()) {
-           return ;
+            mLogoutDialog.dismiss();
         }
         mLogoutDialog = new CommonGlobalDialog(HyApplication.getApplication());
         mLogoutDialog.setCancelable(false);
@@ -34,16 +38,13 @@ public class LogoutDialog {
 
             @Override
             public void onDialogClickCancel() {
-                goToLoginActivity(HyApplication.getApplication());
+              new LogoutInintUtils(HyApplication.getApplication());
             }
 
         });
         mLogoutDialog.show();
     }
 
-    private void  goToLoginActivity(Context context){
-        Intent intent = new Intent(context, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-    }
+
+
 }
