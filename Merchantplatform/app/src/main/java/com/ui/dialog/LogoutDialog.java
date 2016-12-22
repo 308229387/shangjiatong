@@ -22,7 +22,7 @@ public class LogoutDialog {
     public LogoutDialog(String message) {
 
         if (mLogoutDialog != null && mLogoutDialog.isShowing()) {
-            mLogoutDialog.dismiss();
+            return;
         }
         mLogoutDialog = new CommonGlobalDialog(HyApplication.getApplication());
         mLogoutDialog.setCancelable(false);
