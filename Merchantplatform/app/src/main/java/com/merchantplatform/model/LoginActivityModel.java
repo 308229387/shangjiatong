@@ -17,7 +17,6 @@ import com.merchantplatform.bean.LoginResponse;
 import com.okhttputils.OkHttpUtils;
 import com.ui.dialog.CommonDialog;
 import com.utils.AppInfoUtils;
-import com.utils.IMLoginUtils;
 import com.utils.PageSwitchUtils;
 import com.utils.Urls;
 import com.utils.UserUtils;
@@ -59,10 +58,10 @@ public class LoginActivityModel extends BaseModel {
                     temp.append(UserUtils.getUserId() + "_");
                     temp.append(AppInfoUtils.getIMEI(HyApplication.getApplication()));
                     String a = temp.toString();
-                    Log.i("song", a);
+                    Log.i("song",a);
                     Push.getInstance().binderAlias(a); //绑定/解绑别名:非空串,绑定指定的alias ,空串(“”),解绑alias。
-//                    PageSwitchUtils.goToActivity(context, HomepageActivity.class);
                 }
+
                 if (isPassportLoginFail(loginSDKBean)) {
                     context.finish();
                 }
@@ -70,7 +69,7 @@ public class LoginActivityModel extends BaseModel {
         };
     }
 
-    private void loginPassrotSuccess() {
+    private void loginPassrotSuccess(){
         OkHttpUtils.post(Urls.LOGIN)
                 .execute(new localLoginCallback(context));
     }
@@ -97,6 +96,7 @@ public class LoginActivityModel extends BaseModel {
     private boolean isPassportLoginFail(@Nullable LoginSDKBean loginSDKBean) {
         return loginSDKBean != null && loginSDKBean.getCode() == LoginSDKBean.CODE_CANCEL_OPERATION;
     }
+
 
     public void removeOtherActivity() {
         new Handler().postDelayed(new Runnable() {
@@ -137,26 +137,26 @@ public class LoginActivityModel extends BaseModel {
 
         @Override
         public void onResponse(boolean isFromCache, LoginResponse loginResponse, okhttp3.Request request, @Nullable Response response) {
-            if (loginResponse != null) {
+            if(loginResponse != null){
                 LoginSuccess(loginResponse);
             }
         }
 
         @Override
         public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-            if (e != null && !TextUtils.isEmpty(e.getMessage())) {
-                if (e.getMessage().equals(PPU_UNVALID)) {
+            if(e!= null && !TextUtils.isEmpty(e.getMessage())){
+                if(e.getMessage().equals(PPU_UNVALID)){
                     initLoginErrorDialog(context.getString(R.string.ppu_expired));
-                } else if (e.getMessage().equals(SINGLE_DEVICE_LOGIN)) {
+                }else if(e.getMessage().equals(SINGLE_DEVICE_LOGIN)){
                     initLoginErrorDialog(context.getString(R.string.force_exit));
-                } else {
-                    initLoginErrorDialog(e.getMessage());
+                }else{
+                   initLoginErrorDialog(e.getMessage());
                 }
             }
         }
     }
 
-    private void initLoginErrorDialog(String message) {
+    private void initLoginErrorDialog(String message){
         if (loginErrorDialog != null && loginErrorDialog.isShowing()) {
             loginErrorDialog.dismiss();
         }
@@ -177,7 +177,9 @@ public class LoginActivityModel extends BaseModel {
                 loginErrorDialog.dismiss();
                 context.finish();
             }
+
         });
         loginErrorDialog.show();
     }
+
 }
