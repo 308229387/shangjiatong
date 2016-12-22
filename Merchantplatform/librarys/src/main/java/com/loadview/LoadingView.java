@@ -1,5 +1,8 @@
 package com.loadview;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -13,9 +16,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.librarys.R;
-import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.AnimatorSet;
-import com.nineoldandroids.animation.ObjectAnimator;
 
 
 /**
@@ -163,7 +163,7 @@ public class LoadingView extends FrameLayout {
     public void setVisibility(int visibility) {
         super.setVisibility(visibility);
         if (visibility == View.VISIBLE) {
-            startLoading(200);
+            startLoading(0);
         } else {
             stopLoading();
         }
@@ -179,10 +179,10 @@ public class LoadingView extends FrameLayout {
             ObjectAnimator objectAnimator4 = ObjectAnimator.ofFloat(mShapeLoadingView2, "scaleY", 1, 0.1f);
 
 
-            objectAnimator1.setDuration(10);
-            objectAnimator2.setDuration(10);
-            objectAnimator3.setDuration(10);
-            objectAnimator4.setDuration(10);
+            objectAnimator1.setDuration(1);
+            objectAnimator2.setDuration(1);
+            objectAnimator3.setDuration(1);
+            objectAnimator4.setDuration(1);
 
             mAnimatorSet = new AnimatorSet();
             mAnimatorSet.playTogether(objectAnimator1, objectAnimator2, objectAnimator3, objectAnimator4);
