@@ -14,6 +14,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.loadview.ShapeLoadingDialog;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.FundingManageActivity;
 import com.merchantplatform.bean.RechargeOrder;
@@ -36,22 +37,25 @@ public class FundingManageModel extends BaseModel {
     private FundingManageActivity context;
 
     private TitleBar tb_funding_title;
-    private ProgressBar pb_progress;
+    //private ProgressBar pb_progress;
     private View no_internet_view;
     private WebView webView_funding;
     private String url;
-    public FundingManageModel(FundingManageActivity context){
+
+    private ShapeLoadingDialog dialog;
+
+    public FundingManageModel(FundingManageActivity context) {
         this.context = context;
     }
 
-    public  void initView(){
+    public void initView() {
         tb_funding_title = (TitleBar) context.findViewById(R.id.tb_funding_title);
         no_internet_view = context.findViewById(R.id.view_no_internet);
-        pb_progress = (ProgressBar) context.findViewById(R.id.pb_progress);
+        //pb_progress = (ProgressBar) context.findViewById(R.id.pb_progress);
         webView_funding = (WebView) context.findViewById(R.id.webView_funding);
     }
 
-    public  void initData(){
+    public void initData() {
         //设置透明状态栏
         tb_funding_title.setImmersive(true);
         //设置背景颜色
@@ -65,7 +69,7 @@ public class FundingManageModel extends BaseModel {
 
     }
 
-    public void setListener(){
+    public void setListener() {
         //设置左侧点击事件
         tb_funding_title.setLeftClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +84,7 @@ public class FundingManageModel extends BaseModel {
         removeJSInterface();
     }
 
-    private  void setWebViewProperty() {
+    private void setWebViewProperty() {
         webView_funding.getSettings().setJavaScriptEnabled(true);
         webView_funding.getSettings().setUseWideViewPort(true);
         webView_funding.getSettings().setDefaultTextEncodingName("UTF-8"); // 设置默认的显示编码
@@ -106,11 +110,17 @@ public class FundingManageModel extends BaseModel {
 
     public void initRechargePage() {
         initUrl();
+        startDialog();
         loadRechargePage();
     }
 
     private void initUrl() {
         url = Urls.RECHARGE;
+    }
+
+    private void startDialog() {
+        dialog = new ShapeLoadingDialog(context);
+        dialog.show();
     }
 
     private void loadRechargePage() {
@@ -228,12 +238,9 @@ public class FundingManageModel extends BaseModel {
     private class WebChromeBaseClient extends WebChromeClient {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
-            pb_progress.setProgress(newProgress);
             if (newProgress == 100) {
-                pb_progress.setVisibility(View.GONE);
-            } else {
-                if (pb_progress.getVisibility() != View.VISIBLE) {
-                    pb_progress.setVisibility(View.VISIBLE);
+                if (null != dialog && dialog.isShowing()) {
+                    dialog.dismiss();
                 }
             }
             super.onProgressChanged(view, newProgress);
@@ -249,7 +256,6 @@ public class FundingManageModel extends BaseModel {
             super.onReceivedIcon(view, icon);
         }
     }
-
 
 
     private void back() {
