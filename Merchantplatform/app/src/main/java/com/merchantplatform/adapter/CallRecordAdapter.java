@@ -89,7 +89,6 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
     }
 
     private void goToCallDetail(int position) {
-        Long clickCallId = mList.get(position).getId();
         String phoneNum = mList.get(position).getPhone();
         String local = mList.get(position).getLocal();
         String cate = mList.get(position).getCate();
@@ -97,7 +96,6 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
         ArrayList<CallDetail> detailData = getDetailByList(mList.get(position));
         ArrayList<CallDetailListBean> detailList = getDetailList(detailData);
         Bundle bundle = new Bundle();
-        bundle.putLong("clickCallId", clickCallId);
         bundle.putString("phoneNum", phoneNum);
         bundle.putString("local", local);
         bundle.putString("cate", cate);
