@@ -376,6 +376,7 @@ public class CallDetailModel extends BaseModel {
                 getNewDetailList();
             }
         } else {
+            detailList.clear();
             getNewDetailList();
             if (detailList != null && detailList.size() > 0) {
                 String time = detailList.get(0).getTime();
@@ -385,25 +386,26 @@ public class CallDetailModel extends BaseModel {
     }
 
     private void getNewDetailList() {
-        ArrayList<CallDetailListBean> newDetailList = getDetailList(getNewListDataFromDB());
+        ArrayList<CallDetailListBean> newDetailList = getDetailList(getNewDetailDataFromDB());
         detailList.addAll(newDetailList);
+        detailAdapter.notifyDataSetChanged();
     }
 
-    private ArrayList<CallList> getNewListDataFromDB() {
+    private ArrayList<CallDetail> getNewDetailDataFromDB() {
         String date_Day = DateUtils.getCurrentDate();
-        WhereCondition conditionUserId = CallListDao.Properties.UserId.eq(UserUtils.getUserId());
-        WhereCondition conditionPhone = CallListDao.Properties.Phone.eq(phoneNum);
+        WhereCondition conditionUserId = CallDetailDao.Properties.UserId.eq(UserUtils.getUserId());
+        WhereCondition conditionPhone = CallDetailDao.Properties.Phone.eq(phoneNum);
         WhereCondition conditionCallTime = new WhereCondition.StringCondition("date(CALL_TIME)='" + date_Day + "'");
-        return CallListDaoOperate.queryLimitDataByCondition(context, 1, conditionUserId, conditionPhone, conditionCallTime);
+        return CallDetailDaoOperate.queryLimitDataByCondition(context, 1, conditionUserId, conditionPhone, conditionCallTime);
     }
 
-    private ArrayList<CallDetailListBean> getDetailList(ArrayList<CallList> newListDataFromDB) {
+    private ArrayList<CallDetailListBean> getDetailList(ArrayList<CallDetail> newDetailDataFromDB) {
         ArrayList<CallDetailListBean> detailList = new ArrayList<>();
-        for (CallList lists : newListDataFromDB) {
+        for (CallDetail lists : newDetailDataFromDB) {
             CallDetailListBean detailListBean = new CallDetailListBean();
-            detailListBean.setTime(detailListBean.getTime());
-            detailListBean.setType(detailListBean.getType());
-            detailListBean.setDuration(detailListBean.getDuration());
+            detailListBean.setTime(lists.getCallTime());
+            detailListBean.setType(lists.getType());
+            detailListBean.setDuration(lists.getEntryTime());
             detailList.add(detailListBean);
         }
         return detailList;
