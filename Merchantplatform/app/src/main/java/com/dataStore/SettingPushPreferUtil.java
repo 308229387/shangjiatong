@@ -2,8 +2,6 @@ package com.dataStore;
 
 import android.content.Context;
 
-import com.utils.UserUtils;
-
 /**
  * Created by 58 on 2016/12/9.
  */
@@ -47,5 +45,10 @@ public class SettingPushPreferUtil extends BaseSharedPrefersStore{
 
     public void savePushVibrateAlertState(boolean state) {
         saveBoolean(PUSH_VIBRATE_ALERT, state);
+    }
+
+    public void resetPushSettingState(){
+        saveBoolean(PUSH_SOUND_ALERT, true);
+        saveBoolean(PUSH_VIBRATE_ALERT, true);
     }
 }
