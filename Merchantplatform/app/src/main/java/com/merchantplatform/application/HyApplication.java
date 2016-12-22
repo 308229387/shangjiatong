@@ -75,16 +75,19 @@ public class HyApplication extends MultiDexApplication {
     }
 
     private void initBugly() {
-        if (!BuildConfig.DEBUG)
+        if (!BuildConfig.DEBUG) {
             CrashReport.initCrashReport(application, Constant.BUGLY_APP_ID, false);
+        }
     }
 
     private void initStetho() {
-        Stetho.initialize(
-                Stetho.newInitializerBuilder(application)
-                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(application))
-                        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(application))
-                        .build());
+        if (BuildConfig.DEBUG) {
+            Stetho.initialize(
+                    Stetho.newInitializerBuilder(application)
+                            .enableDumpapp(Stetho.defaultDumperPluginsProvider(application))
+                            .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(application))
+                            .build());
+        }
     }
 
     private void initUmeng() {

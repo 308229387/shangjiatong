@@ -37,5 +37,4 @@ dependencies {
     compile 'com.orhanobut:logger:1.15'
     testCompile 'junit:junit:4.12'
     compile 'com.umeng.analytics:analytics:latest.integration'
-    compile 'com.nineoldandroids:library:2.4.0'
 }
