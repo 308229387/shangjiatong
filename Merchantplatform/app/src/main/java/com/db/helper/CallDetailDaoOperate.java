@@ -48,14 +48,6 @@ public class CallDetailDaoOperate {
     }
 
     /**
-     * @desc 按条件返回最新的限制条数结果集
-     **/
-    public static ArrayList<CallDetail> queryLimitDataByCondition(Context context, int limit, WhereCondition whereCondition, WhereCondition... condMore) {
-        QueryBuilder<CallDetail> builder = DbManager.getDaoSession(context).getCallDetailDao().queryBuilder();
-        return (ArrayList<CallDetail>) builder.where(whereCondition, condMore).orderDesc(CallDetailDao.Properties.CallTime).limit(limit).list();
-    }
-
-    /**
      * @desc 查询最大BackTime
      **/
     public static long queryMaxBackTime(Context context) {

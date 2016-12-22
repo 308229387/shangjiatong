@@ -369,12 +369,8 @@ public class CallDetailModel extends BaseModel {
 
     private void loadRefreshDataFromDB() {
         if (date.equals(DateUtils.getCurrentDate())) {
-            if (clickCallList.getType() == 1 && clickCallList.getCallResult() == 20) {
-                detailList.clear();
-                getNewDetailList();
-            } else {
-                getNewDetailList();
-            }
+            detailList.clear();
+            getNewDetailList();
         } else {
             detailList.clear();
             getNewDetailList();
@@ -396,7 +392,8 @@ public class CallDetailModel extends BaseModel {
         WhereCondition conditionUserId = CallDetailDao.Properties.UserId.eq(UserUtils.getUserId());
         WhereCondition conditionPhone = CallDetailDao.Properties.Phone.eq(phoneNum);
         WhereCondition conditionCallTime = new WhereCondition.StringCondition("date(CALL_TIME)='" + date_Day + "'");
-        return CallDetailDaoOperate.queryLimitDataByCondition(context, 1, conditionUserId, conditionPhone, conditionCallTime);
+        WhereCondition conditionType = CallDetailDao.Properties.Type.eq(2);
+        return CallDetailDaoOperate.queryByCondition(context, conditionUserId, conditionPhone, conditionCallTime, conditionType);
     }
 
     private ArrayList<CallDetailListBean> getDetailList(ArrayList<CallDetail> newDetailDataFromDB) {
