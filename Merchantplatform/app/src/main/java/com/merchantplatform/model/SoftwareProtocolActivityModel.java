@@ -73,14 +73,8 @@ public class SoftwareProtocolActivityModel extends BaseModel {
     }
 
     private void setWebViewProperty(){
-        webView_protocol.getSettings().setJavaScriptEnabled(true);
-        webView_protocol.getSettings().setUseWideViewPort(true);
-        webView_protocol.getSettings().setLoadWithOverviewMode(true);
-        webView_protocol.getSettings().setUseWideViewPort(true);
-        webView_protocol.getSettings().setSupportZoom(true); //设置可以支持缩放
-        webView_protocol.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
-        webView_protocol.getSettings().setBuiltInZoomControls(true);//设置出现缩放工具
-        webView_protocol.getSettings().setDefaultTextEncodingName("GBK"); // 设置默认的显示编码
+        webView_protocol.getSettings().setUseWideViewPort(false);
+        webView_protocol.getSettings().setDefaultTextEncodingName("UTF-8"); // 设置默认的显示编码
         webView_protocol.setWebViewClient(new BaseWebClient());
         webView_protocol.setWebChromeClient(new WebChromeBaseClient());
     }
@@ -107,7 +101,7 @@ public class SoftwareProtocolActivityModel extends BaseModel {
     }
 
     private void initUrl(){
-        url = "file:///android_asset/protocol.htm";
+        url = "file:///android_asset/58商家通APP用户协议.html";
     }
 
     private void loadIntroductionPage(){
