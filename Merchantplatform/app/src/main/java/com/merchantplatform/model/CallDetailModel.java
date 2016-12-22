@@ -93,7 +93,7 @@ public class CallDetailModel extends BaseModel {
             tv_call_detail_local.setText(local);
             tv_call_detail_cate.setText("咨询类别-" + cate);
             if (date != null) {
-                tv_call_detail_date.setText(date.replace("-", "/"));
+                tv_call_detail_date.setText(DateUtils.formatDateTimeToDate(date).replace("-", "/"));
             }
             detailList = detailListBeen;
         }
@@ -123,7 +123,7 @@ public class CallDetailModel extends BaseModel {
             getNewDetailList();
             if (detailList != null && detailList.size() > 0) {
                 String time = detailList.get(0).getTime();
-                tv_call_detail_date.setText(DateUtils.formatTimeToDisplayTime(time));
+                tv_call_detail_date.setText(DateUtils.formatDateTimeToDate(date).replace("-", "/"));
             }
         }
     }

@@ -94,7 +94,7 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
         String phoneNum = mList.get(position).getPhone();
         String local = mList.get(position).getLocal();
         String cate = mList.get(position).getCate();
-        String date = DateUtils.formatDateTimeToDate(mList.get(position).getCallTime());
+        String date = mList.get(position).getCallTime();
         ArrayList<CallDetail> detailData = getDetailByList(mList.get(position));
         ArrayList<CallDetailListBean> detailList = getDetailList(detailData);
         Bundle bundle = new Bundle();
