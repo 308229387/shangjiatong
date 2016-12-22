@@ -305,6 +305,7 @@ public class CallRecordModel extends BaseModel {
         for (CallList callList : result) {
             if (callList.getType() == CALL_OUT_TYPE) {
                 callList.setPhoneCount(callList.getPhoneCount() + 1);
+                callList.setCallTime(callList.getCallTime());
                 CallListDaoOperate.updateData(context.getContext(), callList);
                 break;
             }
@@ -315,6 +316,7 @@ public class CallRecordModel extends BaseModel {
         for (CallList callList : result) {
             if (callList.getType() == CALL_IN_TYPE && callList.getCallResult() == CALL_RESULT_OK) {
                 callList.setPhoneCount(callList.getPhoneCount() + 1);
+                callList.setCallTime(callList.getCallTime());
                 CallListDaoOperate.updateData(context.getContext(), callList);
                 break;
             }
@@ -325,6 +327,7 @@ public class CallRecordModel extends BaseModel {
         for (CallList callList : result) {
             if (callList.getType() == CALL_IN_TYPE && callList.getCallResult() == CALL_RESULT_FAILURE) {
                 callList.setPhoneCount(callList.getPhoneCount() + 1);
+                callList.setCallTime(callList.getCallTime());
                 CallListDaoOperate.updateData(context.getContext(), callList);
                 break;
             }
@@ -470,9 +473,9 @@ public class CallRecordModel extends BaseModel {
                 userCallRecordBean.setRecordState(duration == 0 ? 20 : 10);
                 userCallRecordBean.setBeginTime(beginTime);
                 userCallRecordBean.setEndTime(beginTime + duration);
+                cursor.close();
                 return userCallRecordBean;
             }
-            cursor.close();
         }
         return null;
     }
