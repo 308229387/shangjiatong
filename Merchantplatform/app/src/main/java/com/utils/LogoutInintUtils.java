@@ -3,6 +3,7 @@ package com.utils;
 import android.content.Context;
 import android.content.Intent;
 
+import com.dataStore.SettingPushPreferUtil;
 import com.merchantplatform.activity.LoginActivity;
 import com.wuba.loginsdk.external.LoginClient;
 import com.wuba.wbpush.Push;
@@ -17,6 +18,7 @@ public class LogoutInintUtils {
         setWPushBindsAlias();
         setLogoutStateToPPU(context);
         clearUserInfo(context);
+        resetUserPreference(context);
         goToLoginActivity(context);
     }
 
@@ -26,6 +28,10 @@ public class LogoutInintUtils {
 
     private void clearUserInfo(Context context){
         UserUtils.clearUserInfo(context);
+    }
+
+    private void resetUserPreference(Context context){
+        SettingPushPreferUtil.getInstance(context).resetPushSettingState();
     }
 
     private void setLogoutStateToPPU(Context context) {

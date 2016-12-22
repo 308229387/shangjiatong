@@ -10,14 +10,19 @@
         android:layout_height="0.5dp"
         android:background="#dbdbdb"/>
 
-    <ListView
-        android:id="@+id/system_notification_list"
+    <com.xrecyclerview.XRecyclerView
+        android:id="@+id/xrv_callrecord"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:listSelector="@android:color/transparent"
-        android:layout_marginRight="5dp"
-        android:divider="#00000000"
-        android:dividerHeight="0dp"></ListView>
+        android:layout_height="match_parent" />
+
+    <!--<ListView-->
+        <!--android:id="@+id/system_notification_list"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="5dp"-->
+        <!--android:listSelector="@android:color/transparent"-->
+        <!--android:layout_marginRight="5dp"-->
+        <!--android:divider="#00000000"-->
+        <!--android:dividerHeight="0dp"></ListView>-->
 
 </LinearLayout>

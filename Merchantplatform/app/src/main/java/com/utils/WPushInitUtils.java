@@ -3,8 +3,12 @@ package com.utils;
 import android.content.Context;
 import android.util.Log;
 
+import com.db.dao.SystemNotificationDetial;
+import com.db.helper.SystemNotificationOperate;
 import com.google.gson.Gson;
 import com.Utils.SystemNotification;
+import com.merchantplatform.activity.HomepageActivity;
+import com.merchantplatform.application.HyApplication;
 import com.wuba.wbpush.Push;
 
 import org.greenrobot.eventbus.EventBus;
@@ -44,12 +48,12 @@ public class WPushInitUtils implements Push.MessageListener,
     @Override
     public void OnMessage(Push.PushMessage pushMessage) {
         Gson temp = new Gson();
-        SystemNotification temp1 = temp.fromJson(pushMessage.messageContent, SystemNotification.class);
+        final SystemNotification bean = temp.fromJson(pushMessage.messageContent, SystemNotification.class);
 
-        if (temp1.getType()==103) {
-
+        if (bean.getType() == 103) {
+            saveDataToDB(bean);
         }
-        EventBus.getDefault().post(temp1);
+        EventBus.getDefault().post(bean);
 
         Log.i("song", pushMessage.messageContent);
         String messageContent = pushMessage.messageContent;
@@ -77,6 +81,23 @@ public class WPushInitUtils implements Push.MessageListener,
         Log.d("PushUtils", "onMessage-pushMessage:" + msgString);
 
 
+    }
+
+    private void saveDataToDB(SystemNotification temp1) {
+        final SystemNotificationDetial data = new SystemNotificationDetial();
+        data.setType(temp1.getType());
+        data.setTitle(temp1.getTitle());
+        data.setSortId(temp1.getSortId());
+        data.setId(temp1.getId());
+        data.setContent(temp1.getContent());
+        data.setContentType(temp1.getContentType());
+        data.setDescribe(temp1.getDescribe());
+        new Thread() {
+            @Override
+            public void run() {
+                SystemNotificationOperate.insertOrReplace(HyApplication.getApplication(), data);
+            }
+        }.start();
     }
 
     /**

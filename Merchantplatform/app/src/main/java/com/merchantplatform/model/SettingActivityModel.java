@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.callback.DialogCallback;
+import com.dataStore.SettingPushPreferUtil;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.AboutActivity;
 import com.merchantplatform.activity.LoginActivity;
@@ -139,6 +140,7 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
         setLogoutStateToPPU();
         setWPushBindsAlias();
         clearUserInfo();
+        resetUserPreference();
         goToLogin();
     }
 
@@ -158,6 +160,10 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
 
     private void clearUserInfo(){
         UserUtils.clearUserInfo(context);
+    }
+
+    private void resetUserPreference(){
+        SettingPushPreferUtil.getInstance(context).resetPushSettingState();
     }
 
     private void goToLogin() {

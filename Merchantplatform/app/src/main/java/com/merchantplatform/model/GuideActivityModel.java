@@ -23,7 +23,6 @@ import com.wuba.loginsdk.external.LoginClient;
  */
 public class GuideActivityModel extends BaseModel {
     private Activity context;
-    private Button button_message;
     private ImageView imageView_glide_test;
 
     private static final long DELAYED_TIMES = 3 * 1000;
@@ -34,13 +33,6 @@ public class GuideActivityModel extends BaseModel {
     }
 
     public void initLayout() {
-        button_message =  (Button) context.findViewById(R.id.button_message);
-        button_message.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                context.startActivity(new Intent(context, SystemMessageActivity.class));
-            }
-        });
         imageView_glide_test = (ImageView) context.findViewById(R.id.imageView_glide_test);
         Glide.with(context).load("http://img.58cdn.com.cn/logo/58/252_84/logo-o.png?v=2").into(imageView_glide_test);
     }
