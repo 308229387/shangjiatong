@@ -23,6 +23,10 @@ public abstract class BaseRecyclerViewAdapter<T, VH extends BaseRecyclerViewAdap
         this.mList = mList;
     }
 
+    public BaseRecyclerViewAdapter(Context context) {
+        this.context = context;
+    }
+
     protected T getItem(int position) {
         return mList.get(position);
     }

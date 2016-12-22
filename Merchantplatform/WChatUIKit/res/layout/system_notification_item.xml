@@ -52,6 +52,7 @@
             android:textSize="16sp" />
 
         <View
+            android:id="@+id/system_notification_line"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_marginBottom="3dp"

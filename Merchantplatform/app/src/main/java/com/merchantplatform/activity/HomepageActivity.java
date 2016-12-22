@@ -2,8 +2,11 @@ package com.merchantplatform.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 
+import com.common.gmacs.utils.ToastUtil;
+import com.db.helper.SystemNotificationOperate;
 import com.merchantplatform.R;
 import com.Utils.JumpSystemNotificationAction;
 import com.merchantplatform.model.HomepageModel;
@@ -25,6 +28,7 @@ public class HomepageActivity extends BaseActivity<HomepageModel> {
         model.createFragment();
         model.createFragmentManagerAndShow();
         model.getGlobalParams();
+
     }
 
 
@@ -44,5 +48,6 @@ public class HomepageActivity extends BaseActivity<HomepageModel> {
     public void onEvent(JumpSystemNotificationAction action) {
         startActivity(new Intent(HomepageActivity.this, SystemNotificationActivity.class));
     }
+
 
 }
