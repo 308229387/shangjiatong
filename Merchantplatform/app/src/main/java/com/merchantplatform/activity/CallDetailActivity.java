@@ -4,7 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.merchantplatform.R;
+import com.merchantplatform.bean.CallListNotificationDetail;
 import com.merchantplatform.model.CallDetailModel;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class CallDetailActivity extends BaseActivity<CallDetailModel> {
 
@@ -14,7 +18,7 @@ public class CallDetailActivity extends BaseActivity<CallDetailModel> {
         setContentView(R.layout.activity_call_detail);
         initView();
         initData(getIntent());
-        registPhoneBroadcast();
+        registerEventBus();
     }
 
     private void initView() {
@@ -29,14 +33,19 @@ public class CallDetailActivity extends BaseActivity<CallDetailModel> {
         model.initAdapter();
     }
 
-    private void registPhoneBroadcast() {
-        model.registPhoneBroadcast();
+    private void registerEventBus() {
+        model.registerEventBus();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(CallListNotificationDetail callListNotificationDetail) {
+        model.onEvent(callListNotificationDetail);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        model.releasePhoneMonitor();
+        model.unRegisterEventBus();
     }
 
     @Override

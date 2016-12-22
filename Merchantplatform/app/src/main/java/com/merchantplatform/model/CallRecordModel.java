@@ -25,6 +25,7 @@ import com.db.helper.CallDetailDaoOperate;
 import com.db.helper.CallListDaoOperate;
 import com.merchantplatform.R;
 import com.merchantplatform.bean.CallDetailResponse;
+import com.merchantplatform.bean.CallListNotificationDetail;
 import com.merchantplatform.bean.UserCallRecordBean;
 import com.merchantplatform.receiver.PhoneReceiver;
 import com.okhttputils.OkHttpUtils;
@@ -233,12 +234,14 @@ public class CallRecordModel extends BaseModel {
                 saveNewDataToDB(callDetailResponse);
             }
             loadRefreshDataFromDB();
+            EventBus.getDefault().post(new CallListNotificationDetail("refreshDetail"));
         }
 
         @Override
         public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
             super.onError(isFromCache, call, response, e);
             loadRefreshDataFromDB();
+            EventBus.getDefault().post(new CallListNotificationDetail("refreshDetail"));
         }
     }
 
@@ -271,13 +274,14 @@ public class CallRecordModel extends BaseModel {
         if (!isExistInDetail(bean)) {
             ArrayList<CallList> result = getDataFromList(bean);
             if (result != null && result.size() > 0) {
+                String newCallTime = DateUtils.formatMillisToDateTime(bean.getCallTime());
                 if (bean.getType() == CALL_OUT_TYPE) {
-                    updateOutGoingCall(result);
+                    updateOutGoingCall(result, newCallTime);
                 } else if (bean.getType() == CALL_IN_TYPE) {
                     if (bean.getCallResult() == CALL_RESULT_OK) {
-                        updateInCallOk(result);
+                        updateInCallOk(result, newCallTime);
                     } else if (bean.getCallResult() == CALL_RESULT_FAILURE) {
-                        updateInCallFailure(result);
+                        updateInCallFailure(result, newCallTime);
                     }
                 }
             } else {
@@ -301,33 +305,33 @@ public class CallRecordModel extends BaseModel {
         return CallListDaoOperate.queryByCondition(context.getContext(), conditionUserId, conditionPhone, conditionCallTime);
     }
 
-    private void updateOutGoingCall(ArrayList<CallList> result) {
+    private void updateOutGoingCall(ArrayList<CallList> result, String newCallTime) {
         for (CallList callList : result) {
             if (callList.getType() == CALL_OUT_TYPE) {
                 callList.setPhoneCount(callList.getPhoneCount() + 1);
-                callList.setCallTime(callList.getCallTime());
+                callList.setCallTime(newCallTime);
                 CallListDaoOperate.updateData(context.getContext(), callList);
                 break;
             }
         }
     }
 
-    private void updateInCallOk(ArrayList<CallList> result) {
+    private void updateInCallOk(ArrayList<CallList> result, String newCallTime) {
         for (CallList callList : result) {
             if (callList.getType() == CALL_IN_TYPE && callList.getCallResult() == CALL_RESULT_OK) {
                 callList.setPhoneCount(callList.getPhoneCount() + 1);
-                callList.setCallTime(callList.getCallTime());
+                callList.setCallTime(newCallTime);
                 CallListDaoOperate.updateData(context.getContext(), callList);
                 break;
             }
         }
     }
 
-    private void updateInCallFailure(ArrayList<CallList> result) {
+    private void updateInCallFailure(ArrayList<CallList> result, String newCallTime) {
         for (CallList callList : result) {
             if (callList.getType() == CALL_IN_TYPE && callList.getCallResult() == CALL_RESULT_FAILURE) {
                 callList.setPhoneCount(callList.getPhoneCount() + 1);
-                callList.setCallTime(callList.getCallTime());
+                callList.setCallTime(newCallTime);
                 CallListDaoOperate.updateData(context.getContext(), callList);
                 break;
             }
