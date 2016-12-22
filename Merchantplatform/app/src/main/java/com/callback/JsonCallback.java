@@ -39,7 +39,6 @@ public abstract class JsonCallback<T> extends CommonCallback<T> {
         this.type = type;
     }
 
-    //该方法是子线程处理　　，不能做ui相关的工作
     @Override
     public T parseNetworkResponse(Response response) throws Exception {
         String responseData = response.body().string();

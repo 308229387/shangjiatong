@@ -37,7 +37,8 @@ public class SystemNotificationXAdapter extends BaseRecyclerViewAdapter<SystemNo
         viewHolder.setText(R.id.system_notification_title, systemNotification.getTitle())
                 .setText(R.id.time, messageTimeFormat(systemNotification.getSortId()))
                 .setVisible(R.id.system_notification_arrow, systemNotification.getContentType() == 1 ? false : true)
-                .setVisible(R.id.system_notification_line, systemNotification.getContentType() == 1 ? false : true);
+                .setVisible(R.id.system_notification_line, systemNotification.getContentType() == 1 ? false : true)
+                .setText(R.id.system_notification_text, systemNotification.getDescribe());
     }
 
     @Override
