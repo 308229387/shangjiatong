@@ -68,7 +68,7 @@ public class CallRecordModel extends BaseModel {
     private static final int CALL_RESULT_FAILURE = 20;
     private int tabIndex;
     private boolean isCallOut = false;
-    private CallList clickCallList;
+    public static CallList clickCallList;
 
     public CallRecordModel(CallRecordFragment context) {
         this.context = context;

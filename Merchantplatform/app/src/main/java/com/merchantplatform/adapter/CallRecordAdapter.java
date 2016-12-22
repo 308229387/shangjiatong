@@ -14,6 +14,7 @@ import com.db.helper.CallListDaoOperate;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.CallDetailActivity;
 import com.merchantplatform.bean.CallDetailListBean;
+import com.merchantplatform.model.CallRecordModel;
 import com.utils.DateUtils;
 import com.utils.UserUtils;
 import com.xrecyclerview.BaseRecyclerViewAdapter;
@@ -84,6 +85,7 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
         @Override
         public void onClick(View v) {
             int position = (int) v.getTag();
+            CallRecordModel.clickCallList = mList.get(position);
             goToCallDetail(position);
         }
     }
@@ -126,7 +128,7 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
             ArrayList<CallDetailListBean> detailList = new ArrayList<>();
             for (CallDetail callDetail : detailData) {
                 CallDetailListBean listBean = new CallDetailListBean();
-                listBean.setTime(DateUtils.formatDateTimeToTime(callDetail.getCallTime()));
+                listBean.setTime(callDetail.getCallTime());
                 listBean.setType(callDetail.getType());
                 listBean.setDuration(callDetail.getEntryTime());
                 detailList.add(listBean);
