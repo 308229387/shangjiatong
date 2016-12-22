@@ -2,6 +2,9 @@ package com.ui.dialog;
 
 import android.app.Activity;
 
+import com.merchantplatform.activity.LoginActivity;
+import com.utils.PageSwitchUtils;
+
 /**
  * Created by 58 on 2016/12/19.
  */
@@ -23,6 +26,7 @@ public class ConfirmDialog {
             @Override
             public void onDialogClickSure() {
                 mConfirmDialog.dismiss();
+                PageSwitchUtils.goToActivity(context, LoginActivity.class);
                 context.finish();
             }
 

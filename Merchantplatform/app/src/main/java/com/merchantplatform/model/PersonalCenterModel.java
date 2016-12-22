@@ -106,10 +106,11 @@ public class PersonalCenterModel extends BaseModel implements View.OnClickListen
                 String sex = userInfoResponse.getData().getSex();
 
                 if(!StringUtil.isEmpty(phone)){
-                    tv_personal_userPhone.setText(phone);
+
                 }
 
                 if(!StringUtils.isEmpty(bindPhone)){
+                    tv_personal_userPhone.setText(bindPhone);
                     UserUtils.setMobile(context.getContext(),bindPhone);
                 }
 

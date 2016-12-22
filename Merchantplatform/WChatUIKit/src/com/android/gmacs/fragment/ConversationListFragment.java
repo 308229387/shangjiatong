@@ -28,7 +28,6 @@ import com.common.gmacs.parse.talk.Talk;
 import com.common.gmacs.utils.GLog;
 import com.common.gmacs.utils.GmacsUiUtil;
 import com.common.gmacs.utils.NetworkUtil;
-import com.common.gmacs.utils.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -142,7 +141,6 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
     public void onEvent(SystemNotification temp) {
         systemText.setText(temp.getDescribe());
         redDot.setVisibility(View.VISIBLE);
-        ToastUtil.showToast(temp.getTitle() + "fragment");
     }
 
     @Override

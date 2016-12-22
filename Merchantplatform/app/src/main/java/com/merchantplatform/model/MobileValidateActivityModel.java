@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.callback.DialogCallback;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.HomepageActivity;
+import com.merchantplatform.activity.LoginActivity;
 import com.merchantplatform.activity.MobileValidateActivity;
 import com.merchantplatform.bean.BindMobileResponse;
 import com.merchantplatform.bean.GetCodeResponse;
@@ -217,14 +218,18 @@ public class MobileValidateActivityModel extends BaseModel implements View.OnCli
 
         @Override
         public void onResponse(boolean isFromCache, TempResponse tempResponse, Request request, @Nullable Response response) {
-            String status = tempResponse.getStatus();
-            String message = tempResponse.getMsg();
-            if(TextUtils.equals(status,SUCCESS)){
-                validateSuccess();
-            } else{
-                if(!TextUtils.isEmpty(message))
-                    ToastUtils.makeImgAndTextToast(context, message, R.mipmap.validate_error, 0).show();
+            if(tempResponse != null){
+                String status = tempResponse.getStatus();
+                String message = tempResponse.getMsg();
+                if(!TextUtils.isEmpty(status)  && !TextUtils.isEmpty(message))
+                if(TextUtils.equals(status,SUCCESS)){
+                    ToastUtils.makeImgAndTextToast(context, context.getString(R.string.bind_success), R.mipmap.validate_done, Toast.LENGTH_SHORT).show();
+                    validateSuccess();
+                } else{
+                    ToastUtils.showToast( message);
+                }
             }
+
         }
     }
 }
