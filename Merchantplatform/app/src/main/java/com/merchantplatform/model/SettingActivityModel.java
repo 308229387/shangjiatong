@@ -1,7 +1,6 @@
 package com.merchantplatform.model;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -17,7 +16,7 @@ import com.merchantplatform.activity.SettingFeedbackActivity;
 import com.merchantplatform.activity.SettingPushActivity;
 import com.merchantplatform.bean.TempResponse;
 import com.okhttputils.OkHttpUtils;
-import com.ui.actionsheet.NormalActionSheet;
+import com.ui.sheet.NormalActionSheet;
 import com.Utils.TitleBar;
 import com.utils.PageSwitchUtils;
 import com.utils.Urls;

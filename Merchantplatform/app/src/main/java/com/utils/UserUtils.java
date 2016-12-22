@@ -101,7 +101,9 @@ public class UserUtils {
     public static void clearUserInfo(Context context){
         context.getSharedPreferences(USER_SP_NAME, 0).edit().putString(USER_ID, "").commit();
         context.getSharedPreferences(USER_SP_NAME, 0).edit().putInt(USER_VALIDATE, 0).commit();
+        context.getSharedPreferences(USER_SP_NAME, 0).edit().putInt(USER_MOBILE, 0).commit();
         userId = "";
         hasValidate= 0;
+        mobile= "";
     }
 }

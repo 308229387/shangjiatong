@@ -10,11 +10,11 @@ import com.utils.UserUtils;
 
 public class SettingPushPreferUtil extends BaseSharedPrefersStore{
 
-    private static String PREFER_FILE_NAME = UserUtils.getUserId();
+    private static final String PREFER_FILE_NAME = "SettingPushPreferUtil";
 
-    private static final String PUSH_SOUND_ALERT ="PushSoundAlert";
+    private static  String PUSH_SOUND_ALERT ="PushSoundAlert";
 
-    private static final String PUSH_VIBRATE_ALERT = "PushVibrateAlert";
+    private static final String PUSH_VIBRATE_ALERT ="PushVibrateAlert";
 
     private static SettingPushPreferUtil mInstance;
 
