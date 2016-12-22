@@ -97,7 +97,6 @@
             android:layout_toStartOf="@+id/ll_conversation_name_time"
             android:background="@drawable/gmacs_bg_bubble"
             android:gravity="center"
-            android:text="2"
             android:textColor="@color/white"
             android:textSize="@dimen/conversation_list_msg_count_text_size" />
     </LinearLayout>
