@@ -1,17 +1,12 @@
 package com.callback;
 
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.os.Build;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 
 import com.loadview.ShapeLoadingDialog;
 import com.merchantplatform.R;
-import com.merchantplatform.application.HyApplication;
 import com.okhttputils.request.BaseRequest;
 import com.ui.dialog.LogoutDialog;
-import com.utils.PermissionUtils;
 import com.utils.ToastUtils;
 
 import java.lang.reflect.Type;
@@ -88,13 +83,13 @@ public abstract class DialogCallback<T> extends JsonCallback<T> {
         if(activity != null && !activity.isFinishing() && e!= null){
             if (e.getMessage().equals(PPU_UNVALID) && !isShow) {
                 isShow = true;
-                new LogoutDialog(activity,HyApplication.getApplication().getString(R.string.ppu_expired));
+                new LogoutDialog(activity,activity.getString(R.string.ppu_expired));
                 exitTimeRunTask();
             }
 
             if(e.getMessage().equals(SINGLE_DEVICE_LOGIN) && !isShow){
                 isShow = true;
-                new LogoutDialog(activity,HyApplication.getApplication().getString(R.string.force_exit));
+                new LogoutDialog(activity,activity.getString(R.string.force_exit));
                 exitTimeRunTask();
             }
         }
