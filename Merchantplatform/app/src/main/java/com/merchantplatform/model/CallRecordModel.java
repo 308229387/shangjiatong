@@ -416,8 +416,10 @@ public class CallRecordModel extends BaseModel {
         }
         if (isCallOut && action.equals(PhoneReceiver.CALL_OVER)) {//挂机
             isCallOut = false;
-            deleteThisRecord(clickCallList);
-            upLoadUserCallLog(getUserCallLog(clickCallList));
+            if (clickCallList != null) {
+                deleteThisRecord(clickCallList);
+                upLoadUserCallLog(getUserCallLog(clickCallList));
+            }
         }
     }
 
