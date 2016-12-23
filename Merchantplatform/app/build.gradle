@@ -3,10 +3,6 @@ apply plugin: 'org.greenrobot.greendao'
 
 def outputPath = "../jenkinspackage/"
 
-def releaseTime() {
-    return new Date().format("yyyy_MM_dd", TimeZone.getTimeZone("UTC"))
-}
-
 repositories {
     mavenCentral()
     flatDir {
@@ -22,17 +18,17 @@ android {
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true //支持多dex
     }
 
     signingConfigs {
         key {
-            storeFile file("../merchantplatform.jks")
-            storePassword "123456"
-            keyAlias "merchantplatform"
-            keyPassword "123456"
+            storeFile file("../hyzhaobiao.keystore")
+            storePassword "lly5432lly"
+            keyAlias "hyzhaobiao"
+            keyPassword "lly5432lly"
         }
     }
 
@@ -42,9 +38,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-        debug {
-            signingConfig signingConfigs.key  // 配置debug包的签名
-        }
+
     }
     lintOptions {
         abortOnError false
@@ -52,10 +46,11 @@ android {
     dexOptions {
         javaMaxHeapSize "4g"
     }
+
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
             def outputFile = output.outputFile
-            def outputName = "58shangjiatong_${variant.buildType.name}_v${defaultConfig.versionName}_${variant.productFlavors[0].name}_${releaseTime()}.apk".toLowerCase()
+            def outputName ="${defaultConfig.versionName}_shangjiatong_${variant.productFlavors[0].name}_${variant.buildType.name}.apk"
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
                 if (variant.buildType.name.equals('release')) {
                     output.outputFile = new File(outputPath, outputName)
@@ -123,7 +118,7 @@ dependencies {
     compile 'org.greenrobot:greendao:3.2.0'
     compile 'com.facebook.stetho:stetho:1.4.1'
     testCompile 'junit:junit:4.12'
-    debugCompile 'com.wuba.wuxian.sdk:login:2.3.9-NOLEGO-debug-SNAPSHOT-2'
-    releaseCompile 'com.wuba.wuxian.sdk:login:2.3.9-NOLEGO'
+    debugCompile 'com.wuba.wuxian.sdk:login:2.6.5-NOLEGO-test4'
+    releaseCompile 'com.wuba.wuxian.sdk:login:2.6.5-NOLEGO'
     compile 'com.wuba.wchat:WChatLib-release:1.2.1.48'
 }
