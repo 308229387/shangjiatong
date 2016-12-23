@@ -25,15 +25,15 @@ public class HomepageActivity extends BaseActivity<HomepageModel> {
         model.createFragment();
         model.createFragmentManagerAndShow();
         model.getGlobalParams();
-
     }
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK)
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             moveTaskToBack(false);
-        return false;
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -45,5 +45,4 @@ public class HomepageActivity extends BaseActivity<HomepageModel> {
     public void onEvent(JumpSystemNotificationAction action) {
         startActivity(new Intent(HomepageActivity.this, SystemNotificationActivity.class));
     }
-
 }
