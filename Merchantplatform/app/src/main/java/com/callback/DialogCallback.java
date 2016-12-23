@@ -1,6 +1,7 @@
 package com.callback;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
@@ -87,13 +88,13 @@ public abstract class DialogCallback<T> extends JsonCallback<T> {
         if(activity != null && !activity.isFinishing() && e!= null){
             if (e.getMessage().equals(PPU_UNVALID) && !isShow) {
                 isShow = true;
-                new LogoutDialog(HyApplication.getApplication().getString(R.string.ppu_expired));
+                new LogoutDialog(activity,HyApplication.getApplication().getString(R.string.ppu_expired));
                 exitTimeRunTask();
             }
 
             if(e.getMessage().equals(SINGLE_DEVICE_LOGIN) && !isShow){
                 isShow = true;
-                new LogoutDialog(HyApplication.getApplication().getString(R.string.force_exit));
+                new LogoutDialog(activity,HyApplication.getApplication().getString(R.string.force_exit));
                 exitTimeRunTask();
             }
         }
