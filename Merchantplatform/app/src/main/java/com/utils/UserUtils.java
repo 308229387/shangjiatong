@@ -13,6 +13,7 @@ import com.merchantplatform.application.HyApplication;
 public class UserUtils {
     private static final String USER_SP_NAME = "user";
     private static final String USER_ID = "userId";
+    private static final String SHOW_NOTIFICATION = "showNotification";
     private static final String USER_VALIDATE = "validate";
     private static final String USER_FACE = "face";
     private static final String USER_NAME = "name";
@@ -38,22 +39,25 @@ public class UserUtils {
 
     /**
      * 手机号已验证
+     *
      * @param context
      */
-    public static void hasValidate(Context context){
+    public static void hasValidate(Context context) {
         SharedPreferences sp = context.getSharedPreferences(USER_SP_NAME, 0);
         hasValidate = 1;
         sp.edit().putInt(USER_VALIDATE, hasValidate).commit();
     }
+
     /**
      * 手机号是否得到验证
+     *
      * @param context
      * @return
      */
-    public static boolean isValidate(Context context){
+    public static boolean isValidate(Context context) {
         hasValidate = context.getSharedPreferences(USER_SP_NAME, 0).getInt(USER_VALIDATE, 0);
 
-        if(hasValidate == 1){
+        if (hasValidate == 1) {
             return true;
         }
         return false;
@@ -98,12 +102,15 @@ public class UserUtils {
         return mobile;
     }
 
-    public static void clearUserInfo(Context context){
+    public static void clearUserInfo(Context context) {
         context.getSharedPreferences(USER_SP_NAME, 0).edit().putString(USER_ID, "").commit();
         context.getSharedPreferences(USER_SP_NAME, 0).edit().putInt(USER_VALIDATE, 0).commit();
         context.getSharedPreferences(USER_SP_NAME, 0).edit().putInt(USER_MOBILE, 0).commit();
         userId = "";
-        hasValidate= 0;
-        mobile= "";
+        hasValidate = 0;
+        mobile = "";
     }
+
+
+
 }

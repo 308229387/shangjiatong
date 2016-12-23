@@ -2,6 +2,7 @@ package com.android.gmacs.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -112,6 +113,24 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
                 EventBus.getDefault().post(new JumpSystemNotificationAction("jump"));
             }
         });
+        systemHead.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                final GmacsDialog.Builder dialog = new GmacsDialog.Builder(getActivity(), GmacsDialog.Builder.DIALOG_TYPE_LIST_NO_BUTTON);
+                dialog.setListTexts(new String[]{"删除系统通知"});
+                dialog.initDialog(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        systemHead.setVisibility(View.GONE);
+                        setShowNotification(false);
+                    }
+                }).create().show();
+                return true;
+            }
+        });
+
+        if (!getShowNotification())
+            systemHead.setVisibility(View.GONE);
         mHiddenView = (LinearLayout) getView().findViewById(R.id.ll_conversation_hiddenview);
         mHeaderView = new LinearLayout(getActivity());
         mHeaderView.setOrientation(LinearLayout.VERTICAL);
@@ -134,12 +153,13 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
         }
         mListView.addHeaderView(mHeaderView);
         mListView.addHeaderView(systemHead);
-
     }
 
     @Subscribe
     public void onEvent(SystemNotification temp) {
+        setShowNotification(true);
         systemText.setText(temp.getDescribe());
+        systemHead.setVisibility(View.VISIBLE);
         redDot.setVisibility(View.VISIBLE);
     }
 
@@ -374,6 +394,17 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
                 mConnectionStatusTextView.setText(R.string.connection_status_kickedoff);
                 break;
         }
+    }
+
+    public void setShowNotification(boolean trag) {
+        SharedPreferences sp = getActivity().getSharedPreferences("user", 0);
+        sp.edit().putBoolean("showNotification", trag).commit();
+    }
+
+    public boolean getShowNotification() {
+        boolean tag = false;
+        tag = getActivity().getSharedPreferences("user", 0).getBoolean("showNotification", false);
+        return tag;
     }
 
 

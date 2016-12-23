@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 
+import com.Utils.JumpSystemNotificationAction;
 import com.Utils.SystemNotification;
 import com.android.gmacs.R;
 import com.android.gmacs.activity.BaseActivity;
@@ -18,13 +20,13 @@ import com.merchantplatform.adapter.SystemNotificationXAdapter;
 import com.merchantplatform.application.HyApplication;
 import com.merchantplatform.bean.SystemNotificationList;
 import com.okhttputils.OkHttpUtils;
-import com.okhttputils.callback.AbsCallback;
-import com.utils.ExampleUtils;
 import com.utils.Urls;
 import com.xrecyclerview.ProgressStyle;
 import com.xrecyclerview.XRecyclerView;
 
-import java.io.Serializable;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 
 import okhttp3.Call;
@@ -58,7 +60,7 @@ public class SystemNotificationActivity extends BaseActivity {
         mXRecyclerView.setLayoutManager(layoutManager);
         mXRecyclerView.setRefreshProgressStyle(ProgressStyle.BallPulse);
         mXRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.SquareSpin);
-
+        EventBus.getDefault().register(this);
         temp = SystemNotificationOperate.queryAll(this);
         setListener();
     }
@@ -135,6 +137,13 @@ public class SystemNotificationActivity extends BaseActivity {
                 xAdapter.notifyDataSetChanged();
             }
         }.start();
+    }
+
+    @Subscribe
+    public void onEvent(SystemNotification action) {
+        temp.clear();
+        temp.addAll(SystemNotificationOperate.queryAll(this));
+        xAdapter.notifyDataSetChanged();
     }
 
 }
