@@ -1,6 +1,8 @@
 package com.callback;
 
 import android.app.Activity;
+import android.os.Build;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 
 import com.loadview.ShapeLoadingDialog;
@@ -8,6 +10,7 @@ import com.merchantplatform.R;
 import com.merchantplatform.application.HyApplication;
 import com.okhttputils.request.BaseRequest;
 import com.ui.dialog.LogoutDialog;
+import com.utils.PermissionUtils;
 import com.utils.ToastUtils;
 
 import java.lang.reflect.Type;
@@ -22,6 +25,7 @@ import okhttp3.Response;
  */
 public abstract class DialogCallback<T> extends JsonCallback<T> {
     private ShapeLoadingDialog shapeLoadingDialog;
+    private Activity activity;
 
     protected boolean isToast = false;
     private  Boolean isShow = false;
@@ -29,25 +33,23 @@ public abstract class DialogCallback<T> extends JsonCallback<T> {
     private void initDialog(Activity activity) {
 
         shapeLoadingDialog = new ShapeLoadingDialog(activity);
-//        dialog = new ProgressDialog(activity);
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        dialog.setCanceledOnTouchOutside(false);
-//        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-//        dialog.setMessage("请求网络中...");
     }
 
     public DialogCallback(Activity activity) {
         super();
+        this.activity = activity;
         initDialog(activity);
     }
 
     public DialogCallback(Activity activity, Class<T> clazz) {
         super(clazz);
+        this.activity = activity;
         initDialog(activity);
     }
 
     public DialogCallback(Activity activity, Type type) {
         super(type);
+        this.activity = activity;
         initDialog(activity);
     }
 
@@ -82,7 +84,7 @@ public abstract class DialogCallback<T> extends JsonCallback<T> {
         if (shapeLoadingDialog != null && shapeLoadingDialog.isShowing()) {
             shapeLoadingDialog.dismiss();
         }
-        if(e!= null){
+        if(activity != null && !activity.isFinishing() && e!= null){
             if (e.getMessage().equals(PPU_UNVALID) && !isShow) {
                 isShow = true;
                 new LogoutDialog(HyApplication.getApplication().getString(R.string.ppu_expired));

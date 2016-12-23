@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Merchant platform</string>
+    <string name="app_name">58商家通</string>
     <string name="tab_menu_alert">提醒</string>
     <string name="bind_userid">bindUserID</string>
     <string name="bind_alias">bindAlias</string>

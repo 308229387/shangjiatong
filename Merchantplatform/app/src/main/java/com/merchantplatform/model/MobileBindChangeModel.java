@@ -289,7 +289,7 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
         }
     }
 
-    private class updateMobileCallback extends DialogCallback<UpdateMobileResponse> {
+    private class updateMobileCallback extends DialogCallback<TempResponse> {
 
 
         public updateMobileCallback(Activity activity) {
@@ -297,15 +297,20 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
         }
 
         @Override
-        public void onResponse(boolean isFromCache, UpdateMobileResponse updateMobileResponse, Request request, @Nullable Response response) {
-            String status = updateMobileResponse.getData().getStatus();
-            String message = updateMobileResponse.getData().getMsg();
-            if(TextUtils.equals(status,SUCCESS)){//成功
-                ToastUtils.makeImgAndTextToast(context,"更改成功",R.mipmap.validate_done, Toast.LENGTH_SHORT).show();
-              context.onBackPressed();
-            }else{
-                ToastUtils.showToast(message);
+        public void onResponse(boolean isFromCache, TempResponse tempResponse, Request request, @Nullable Response response) {
+        if(tempResponse != null){
+            String status = tempResponse.getStatus();
+            String message = tempResponse.getMsg();
+            if (!TextUtils.isEmpty(status) && !TextUtils.isEmpty(message)) {
+                if (TextUtils.equals(status, SUCCESS)) {//成功
+                    ToastUtils.makeImgAndTextToast(context, message, R.mipmap.validate_done, Toast.LENGTH_SHORT).show();
+                    context.onBackPressed();
+                } else {
+                    ToastUtils.showToast(message);
+                }
             }
+        }
+
         }
 
     }

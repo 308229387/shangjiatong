@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import static android.R.attr.permission;
+import static com.tencent.open.utils.Global.getPackageName;
 
 /**
  * Created by 58 on 2016/11/28.
@@ -58,6 +59,7 @@ public class PermissionUtils {
     public static final int CODE_READ_EXTERNAL_STORAGE = 7;
     public static final int CODE_WRITE_EXTERNAL_STORAGE = 8;
     public static final int CODE_READ_CALL_LOG = 9;
+    public static final int CODE_MANAGE_OVERLAY = 10;
     public static final int CODE_MULTI_PERMISSION = 100;
 
     public static final String PERMISSION_RECORD_AUDIO = Manifest.permission.RECORD_AUDIO;
@@ -288,4 +290,7 @@ public class PermissionUtils {
             }
         }
     }
+
+
+
 }
