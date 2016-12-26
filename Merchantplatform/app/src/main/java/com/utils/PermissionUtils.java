@@ -276,7 +276,7 @@ public class PermissionUtils {
      * @param activity
      */
     public static void getIMEIPermission(final Activity activity) {
-        if (ContextCompat.checkSelfPermission(activity, PERMISSION_READ_PHONE_STATE) == PackageManager.PERMISSION_DENIED) {
+        if (ContextCompat.checkSelfPermission(activity, PERMISSION_READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(activity, PERMISSION_READ_PHONE_STATE)) {
                 String[] permissionsHint = activity.getResources().getStringArray(R.array.permissions);
                 showMessageOK(activity, "说明：" + permissionsHint[CODE_READ_PHONE_STATE], new DialogInterface.OnClickListener() {
@@ -290,7 +290,6 @@ public class PermissionUtils {
             }
         }
     }
-
 
 
 }
