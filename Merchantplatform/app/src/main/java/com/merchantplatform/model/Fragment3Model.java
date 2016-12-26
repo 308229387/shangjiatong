@@ -5,7 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.merchantplatform.R;
-import com.merchantplatform.fragment.Fragment1;
 import com.merchantplatform.fragment.Fragment3;
 
 /**

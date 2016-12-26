@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.MobileBindChangeActivity;
 import com.merchantplatform.activity.PersonalSettingActivity;
@@ -81,6 +83,7 @@ public class PersonalSettingActivityModel extends BaseModel implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.rl_binding_change_mobile:
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_SHEZHIXQY_GGBDSJ);
                 goToMobileChangePage();
                 break;
         }

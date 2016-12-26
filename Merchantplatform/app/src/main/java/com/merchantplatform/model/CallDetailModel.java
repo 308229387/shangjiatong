@@ -15,6 +15,8 @@ import com.Utils.TitleBar;
 import com.db.dao.CallDetail;
 import com.db.dao.gen.CallDetailDao;
 import com.db.helper.CallDetailDaoOperate;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.CallDetailActivity;
 import com.merchantplatform.adapter.CallDetailAdapter;
@@ -158,6 +160,7 @@ public class CallDetailModel extends BaseModel {
     private class OnBackPressed implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            LogUmengAgent.ins().log(LogUmengEnum.LOG_DIANHUAXQY_RETURN);
             context.onBackPressed();
         }
     }
@@ -166,6 +169,7 @@ public class CallDetailModel extends BaseModel {
 
         @Override
         public void onClick(View v) {
+            LogUmengAgent.ins().log(LogUmengEnum.LOG_DIANHUAXQY_BDDH);
             makeACall();
         }
     }

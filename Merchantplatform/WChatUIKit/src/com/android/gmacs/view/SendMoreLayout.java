@@ -41,6 +41,8 @@ import com.common.gmacs.utils.FileUtil;
 import com.common.gmacs.utils.GLog;
 import com.common.gmacs.utils.GmacsUtils;
 import com.common.gmacs.utils.ToastUtil;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -245,6 +247,7 @@ public class SendMoreLayout extends LinearLayout implements ViewPager.OnPageChan
      * 打开图片选择页面
      */
     private void openAlbumActivity() {
+        LogUmengAgent.ins().log(LogUmengEnum.LOG_LIAOTIANXQY_XC);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             boolean findMethod = true;
             try {
@@ -275,6 +278,7 @@ public class SendMoreLayout extends LinearLayout implements ViewPager.OnPageChan
      * 打开拍照页面
      */
     public void openCameraActivity() {
+        LogUmengAgent.ins().log(LogUmengEnum.LOG_LIAOTIANXQY_ZX);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             boolean findMethod = true;
             try {
@@ -310,6 +314,7 @@ public class SendMoreLayout extends LinearLayout implements ViewPager.OnPageChan
      * 打开地图位置
      */
     public void openLocationActivity() {
+        LogUmengAgent.ins().log(LogUmengEnum.LOG_LIAOTIANXQY_WZ);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             boolean findMethod = true;
             try {

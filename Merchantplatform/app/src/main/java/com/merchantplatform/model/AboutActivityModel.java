@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.AboutActivity;
 import com.merchantplatform.activity.SoftwareProtocolActivity;
@@ -69,6 +71,7 @@ public class AboutActivityModel extends BaseModel{
         tv_protocol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_SHEZHIXQY_YHXY);
                 oToSoftWareUsagePage();
             }
         });

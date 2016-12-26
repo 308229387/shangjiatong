@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.Utils.TitleBar;
 import com.callback.DialogCallback;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.MobileBindChangeActivity;
 import com.merchantplatform.bean.TempResponse;
@@ -185,9 +187,11 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_getCode://获取验证码
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_SHEZHIXQY_HQYZHM);
                 getCode(et_now_bind_mobile.getText().toString());
                 break;
             case R.id.btn_submit://提交
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_SHEZHIXQY_SJHMGGTJ);
                 submit();
                 break;
         }

@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 
 import com.db.helper.CallDetailDaoOperate;
 import com.db.helper.CallListDaoOperate;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.adapter.FragmentAdapter;
 import com.merchantplatform.fragment.CallRecordFragment;
@@ -83,6 +85,12 @@ public class CallMessageModel extends BaseModel {
 
         @Override
         public void onTabSelect(int position) {
+            if (position == 0) {
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_TONGHUALBY_THJL);
+            } else if (position == 1) {
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_TONGHUALBY_WJLD);
+            }
+
             mTabLayout.getTitleView(position).setTextSize(20);
             for (int i = 0; i < mTabLayout.getTabCount(); i++) {
                 if (i != position) {

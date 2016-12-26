@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.callback.DialogCallback;
 import com.dataStore.AppPrefersUtil;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.SettingFeedbackActivity;
 import com.merchantplatform.bean.FeedbackResponse;
@@ -88,6 +90,7 @@ public class SettingFeedbackActivityModel extends BaseModel{
         tb_feedback_title.addAction(new TitleBar.TextAction("提交") {
             @Override
             public void performAction(View view) {
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_SHEZHIXQY_YJFKTJ);
                 gotoSubmit();
             }
         });

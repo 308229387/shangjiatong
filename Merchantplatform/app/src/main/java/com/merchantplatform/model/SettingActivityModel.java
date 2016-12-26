@@ -8,6 +8,8 @@ import android.widget.RelativeLayout;
 
 import com.callback.DialogCallback;
 import com.dataStore.SettingPushPreferUtil;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.AboutActivity;
 import com.merchantplatform.activity.LoginActivity;
@@ -88,18 +90,23 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.rl_setting_push:
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_SHEZHIXQY_XXTS);
                 goToSettingPushActivity();
                 break;
             case R.id.rl_setting_feedback:
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_SHEZHIXQY_YJFK);
                 goToSettingFeedbackActivity();
                 break;
             case R.id.rl_setting_binding:
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_SHEZHIXQY_ZHBD);
                 goToSettingBindingActivity();
                 break;
             case R.id.rl_setting_about:
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_SHEZHIXQY_GYWM);
                 goToSettingAboutActivity();
                 break;
             case R.id.rl_setting_exit:
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_SHEZHIXQY_TCZH);
                 exit();
                 break;
         }
@@ -129,6 +136,7 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
                     @Override
                     public void onClick(String value) {
                         if (value.equals("退出登录")) {
+                            LogUmengAgent.ins().log(LogUmengEnum.LOG_SHEZHIXQY_QRTCHDL);
                             logoutOperate();
                         }
                     }

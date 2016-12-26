@@ -2,7 +2,6 @@ package com.merchantplatform.model;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,11 +14,12 @@ import com.callback.DialogCallback;
 import com.common.gmacs.utils.ToastUtil;
 import com.db.dao.SystemNotificationDetial;
 import com.db.helper.SystemNotificationOperate;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.HomepageActivity;
 import com.merchantplatform.bean.GlobalResponse;
 import com.merchantplatform.fragment.BaseFragment;
-import com.merchantplatform.fragment.Fragment1;
 import com.merchantplatform.fragment.CallMessageFragment;
 import com.merchantplatform.fragment.Fragment3;
 import com.merchantplatform.fragment.PersonalCenterFragment;
@@ -31,7 +31,6 @@ import com.utils.StringUtil;
 import com.utils.Urls;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
@@ -140,12 +139,15 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.homepage_bottom_button1:
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_DY_XX);//添加埋点信息
                 dealWithClick(bottomButton1, conversationListFragment);
                 break;
             case R.id.homepage_bottom_button2:
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_DY_DH);//添加埋点信息
                 dealWithClick(bottomButton2, fragment2);
                 break;
             case R.id.homepage_bottom_button4:
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_DY_WD);//添加埋点信息
                 dealWithClick(bottomButton4, fragment4);
                 break;
             default:
