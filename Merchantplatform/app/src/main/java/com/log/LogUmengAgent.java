@@ -1,4 +1,4 @@
-package com.umeng;
+package com.log;
 
 import android.content.Context;
 import android.util.Log;

@@ -10,7 +10,7 @@ import com.facebook.stetho.Stetho;
 import com.merchantplatform.BuildConfig;
 import com.okhttputils.OkHttpUtils;
 import com.tencent.bugly.crashreport.CrashReport;
-import com.umeng.LogUmengAgent;
+import com.log.LogUmengAgent;
 import com.utils.Constant;
 import com.utils.IMInitAppUtils;
 import com.utils.LoginRegisterUtils;
