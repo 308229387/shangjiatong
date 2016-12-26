@@ -110,6 +110,7 @@
             android:name=".activity.SystemNotificationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/GmacsTheme"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="stateUnspecified|adjustResize"/>
 
         <service
