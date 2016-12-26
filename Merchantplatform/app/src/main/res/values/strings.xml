@@ -1,19 +1,19 @@
 <resources>
-    <string name="app_name">Merchant platform</string>
+    <string name="app_name">58商家通</string>
     <string name="tab_menu_alert">提醒</string>
     <string name="bind_userid">bindUserID</string>
     <string name="bind_alias">bindAlias</string>
     <string-array name="permissions">
-        <item>请授予获取录音的权限，否则该功能可能无法正常使用</item>
-        <item>请授予获取账户信息的权限，否则该功能可能无法正常使用</item>
-        <item>请授予获取电话状态的权限，否则该功能可能无法正常使用</item>
-        <item>请授予直接拨打电话的权限，否则该功能可能无法正常使用</item>
-        <item>请授予使用相机的权限，否则该功能可能无法正常使用</item>
-        <item>请授予获取精确位置的权限，否则该功能可能无法正常使用</item>
-        <item>请授予获取粗略位置的权限，否则该功能可能无法正常使用</item>
-        <item>请授予读取存储空间的权限，否则该功能可能无法正常使用</item>
-        <item>请授予写入存储空间的权限，否则该功能可能无法正常使用</item>
-        <item>请授予获取通话记录的权限，否则该功能可能无法正常使用</item>
+        <item>请授予获取录音的权限，否则相关功能可能无法正常使用</item>
+        <item>请授予获取账户信息的权限，否则相关功能可能无法正常使用</item>
+        <item>请授予获取电话状态的权限，否则相关功能可能无法正常使用</item>
+        <item>请授予直接拨打电话的权限，否则相关功能可能无法正常使用</item>
+        <item>请授予使用相机的权限，否则相关功能可能无法正常使用</item>
+        <item>请授予获取精确位置的权限，否则相关功能可能无法正常使用</item>
+        <item>请授予获取粗略位置的权限，否则相关功能可能无法正常使用</item>
+        <item>请授予读取存储空间的权限，否则相关功能可能无法正常使用</item>
+        <item>请授予写入存储空间的权限，否则相关功能可能无法正常使用</item>
+        <item>请授予获取通话记录的权限，否则相关功能可能无法正常使用</item>
     </string-array>
 
     <item name="delete_tag_vh" type="id" />

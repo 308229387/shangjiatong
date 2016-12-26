@@ -76,7 +76,6 @@ public class CommonGlobalDialog extends Dialog implements View.OnClickListener {
         lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         lp.width = ViewGroup.LayoutParams.WRAP_CONTENT;
         dialogWindow.setAttributes(lp);
-        dialogWindow.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
     }
 
      private void initViews(){

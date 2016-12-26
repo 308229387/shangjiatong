@@ -22,30 +22,30 @@ import java.util.List;
 import java.util.Map;
 
 import static android.R.attr.permission;
+import static com.tencent.open.utils.Global.getPackageName;
 
 /**
  * Created by 58 on 2016/11/28.
  * ---->checkSelfPermission(@NonNull Context context, @NonNull String permission) ，
- *                                         主要用于检测某个权限是否已经被授予，
- *                                        方法返回值为PackageManager.PERMISSION_DENIED或者PackageManager.PERMISSION_GRANTED。
- *                                        当返回DENIED就需要进行申请授权了。
- *
+ * 主要用于检测某个权限是否已经被授予，
+ * 方法返回值为PackageManager.PERMISSION_DENIED或者PackageManager.PERMISSION_GRANTED。
+ * 当返回DENIED就需要进行申请授权了。
+ * <p>
  * ----> requestPermissions(final @NonNull Activity activity,final @NonNull String[] permissions, final int requestCode),
- *                                        主要用于申请某个权限
- *                                        该方法是异步的，第一个参数是Context；
- *                                        第二个参数是需要申请的权限的字符串数组；
- *                                        第三个参数为requestCode，主要用于回调的时候检测。
- *
+ * 主要用于申请某个权限
+ * 该方法是异步的，第一个参数是Context；
+ * 第二个参数是需要申请的权限的字符串数组；
+ * 第三个参数为requestCode，主要用于回调的时候检测。
+ * <p>
  * --->shouldShowRequestPermissionRationale(@NonNull Activity activity,@NonNull String permission)
- *                                        主要用于给用户一个申请权限的解释，
- *                                        该方法只有在用户在上一次已经拒绝过你的这个权限申请。
- *                                        也就是说，用户已经拒绝一次了，你又弹个授权框，你需要给用户一个解释，为什么要授权，则使用该方法。
- *
+ * 主要用于给用户一个申请权限的解释，
+ * 该方法只有在用户在上一次已经拒绝过你的这个权限申请。
+ * 也就是说，用户已经拒绝一次了，你又弹个授权框，你需要给用户一个解释，为什么要授权，则使用该方法。
+ * <p>
  * ---->onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,@NonNull int[] grantResults)
- *                                       首先验证requestCode定位到你的申请，
- *                                       然后验证grantResults对应于申请的结果，这里的数组对应于申请时的第二个权限字符串数组。
- *                                       如果你同时申请两个权限，那么grantResults的length就为2，分别记录你两个权限的申请结果
- *
+ * 首先验证requestCode定位到你的申请，
+ * 然后验证grantResults对应于申请的结果，这里的数组对应于申请时的第二个权限字符串数组。
+ * 如果你同时申请两个权限，那么grantResults的length就为2，分别记录你两个权限的申请结果
  */
 
 public class PermissionUtils {
@@ -59,6 +59,7 @@ public class PermissionUtils {
     public static final int CODE_READ_EXTERNAL_STORAGE = 7;
     public static final int CODE_WRITE_EXTERNAL_STORAGE = 8;
     public static final int CODE_READ_CALL_LOG = 9;
+    public static final int CODE_MANAGE_OVERLAY = 10;
     public static final int CODE_MULTI_PERMISSION = 100;
 
     public static final String PERMISSION_RECORD_AUDIO = Manifest.permission.RECORD_AUDIO;
@@ -217,6 +218,14 @@ public class PermissionUtils {
                 .show();
     }
 
+    private static void showMessageOK(final Activity activity, String message, DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(activity)
+                .setMessage(message)
+                .setPositiveButton("确认", okListener)
+                .create()
+                .show();
+    }
+
     private static void openSettingActivity(final Activity activity, String message) {
         showMessageOKCancel(activity, message, new DialogInterface.OnClickListener() {
             @Override
@@ -261,32 +270,27 @@ public class PermissionUtils {
         return permissions;
     }
 
-
     /**
      * 获取手机IMEI设备号
+     *
      * @param activity
      */
-    public static void getIMEIPermission(final Activity activity){
-
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
-            if (ContextCompat.checkSelfPermission(activity, PERMISSION_READ_PHONE_STATE) == PackageManager.PERMISSION_DENIED) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(activity, PERMISSION_READ_PHONE_STATE)) {
-                    showMessageOKCancel(activity, "说明：" + PERMISSION_READ_PHONE_STATE, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(activity, new String[]{PERMISSION_READ_PHONE_STATE}, CODE_READ_PHONE_STATE);
-                        }
-                    });
-                } else {
-                    ActivityCompat.requestPermissions(activity, new String[]{PERMISSION_READ_PHONE_STATE}, CODE_READ_PHONE_STATE);
-                }
-
-            }else{
-                AppInfoUtils.getIMEI(activity);
+    public static void getIMEIPermission(final Activity activity) {
+        if (ContextCompat.checkSelfPermission(activity, PERMISSION_READ_PHONE_STATE) == PackageManager.PERMISSION_DENIED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, PERMISSION_READ_PHONE_STATE)) {
+                String[] permissionsHint = activity.getResources().getStringArray(R.array.permissions);
+                showMessageOK(activity, "说明：" + permissionsHint[CODE_READ_PHONE_STATE], new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ActivityCompat.requestPermissions(activity, new String[]{PERMISSION_READ_PHONE_STATE}, CODE_READ_PHONE_STATE);
+                    }
+                });
+            } else {
+                ActivityCompat.requestPermissions(activity, new String[]{PERMISSION_READ_PHONE_STATE}, CODE_READ_PHONE_STATE);
             }
-        }else{
-            AppInfoUtils.getIMEI(activity);
         }
     }
+
+
 
 }
