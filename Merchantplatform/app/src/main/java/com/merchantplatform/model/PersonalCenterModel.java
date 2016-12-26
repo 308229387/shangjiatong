@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.Utils.CircleImageView;
 import com.callback.DialogCallback;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.FundingManageActivity;
 import com.merchantplatform.activity.SettingActivity;
@@ -76,9 +78,11 @@ public class PersonalCenterModel extends BaseModel implements View.OnClickListen
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.rl_personal_funding:
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_WODELBY_WDZJ);
                 goToFundingActivity();
                 break;
             case R.id.rl_personal_setting:
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_WODELBY_SZ);
                 goToSettingActivity();
                 break;
         }

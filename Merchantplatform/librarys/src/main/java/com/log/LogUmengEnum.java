@@ -50,12 +50,12 @@ public enum LogUmengEnum {
     LOG_TONGHUALBY_QRSCH("tonghuaLBY_QRSCh", "通话列表页-左滑-确认删除"),
     LOG_TONGHUALBY_THJL("tonghuaLBY_THJL", "通话列表页-通话记录"),
     LOG_TONGHUALBY_WJLD("tonghuaLBY_WJLD", "通话列表页-未接来电"),
-    LOG_TONGHUALBY_ZHSHCH("tonghuaLBY_ZHShCh", "通话列表页-左滑删除"),
+    LOG_TONGHUALBY_CHASHCH("tonghuaLBY_ChAShCh", "通话列表页-左滑删除"),
     LOG_TONGHULBY_DJJRXQY("tonghuLBY_DJJRXQY", "通话列表页-点击进入详情页"),
     LOG_WODELBY_SZ("wodeLBY_SZ", "我的列表页-设置"),
     LOG_WODELBY_WDZJ("wodeLBY_WDZJ", "我的列表页_我的资金"),
     LOG_XIAOXILBY_DELETE("xiaoxiLBY_delete", "消息列表页-删除对话（左滑）"),
-    LOG_XIAOXILBY_HHD("xiaoxiLBY_HHD", "消息列表页-会话点击");
+    LOG_XIAOXILBY_HHDJ("xiaoxiLBY_HHDJ", "消息列表页-会话点击");
 
 
     private String eventid;

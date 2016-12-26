@@ -23,6 +23,8 @@ import com.db.dao.gen.CallDetailDao;
 import com.db.dao.gen.CallListDao;
 import com.db.helper.CallDetailDaoOperate;
 import com.db.helper.CallListDaoOperate;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.bean.CallDetailResponse;
 import com.merchantplatform.bean.CallListNotificationDetail;
@@ -370,6 +372,7 @@ public class CallRecordModel extends BaseModel {
 
         @Override
         public void onItemClick(View view, int position) {
+            LogUmengAgent.ins().log(LogUmengEnum.LOG_TONGHUALBY_DJBDDH);
             makeACall(position);
         }
     }

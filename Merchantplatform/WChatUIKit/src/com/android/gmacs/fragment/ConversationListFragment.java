@@ -32,6 +32,8 @@ import com.common.gmacs.parse.talk.Talk;
 import com.common.gmacs.utils.GLog;
 import com.common.gmacs.utils.GmacsUiUtil;
 import com.common.gmacs.utils.NetworkUtil;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -208,6 +210,7 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
         }
         Talk talk = mTalks.get(realPosition);
         if (!onItemClickDelegate(talk)) {
+            LogUmengAgent.ins().log(LogUmengEnum.LOG_XIAOXILBY_HHDJ);
             Intent intent = new Intent(GmacsUiUtil.createToChatActivity(getActivity(), "", talk.getmLastMessage().getTalkOtherUserInfo()));
             startActivity(intent);
         }
@@ -245,10 +248,12 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
                     if (position == 0) {
                         TalkLogic.getInstance().updateTalkRead(talk.mTalkOtherUserId, talk.mTalkOtherUserSource);
                     } else if (position == 1) {
+                        LogUmengAgent.ins().log(LogUmengEnum.LOG_XIAOXILBY_DELETE);
                         TalkLogic.getInstance().deleteTalk(talk.mTalkOtherUserId, talk.mTalkOtherUserSource);
                     }
                 } else {
                     if (position == 0) {
+                        LogUmengAgent.ins().log(LogUmengEnum.LOG_XIAOXILBY_DELETE);
                         TalkLogic.getInstance().deleteTalk(talk.mTalkOtherUserId, talk.mTalkOtherUserSource);
                     }
                 }

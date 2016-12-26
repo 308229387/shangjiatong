@@ -44,10 +44,11 @@ public class LogUmengAgent {
     }
 
     public void log(LogUmengEnum umengEnum) {
-        MobclickAgent.onEvent(mContext, umengEnum.getEventid());
+        log(umengEnum.getEventid());
     }
 
     public void log(String eventId) {
+        Log.i("LogUmengAgent", "触发埋点时间Id：" + eventId);
         MobclickAgent.onEvent(mContext, eventId);
     }
 

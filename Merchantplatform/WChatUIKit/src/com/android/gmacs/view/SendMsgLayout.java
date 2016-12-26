@@ -36,6 +36,8 @@ import com.common.gmacs.core.GmacsConstant;
 import com.common.gmacs.utils.GLog;
 import com.common.gmacs.utils.GmacsEnvi;
 import com.common.gmacs.utils.ToastUtil;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 
 /**
  * 聊天页面底部工具view
@@ -160,6 +162,7 @@ public class SendMsgLayout extends LinearLayout implements OnClickListener, OnIn
      * 点击发送按钮处理逻辑
      */
     private void sendTextMsg() {
+        LogUmengAgent.ins().log(LogUmengEnum.LOG_LIAOTIANXQY_WZFS);
         String message = sendMessageEditText.getText().toString();
         if (TextUtils.isEmpty(message)) {
             ToastUtil.showToast(getResources().getText(R.string.message_cannot_be_empty));
@@ -177,6 +180,7 @@ public class SendMsgLayout extends LinearLayout implements OnClickListener, OnIn
     public boolean onTouch(View v, MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_LIAOTIANXQY_AZHSHH);//埋点添加
                 GLog.d("audio_msg", "down");
                 // 开始录音
                 mRecordVoice.setText(getContext().getString(R.string.record_stop));
@@ -375,6 +379,8 @@ public class SendMsgLayout extends LinearLayout implements OnClickListener, OnIn
      * 转换为发送语音
      */
     public void switchSendVoice() {
+        LogUmengAgent.ins().log(LogUmengEnum.LOG_LIAOTIANXQY_YYORJPAN);
+
         if (mRecordVoice.isShown()) {
             switchSendText();
         } else {
@@ -394,6 +400,7 @@ public class SendMsgLayout extends LinearLayout implements OnClickListener, OnIn
      * 切换到表情发送模式
      */
     public void switchSendEmoji() {
+        LogUmengAgent.ins().log(LogUmengEnum.LOG_LIAOTIANXQY_BQ);
         mSendVoice.setImageResource(R.drawable.gmacs_ic_voice);
         mRecordVoice.setVisibility(View.GONE);
         sendMessageEditText.setVisibility(View.VISIBLE);
@@ -418,6 +425,7 @@ public class SendMsgLayout extends LinearLayout implements OnClickListener, OnIn
      * 切换到发送更多模式
      */
     public void switchSendMore() {
+        LogUmengAgent.ins().log(LogUmengEnum.LOG_LIAOTIANXQY_JH);
         sendMessageEditText.setVisibility(View.VISIBLE);
         mSendVoice.setImageResource(R.drawable.gmacs_ic_voice);
         mRecordVoice.setVisibility(View.GONE);

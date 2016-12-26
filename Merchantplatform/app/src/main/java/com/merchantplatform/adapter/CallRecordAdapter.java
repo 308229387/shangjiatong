@@ -11,6 +11,8 @@ import com.db.dao.CallList;
 import com.db.dao.gen.CallDetailDao;
 import com.db.helper.CallDetailDaoOperate;
 import com.db.helper.CallListDaoOperate;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.CallDetailActivity;
 import com.merchantplatform.bean.CallDetailListBean;
@@ -86,6 +88,7 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
         public void onClick(View v) {
             int position = (int) v.getTag();
             CallRecordModel.clickCallList = mList.get(position);
+            LogUmengAgent.ins().log(LogUmengEnum.LOG_TONGHULBY_DJJRXQY);
             goToCallDetail(position);
         }
     }
@@ -142,6 +145,7 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
 
         @Override
         public void onClick(View v) {
+            LogUmengAgent.ins().log(LogUmengEnum.LOG_TONGHUALBY_CHASHCH);
             int position = (Integer) v.getTag(R.id.delete_tag_position);
             setDeletedFlagInDB(position);
             deleteFromCallList(position);

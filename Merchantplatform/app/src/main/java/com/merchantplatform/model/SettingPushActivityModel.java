@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.CompoundButton;
 
 import com.dataStore.SettingPushPreferUtil;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.SettingPushActivity;
 import com.ui.SettingToggleGroup;
@@ -61,6 +63,7 @@ public class SettingPushActivityModel extends BaseModel{
                 .toggleChangeClick(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        LogUmengAgent.ins().log(LogUmengEnum.LOG_SHEZHIXQY_SYTX);
                         SettingPushPreferUtil.getInstance(context).savePushSoundAlertState(buttonView.isChecked());
                     }
         });
@@ -70,6 +73,7 @@ public class SettingPushActivityModel extends BaseModel{
                 .toggleChangeClick(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        LogUmengAgent.ins().log(LogUmengEnum.LOG_SHEZHIXQY_ZDTX);
                         SettingPushPreferUtil.getInstance(context).savePushVibrateAlertState(buttonView.isChecked());
                     }
         });
