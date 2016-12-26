@@ -12,8 +12,8 @@ import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
 
+import com.Utils.TitleBar;
 import com.loadview.ShapeLoadingDialog;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.FundingManageActivity;
@@ -23,7 +23,6 @@ import com.pay58.sdk.api.Pay58ResultCallback;
 import com.pay58.sdk.common.Common;
 import com.pay58.sdk.common.PayResult;
 import com.pay58.sdk.order.Order;
-import com.Utils.TitleBar;
 import com.utils.AppInfoUtils;
 import com.utils.Urls;
 import com.utils.UserUtils;
