@@ -57,7 +57,7 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
     /**
      * Connection status bar
      */
-    protected View systemHead;
+    protected RelativeLayout systemHead;
     protected LinearLayout mConnectionStatusHeaderView;
     protected TextView mConnectionStatusTextView;
     protected ImageView mConnectionStatusImageView;
@@ -103,7 +103,9 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
-        systemHead = inflater.inflate(R.layout.system_notification_list_layout, null);
+        View v = inflater.inflate(R.layout.system_notification_list_layout, null);
+        systemHead = (RelativeLayout) v.findViewById(R.id.system_notification_layout);
+
         redDot = (TextView) systemHead.findViewById(R.id.tv_conversation_msg_count);
         systemText = (TextView) systemHead.findViewById(R.id.tv_conversation_msg_text);
         systemHead.setOnClickListener(new View.OnClickListener() {
@@ -129,8 +131,7 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
             }
         });
 
-        if (!getShowNotification())
-            systemHead.setVisibility(View.GONE);
+
         mHiddenView = (LinearLayout) getView().findViewById(R.id.ll_conversation_hiddenview);
         mHeaderView = new LinearLayout(getActivity());
         mHeaderView.setOrientation(LinearLayout.VERTICAL);
@@ -152,7 +153,10 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
             mListView.addHeaderView(mConnectionStatusHeaderViewContainer);
         }
         mListView.addHeaderView(mHeaderView);
-        mListView.addHeaderView(systemHead);
+        mListView.addHeaderView(v);
+
+        if (!getShowNotification())
+            systemHead.setVisibility(View.GONE);
     }
 
     @Subscribe

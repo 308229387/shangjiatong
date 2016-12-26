@@ -1,17 +1,12 @@
 package com.merchantplatform.activity;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.util.Log;
 import android.view.KeyEvent;
 
 import com.merchantplatform.R;
 import com.Utils.JumpSystemNotificationAction;
 import com.merchantplatform.model.HomepageModel;
-import com.utils.PermissionUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -30,15 +25,13 @@ public class HomepageActivity extends BaseActivity<HomepageModel> {
         model.createFragment();
         model.createFragmentManagerAndShow();
         model.getGlobalParams();
-
-
     }
 
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            moveTaskToBack(false);
+            moveTaskToBack(true);
             return true;
         }
         return super.onKeyDown(keyCode, event);
