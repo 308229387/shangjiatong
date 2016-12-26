@@ -62,7 +62,7 @@ public class AboutActivityModel extends BaseModel{
             name = "v 1.0.0";
             e.printStackTrace();
         }
-        tv_version.setText(name);
+        tv_version.setText("版本号:" + name);
     }
 
     public void setSoftwareUsage(){
