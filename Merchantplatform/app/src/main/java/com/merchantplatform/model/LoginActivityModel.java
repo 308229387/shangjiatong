@@ -17,6 +17,7 @@ import com.merchantplatform.bean.LoginResponse;
 import com.okhttputils.OkHttpUtils;
 import com.ui.dialog.CommonDialog;
 import com.utils.AppInfoUtils;
+import com.utils.IMLoginUtils;
 import com.utils.PageSwitchUtils;
 import com.utils.Urls;
 import com.utils.UserUtils;
@@ -51,15 +52,7 @@ public class LoginActivityModel extends BaseModel {
             public void onLogin58Finished(boolean isSuccess, String msg, @Nullable LoginSDKBean loginSDKBean) {
                 super.onLogin58Finished(isSuccess, msg, loginSDKBean);
                 if (isSuccess && loginSDKBean != null) {
-                    loginPassrotSuccess();
-                    UserUtils.setUserId(context, loginSDKBean.getUserId());
-//                    new IMLoginUtils(context);
-                    StringBuilder temp = new StringBuilder();
-                    temp.append(UserUtils.getUserId() + "_");
-                    temp.append(AppInfoUtils.getIMEI(HyApplication.getApplication()));
-                    String a = temp.toString();
-                    Log.i("song",a);
-                    Push.getInstance().binderAlias(a); //绑定/解绑别名:非空串,绑定指定的alias ,空串(“”),解绑alias。
+                    loginPassrotSuccess(loginSDKBean);
                 }
 
                 if (isPassportLoginFail(loginSDKBean)) {
@@ -69,9 +62,38 @@ public class LoginActivityModel extends BaseModel {
         };
     }
 
-    private void loginPassrotSuccess(){
+    private void loginPassrotSuccess(@Nullable LoginSDKBean loginSDKBean){
+        saveUserId(loginSDKBean);
+        bindAlias();
+        loginLocal();
+//        initIM();
+//        moveToHomePage();
+    }
+
+    private void loginLocal(){
         OkHttpUtils.post(Urls.LOGIN)
                 .execute(new localLoginCallback(context));
+    }
+
+    private void saveUserId(@Nullable LoginSDKBean loginSDKBean){
+        UserUtils.setUserId(context, loginSDKBean.getUserId());
+    }
+
+    private void initIM(){
+        new IMLoginUtils(context);
+    }
+
+    private void bindAlias(){
+        StringBuilder temp = new StringBuilder();
+        temp.append(UserUtils.getUserId() + "_");
+        temp.append(AppInfoUtils.getIMEI(HyApplication.getApplication()));
+        String alias= temp.toString();
+        Log.i("song",alias);
+        Push.getInstance().binderAlias(alias); //绑定/解绑别名:非空串,绑定指定的alias ,空串(“”),解绑alias。
+    }
+
+    private void moveToHomePage(){
+        PageSwitchUtils.goToActivity(context, HomepageActivity.class);
     }
 
     private void LoginSuccess(LoginResponse loginResponse) {
