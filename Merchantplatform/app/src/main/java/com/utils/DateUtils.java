@@ -44,6 +44,17 @@ public class DateUtils {
         return time.substring(startIndex, time.length() - 3);
     }
 
+    public static String formatSecondsToDetailTime(long time) {
+        if (time != 0) {
+            String hour = (time / 3600) == 0 ? "" : (time / 3600) + "小时";
+            String minute = (time / 60 % 60) == 0 ? (hour.equals("") ? "" : "0分") : (time / 60 % 60) + "分";
+            String second = time % 60 + "秒";
+            return hour + minute + second;
+        } else {
+            return "0秒";
+        }
+    }
+
     public static String getMonthAgo(int months) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MONTH, -months);
