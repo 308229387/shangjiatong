@@ -22,7 +22,7 @@
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_launcher" />
+            android:src="@mipmap/iv_logo" />
 
         <TextView
             android:id="@+id/tv_name"

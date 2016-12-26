@@ -11,6 +11,11 @@ public class Urls {
      */
     public static final String BASE_URL = "https://hyapp.58.com/";
     /**
+     * 外网测试域名
+     */
+//    public static final String BASE_URL = "https://hyapp.58v5.cn/";
+
+    /**
      * 基础Url_APP
      */
     public static final String BASE_URL_APP = BASE_URL + "app/";

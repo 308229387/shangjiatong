@@ -114,7 +114,7 @@ public class AppDownloadService extends IntentService {
     private void setUpNotification() {
         CharSequence tickerText = HyApplication.getApplication().getString(R.string.update_version_tip);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setSmallIcon(R.drawable.ic_launcher)
+        builder.setSmallIcon(R.mipmap.iv_logo)
                 .setTicker(tickerText)
                 .setOngoing(false)
                 .setContentTitle(tickerText)

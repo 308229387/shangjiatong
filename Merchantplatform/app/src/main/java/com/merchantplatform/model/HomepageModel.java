@@ -157,7 +157,8 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         new Thread() {
             public void run() {
                 ArrayList<SystemNotificationDetial> temp = SystemNotificationOperate.queryAll(context);
-                EventBus.getDefault().post(new SystemNotificationInfoAction(temp.get(0).getTitle()));
+                if (temp.size() > 0)
+                    EventBus.getDefault().post(new SystemNotificationInfoAction(temp.get(0).getTitle()));
             }
         }.start();
 

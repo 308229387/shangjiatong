@@ -52,18 +52,11 @@ public class WPushInitUtils implements Push.MessageListener,
 
         if (bean.getType() == 103) {
             saveDataToDB(bean);
+            EventBus.getDefault().post(bean);
         }
-        EventBus.getDefault().post(bean);
 
         Log.i("song", pushMessage.messageContent);
-        String messageContent = pushMessage.messageContent;
-        String messageID = pushMessage.messageID;
-        try {
-            JSONObject jsonObject = new JSONObject(messageContent);
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 //         //应用在后台，不需要刷新UI,通知栏提示新消息
 //        if(!AppInfoUtils.isRunningForeground(HyApplication.getApplication())){
 //            WPushNotify.notification(messageContent);

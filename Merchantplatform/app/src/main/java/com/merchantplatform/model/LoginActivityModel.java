@@ -65,9 +65,9 @@ public class LoginActivityModel extends BaseModel {
     private void loginPassrotSuccess(@Nullable LoginSDKBean loginSDKBean){
         saveUserId(loginSDKBean);
         bindAlias();
-        loginLocal();
-//        initIM();
-//        moveToHomePage();
+//        loginLocal();
+        initIM();
+        moveToHomePage();
     }
 
     private void loginLocal(){
@@ -145,7 +145,7 @@ public class LoginActivityModel extends BaseModel {
                 //可选，设置三方登录区域是否可见
                 .setSocialEntranceEnable(false)
                 //是否显示手机动态码登录入口
-                .setPhoneLoginEnable(true)
+                .setPhoneLoginEnable(false)
                 //可选，设置左上角关闭按钮是否可见
                 .setCloseButtonEnable(true)
                 //可选，在登录页面成功后跳转的目标activity，这个参数用于登录成功后跳转，不传则不跳转
