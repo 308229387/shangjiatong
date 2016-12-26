@@ -3,6 +3,7 @@ package com.android.gmacs.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.Utils.JumpSystemNotificationAction;
+import com.Utils.SystemGetNotificationInfoAction;
 import com.Utils.SystemNotification;
+import com.Utils.SystemNotificationInfoAction;
 import com.android.gmacs.R;
 import com.android.gmacs.adapter.ConversationListAdapter;
 import com.android.gmacs.event.RecentTalksEvent;
@@ -64,6 +67,7 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
 
     protected ArrayList<Talk> mTalks = new ArrayList<>();
     private RelativeLayout titleBar;
+    private ImageView callPhone;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -100,6 +104,16 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
         titleBar = (RelativeLayout) getView().findViewById(R.id.title_bar);
         mListView = (ListView) getView().findViewById(R.id.lv_conversation_list);
         mTalkListEmptyPromptView = (LinearLayout) getView().findViewById(R.id.ll_conversation_list_empty_prompt);
+        callPhone = (ImageView) getView().findViewById(R.id.call_phone);
+        callPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                Uri data = Uri.parse("tel:" + "4007585858");
+                intent.setData(data);
+                startActivity(intent);
+            }
+        });
 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
@@ -155,8 +169,6 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
         mListView.addHeaderView(mHeaderView);
         mListView.addHeaderView(v);
 
-        if (!getShowNotification())
-            systemHead.setVisibility(View.GONE);
     }
 
     @Subscribe
@@ -167,8 +179,19 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
         redDot.setVisibility(View.VISIBLE);
     }
 
+    @Subscribe
+    public void onEvent(SystemNotificationInfoAction temp) {
+        if (getShowNotification()) {
+            systemText.setText(temp.getJump());
+            systemHead.setVisibility(View.VISIBLE);
+            redDot.setVisibility(View.VISIBLE);
+        }
+    }
+
+
     @Override
     protected void initData() {
+        EventBus.getDefault().post(new SystemGetNotificationInfoAction("info"));
         mTalkAdapter = new ConversationListAdapter(this.getActivity(), mTalks);
         mListView.setAdapter(mTalkAdapter);
         mListView.setOnItemClickListener(this);
@@ -199,27 +222,6 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
      * @return
      */
     protected boolean onItemClickDelegate(Talk talk) {
-//        Intent intent1 = new Intent(ContactLogic.ACTION_REMARK_LOCAL);
-//        JSONObject remark = new JSONObject();
-//        try {
-//            remark.put("business_source", 1);
-//            remark.put("remark_name", "我是神");
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        sendAction(intent1, "12347", 0, "我是神", remark.toString());
-//
-//        Message.MessageUserInfo messageUserInfo = new Message.MessageUserInfo(false);
-//        messageUserInfo.mUserId = "12347";
-//        messageUserInfo.mUserName = "";
-//        messageUserInfo.mUserSource = 0;
-////        messageUserInfo.mAvatar = talk.mTalkOtherUserAvatar;
-//        messageUserInfo.mTalkType = 2;
-//        Intent intent = new Intent(GmacsUiUtil.createToChatActivity(getActivity(),"", messageUserInfo, 2));
-//        startActivity(intent);
-//        //从onPause移动该处，解决从非聊天界面发的消息无法在会话列表显示的问题
-//        MessageManager.getInstance().removeSendIMMsgListener(GmacsManager.getInstance().getTalkLogic());
-//        return true;
         return false;
     }
 
@@ -410,6 +412,5 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
         tag = getActivity().getSharedPreferences("user", 0).getBoolean("showNotification", false);
         return tag;
     }
-
 
 }

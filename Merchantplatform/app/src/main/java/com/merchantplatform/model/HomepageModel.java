@@ -8,9 +8,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
+import com.Utils.SystemGetNotificationInfoAction;
+import com.Utils.SystemNotificationInfoAction;
 import com.android.gmacs.fragment.ConversationListFragment;
 import com.callback.DialogCallback;
 import com.common.gmacs.utils.ToastUtil;
+import com.db.dao.SystemNotificationDetial;
+import com.db.helper.SystemNotificationOperate;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.HomepageActivity;
 import com.merchantplatform.bean.GlobalResponse;
@@ -28,6 +32,8 @@ import com.utils.Urls;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
 
 import okhttp3.Request;
 import okhttp3.Response;
@@ -145,6 +151,16 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
             default:
                 break;
         }
+    }
+
+    public void getSystemNotificationInfo() {
+        new Thread() {
+            public void run() {
+                ArrayList<SystemNotificationDetial> temp = SystemNotificationOperate.queryAll(context);
+                EventBus.getDefault().post(new SystemNotificationInfoAction(temp.get(0).getTitle()));
+            }
+        }.start();
+
     }
 
     private class globalCallback extends DialogCallback<GlobalResponse> {

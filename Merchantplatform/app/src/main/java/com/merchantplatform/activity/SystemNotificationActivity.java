@@ -4,16 +4,12 @@ package com.merchantplatform.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
-import android.view.View;
 import android.widget.ListView;
 
-import com.Utils.JumpSystemNotificationAction;
 import com.Utils.SystemNotification;
 import com.android.gmacs.R;
 import com.android.gmacs.activity.BaseActivity;
 import com.callback.DialogCallback;
-import com.common.gmacs.utils.ToastUtil;
 import com.db.dao.SystemNotificationDetial;
 import com.db.helper.SystemNotificationOperate;
 import com.merchantplatform.adapter.SystemNotificationXAdapter;
@@ -29,7 +25,6 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
-import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -38,7 +33,6 @@ import okhttp3.Response;
  */
 
 public class SystemNotificationActivity extends BaseActivity {
-    private ListView listView;
     private SystemNotificationXAdapter xAdapter;
     private XRecyclerView mXRecyclerView;
     ArrayList<SystemNotificationDetial> temp;
@@ -61,14 +55,24 @@ public class SystemNotificationActivity extends BaseActivity {
         mXRecyclerView.setRefreshProgressStyle(ProgressStyle.BallPulse);
         mXRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.SquareSpin);
         EventBus.getDefault().register(this);
-        temp = SystemNotificationOperate.queryAll(this);
+        new Thread() {
+            public void run() {
+                showData();
+            }
+        }.start();
         setListener();
+    }
+
+    private void showData() {
+        temp = SystemNotificationOperate.queryAll(SystemNotificationActivity.this);
+        xAdapter = new SystemNotificationXAdapter(SystemNotificationActivity.this, temp);
+        mXRecyclerView.setAdapter(xAdapter);
     }
 
     public void setListener() {
         mXRecyclerView.setLoadingListener(new RecyclerViewLoadingListener());
-        xAdapter = new SystemNotificationXAdapter(this, temp);
-        mXRecyclerView.setAdapter(xAdapter);
+
+
     }
 
     @Override
@@ -114,11 +118,6 @@ public class SystemNotificationActivity extends BaseActivity {
             }
         }
 
-        @Override
-        public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-            super.onError(isFromCache, call, response, e);
-            Log.i("song", "错误信息：" + e.getMessage());
-        }
     }
 
     private void saveDataToDB(SystemNotification temp1) {

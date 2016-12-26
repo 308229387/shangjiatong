@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
+import com.Utils.SystemGetNotificationInfoAction;
+import com.Utils.SystemNotificationInfoAction;
+import com.common.gmacs.utils.ToastUtil;
 import com.merchantplatform.R;
 import com.Utils.JumpSystemNotificationAction;
 import com.merchantplatform.model.HomepageModel;
@@ -46,4 +49,10 @@ public class HomepageActivity extends BaseActivity<HomepageModel> {
     public void onEvent(JumpSystemNotificationAction action) {
         startActivity(new Intent(HomepageActivity.this, SystemNotificationActivity.class));
     }
+
+    @Subscribe
+    public void onEvent(SystemGetNotificationInfoAction action) {
+        model.getSystemNotificationInfo();
+    }
+
 }

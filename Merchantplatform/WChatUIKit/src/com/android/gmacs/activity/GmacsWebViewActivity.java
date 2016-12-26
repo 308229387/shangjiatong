@@ -33,7 +33,10 @@ public class GmacsWebViewActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        setBackEnable(false);
         WebView webView = (WebView) findViewById(R.id.wv_gmacs_webview);
+        webView.getSettings().setAppCacheEnabled(false);
+
         String url = getIntent().getStringExtra(EXTRA_URL);
         String title = getIntent().getStringExtra(EXTRA_TITLE);
         setTitle(title);

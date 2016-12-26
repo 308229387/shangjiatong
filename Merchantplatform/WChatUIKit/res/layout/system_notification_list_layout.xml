@@ -8,7 +8,8 @@
         android:id="@+id/system_notification_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/gmacs_bg_conversation_list_item">
+        android:background="@drawable/gmacs_bg_conversation_list_item"
+        android:visibility="gone">
 
         <com.android.gmacs.view.NetworkImageView
             android:id="@+id/iv_avatar"
@@ -90,7 +91,6 @@
                 android:ellipsize="end"
                 android:includeFontPadding="false"
                 android:maxLines="1"
-                android:text="今天晚上嗨起来"
                 android:textColor="@color/conversation_list_msg"
                 android:textSize="@dimen/conversation_list_msg" />
 

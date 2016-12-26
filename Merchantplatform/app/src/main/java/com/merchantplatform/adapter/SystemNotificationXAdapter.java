@@ -1,15 +1,13 @@
 package com.merchantplatform.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.android.gmacs.R;
+import com.android.gmacs.activity.GmacsWebViewActivity;
+import com.common.gmacs.utils.ToastUtil;
 import com.db.dao.SystemNotificationDetial;
 import com.xrecyclerview.BaseRecyclerViewAdapter;
 
@@ -39,6 +37,10 @@ public class SystemNotificationXAdapter extends BaseRecyclerViewAdapter<SystemNo
                 .setVisible(R.id.system_notification_arrow, systemNotification.getContentType() == 1 ? false : true)
                 .setVisible(R.id.system_notification_line, systemNotification.getContentType() == 1 ? false : true)
                 .setText(R.id.system_notification_text, systemNotification.getDescribe());
+
+        if (systemNotification.getContentType() == 2) {
+            viewHolder.setOnClickListener(R.id.system_notification_text, new SystemNotificationWebListener(systemNotification));
+        }
     }
 
     @Override
@@ -99,5 +101,23 @@ public class SystemNotificationXAdapter extends BaseRecyclerViewAdapter<SystemNo
             formattedTime = mSimpleDateFormat.format(calendar.getTime());
         }
         return formattedTime;
+    }
+
+
+    private class SystemNotificationWebListener implements View.OnClickListener {
+        private final SystemNotificationDetial systemNotification;
+
+        public SystemNotificationWebListener(SystemNotificationDetial systemNotification) {
+            this.systemNotification = systemNotification;
+        }
+
+        @Override
+        public void onClick(View v) {
+
+            Intent intent = new Intent(context, GmacsWebViewActivity.class);
+            intent.putExtra(GmacsWebViewActivity.EXTRA_TITLE, systemNotification.getTitle());
+            intent.putExtra(GmacsWebViewActivity.EXTRA_URL, systemNotification.getContent());
+            context.startActivity(intent);
+        }
     }
 }
