@@ -65,9 +65,9 @@ public class LoginActivityModel extends BaseModel {
     private void loginPassrotSuccess(@Nullable LoginSDKBean loginSDKBean){
         saveUserId(loginSDKBean);
         bindAlias();
-//        loginLocal();
-        initIM();
-        moveToHomePage();
+        loginLocal();
+//        initIM();
+//        moveToHomePage();
     }
 
     private void loginLocal(){
