@@ -303,9 +303,15 @@ public class SendMoreLayout extends LinearLayout implements ViewPager.OnPageChan
         Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         String name = DateFormat.format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
 
-        picturePath = BitmapUtil.SAVE_IMAGE_FILE_DIR + "/" + name;
+        File dir = new File(BitmapUtil.SAVE_IMAGE_FILE_DIR);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        File file = new File(dir, name);
+        picturePath = file.getAbsolutePath();
 
-        Uri imageUri = Uri.fromFile(new File(picturePath));
+        Uri imageUri = Uri.fromFile(file);
+
         openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         gmacsChatActivity.startActivityForResult(openCameraIntent, REQUEST_TAKE_PHOTO_CODE);
     }
