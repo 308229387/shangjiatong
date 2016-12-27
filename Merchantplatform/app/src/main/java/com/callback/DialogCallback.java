@@ -24,10 +24,9 @@ public abstract class DialogCallback<T> extends JsonCallback<T> {
     private Activity activity;
 
     protected boolean isToast = false;
-    private  Boolean isShow = false;
+    private Boolean isShow = false;
 
     private void initDialog(Activity activity) {
-
         shapeLoadingDialog = new ShapeLoadingDialog(activity);
     }
 
@@ -49,6 +48,13 @@ public abstract class DialogCallback<T> extends JsonCallback<T> {
         initDialog(activity);
     }
 
+    public DialogCallback(Activity activity, boolean isShowDialog) {
+        super();
+        this.activity = activity;
+        if (isShowDialog)
+            initDialog(activity);
+    }
+
     @Override
     public void onBefore(BaseRequest request) {
         super.onBefore(request);
@@ -61,13 +67,11 @@ public abstract class DialogCallback<T> extends JsonCallback<T> {
     @Override
     public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
         super.onError(isFromCache, call, response, e);
-        if(e != null){
-            if(e.getMessage().equals(PPU_UNVALID)
-                    || e.getMessage().equals(SINGLE_DEVICE_LOGIN)){
+        if (e != null) {
+            if (e.getMessage().equals(PPU_UNVALID) || e.getMessage().equals(SINGLE_DEVICE_LOGIN)) {
                 isToast = true;
             }
-
-            if(!isToast){
+            if (!isToast) {
                 ToastUtils.showToast(e.getMessage());
             }
         }
@@ -80,24 +84,22 @@ public abstract class DialogCallback<T> extends JsonCallback<T> {
         if (shapeLoadingDialog != null && shapeLoadingDialog.isShowing()) {
             shapeLoadingDialog.dismiss();
         }
-        if(activity != null && !activity.isFinishing() && e!= null){
+        if (activity != null && !activity.isFinishing() && e != null) {
             if (e.getMessage().equals(PPU_UNVALID) && !isShow) {
                 isShow = true;
-                new LogoutDialog(activity,activity.getString(R.string.ppu_expired));
+                new LogoutDialog(activity, activity.getString(R.string.ppu_expired));
                 exitTimeRunTask();
             }
-
-            if(e.getMessage().equals(SINGLE_DEVICE_LOGIN) && !isShow){
+            if (e.getMessage().equals(SINGLE_DEVICE_LOGIN) && !isShow) {
                 isShow = true;
-                new LogoutDialog(activity,activity.getString(R.string.force_exit));
+                new LogoutDialog(activity, activity.getString(R.string.force_exit));
                 exitTimeRunTask();
             }
         }
-
     }
 
     private void exitTimeRunTask() {
-        Timer isDialogShow  = new Timer();
+        Timer isDialogShow = new Timer();
         isDialogShow.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -105,6 +107,4 @@ public abstract class DialogCallback<T> extends JsonCallback<T> {
             }
         }, 3000);
     }
-
-
 }
