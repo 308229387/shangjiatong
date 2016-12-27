@@ -1,19 +1,22 @@
 package com.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
+import com.Utils.SystemNotification;
 import com.db.dao.SystemNotificationDetial;
 import com.db.helper.SystemNotificationOperate;
 import com.google.gson.Gson;
-import com.Utils.SystemNotification;
-import com.merchantplatform.activity.HomepageActivity;
+import com.merchantplatform.R;
 import com.merchantplatform.application.HyApplication;
+import com.push.WPushNotify;
+import com.ui.dialog.LogoutDialog;
 import com.wuba.wbpush.Push;
 
 import org.greenrobot.eventbus.EventBus;
-import org.json.JSONException;
-import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * Created by 58 on 2016/11/29.
@@ -40,6 +43,8 @@ public class WPushInitUtils implements Push.MessageListener,
     public void onDeviceIDAvalible(String deviceID) {
     }
 
+
+
     /**
      * 收到的Push消息
      *
@@ -51,16 +56,23 @@ public class WPushInitUtils implements Push.MessageListener,
         final SystemNotification bean = temp.fromJson(pushMessage.messageContent, SystemNotification.class);
 
         if (bean.getType() == 103) {
+
+            //应用在后台，不需要刷新UI,通知栏提示新消息
+            if (!AppInfoUtils.isRunningForeground(HyApplication.getApplication())) {
+                WPushNotify.notification(bean);
+            }
             saveDataToDB(bean);
             EventBus.getDefault().post(bean);
+        } else if (bean.getType() == 104) {
+            List<Activity> list= HyApplication.getInstance().getActivityList();
+            if(list  != null && list.size() >0){
+                Activity activity = list.get(list.size() -1);
+                new LogoutDialog(activity,activity.getString(R.string.force_exit));
+            }
+
         }
 
         Log.i("song", pushMessage.messageContent);
-
-//         //应用在后台，不需要刷新UI,通知栏提示新消息
-//        if(!AppInfoUtils.isRunningForeground(HyApplication.getApplication())){
-//            WPushNotify.notification(messageContent);
-//        }
 
         String type = pushMessage.messageType == Push.MessageType.Notify ? "Notify" : "PassThrough";
         String msgString = null;
