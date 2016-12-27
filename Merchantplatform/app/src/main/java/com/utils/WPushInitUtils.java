@@ -38,12 +38,9 @@ public class WPushInitUtils implements Push.MessageListener,
 
     }
 
-
     @Override
     public void onDeviceIDAvalible(String deviceID) {
     }
-
-
 
     /**
      * 收到的Push消息
@@ -73,18 +70,6 @@ public class WPushInitUtils implements Push.MessageListener,
         }
 
         Log.i("song", pushMessage.messageContent);
-
-        String type = pushMessage.messageType == Push.MessageType.Notify ? "Notify" : "PassThrough";
-        String msgString = null;
-        if (pushMessage.messageInfos != null) {
-            msgString = String.format("messgeID:%s messageType:%s messaegContent:%s pushType:%s",
-                    pushMessage.messageID, type, pushMessage.messageContent, pushMessage.messageInfos.get("pushType"));
-        } else {
-            msgString = String.format("messgeID:%s messageType:%s messaegContent:%s",
-                    pushMessage.messageID, type, pushMessage.messageContent);
-        }
-        Log.d("PushUtils", "onMessage-pushMessage:" + msgString);
-
 
     }
 

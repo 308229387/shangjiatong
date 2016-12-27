@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.callback.DialogCallback;
+import com.dataStore.DeviceUuidFactory;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.HomepageActivity;
 import com.merchantplatform.activity.LoginActivity;
@@ -85,7 +86,7 @@ public class LoginActivityModel extends BaseModel {
     private void bindAlias(){
         StringBuilder temp = new StringBuilder();
         temp.append(UserUtils.getUserId() + "_");
-        temp.append(AppInfoUtils.getIMEI(HyApplication.getApplication()));
+        temp.append(DeviceUuidFactory.getInstance().getDeviceUuidString());
         String alias= temp.toString();
         Log.i("song",alias);
         Push.getInstance().binderAlias(alias); //绑定/解绑别名:非空串,绑定指定的alias ,空串(“”),解绑alias。

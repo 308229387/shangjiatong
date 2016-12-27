@@ -19,18 +19,12 @@ import com.wuba.loginsdk.external.LoginClient;
  */
 public class GuideActivityModel extends BaseModel {
     private Activity context;
-    private ImageView imageView_glide_test;
 
     private static final long DELAYED_TIMES = 3 * 1000;
     private Handler handler = new Handler();
 
     public GuideActivityModel(Activity context) {
         this.context = context;
-    }
-
-    public void initLayout() {
-        imageView_glide_test = (ImageView) context.findViewById(R.id.imageView_glide_test);
-        Glide.with(context).load("http://img.58cdn.com.cn/logo/58/252_84/logo-o.png?v=2").into(imageView_glide_test);
     }
 
     public void waitAndGo() {
