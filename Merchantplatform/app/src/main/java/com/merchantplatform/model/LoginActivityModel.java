@@ -66,8 +66,7 @@ public class LoginActivityModel extends BaseModel {
         saveUserId(loginSDKBean);
         bindAlias();
         loginLocal();
-//        initIM();
-//        moveToHomePage();
+        initIM();
     }
 
     private void loginLocal(){
@@ -92,9 +91,6 @@ public class LoginActivityModel extends BaseModel {
         Push.getInstance().binderAlias(alias); //绑定/解绑别名:非空串,绑定指定的alias ,空串(“”),解绑alias。
     }
 
-    private void moveToHomePage(){
-        PageSwitchUtils.goToActivity(context, HomepageActivity.class);
-    }
 
     private void LoginSuccess(LoginResponse loginResponse) {
         GoToWhere(loginResponse);

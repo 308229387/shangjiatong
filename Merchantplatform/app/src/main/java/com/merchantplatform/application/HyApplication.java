@@ -122,6 +122,10 @@ public class HyApplication extends MultiDexApplication {
         }
     }
 
+    public List<Activity> getActivityList(){
+        return activityList;
+    }
+
     public static Context getApplication() {
         return application;
     }

@@ -55,6 +55,7 @@ public abstract class BaseActivity<T extends BaseModel> extends AppCompatActivit
         }
     }
 
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void moreThanLollipopStatusBar() {
         Window window = getWindow();
@@ -77,6 +78,7 @@ public abstract class BaseActivity<T extends BaseModel> extends AppCompatActivit
     }
 
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -86,5 +88,4 @@ public abstract class BaseActivity<T extends BaseModel> extends AppCompatActivit
         super.onPause();
         MobclickAgent.onPause(this);
     }
-
 }

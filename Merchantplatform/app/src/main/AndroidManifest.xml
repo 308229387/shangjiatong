@@ -104,9 +104,6 @@
             android:name=".activity.MobileValidateActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.SystemMessageActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.SystemNotificationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/GmacsTheme"
