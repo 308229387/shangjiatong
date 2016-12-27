@@ -52,7 +52,7 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
         tb_setting_title = (TitleBar) context.findViewById(R.id.tb_setting_title);
         rl_setting_push = (RelativeLayout) context.findViewById(R.id.rl_setting_push);
         rl_setting_feedback = (RelativeLayout) context.findViewById(R.id.rl_setting_feedback);
-        rl_setting_binding = (RelativeLayout) context.findViewById(R.id.rl_setting_binding);
+//        rl_setting_binding = (RelativeLayout) context.findViewById(R.id.rl_setting_binding);
         rl_setting_about = (RelativeLayout) context.findViewById(R.id.rl_setting_about);
         rl_setting_exit = (RelativeLayout) context.findViewById(R.id.rl_setting_exit);
     }
@@ -80,7 +80,7 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
     public void setListener(){
         rl_setting_push.setOnClickListener(this);
         rl_setting_feedback.setOnClickListener(this);
-        rl_setting_binding.setOnClickListener(this);
+//        rl_setting_binding.setOnClickListener(this);
         rl_setting_about.setOnClickListener(this);
         rl_setting_exit.setOnClickListener(this);
     }
@@ -97,10 +97,10 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
                 LogUmengAgent.ins().log(LogUmengEnum.LOG_SHEZHIXQY_YJFK);
                 goToSettingFeedbackActivity();
                 break;
-            case R.id.rl_setting_binding:
-                LogUmengAgent.ins().log(LogUmengEnum.LOG_SHEZHIXQY_ZHBD);
-                goToSettingBindingActivity();
-                break;
+//            case R.id.rl_setting_binding:
+//                LogUmengAgent.ins().log(LogUmengEnum.LOG_SHEZHIXQY_ZHBD);
+//                goToSettingBindingActivity();
+//                break;
             case R.id.rl_setting_about:
                 LogUmengAgent.ins().log(LogUmengEnum.LOG_SHEZHIXQY_GYWM);
                 goToSettingAboutActivity();

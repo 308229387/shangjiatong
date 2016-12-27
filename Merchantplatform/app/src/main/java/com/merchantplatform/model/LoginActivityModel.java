@@ -99,12 +99,12 @@ public class LoginActivityModel extends BaseModel {
     }
 
     private void GoToWhere(LoginResponse loginResponse) {
-        if (hasValidated(loginResponse)) {
+//        if (hasValidated(loginResponse)) {
             UserUtils.hasValidate(context.getApplicationContext());
             PageSwitchUtils.goToActivity(context, HomepageActivity.class);
-        } else {
-            PageSwitchUtils.goToActivity(context, MobileValidateActivity.class);
-        }
+//        } else {
+//            PageSwitchUtils.goToActivity(context, MobileValidateActivity.class);
+//        }
     }
 
     private Boolean hasValidated(LoginResponse loginResponse) {
@@ -141,8 +141,6 @@ public class LoginActivityModel extends BaseModel {
                 .setLogoResId(R.drawable.loginsdk_account_newlogin_logo)
                 //可选，设置三方登录区域是否可见
                 .setSocialEntranceEnable(false)
-                //是否显示手机动态码登录入口
-                .setPhoneLoginEnable(false)
                 //可选，设置左上角关闭按钮是否可见
                 .setCloseButtonEnable(true)
                 //可选，在登录页面成功后跳转的目标activity，这个参数用于登录成功后跳转，不传则不跳转
