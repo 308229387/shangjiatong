@@ -23,8 +23,6 @@ import com.merchantplatform.application.HyApplication;
 public class WPushNotify {
 
     protected static int notifyID = 011000;
-    public static String NOTIFY_CLICK_PUSHBEAN = "notify_click_push_bean";
-
 
     //推送显示在通知栏
     public static void notification(SystemNotification bean){

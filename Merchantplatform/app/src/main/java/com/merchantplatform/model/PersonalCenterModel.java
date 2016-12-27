@@ -105,17 +105,17 @@ public class PersonalCenterModel extends BaseModel implements View.OnClickListen
         @Override
         public void onResponse(boolean isFromCache, UserInfoResponse userInfoResponse, Request request, @Nullable Response response) {
             if(userInfoResponse != null){
-                String bindPhone = userInfoResponse.getData().getBindPhone();
+                String username = userInfoResponse.getData().getUsername();
                 String phone = userInfoResponse.getData().getPhone();
                 String sex = userInfoResponse.getData().getSex();
 
                 if(!StringUtil.isEmpty(phone)){
-
-                }
-
-                if(!StringUtils.isEmpty(bindPhone)){
-                    tv_personal_userPhone.setText(bindPhone);
-                    UserUtils.setMobile(context.getContext(),bindPhone);
+                    tv_personal_userPhone.setText(phone);
+                    UserUtils.setMobile(context.getContext(),phone);
+                }else{
+                   if(!StringUtil.isEmpty(username)){
+                       tv_personal_userPhone.setText(username);
+                   }
                 }
 
                 if(!StringUtil.isEmpty(sex)){

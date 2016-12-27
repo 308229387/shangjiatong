@@ -3,6 +3,7 @@ package com.callback;
 
 import android.content.pm.PackageManager;
 
+import com.dataStore.DeviceUuidFactory;
 import com.merchantplatform.application.HyApplication;
 import com.okhttputils.callback.AbsCallback;
 import com.okhttputils.request.BaseRequest;
@@ -21,7 +22,7 @@ public abstract class CommonCallback<T> extends AbsCallback<T> {
         try {
             request.headers("ppu", LoginClient.doGetPPUOperate(HyApplication.getApplication()))
                     .headers("version", AppInfoUtils.getVersionCode(HyApplication.getApplication()))
-                    .headers("imei", AppInfoUtils.getIMEI(HyApplication.getApplication()))
+                    .headers("imei", DeviceUuidFactory.getInstance().getDeviceUuidString())
                     .headers("platform", "1");
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();

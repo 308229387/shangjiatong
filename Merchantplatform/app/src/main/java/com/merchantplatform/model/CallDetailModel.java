@@ -31,10 +31,6 @@ import org.greenrobot.greendao.query.WhereCondition;
 
 import java.util.ArrayList;
 
-import okhttp3.Call;
-import okhttp3.Request;
-import okhttp3.Response;
-
 /**
  * Created by 58 on 2016/12/17.
  */
@@ -117,16 +113,11 @@ public class CallDetailModel extends BaseModel {
     }
 
     private void loadRefreshDataFromDB() {
-        if (date.equals(DateUtils.getCurrentDate())) {
-            detailList.clear();
-            getNewDetailList();
-        } else {
-            detailList.clear();
-            getNewDetailList();
-            if (detailList != null && detailList.size() > 0) {
-                String time = detailList.get(0).getTime();
-                tv_call_detail_date.setText(DateUtils.formatDateTimeToDate(date).replace("-", "/"));
-            }
+        detailList.clear();
+        getNewDetailList();
+        if (!date.equals(DateUtils.getCurrentDate()) && detailList != null && detailList.size() > 0) {
+            String time = DateUtils.formatDateTimeToDate(date);
+            tv_call_detail_date.setText(time.replace("-", "/"));
         }
     }
 

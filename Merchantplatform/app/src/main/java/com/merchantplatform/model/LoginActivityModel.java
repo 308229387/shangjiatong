@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.callback.DialogCallback;
+import com.dataStore.DeviceUuidFactory;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.HomepageActivity;
 import com.merchantplatform.activity.LoginActivity;
@@ -85,7 +86,7 @@ public class LoginActivityModel extends BaseModel {
     private void bindAlias(){
         StringBuilder temp = new StringBuilder();
         temp.append(UserUtils.getUserId() + "_");
-        temp.append(AppInfoUtils.getIMEI(HyApplication.getApplication()));
+        temp.append(DeviceUuidFactory.getInstance().getDeviceUuidString());
         String alias= temp.toString();
         Log.i("song",alias);
         Push.getInstance().binderAlias(alias); //绑定/解绑别名:非空串,绑定指定的alias ,空串(“”),解绑alias。
@@ -98,12 +99,12 @@ public class LoginActivityModel extends BaseModel {
     }
 
     private void GoToWhere(LoginResponse loginResponse) {
-        if (hasValidated(loginResponse)) {
+//        if (hasValidated(loginResponse)) {
             UserUtils.hasValidate(context.getApplicationContext());
             PageSwitchUtils.goToActivity(context, HomepageActivity.class);
-        } else {
-            PageSwitchUtils.goToActivity(context, MobileValidateActivity.class);
-        }
+//        } else {
+//            PageSwitchUtils.goToActivity(context, MobileValidateActivity.class);
+//        }
     }
 
     private Boolean hasValidated(LoginResponse loginResponse) {
@@ -140,8 +141,6 @@ public class LoginActivityModel extends BaseModel {
                 .setLogoResId(R.drawable.loginsdk_account_newlogin_logo)
                 //可选，设置三方登录区域是否可见
                 .setSocialEntranceEnable(false)
-                //是否显示手机动态码登录入口
-                .setPhoneLoginEnable(false)
                 //可选，设置左上角关闭按钮是否可见
                 .setCloseButtonEnable(true)
                 //可选，在登录页面成功后跳转的目标activity，这个参数用于登录成功后跳转，不传则不跳转

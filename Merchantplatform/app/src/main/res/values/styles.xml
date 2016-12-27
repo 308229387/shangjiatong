@@ -84,4 +84,8 @@
         <item name="android:windowExitAnimation">@anim/dialog_exit_anim</item>
     </style>
 
+    <style name="Splash" parent="Theme.AppCompat.Light">
+        <item name="android:windowBackground">@mipmap/iv_splash</item>
+    </style>
+
 </resources>

@@ -1,5 +1,6 @@
 package com.utils;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -104,37 +105,37 @@ public class AppInfoUtils {
         return "" + (context.getPackageManager().getPackageInfo(packageName, 0).versionName);
     }
 
-    /**
-     * 获取设备号
-     * @param context
-     * @return
-     */
-    public static String getIMEI(Context context){
-        TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        String imeiCode ="-";
-        try {
-            imeiCode=manager.getDeviceId();
-        }catch(Exception e){
-            imeiCode=getMacAddress(context);
-        }
-
-        return imeiCode;
-    }
-
-    /**
-     * 获取手机MAC地址
-     * 只有手机开启wifi才能获取到mac地址
-     */
-    public static String getMacAddress(Context context){
-        String result = "-";
-        if(isNetworkConnected(context)) {
-            WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-            WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-            result = wifiInfo.getMacAddress();
-            return result;
-        }
-        return result;
-    }
+//    /**
+//     * 获取设备号
+//     * @param context
+//     * @return
+//     */
+//    public static String getIMEI(Context context){
+//        TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+//        String imeiCode ="-";
+//        try {
+//            imeiCode=manager.getDeviceId();
+//        }catch(Exception e){
+//            imeiCode=getMacAddress(context);
+//        }
+//
+//        return imeiCode;
+//    }
+//
+//    /**
+//     * 获取手机MAC地址
+//     * 只有手机开启wifi才能获取到mac地址
+//     */
+//    public static String getMacAddress(Context context){
+//        String result = "-";
+//        if(isNetworkConnected(context)) {
+//            WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+//            WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+//            result = wifiInfo.getMacAddress();
+//            return result;
+//        }
+//        return result;
+//    }
 
 
 

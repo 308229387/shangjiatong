@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Message;
 import android.provider.CallLog.Calls;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -23,6 +24,7 @@ import com.db.dao.gen.CallDetailDao;
 import com.db.dao.gen.CallListDao;
 import com.db.helper.CallDetailDaoOperate;
 import com.db.helper.CallListDaoOperate;
+import com.loadview.ShapeLoadingDialog;
 import com.log.LogUmengAgent;
 import com.log.LogUmengEnum;
 import com.merchantplatform.R;
@@ -31,6 +33,7 @@ import com.merchantplatform.bean.CallListNotificationDetail;
 import com.merchantplatform.bean.UserCallRecordBean;
 import com.merchantplatform.receiver.PhoneReceiver;
 import com.okhttputils.OkHttpUtils;
+import com.okhttputils.request.BaseRequest;
 import com.tablayout.SlidingTabLayout;
 import com.utils.DateUtils;
 import com.utils.PermissionUtils;
@@ -62,6 +65,7 @@ public class CallRecordModel extends BaseModel {
     private XRecyclerView mXRecyclerView;
     private View emptyView;
     private SlidingTabLayout mTabLayout;
+    private ShapeLoadingDialog shapeLoadingDialog;
     private CallRecordAdapter mAdapter;
     private ArrayList<CallList> listData;
     private static final int CALL_IN_TYPE = 1;
@@ -71,6 +75,22 @@ public class CallRecordModel extends BaseModel {
     private int tabIndex;
     private boolean isCallOut = false;
     public static CallList clickCallList;
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    dismissDialog();
+                    loadRefreshDataFromDB();
+                    EventBus.getDefault().post(new CallListNotificationDetail("refreshDetail"));
+                    break;
+                case 1:
+                    dismissDialog();
+                    loadMoreDataFromDB();
+                    break;
+            }
+        }
+    };
 
     public CallRecordModel(CallRecordFragment context) {
         this.context = context;
@@ -115,6 +135,9 @@ public class CallRecordModel extends BaseModel {
         listData = new ArrayList<>();
         mAdapter = new CallRecordAdapter(context.getContext(), listData, tabIndex);
         mXRecyclerView.setAdapter(mAdapter);
+    }
+
+    public void firstRefreshData() {
         mXRecyclerView.refresh();
     }
 
@@ -185,22 +208,33 @@ public class CallRecordModel extends BaseModel {
         OkHttpUtils.get(Urls.PHONE_INCREASE_DATA)
                 .params("backTime", backTime)
                 .params("refreshType", "0")
-                .execute(new getPhoneLoadMoreDataResponse(context.getActivity()));
+                .execute(new getPhoneLoadMoreDataResponse(context.getActivity(), false));
     }
 
     private class getPhoneLoadMoreDataResponse extends DialogCallback<CallDetailResponse> {
 
-        public getPhoneLoadMoreDataResponse(Activity activity) {
-            super(activity);
+        public getPhoneLoadMoreDataResponse(Activity activity, boolean isShowDialog) {
+            super(activity, isShowDialog);
         }
 
         @Override
-        public void onResponse(boolean isFromCache, CallDetailResponse callDetailResponse, Request request, @Nullable Response response) {
+        public void onBefore(BaseRequest request) {
+            super.onBefore(request);
+            initDialogAndShow(context.getActivity());
+        }
+
+        @Override
+        public void onResponse(boolean isFromCache, final CallDetailResponse callDetailResponse, Request request, @Nullable Response response) {
             if (callDetailResponse.getData() == null || callDetailResponse.getData().size() == 0) {
                 mXRecyclerView.setNoMore(true);
             } else {
-                saveNewDataToDB(callDetailResponse);
-                loadMoreDataFromDB();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        saveNewDataToDB(callDetailResponse);
+                        mHandler.sendEmptyMessage(1);
+                    }
+                }).start();
             }
         }
 
@@ -221,22 +255,32 @@ public class CallRecordModel extends BaseModel {
         OkHttpUtils.get(Urls.PHONE_INCREASE_DATA)
                 .params("backTime", backTime)
                 .params("refreshType", "1")
-                .execute(new getPhoneIncreaseDataResponse(context.getActivity()));
+                .execute(new getPhoneIncreaseDataResponse(context.getActivity(), false));
     }
 
     private class getPhoneIncreaseDataResponse extends DialogCallback<CallDetailResponse> {
 
-        public getPhoneIncreaseDataResponse(Activity activity) {
-            super(activity);
+        public getPhoneIncreaseDataResponse(Activity activity, boolean isShowDialog) {
+            super(activity, isShowDialog);
         }
 
         @Override
-        public void onResponse(boolean isFromCache, CallDetailResponse callDetailResponse, Request request, @Nullable Response response) {
-            if (callDetailResponse != null && callDetailResponse.getData() != null) {
-                saveNewDataToDB(callDetailResponse);
-            }
-            loadRefreshDataFromDB();
-            EventBus.getDefault().post(new CallListNotificationDetail("refreshDetail"));
+        public void onBefore(BaseRequest request) {
+            super.onBefore(request);
+            initDialogAndShow(context.getActivity());
+        }
+
+        @Override
+        public void onResponse(boolean isFromCache, final CallDetailResponse callDetailResponse, Request request, @Nullable Response response) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    if (callDetailResponse != null && callDetailResponse.getData() != null) {
+                        saveNewDataToDB(callDetailResponse);
+                        mHandler.sendEmptyMessage(0);
+                    }
+                }
+            }).start();
         }
 
         @Override
@@ -244,6 +288,18 @@ public class CallRecordModel extends BaseModel {
             super.onError(isFromCache, call, response, e);
             loadRefreshDataFromDB();
             EventBus.getDefault().post(new CallListNotificationDetail("refreshDetail"));
+        }
+    }
+
+    private void initDialogAndShow(Activity activity) {
+        shapeLoadingDialog = new ShapeLoadingDialog(activity);
+        shapeLoadingDialog.show();
+    }
+
+    private void dismissDialog() {
+        if (shapeLoadingDialog != null && shapeLoadingDialog.isShowing()) {
+            shapeLoadingDialog.dismiss();
+            shapeLoadingDialog = null;
         }
     }
 
@@ -462,7 +518,7 @@ public class CallRecordModel extends BaseModel {
                     .params("beginTime", usercallRecordBean.getBeginTime() + "")
                     .params("endTime", usercallRecordBean.getEndTime() + "")
                     .params("recordState", usercallRecordBean.getRecordState() + "")
-                    .execute(new getPhoneIncreaseDataResponse(context.getActivity()));
+                    .execute(new getPhoneIncreaseDataResponse(context.getActivity(), false));
         }
     }
 
