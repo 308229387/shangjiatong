@@ -17,6 +17,7 @@ public class SystemNotificationDetial {
     public Long sortId;
     public String title;
     public int type;
+    public int isReaded;
     public SystemNotificationDetial() {
     }
     public Long getId() {
@@ -60,6 +61,12 @@ public class SystemNotificationDetial {
     }
     public void setType(int type) {
         this.type = type;
+    }
+    public int getIsReaded() {
+        return this.isReaded;
+    }
+    public void setIsReaded(int isReaded) {
+        this.isReaded = isReaded;
     }
 
 }
