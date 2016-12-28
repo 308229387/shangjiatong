@@ -1,16 +1,12 @@
 package com.utils;
 
-import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Build;
-import android.telephony.TelephonyManager;
 
 import java.util.List;
 
@@ -29,16 +25,16 @@ public class AppInfoUtils {
 
     /**
      * 获取渠道号
+     *
      * @param context
      * @return
      */
-    public static String getChannelId(Context context){
-        String channel= "";
+    public static String getChannelId(Context context) {
+        String channel = "";
         try {
             ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(context.getPackageName(),
                     PackageManager.GET_META_DATA);
-            channel=appInfo.metaData.getString("CHANNEL_ID");
-
+            channel = appInfo.metaData.getString("CHANNEL_ID");
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -47,6 +43,7 @@ public class AppInfoUtils {
 
     /**
      * 判断网络是否连接
+     *
      * @param context
      * @return
      */
@@ -63,6 +60,7 @@ public class AppInfoUtils {
 
     /**
      * 判断当前应用程序是否在前台
+     *
      * @param context
      * @return
      */
@@ -85,6 +83,7 @@ public class AppInfoUtils {
 
     /**
      * 获得版本名
+     *
      * @param context
      * @return
      * @throws PackageManager.NameNotFoundException
@@ -96,6 +95,7 @@ public class AppInfoUtils {
 
     /**
      * 获得版本号
+     *
      * @param context
      * @return
      * @throws PackageManager.NameNotFoundException
@@ -105,38 +105,12 @@ public class AppInfoUtils {
         return "" + (context.getPackageManager().getPackageInfo(packageName, 0).versionName);
     }
 
-//    /**
-//     * 获取设备号
-//     * @param context
-//     * @return
-//     */
-//    public static String getIMEI(Context context){
-//        TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-//        String imeiCode ="-";
-//        try {
-//            imeiCode=manager.getDeviceId();
-//        }catch(Exception e){
-//            imeiCode=getMacAddress(context);
-//        }
-//
-//        return imeiCode;
-//    }
-//
-//    /**
-//     * 获取手机MAC地址
-//     * 只有手机开启wifi才能获取到mac地址
-//     */
-//    public static String getMacAddress(Context context){
-//        String result = "-";
-//        if(isNetworkConnected(context)) {
-//            WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-//            WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-//            result = wifiInfo.getMacAddress();
-//            return result;
-//        }
-//        return result;
-//    }
-
-
-
+    /**
+     * 获取手机制造商
+     *
+     * @return 手机制造商转换为小写后的结果
+     */
+    public static String getProductBrand() {
+        return Build.BRAND.toLowerCase();
+    }
 }
