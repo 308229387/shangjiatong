@@ -63,32 +63,34 @@ public class LoginActivityModel extends BaseModel {
         };
     }
 
-    private void loginPassrotSuccess(@Nullable LoginSDKBean loginSDKBean){
+    private void loginPassrotSuccess(@Nullable LoginSDKBean loginSDKBean) {
         saveUserId(loginSDKBean);
         bindAlias();
-        loginLocal();
+//        loginLocal();
         initIM();
+        PageSwitchUtils.goToActivity(context, HomepageActivity.class);
     }
 
-    private void loginLocal(){
+    private void loginLocal() {
         OkHttpUtils.post(Urls.LOGIN)
                 .execute(new localLoginCallback(context));
     }
 
-    private void saveUserId(@Nullable LoginSDKBean loginSDKBean){
+    private void saveUserId(@Nullable LoginSDKBean loginSDKBean) {
         UserUtils.setUserId(context, loginSDKBean.getUserId());
+        UserUtils.setFace(context, loginSDKBean.getFace());
     }
 
-    private void initIM(){
+    private void initIM() {
         new IMLoginUtils(context);
     }
 
-    private void bindAlias(){
+    private void bindAlias() {
         StringBuilder temp = new StringBuilder();
         temp.append(UserUtils.getUserId() + "_");
         temp.append(DeviceUuidFactory.getInstance().getDeviceUuidString());
-        String alias= temp.toString();
-        Log.i("song",alias);
+        String alias = temp.toString();
+        Log.i("song", alias);
         Push.getInstance().binderAlias(alias); //绑定/解绑别名:非空串,绑定指定的alias ,空串(“”),解绑alias。
     }
 
@@ -100,8 +102,8 @@ public class LoginActivityModel extends BaseModel {
 
     private void GoToWhere(LoginResponse loginResponse) {
 //        if (hasValidated(loginResponse)) {
-            UserUtils.hasValidate(context.getApplicationContext());
-            PageSwitchUtils.goToActivity(context, HomepageActivity.class);
+        UserUtils.hasValidate(context.getApplicationContext());
+        PageSwitchUtils.goToActivity(context, HomepageActivity.class);
 //        } else {
 //            PageSwitchUtils.goToActivity(context, MobileValidateActivity.class);
 //        }
@@ -156,26 +158,26 @@ public class LoginActivityModel extends BaseModel {
 
         @Override
         public void onResponse(boolean isFromCache, LoginResponse loginResponse, okhttp3.Request request, @Nullable Response response) {
-            if(loginResponse != null){
+            if (loginResponse != null) {
                 LoginSuccess(loginResponse);
             }
         }
 
         @Override
         public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-            if(e!= null && !TextUtils.isEmpty(e.getMessage())){
-                if(e.getMessage().equals(PPU_UNVALID)){
+            if (e != null && !TextUtils.isEmpty(e.getMessage())) {
+                if (e.getMessage().equals(PPU_UNVALID)) {
                     initLoginErrorDialog(context.getString(R.string.ppu_expired));
-                }else if(e.getMessage().equals(SINGLE_DEVICE_LOGIN)){
+                } else if (e.getMessage().equals(SINGLE_DEVICE_LOGIN)) {
                     initLoginErrorDialog(context.getString(R.string.force_exit));
-                }else{
-                   initLoginErrorDialog(e.getMessage());
+                } else {
+                    initLoginErrorDialog(e.getMessage());
                 }
             }
         }
     }
 
-    private void initLoginErrorDialog(String message){
+    private void initLoginErrorDialog(String message) {
         if (loginErrorDialog != null && loginErrorDialog.isShowing()) {
             loginErrorDialog.dismiss();
         }
