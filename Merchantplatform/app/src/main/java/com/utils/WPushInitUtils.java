@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
+import com.Utils.RedNumSystemNotificationAction;
 import com.Utils.SystemNotification;
 import com.db.dao.SystemNotificationDetial;
 import com.db.helper.SystemNotificationOperate;
@@ -16,6 +17,7 @@ import com.wuba.wbpush.Push;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -83,10 +85,13 @@ public class WPushInitUtils implements Push.MessageListener,
         data.setContent(temp1.getContent());
         data.setContentType(temp1.getContentType());
         data.setDescribe(temp1.getDescribe());
+        data.setIsReaded(0);
         new Thread() {
             @Override
             public void run() {
                 SystemNotificationOperate.insertOrReplace(HyApplication.getApplication(), data);
+                ArrayList<SystemNotificationDetial> temp = SystemNotificationOperate.checkReaded(HyApplication.getApplication());
+                EventBus.getDefault().post(new RedNumSystemNotificationAction(temp.size()));
             }
         }.start();
     }
