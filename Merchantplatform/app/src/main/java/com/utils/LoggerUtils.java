@@ -15,63 +15,63 @@ public class LoggerUtils {
         LoggerUtils.isShowLog = isShowLog;
     }
 
-    public static void v(String msg) {
+    public static void v(String tag, String msg) {
         if (BuildConfig.DEBUG && isShowLog)
-            Logger.v(msg);
+            Logger.t(tag).v(msg);
     }
 
-    public static void d(String msg) {
+    public static void d(String tag, String msg) {
         if (BuildConfig.DEBUG && isShowLog)
-            Logger.d(msg);
+            Logger.t(tag).d(msg);
     }
 
-    public static void list(List list) {
+    public static void list(String tag, List list) {
         if (BuildConfig.DEBUG && isShowLog)
-            Logger.d(list);
+            Logger.t(tag).d(list);
     }
 
-    public static void map(Map map) {
+    public static void map(String tag, Map map) {
         if (BuildConfig.DEBUG && isShowLog)
-            Logger.d(map);
+            Logger.t(tag).d(map);
     }
 
-    public static void set(Set set) {
+    public static void set(String tag, Set set) {
         if (BuildConfig.DEBUG && isShowLog)
-            Logger.d(set);
+            Logger.t(tag).d(set);
     }
 
-    public static void stringArray(String[] strings) {
+    public static void stringArray(String tag, String[] strings) {
         if (BuildConfig.DEBUG && isShowLog)
-            Logger.d(strings);
+            Logger.t(tag).d(strings);
     }
 
-    public static void i(String msg) {
+    public static void i(String tag, String msg) {
         if (BuildConfig.DEBUG && isShowLog)
-            Logger.i(msg);
+            Logger.t(tag).i(msg);
     }
 
-    public static void w(String msg) {
+    public static void w(String tag, String msg) {
         if (BuildConfig.DEBUG && isShowLog)
-            Logger.w(msg);
+            Logger.t(tag).w(msg);
     }
 
-    public static void e(String msg) {
+    public static void e(String tag, String msg) {
         if (BuildConfig.DEBUG && isShowLog)
-            Logger.e(msg);
+            Logger.t(tag).e(msg);
     }
 
-    public static void a(String msg) {
+    public static void a(String tag, String msg) {
         if (BuildConfig.DEBUG && isShowLog)
-            Logger.wtf(msg);
+            Logger.t(tag).wtf(msg);
     }
 
-    public static void json(String msg) {
+    public static void json(String tag, String msg) {
         if (BuildConfig.DEBUG && isShowLog)
-            Logger.json(msg);
+            Logger.t(tag).json(msg);
     }
 
-    public static void xml(String msg) {
+    public static void xml(String tag, String msg) {
         if (BuildConfig.DEBUG && isShowLog)
-            Logger.xml(msg);
+            Logger.t(tag).xml(msg);
     }
 }
