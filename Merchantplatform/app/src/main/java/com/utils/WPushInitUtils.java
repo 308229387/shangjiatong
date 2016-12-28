@@ -49,24 +49,25 @@ public class WPushInitUtils implements Push.MessageListener,
      */
     @Override
     public void OnMessage(Push.PushMessage pushMessage) {
-        Gson temp = new Gson();
-        final SystemNotification bean = temp.fromJson(pushMessage.messageContent, SystemNotification.class);
-
-        if (bean.getType() == 103) {
-
-            //应用在后台，不需要刷新UI,通知栏提示新消息
-            if (!AppInfoUtils.isRunningForeground(HyApplication.getApplication())) {
-                WPushNotify.notification(bean);
+        try{
+            Gson temp = new Gson();
+            final SystemNotification bean = temp.fromJson(pushMessage.messageContent, SystemNotification.class);
+            if (bean.getType() == 103) {
+                //应用在后台，不需要刷新UI,通知栏提示新消息
+                if (!AppInfoUtils.isRunningForeground(HyApplication.getApplication())) {
+                    WPushNotify.notification(bean);
+                }
+                saveDataToDB(bean);
+                EventBus.getDefault().post(bean);
+            } else if (bean.getType() == 104) {
+                List<Activity> list= HyApplication.getInstance().getActivityList();
+                if(list  != null && list.size() >0){
+                    Activity activity = list.get(list.size() -1);
+                    new LogoutDialog(activity,activity.getString(R.string.force_exit));
+                }
             }
-            saveDataToDB(bean);
-            EventBus.getDefault().post(bean);
-        } else if (bean.getType() == 104) {
-            List<Activity> list= HyApplication.getInstance().getActivityList();
-            if(list  != null && list.size() >0){
-                Activity activity = list.get(list.size() -1);
-                new LogoutDialog(activity,activity.getString(R.string.force_exit));
-            }
-
+        }catch (Exception e){
+          LogUtils.e("wpush",e.getMessage());
         }
 
         Log.i("song", pushMessage.messageContent);
