@@ -2,6 +2,8 @@ package com.utils;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,15 +16,14 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
+import com.merchantplatform.BuildConfig;
 import com.merchantplatform.R;
+import com.merchantplatform.application.HyApplication;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static android.R.attr.permission;
-import static com.tencent.open.utils.Global.getPackageName;
 
 /**
  * Created by 58 on 2016/11/28.
@@ -291,5 +292,48 @@ public class PermissionUtils {
         }
     }
 
-
+    public static void goToPermissionCenter(Context context) {
+        String phoneBrand = AppInfoUtils.getProductBrand();
+        Intent intent = new Intent();
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        ComponentName comp = null;
+        LogUtils.e("meng", phoneBrand);
+        switch (phoneBrand) {
+            case "huawei":
+                comp = new ComponentName("com.huawei.systemmanager", "com.huawei.permissionmanager.ui.MainActivity");
+                break;
+            case "xiaomi":
+                comp = ComponentName
+                        .unflattenFromString("com.miui.securitycenter/com.miui.permcenter.permissions.AppPermissionsEditorActivity");
+                intent.putExtra("extra_pkgname", context.getPackageName());
+                break;
+            case "meizu":
+                comp = ComponentName
+                        .unflattenFromString("com.meizu.safe.security.SHOW_APPSEC");
+                intent.addCategory(Intent.CATEGORY_DEFAULT);
+                intent.putExtra("packageName", BuildConfig.APPLICATION_ID);
+                break;
+            case "vivo":
+                comp = ComponentName
+                        .unflattenFromString("com.iqoo.secure/.ui.phoneoptimize.AddWhiteListActivity");
+                break;
+            case "oppo":
+                comp = ComponentName
+                        .unflattenFromString("com.coloros.safecenter/.permission.PermissionAppAllPermissionActivity");
+                intent.putExtra("packageName", BuildConfig.APPLICATION_ID);
+                break;
+            default:
+                if (Build.VERSION.SDK_INT >= 9) {
+                    intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+                    intent.setData(Uri.fromParts("package", context.getPackageName(), null));
+                } else if (Build.VERSION.SDK_INT <= 8) {
+                    intent.setAction(Intent.ACTION_VIEW);
+                    intent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
+                    intent.putExtra("com.android.settings.ApplicationPkgName", context.getPackageName());
+                }
+                break;
+        }
+        intent.setComponent(comp);
+        context.startActivity(intent);
+    }
 }
