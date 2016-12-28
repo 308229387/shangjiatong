@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.Utils.JumpSystemNotificationAction;
+import com.Utils.RedNumSystemNotificationAction;
 import com.Utils.SystemGetNotificationInfoAction;
 import com.Utils.SystemNotification;
 import com.Utils.SystemNotificationInfoAction;
@@ -70,6 +71,7 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
     protected ArrayList<Talk> mTalks = new ArrayList<>();
     private RelativeLayout titleBar;
     private ImageView callPhone;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -187,6 +189,14 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
             systemText.setText(temp.getJump());
             systemHead.setVisibility(View.VISIBLE);
             redDot.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Subscribe
+    public void onEvent(RedNumSystemNotificationAction temp) {
+        if (getShowNotification()) {
+            redDot.setVisibility(View.VISIBLE);
+            redDot.setText(temp.getNum() > 99 ? "99+" : temp.getNum() + "");
         }
     }
 
