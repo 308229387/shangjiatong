@@ -112,7 +112,7 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
         callPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_CALL);
+                Intent intent = new Intent(Intent.ACTION_DIAL);
                 Uri data = Uri.parse("tel:" + "4007585858");
                 intent.setData(data);
                 startActivity(intent);
