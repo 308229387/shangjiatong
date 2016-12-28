@@ -50,7 +50,6 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
     private CallMessageFragment callMessageFragment;
     private PersonalCenterFragment personalCenterFragment;
     private Fragment mFragment;
-    private Bundle savedInstanceState;
     private FragmentManager fragmentManager;
 
     public HomepageModel(HomepageActivity context) {
@@ -99,23 +98,38 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         bottomButton4.registerState();
     }
 
+    public void createFragmentManager() {
+        fragmentManager = context.getSupportFragmentManager();
+    }
+
     public void createFragment() {
-        if (savedInstanceState != null) {
-            Log.i("song", "savedInstanceState不为NULL**********");
-            conversationListFragment = (ConversationListFragment) fragmentManager.findFragmentByTag("ConversationListFragment");
-            callMessageFragment = (CallMessageFragment) fragmentManager.findFragmentByTag("CallMessageFragment");
-            personalCenterFragment = (PersonalCenterFragment) fragmentManager.findFragmentByTag("PersonalCenterFragment");
-        } else {
-            Log.i("song", "savedInstanceState为NULL");
+        if (fragmentManager.findFragmentByTag("ConversationListFragment") == null)
             conversationListFragment = new ConversationListFragment();
+        else
+            conversationListFragment = (ConversationListFragment) fragmentManager.findFragmentByTag("ConversationListFragment");
+
+        if (fragmentManager.findFragmentByTag("CallMessageFragment") == null)
             callMessageFragment = new CallMessageFragment();
+        else
+            callMessageFragment = (CallMessageFragment) fragmentManager.findFragmentByTag("CallMessageFragment");
+
+        if (fragmentManager.findFragmentByTag("PersonalCenterFragment") == null)
             personalCenterFragment = new PersonalCenterFragment();
-        }
+        else
+            personalCenterFragment = (PersonalCenterFragment) fragmentManager.findFragmentByTag("PersonalCenterFragment");
+
         mFragment = conversationListFragment;
     }
 
     public void createFragmentManagerAndShow() {
-        fragmentManager.beginTransaction().add(R.id.main_fragment, mFragment).commit();
+        judgeFragmentAdded(conversationListFragment);
+
+        if (callMessageFragment.isAdded())
+            context.getSupportFragmentManager().beginTransaction().hide(callMessageFragment).commit();
+
+        if (personalCenterFragment.isAdded())
+            context.getSupportFragmentManager().beginTransaction().hide(personalCenterFragment).commit();
+
     }
 
     private void switchFragment(Fragment fragment) {
@@ -129,13 +143,23 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
     }
 
     private void judgeFragmentAdded(Fragment fragment) {
-        if (!fragment.isAdded())
+        if (!fragment.isAdded()) {
+            String tag = "";
+            if (fragment.equals(conversationListFragment))
+                tag = "ConversationListFragment";
+            if (fragment.equals(callMessageFragment))
+                tag = "CallMessageFragment";
+            if (fragment.equals(personalCenterFragment))
+                tag = "PersonalCenterFragment";
             context.getSupportFragmentManager().beginTransaction().hide(mFragment)
-                    .add(R.id.main_fragment, fragment).commit();
-        else
+                    .add(R.id.main_fragment, fragment, tag).show(fragment).commit();
+            Log.i("song", "加入显示" + tag);
+        } else {
             context.getSupportFragmentManager().beginTransaction().hide(mFragment).show(fragment).commit();
-        if (fragment.getTag() != null)
-            Log.i("song", fragment.getTag());
+            Log.i("song", "直接显示" + fragment.getTag());
+        }
+
+
     }
 
     private void dealWithClick(HomepageBottomButton button, Fragment fragment) {
@@ -177,14 +201,6 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
             }
         }.start();
 
-    }
-
-    public void saveBundle(Bundle savedInstanceState) {
-        this.savedInstanceState = savedInstanceState;
-    }
-
-    public void createFragmentManager() {
-        fragmentManager = context.getSupportFragmentManager();
     }
 
     private class globalCallback extends DialogCallback<GlobalResponse> {
