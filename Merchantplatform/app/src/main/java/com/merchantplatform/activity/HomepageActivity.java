@@ -6,6 +6,7 @@ import android.view.KeyEvent;
 
 import com.Utils.JumpSystemNotificationAction;
 import com.Utils.SystemGetNotificationInfoAction;
+import com.db.helper.SystemNotificationOperate;
 import com.merchantplatform.R;
 import com.merchantplatform.model.HomepageModel;
 
@@ -47,6 +48,7 @@ public class HomepageActivity extends BaseActivity<HomepageModel> {
     @Subscribe
     public void onEvent(JumpSystemNotificationAction action) {
         startActivity(new Intent(HomepageActivity.this, SystemNotificationActivity.class));
+        SystemNotificationOperate.updateDataRedDot(this);
     }
 
     @Subscribe

@@ -14,6 +14,7 @@ public class SystemNotification implements Serializable {
     public Long sortId;
     public String title;
     public int type;
+    public int isReaded;
 
     public String getContent() {
         return content;
@@ -69,5 +70,13 @@ public class SystemNotification implements Serializable {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public int getIsReaded() {
+        return isReaded;
+    }
+
+    public void setIsReaded(int isReaded) {
+        this.isReaded = isReaded;
     }
 }

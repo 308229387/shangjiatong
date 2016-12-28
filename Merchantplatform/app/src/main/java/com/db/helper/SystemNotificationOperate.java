@@ -46,16 +46,16 @@ public class SystemNotificationOperate {
      **/
     public static ArrayList<SystemNotificationDetial> checkReaded(Context context) {
         QueryBuilder<SystemNotificationDetial> builder = DbManager.getDaoSession(context).getSystemNotificationDetialDao().queryBuilder();
-        return (ArrayList<SystemNotificationDetial>) builder.where(SystemNotificationDetialDao.Properties.IsReaded.eq(0)).list();
+        return (ArrayList<SystemNotificationDetial>) builder.where(SystemNotificationDetialDao.Properties.IsReaded.notEq(0)).list();
     }
 
     /**
      * @desc 全部标记为以读
      **/
-    public static void updateData(Context context) {
+    public static void updateDataRedDot(Context context) {
         ArrayList<SystemNotificationDetial> unReaded = checkReaded(context);
         for (SystemNotificationDetial temp : unReaded) {
-            temp.setIsReaded(1);
+            temp.setIsReaded(0);
         }
 
         for (SystemNotificationDetial a : unReaded) {

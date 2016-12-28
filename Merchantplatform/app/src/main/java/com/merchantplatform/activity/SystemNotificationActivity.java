@@ -4,12 +4,14 @@ package com.merchantplatform.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.widget.ListView;
 
 import com.Utils.SystemNotification;
 import com.android.gmacs.R;
 import com.android.gmacs.activity.BaseActivity;
 import com.callback.DialogCallback;
+import com.common.gmacs.utils.ToastUtil;
 import com.db.dao.SystemNotificationDetial;
 import com.db.helper.SystemNotificationOperate;
 import com.merchantplatform.adapter.SystemNotificationXAdapter;
@@ -142,8 +144,13 @@ public class SystemNotificationActivity extends BaseActivity {
     public void onEvent(SystemNotification action) {
         temp.clear();
         temp.addAll(SystemNotificationOperate.queryAll(this));
-        SystemNotificationOperate.updateData(this);
         xAdapter.notifyDataSetChanged();
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SystemNotificationOperate.updateDataRedDot(this);
+    }
 }

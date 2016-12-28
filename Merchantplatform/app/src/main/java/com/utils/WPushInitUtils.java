@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
-import com.Utils.RedNumSystemNotificationAction;
 import com.Utils.SystemNotification;
 import com.db.dao.SystemNotificationDetial;
 import com.db.helper.SystemNotificationOperate;
@@ -51,7 +50,7 @@ public class WPushInitUtils implements Push.MessageListener,
      */
     @Override
     public void OnMessage(Push.PushMessage pushMessage) {
-        try{
+        try {
             Gson temp = new Gson();
             final SystemNotification bean = temp.fromJson(pushMessage.messageContent, SystemNotification.class);
             if (bean.getType() == 103) {
@@ -62,14 +61,14 @@ public class WPushInitUtils implements Push.MessageListener,
                 saveDataToDB(bean);
                 EventBus.getDefault().post(bean);
             } else if (bean.getType() == 104) {
-                List<Activity> list= HyApplication.getInstance().getActivityList();
-                if(list  != null && list.size() >0){
-                    Activity activity = list.get(list.size() -1);
-                    new LogoutDialog(activity,activity.getString(R.string.force_exit));
+                List<Activity> list = HyApplication.getInstance().getActivityList();
+                if (list != null && list.size() > 0) {
+                    Activity activity = list.get(list.size() - 1);
+                    new LogoutDialog(activity, activity.getString(R.string.force_exit));
                 }
             }
-        }catch (Exception e){
-          LogUtils.e("wpush",e.getMessage());
+        } catch (Exception e) {
+            LogUtils.e("wpush", e.getMessage());
         }
 
         Log.i("song", pushMessage.messageContent);
@@ -77,6 +76,7 @@ public class WPushInitUtils implements Push.MessageListener,
     }
 
     private void saveDataToDB(SystemNotification temp1) {
+        ArrayList<SystemNotificationDetial> temp = SystemNotificationOperate.checkReaded(HyApplication.getApplication());
         final SystemNotificationDetial data = new SystemNotificationDetial();
         data.setType(temp1.getType());
         data.setTitle(temp1.getTitle());
@@ -85,13 +85,12 @@ public class WPushInitUtils implements Push.MessageListener,
         data.setContent(temp1.getContent());
         data.setContentType(temp1.getContentType());
         data.setDescribe(temp1.getDescribe());
-        data.setIsReaded(0);
+        data.setIsReaded(temp.size() + 1);
+        temp1.setIsReaded(temp.size() + 1);
         new Thread() {
             @Override
             public void run() {
                 SystemNotificationOperate.insertOrReplace(HyApplication.getApplication(), data);
-                ArrayList<SystemNotificationDetial> temp = SystemNotificationOperate.checkReaded(HyApplication.getApplication());
-                EventBus.getDefault().post(new RedNumSystemNotificationAction(temp.size()));
             }
         }.start();
     }

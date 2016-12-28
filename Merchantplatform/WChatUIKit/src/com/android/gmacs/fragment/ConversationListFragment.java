@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.Utils.JumpSystemNotificationAction;
-import com.Utils.RedNumSystemNotificationAction;
 import com.Utils.SystemGetNotificationInfoAction;
 import com.Utils.SystemNotification;
 import com.Utils.SystemNotificationInfoAction;
@@ -176,29 +176,26 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
     }
 
     @Subscribe
-    public void onEvent(SystemNotification temp) {
+    public void onEvent(SystemNotification temp) {//来消息时更新
         setShowNotification(true);
+
         systemText.setText(temp.getDescribe());
         systemHead.setVisibility(View.VISIBLE);
         redDot.setVisibility(View.VISIBLE);
+        redDot.setText(temp.getIsReaded() + "");
     }
 
     @Subscribe
-    public void onEvent(SystemNotificationInfoAction temp) {
+    public void onEvent(SystemNotificationInfoAction temp) {//进来时拉取
         if (getShowNotification()) {
             systemText.setText(temp.getJump());
             systemHead.setVisibility(View.VISIBLE);
             redDot.setVisibility(View.VISIBLE);
+            redDot.setText(temp.getRedDot()+"");
         }
     }
 
-    @Subscribe
-    public void onEvent(RedNumSystemNotificationAction temp) {
-        if (getShowNotification()) {
-            redDot.setVisibility(View.VISIBLE);
-            redDot.setText(temp.getNum() > 99 ? "99+" : temp.getNum() + "");
-        }
-    }
+
 
 
     @Override

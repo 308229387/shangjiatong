@@ -7,13 +7,19 @@ package com.Utils;
 public class SystemNotificationInfoAction {
     private String jump;
 
-    public SystemNotificationInfoAction(String jump) {
+    private int redDot;
+
+    public SystemNotificationInfoAction(String jump, int redDot) {
         this.jump = jump;
+        this.redDot = redDot;
     }
 
     public String getJump() {
         return jump;
     }
 
+    public int getRedDot() {
+        return redDot;
+    }
 
 }
