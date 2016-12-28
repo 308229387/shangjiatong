@@ -23,10 +23,10 @@ public class CallDetailAdapter extends BaseRecyclerViewAdapter<CallDetailListBea
 
     @Override
     protected void bindDataToItemView(CallDetailViewHolder callDetailViewHolder, int position) {
-        String callTime = mList.get(position).getTime();
-        callDetailViewHolder.setText(R.id.item_call_detail_time, DateUtils.formatTimeToDisplayTime(DateUtils.formatDateTimeToTime(callTime)))
-                .setText(R.id.item_call_detail_type, mList.get(position).getType() == 1 ? "呼入电话" : "呼出电话")
-                .setText(R.id.item_call_detail_duration, DateUtils.formatSecondsToDetailTime(mList.get(position).getDuration()));
+        CallDetailListBean detailList = mList.get(position);
+        callDetailViewHolder.setText(R.id.item_call_detail_time, DateUtils.formatTimeToDisplayTime(DateUtils.formatDateTimeToTime(detailList.getTime())))
+                .setText(R.id.item_call_detail_type, detailList.getType() == 1 ? (detailList.getCallResult() == 10 ? "呼入电话" : "未接电话") : "呼出电话")
+                .setText(R.id.item_call_detail_duration, DateUtils.formatSecondsToDetailTime(detailList.getDuration()));
     }
 
     @Override
