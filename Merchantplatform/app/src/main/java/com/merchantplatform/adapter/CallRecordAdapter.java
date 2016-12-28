@@ -133,6 +133,7 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
                 CallDetailListBean listBean = new CallDetailListBean();
                 listBean.setTime(callDetail.getCallTime());
                 listBean.setType(callDetail.getType());
+                listBean.setCallResult(callDetail.getCallResult());
                 listBean.setDuration(callDetail.getEntryTime());
                 detailList.add(listBean);
             }

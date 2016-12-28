@@ -75,6 +75,7 @@ public class CallRecordModel extends BaseModel {
     private int tabIndex;
     private boolean isCallOut = false;
     public static CallList clickCallList;
+    private int callOutTimes = 0;
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -475,7 +476,8 @@ public class CallRecordModel extends BaseModel {
         }
         if (isCallOut && action.equals(PhoneReceiver.CALL_OVER)) {//挂机
             isCallOut = false;
-            if (clickCallList != null) {
+            if (clickCallList != null && callOutTimes == 0) {
+                callOutTimes++;
                 deleteThisRecord(clickCallList);
                 upLoadUserCallLog(getUserCallLog(clickCallList));
             }
@@ -519,6 +521,7 @@ public class CallRecordModel extends BaseModel {
                     .params("endTime", usercallRecordBean.getEndTime() + "")
                     .params("recordState", usercallRecordBean.getRecordState() + "")
                     .execute(new getPhoneIncreaseDataResponse(context.getActivity(), false));
+            callOutTimes = 0;
         }
     }
 

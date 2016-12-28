@@ -11,6 +11,7 @@ public class CallDetailListBean implements Parcelable {
 
     private String time;
     private int type;
+    private int callResult;
     private long duration;
 
     public CallDetailListBean() {
@@ -20,6 +21,7 @@ public class CallDetailListBean implements Parcelable {
     protected CallDetailListBean(Parcel in) {
         time = in.readString();
         type = in.readInt();
+        callResult = in.readInt();
         duration = in.readLong();
     }
 
@@ -34,6 +36,19 @@ public class CallDetailListBean implements Parcelable {
             return new CallDetailListBean[size];
         }
     };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(time);
+        dest.writeInt(type);
+        dest.writeInt(callResult);
+        dest.writeLong(duration);
+    }
 
     public String getTime() {
         return time;
@@ -51,23 +66,19 @@ public class CallDetailListBean implements Parcelable {
         this.type = type;
     }
 
+    public int getCallResult() {
+        return callResult;
+    }
+
+    public void setCallResult(int callResult) {
+        this.callResult = callResult;
+    }
+
     public long getDuration() {
         return duration;
     }
 
     public void setDuration(long duration) {
         this.duration = duration;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(time);
-        dest.writeInt(type);
-        dest.writeLong(duration);
     }
 }

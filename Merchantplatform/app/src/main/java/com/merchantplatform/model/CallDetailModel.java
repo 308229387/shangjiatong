@@ -142,6 +142,7 @@ public class CallDetailModel extends BaseModel {
             CallDetailListBean detailListBean = new CallDetailListBean();
             detailListBean.setTime(lists.getCallTime());
             detailListBean.setType(lists.getType());
+            detailListBean.setCallResult(lists.getCallResult());
             detailListBean.setDuration(lists.getEntryTime());
             detailList.add(detailListBean);
         }
