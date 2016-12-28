@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.CompoundButton;
 
+import com.common.gmacs.utils.GmacsConfig;
 import com.dataStore.SettingPushPreferUtil;
 import com.log.LogUmengAgent;
 import com.log.LogUmengEnum;
@@ -12,27 +13,28 @@ import com.merchantplatform.R;
 import com.merchantplatform.activity.SettingPushActivity;
 import com.ui.SettingToggleGroup;
 import com.Utils.TitleBar;
+import com.utils.WChatConstant;
 
 /**
  * Created by 58 on 2016/12/9.
  */
 
-public class SettingPushActivityModel extends BaseModel{
+public class SettingPushActivityModel extends BaseModel {
     private SettingPushActivity context;
 
     private TitleBar tb_push_title;
     private SettingToggleGroup sg_entry_group_items;
 
-    public SettingPushActivityModel(SettingPushActivity context){
+    public SettingPushActivityModel(SettingPushActivity context) {
         this.context = context;
     }
 
-    public void initView(){
+    public void initView() {
         tb_push_title = (TitleBar) context.findViewById(R.id.tb_push_title);
         sg_entry_group_items = (SettingToggleGroup) context.findViewById(R.id.sg_entry_group_items);
     }
 
-    public void initData(){
+    public void initData() {
         initTitleData();
         initPushData();
     }
@@ -57,16 +59,18 @@ public class SettingPushActivityModel extends BaseModel{
         });
     }
 
-    private void initPushData(){
-       boolean soundState = SettingPushPreferUtil.getInstance(context).isPushSoundAlertOpened();
+    private void initPushData() {
+        boolean soundState = SettingPushPreferUtil.getInstance(context).isPushSoundAlertOpened();
         sg_entry_group_items.addEntry().title("声音提醒").toggleChecked(soundState)
                 .toggleChangeClick(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         LogUmengAgent.ins().log(LogUmengEnum.LOG_SHEZHIXQY_SYTX);
                         SettingPushPreferUtil.getInstance(context).savePushSoundAlertState(buttonView.isChecked());
+                        GmacsConfig.UserConfig.setParam(WChatConstant.SOUND, buttonView.isChecked());
+
                     }
-        });
+                });
 
         boolean vibrateState = SettingPushPreferUtil.getInstance(context).isPushVibrateAlertOpened();
         sg_entry_group_items.addEntry().title("震动提醒").toggleChecked(vibrateState)
@@ -75,8 +79,9 @@ public class SettingPushActivityModel extends BaseModel{
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         LogUmengAgent.ins().log(LogUmengEnum.LOG_SHEZHIXQY_ZDTX);
                         SettingPushPreferUtil.getInstance(context).savePushVibrateAlertState(buttonView.isChecked());
+                        GmacsConfig.UserConfig.setParam(WChatConstant.VIBRATION, buttonView.isChecked());
                     }
-        });
+                });
     }
 
 
