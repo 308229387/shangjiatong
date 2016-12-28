@@ -142,6 +142,7 @@ public class SystemNotificationActivity extends BaseActivity {
     public void onEvent(SystemNotification action) {
         temp.clear();
         temp.addAll(SystemNotificationOperate.queryAll(this));
+        SystemNotificationOperate.updateData(this);
         xAdapter.notifyDataSetChanged();
     }
 

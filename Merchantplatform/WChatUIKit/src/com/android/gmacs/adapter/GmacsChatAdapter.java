@@ -479,9 +479,9 @@ public class GmacsChatAdapter extends BaseAdapter implements View.OnClickListene
         }
 
         if (leftAvatarListener != null) {
-            viewHolder.leftHead.setOnClickListener(leftAvatarListener);
+//            viewHolder.leftHead.setOnClickListener(leftAvatarListener);
         } else {
-            viewHolder.leftHead.setOnClickListener(this);
+//            viewHolder.leftHead.setOnClickListener(this);
         }
     }
 
@@ -491,9 +491,9 @@ public class GmacsChatAdapter extends BaseAdapter implements View.OnClickListene
                 .setErrorImageResId(R.drawable.gmacs_ic_default_avatar)
                 .setImageUrl(ImageUtil.makeUpUrl(Gmacs.getInstance().getGmacsUserInfo().avatar, IMG_RESIZE, IMG_RESIZE));
         if (rightAvatarListener != null) {
-            viewHolder.rightHead.setOnClickListener(rightAvatarListener);
+//            viewHolder.rightHead.setOnClickListener(rightAvatarListener);
         } else {
-            viewHolder.rightHead.setOnClickListener(this);
+//            viewHolder.rightHead.setOnClickListener(this);
         }
     }
 
