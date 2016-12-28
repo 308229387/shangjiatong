@@ -1,22 +1,15 @@
 package com.merchantplatform.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
-import com.Utils.SystemGetNotificationInfoAction;
-import com.Utils.SystemNotificationInfoAction;
-import com.common.gmacs.utils.ToastUtil;
-import com.merchantplatform.R;
 import com.Utils.JumpSystemNotificationAction;
-import com.merchantplatform.application.HyApplication;
+import com.Utils.SystemGetNotificationInfoAction;
+import com.merchantplatform.R;
 import com.merchantplatform.model.HomepageModel;
-import com.ui.dialog.LogoutDialog;
 
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.List;
 
 /**
  * Created by SongYongmeng on 2016/11/24.
@@ -29,9 +22,8 @@ public class HomepageActivity extends BaseActivity<HomepageModel> {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
-        model.saveBundle(savedInstanceState);
-        model.createFragmentManager();
         model.init();
+        model.createFragmentManager();
         model.createFragment();
         model.createFragmentManagerAndShow();
         model.getGlobalParams();
