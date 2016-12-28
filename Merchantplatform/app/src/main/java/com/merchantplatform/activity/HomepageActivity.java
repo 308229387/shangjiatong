@@ -29,6 +29,8 @@ public class HomepageActivity extends BaseActivity<HomepageModel> {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
+        model.saveBundle(savedInstanceState);
+        model.createFragmentManager();
         model.init();
         model.createFragment();
         model.createFragmentManagerAndShow();

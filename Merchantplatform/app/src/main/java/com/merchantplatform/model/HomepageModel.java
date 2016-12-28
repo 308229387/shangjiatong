@@ -2,9 +2,11 @@ package com.merchantplatform.model;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 
 import com.Utils.SystemGetNotificationInfoAction;
@@ -44,9 +46,12 @@ import okhttp3.Response;
 public class HomepageModel extends BaseModel implements View.OnClickListener {
     private HomepageActivity context;
     private HomepageBottomButton bottomButton1, bottomButton2, bottomButton4;
-    private BaseFragment fragment1, fragment2, fragment3, fragment4;
     private ConversationListFragment conversationListFragment;
+    private CallMessageFragment callMessageFragment;
+    private PersonalCenterFragment personalCenterFragment;
     private Fragment mFragment;
+    private Bundle savedInstanceState;
+    private FragmentManager fragmentManager;
 
     public HomepageModel(HomepageActivity context) {
         this.context = context;
@@ -95,15 +100,21 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
     }
 
     public void createFragment() {
-        conversationListFragment = new ConversationListFragment();
-        fragment2 = new CallMessageFragment();
-        fragment3 = new Fragment3();
-        fragment4 = new PersonalCenterFragment();
+        if (savedInstanceState != null) {
+            Log.i("song", "savedInstanceState不为NULL**********");
+            conversationListFragment = (ConversationListFragment) fragmentManager.findFragmentByTag("ConversationListFragment");
+            callMessageFragment = (CallMessageFragment) fragmentManager.findFragmentByTag("CallMessageFragment");
+            personalCenterFragment = (PersonalCenterFragment) fragmentManager.findFragmentByTag("PersonalCenterFragment");
+        } else {
+            Log.i("song", "savedInstanceState为NULL");
+            conversationListFragment = new ConversationListFragment();
+            callMessageFragment = new CallMessageFragment();
+            personalCenterFragment = new PersonalCenterFragment();
+        }
         mFragment = conversationListFragment;
     }
 
     public void createFragmentManagerAndShow() {
-        FragmentManager fragmentManager = context.getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.main_fragment, mFragment).commit();
     }
 
@@ -123,6 +134,8 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
                     .add(R.id.main_fragment, fragment).commit();
         else
             context.getSupportFragmentManager().beginTransaction().hide(mFragment).show(fragment).commit();
+        if (fragment.getTag() != null)
+            Log.i("song", fragment.getTag());
     }
 
     private void dealWithClick(HomepageBottomButton button, Fragment fragment) {
@@ -144,11 +157,11 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
                 break;
             case R.id.homepage_bottom_button2:
                 LogUmengAgent.ins().log(LogUmengEnum.LOG_DY_DH);//添加埋点信息
-                dealWithClick(bottomButton2, fragment2);
+                dealWithClick(bottomButton2, callMessageFragment);
                 break;
             case R.id.homepage_bottom_button4:
                 LogUmengAgent.ins().log(LogUmengEnum.LOG_DY_WD);//添加埋点信息
-                dealWithClick(bottomButton4, fragment4);
+                dealWithClick(bottomButton4, personalCenterFragment);
                 break;
             default:
                 break;
@@ -164,6 +177,14 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
             }
         }.start();
 
+    }
+
+    public void saveBundle(Bundle savedInstanceState) {
+        this.savedInstanceState = savedInstanceState;
+    }
+
+    public void createFragmentManager() {
+        fragmentManager = context.getSupportFragmentManager();
     }
 
     private class globalCallback extends DialogCallback<GlobalResponse> {
