@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class LoggerUtils {
+public class LogUtils {
 
     private static boolean isShowLog = true;
 
     public static void isShowLog(boolean isShowLog) {
-        LoggerUtils.isShowLog = isShowLog;
+        LogUtils.isShowLog = isShowLog;
     }
 
     public static void v(String tag, String msg) {
