@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 
 import com.Utils.JumpSystemNotificationAction;
+import com.Utils.ShowRedDotSystemNotificationAction;
 import com.Utils.SystemGetNotificationInfoAction;
+import com.Utils.SystemNotificationInfoAction;
 import com.db.helper.SystemNotificationOperate;
 import com.merchantplatform.R;
 import com.merchantplatform.model.HomepageModel;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 /**
@@ -48,6 +51,7 @@ public class HomepageActivity extends BaseActivity<HomepageModel> {
     @Subscribe
     public void onEvent(JumpSystemNotificationAction action) {
         startActivity(new Intent(HomepageActivity.this, SystemNotificationActivity.class));
+        EventBus.getDefault().post(new ShowRedDotSystemNotificationAction("dismiss"));
         SystemNotificationOperate.updateDataRedDot(this);
     }
 
