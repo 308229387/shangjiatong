@@ -17,10 +17,10 @@ import java.util.ArrayList;
 public class CallListDaoOperate {
 
     /**
-     * @desc 添加数据至数据库，如果存在，将原来的数据覆盖
+     * @desc 添加数据至数据库
      **/
-    public static void insertOrReplace(Context context, CallList callList) {
-        DbManager.getDaoSession(context).getCallListDao().insertOrReplace(callList);
+    public static void insert(Context context, CallList callList) {
+        DbManager.getDaoSession(context).getCallListDao().insert(callList);
     }
 
     /**

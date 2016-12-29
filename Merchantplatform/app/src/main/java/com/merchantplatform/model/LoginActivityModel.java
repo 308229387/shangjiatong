@@ -12,12 +12,10 @@ import com.dataStore.DeviceUuidFactory;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.HomepageActivity;
 import com.merchantplatform.activity.LoginActivity;
-import com.merchantplatform.activity.MobileValidateActivity;
 import com.merchantplatform.application.HyApplication;
 import com.merchantplatform.bean.LoginResponse;
 import com.okhttputils.OkHttpUtils;
 import com.ui.dialog.CommonDialog;
-import com.utils.AppInfoUtils;
 import com.utils.IMLoginUtils;
 import com.utils.PageSwitchUtils;
 import com.utils.Urls;
@@ -66,9 +64,9 @@ public class LoginActivityModel extends BaseModel {
     private void loginPassrotSuccess(@Nullable LoginSDKBean loginSDKBean) {
         saveUserId(loginSDKBean);
         bindAlias();
-//        loginLocal();
+        loginLocal();
         initIM();
-        PageSwitchUtils.goToActivity(context, HomepageActivity.class);
+//        PageSwitchUtils.goToActivity(context, HomepageActivity.class);
     }
 
     private void loginLocal() {
