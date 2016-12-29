@@ -5,9 +5,8 @@
     <dimen name="textsize">16sp</dimen>
     <dimen name="tablayout_indicator_size">1.5dp</dimen>
     <dimen name="tablayout_maxwidth">80dp</dimen>
-    <dimen name="phoneNum_textsize">16sp</dimen>
-    <dimen name="phoneCount_textsize">15sp</dimen>
-    <dimen name="item_phone_height">18dp</dimen>
+    <dimen name="phoneNum_textsize">18sp</dimen>
+    <dimen name="phoneCount_textsize">17sp</dimen>
     <dimen name="item_phone_count_height">19dp</dimen>
     <dimen name="divider_size">1dp</dimen>
 

@@ -23,20 +23,20 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/item_phone_height"
+                android:layout_height="wrap_content"
                 android:paddingLeft="12dp">
 
                 <TextView
                     android:id="@+id/tv_phoneNum"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="@dimen/phoneNum_textsize" />
 
                 <TextView
                     android:id="@+id/tv_call_count"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
                     android:layout_toRightOf="@+id/tv_phoneNum"
                     android:gravity="center"
@@ -45,7 +45,7 @@
                 <TextView
                     android:id="@+id/tv_call_time"
                     android:layout_width="wrap_content"
-                    android:layout_height="15dp"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="9dp"
                     android:gravity="center"
@@ -56,7 +56,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_marginTop="5dp"
                 android:paddingLeft="6dp">
 
                 <ImageView
@@ -68,27 +67,26 @@
                 <TextView
                     android:id="@+id/tv_phone_city"
                     android:layout_width="wrap_content"
-                    android:layout_height="14dp"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="7dp"
                     android:layout_toRightOf="@+id/iv_phoneState"
                     android:gravity="center"
                     android:textColor="@color/item_call_city"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tv_call_cate"
                     android:layout_width="wrap_content"
-                    android:layout_height="14dp"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
                     android:layout_toRightOf="@+id/tv_phone_city"
                     android:gravity="center"
                     android:textColor="@color/tab_unselected_text"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <ImageView
-                    android:id="@+id/iv_call_detail"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignParentRight="true"
@@ -97,6 +95,13 @@
             </RelativeLayout>
 
         </LinearLayout>
+
+        <View
+            android:id="@+id/iv_call_detail"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/transparent" />
 
         <View
             android:layout_width="match_parent"
