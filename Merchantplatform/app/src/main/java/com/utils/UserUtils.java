@@ -17,6 +17,8 @@ public class UserUtils {
     private static final String USER_VALIDATE = "validate";
     private static final String USER_FACE = "face";
     private static final String USER_NAME = "name";
+    private static final String USER_SOUND = "sound";
+    private static final String USER_SHAKE = "shake";
     private static final String USER_MOBILE = "mobile";
     private static String userId = "";
     public static int hasValidate = 0; //默认未认证，1代表已经认证
@@ -111,6 +113,25 @@ public class UserUtils {
         mobile = "";
     }
 
+    public static void setSoundState(Context context, boolean soundState) {
+        SharedPreferences sp = context.getSharedPreferences(USER_SP_NAME, 0);
+        sp.edit().putBoolean(USER_SOUND, soundState).commit();
+    }
 
 
+    public static boolean getSoundState() {
+        boolean soundState = HyApplication.getApplication().getSharedPreferences(USER_SP_NAME, 0).getBoolean(USER_SOUND, false);
+        return soundState;
+    }
+
+    public static void setShakeState(Context context, boolean soundState) {
+        SharedPreferences sp = context.getSharedPreferences(USER_SP_NAME, 0);
+        sp.edit().putBoolean(USER_SHAKE, soundState).commit();
+    }
+
+
+    public static boolean getShakeState() {
+        boolean shakeState = HyApplication.getApplication().getSharedPreferences(USER_SP_NAME, 0).getBoolean(USER_SHAKE, false);
+        return shakeState;
+    }
 }

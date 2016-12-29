@@ -1,4 +1,4 @@
-package com.android.gmacs.msg;
+package com.utils;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -166,8 +166,8 @@ public class MessageNotifyHelper extends MessageLogic.NotifyHelper {
         // 声音、震动提醒方式是否在允许的时间段内
         int timeOfstart = 8;//允许收到通知开始时间
         int timeOfend = 22;//允许收到通知结束时间
-        boolean openSound = true;//是否开启声音
-        boolean openShake = true;//是否震动
+        boolean openSound = UserUtils.getSoundState();//是否开启声音
+        boolean openShake = UserUtils.getShakeState();//是否震动
 
         Calendar now = Calendar.getInstance();
         Calendar startTime = (Calendar) now.clone();

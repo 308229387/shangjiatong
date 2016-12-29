@@ -5,7 +5,7 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.CompoundButton;
 
-import com.common.gmacs.utils.GmacsConfig;
+import com.android.gmacs.logic.MessageLogic;
 import com.dataStore.SettingPushPreferUtil;
 import com.log.LogUmengAgent;
 import com.log.LogUmengEnum;
@@ -13,7 +13,7 @@ import com.merchantplatform.R;
 import com.merchantplatform.activity.SettingPushActivity;
 import com.ui.SettingToggleGroup;
 import com.Utils.TitleBar;
-import com.utils.WChatConstant;
+import com.utils.UserUtils;
 
 /**
  * Created by 58 on 2016/12/9.
@@ -21,7 +21,6 @@ import com.utils.WChatConstant;
 
 public class SettingPushActivityModel extends BaseModel {
     private SettingPushActivity context;
-
     private TitleBar tb_push_title;
     private SettingToggleGroup sg_entry_group_items;
 
@@ -67,8 +66,10 @@ public class SettingPushActivityModel extends BaseModel {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         LogUmengAgent.ins().log(LogUmengEnum.LOG_SHEZHIXQY_SYTX);
                         SettingPushPreferUtil.getInstance(context).savePushSoundAlertState(buttonView.isChecked());
-                        GmacsConfig.UserConfig.setParam(WChatConstant.SOUND, buttonView.isChecked());
-
+                        if (buttonView.isChecked())
+                            UserUtils.setSoundState(context, true);
+                        else
+                            UserUtils.setSoundState(context, false);
                     }
                 });
 
@@ -79,7 +80,10 @@ public class SettingPushActivityModel extends BaseModel {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         LogUmengAgent.ins().log(LogUmengEnum.LOG_SHEZHIXQY_ZDTX);
                         SettingPushPreferUtil.getInstance(context).savePushVibrateAlertState(buttonView.isChecked());
-                        GmacsConfig.UserConfig.setParam(WChatConstant.VIBRATION, buttonView.isChecked());
+                        if (buttonView.isChecked())
+                            UserUtils.setShakeState(context, true);
+                        else
+                            UserUtils.setShakeState(context, false);
                     }
                 });
     }

@@ -14,10 +14,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
+import com.merchantplatform.activity.GuideActivity;
 import com.merchantplatform.activity.HomepageActivity;
 import com.merchantplatform.activity.LoginActivity;
 import com.merchantplatform.application.HyApplication;
 import com.ui.dialog.CommonDialog;
+import com.utils.IMLoginUtils;
 import com.utils.PageSwitchUtils;
 import com.utils.UserUtils;
 import com.wuba.loginsdk.external.LoginClient;
@@ -26,7 +28,7 @@ import com.wuba.loginsdk.external.LoginClient;
  * Created by SongYongmeng on 2016/11/22.
  */
 public class GuideActivityModel extends BaseModel {
-    private Activity context;
+    private GuideActivity context;
 
     private static final long DELAYED_TIMES = 2 * 1000;
     private Handler handler = new Handler();
@@ -35,7 +37,7 @@ public class GuideActivityModel extends BaseModel {
 
     private static final int CODE_READ_PHONE_STATE = 128;
 
-    public GuideActivityModel(Activity context) {
+    public GuideActivityModel(GuideActivity context) {
         this.context = context;
     }
 
@@ -43,7 +45,7 @@ public class GuideActivityModel extends BaseModel {
      * 获取手机状态权限
      */
     public void getPhoneStatePermission() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             boolean findMethod = true;
             try {
                 ContextCompat.class.getMethod("checkSelfPermission", Context.class, String.class);
@@ -66,7 +68,7 @@ public class GuideActivityModel extends BaseModel {
                 waitAndGo();
             }
 
-        }else{
+        } else {
             waitAndGo();
         }
     }
@@ -97,12 +99,11 @@ public class GuideActivityModel extends BaseModel {
         mAlertDialog.show();
     }
 
-    private void goToPermissionCenter(){
+    private void goToPermissionCenter() {
         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         intent.setData(Uri.parse("package:" + context.getPackageName()));
         context.startActivity(intent);
     }
-
 
 
     public void waitAndGo() {
@@ -123,6 +124,7 @@ public class GuideActivityModel extends BaseModel {
         if (neverCome()) {
             PageSwitchUtils.goToActivity(context, LoginActivity.class);
         } else {
+            new IMLoginUtils(context);
             PageSwitchUtils.goToActivity(context, HomepageActivity.class);
         }
     }
@@ -134,7 +136,7 @@ public class GuideActivityModel extends BaseModel {
     }
 
 
-    public void requestPermissionResult(int requestCode, @NonNull int[] grantResults){
+    public void requestPermissionResult(int requestCode, @NonNull int[] grantResults) {
         if (requestCode == CODE_READ_PHONE_STATE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 waitAndGo();
@@ -148,7 +150,7 @@ public class GuideActivityModel extends BaseModel {
         context.finish();
     }
 
-    public void destoryDialog(){
+    public void destoryDialog() {
         if (mAlertDialog != null && mAlertDialog.isShowing()) {
             mAlertDialog.dismiss();
         }
