@@ -227,6 +227,7 @@ public class CallRecordModel extends BaseModel {
         @Override
         public void onResponse(boolean isFromCache, final CallDetailResponse callDetailResponse, Request request, @Nullable Response response) {
             if (callDetailResponse.getData() == null || callDetailResponse.getData().size() == 0) {
+                dismissDialog();
                 mXRecyclerView.setNoMore(true);
             } else {
                 new Thread(new Runnable() {
