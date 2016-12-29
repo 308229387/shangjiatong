@@ -9,6 +9,8 @@ import android.view.View;
 
 import com.callback.DialogCallback;
 import com.dataStore.DeviceUuidFactory;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.HomepageActivity;
 import com.merchantplatform.activity.LoginActivity;
@@ -94,6 +96,7 @@ public class LoginActivityModel extends BaseModel {
 
 
     private void LoginSuccess(LoginResponse loginResponse) {
+        LogUmengAgent.ins().log(LogUmengEnum.LOG_HY_LOGIN);
         GoToWhere(loginResponse);
         context.finish();
     }
