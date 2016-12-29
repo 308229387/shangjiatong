@@ -69,7 +69,7 @@ public class LoadingView extends FrameLayout {
 
     @Override
     protected void onFinishInflate() {
-        Log.e("LoadingView", "onFinishInflate");
+        Log.d("LoadingView", "onFinishInflate");
         super.onFinishInflate();
 
         View view = LayoutInflater.from(getContext()).inflate(R.layout.load_view, null);
@@ -100,7 +100,7 @@ public class LoadingView extends FrameLayout {
     };
 
     private void startLoading(long delay) {
-        Log.e("LoadingView", "startLoading");
+        Log.d("LoadingView", "startLoading");
         if (mDownAnimatorSet != null && mDownAnimatorSet.isRunning()) {
             return;
         }
@@ -114,7 +114,7 @@ public class LoadingView extends FrameLayout {
 
     @Override
     protected void onDetachedFromWindow() {
-        Log.e("LoadingView", "onDetachedFromWindow");
+        Log.d("LoadingView", "onDetachedFromWindow");
         super.onDetachedFromWindow();
         stopLoading();
     }
@@ -123,7 +123,7 @@ public class LoadingView extends FrameLayout {
 
         run = false;
 
-        Log.e("LoadingView", "stopLoading");
+        Log.d("LoadingView", "stopLoading");
         if (mAnimatorSet != null) {
             //if (mAnimatorSet.isRunning()) {
             mAnimatorSet.cancel();
@@ -219,7 +219,7 @@ public class LoadingView extends FrameLayout {
      * 上抛
      */
     public void upThrow() {
-        Log.e("LoadingView", "upThrow");
+        Log.d("LoadingView", "upThrow");
         mShapeLoadingView.bringToFront();
 
 
@@ -281,7 +281,7 @@ public class LoadingView extends FrameLayout {
      * 下落
      */
     public void freeFall() {
-        Log.e("LoadingView", "freeFall");
+        Log.d("LoadingView", "freeFall");
         mShapeLoadingView2.bringToFront();
         if (null == mDownAnimatorSet) {
 

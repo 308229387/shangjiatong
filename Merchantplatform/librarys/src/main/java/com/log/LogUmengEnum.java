@@ -14,7 +14,7 @@ public enum LogUmengEnum {
     LOG_DY_KFDH("DY_KFDH", "客服电话按钮"),
     LOG_DY_WD("DY_WD", "单页-我的"),
     LOG_DY_XX("DY_XX", "单页_消息"),
-    LOG_HY_LOGIN("hy_login", "登录"),
+    LOG_HY_LOGIN("login", "登录"),
     LOG_LIAOTIANXQY_AZHSHH("liaotianXQY_AZhShH", "聊天详情页-按住说话按钮"),
     LOG_LIAOTIANXQY_BQ("liaotianXQY_BQ", "聊天详情页-表情按钮"),
     LOG_LIAOTIANXQY_JH("liaotianXQY_JH", "聊天详情页-“+”按钮"),
