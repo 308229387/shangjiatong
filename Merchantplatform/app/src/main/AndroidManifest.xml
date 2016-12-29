@@ -101,7 +101,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SoftwareProtocolActivity"
-            android:process=":webhelp"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MobileValidateActivity"

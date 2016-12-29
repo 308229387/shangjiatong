@@ -1,6 +1,6 @@
 package com.merchantplatform.activity;
 
-import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 import com.merchantplatform.model.GuideActivityModel;
 
@@ -11,12 +11,25 @@ import com.merchantplatform.model.GuideActivityModel;
 
 public class GuideActivity extends BaseActivity<GuideActivityModel> {
 
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        model.waitAndGo();
+    protected void onStart() {
+        super.onRestart();
+        model.getPhoneStatePermission();
     }
 
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+       model.requestPermissionResult(requestCode, grantResults);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        model.destoryDialog();
+    }
 
     @Override
     public GuideActivityModel createModel() {

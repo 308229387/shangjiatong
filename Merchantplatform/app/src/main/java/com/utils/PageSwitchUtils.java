@@ -37,4 +37,5 @@ public class PageSwitchUtils {
         context.startActivity(intent);
 
     }
+
 }

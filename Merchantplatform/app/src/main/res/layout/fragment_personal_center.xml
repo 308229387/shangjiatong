@@ -8,6 +8,11 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/center_background">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@mipmap/iv_personal_background">
 
         <com.Utils.CircleImageView
@@ -27,6 +32,7 @@
             android:textSize="@dimen/common_text_size_20"
             android:textColor="@color/white" />
 
+    </RelativeLayout>
     </RelativeLayout>
 
     <RelativeLayout

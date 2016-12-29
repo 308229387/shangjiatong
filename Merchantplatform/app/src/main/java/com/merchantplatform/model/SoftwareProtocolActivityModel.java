@@ -115,7 +115,6 @@ public class SoftwareProtocolActivityModel extends BaseModel {
         webView_protocol.removeAllViews();
         webView_protocol.destroy();
         webView_protocol = null;
-        System.exit(0);
     }
 
     private class BaseWebClient extends WebViewClient {

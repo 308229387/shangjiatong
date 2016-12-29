@@ -18,10 +18,10 @@
     <ProgressBar
         android:id="@+id/pb_progress"
         android:layout_width="fill_parent"
-        android:layout_height="10dip"
+        android:layout_height="5dip"
         android:indeterminate="false"
         android:progressDrawable="@drawable/web_bar_color"
-        style="@android:style/Widget.ProgressBar.Horizontal"/>
+        style="@android:style/Widget.ProgressBar.Horizontal" />
 
     <LinearLayout
         android:id="@+id/ll_protocol_container"
