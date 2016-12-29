@@ -65,6 +65,10 @@ public class SoftwareProtocolActivityModel extends BaseModel {
         tb_protocol_title.setTitle("软件协议");
         //设置标题颜色
         tb_protocol_title.setTitleColor(Color.BLACK);
+        //设置标题栏下划线
+        tb_protocol_title.setDividerColor(Color.parseColor("#F2F2F2"));
+        //设置标题栏下划线高度
+        tb_protocol_title.setDividerHeight(2);
     }
 
     private void initWebViewContainer(){
