@@ -14,6 +14,8 @@ import com.android.gmacs.activity.BaseActivity;
 import com.common.gmacs.utils.GLog;
 import com.common.gmacs.utils.GmacsEnvi;
 import com.common.gmacs.utils.ToastUtil;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 
 import java.util.ArrayList;
 
@@ -52,6 +54,7 @@ public class GmacsAlbumActivity extends BaseActivity {
         mTitleBar.mRightTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_LIAOTIANXQY_XCFS);
                 if (selectedDataList.size() > 0) {
                     onOk(selectedDataList, false);
                 } else {
@@ -255,6 +258,7 @@ public class GmacsAlbumActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        LogUmengAgent.ins().log(LogUmengEnum.LOG_LIAOTIANXQY_XCQX);
     }
 
     private void onOk(ArrayList<String> selectedDataList, boolean rawPicture) {

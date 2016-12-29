@@ -70,6 +70,8 @@ import com.common.gmacs.utils.GmacsConfig;
 import com.common.gmacs.utils.GmacsEnvi;
 import com.common.gmacs.utils.GmacsUiUtil;
 import com.common.gmacs.utils.ToastUtil;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 import com.xxganji.gmacs.proto.CommonPB;
 
 import org.greenrobot.eventbus.EventBus;
@@ -524,6 +526,7 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
     protected void onDestroy() {
         destroy();
         super.onDestroy();
+        LogUmengAgent.ins().log(LogUmengEnum.LOG_LIAOTIANXQY_RETURN);
     }
 
     /**
@@ -789,6 +792,7 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
         public void onLoadMore() {
             if (!isRequestLoading) {
                 loadHistoryMsgs();
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_LIAOTIANXQY_XL);
             }
         }
     };
@@ -968,22 +972,22 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
             userType = otherUserInfo.getUserType();
             setSomethingByUserInfo();
             onFriendRelationShipChanged(isFriend);
-            mTitleBar.setRightImageView(R.drawable.gmacs_ic_user);
-            mTitleBar.setRightImageViewListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        Intent intent = new Intent(GmacsChatActivity.this,
-                                Class.forName(GmacsUiUtil.getContactDetailInfoActivityClassName()));
-                        intent.putExtra(GmacsConstant.EXTRA_USER_ID, otherUserInfo.getUserId());
-                        intent.putExtra(GmacsConstant.EXTRA_TALK_TYPE, Gmacs.TalkType.TALKETYPE_NORMAL.getValue());
-                        intent.putExtra(GmacsConstant.EXTRA_USER_SOURCE, otherUserInfo.getUserSource());
-                        intent.putExtra(GmacsConstant.EXTRA_DEVICEID, GmacsUser.getInstance().getDeviceId());
-                        startActivity(intent);
-                    } catch (ClassNotFoundException e) {
-                    }
-                }
-            });
+//            mTitleBar.setRightImageView(R.drawable.gmacs_ic_user);
+//            mTitleBar.setRightImageViewListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    try {
+//                        Intent intent = new Intent(GmacsChatActivity.this,
+//                                Class.forName(GmacsUiUtil.getContactDetailInfoActivityClassName()));
+//                        intent.putExtra(GmacsConstant.EXTRA_USER_ID, otherUserInfo.getUserId());
+//                        intent.putExtra(GmacsConstant.EXTRA_TALK_TYPE, Gmacs.TalkType.TALKETYPE_NORMAL.getValue());
+//                        intent.putExtra(GmacsConstant.EXTRA_USER_SOURCE, otherUserInfo.getUserSource());
+//                        intent.putExtra(GmacsConstant.EXTRA_DEVICEID, GmacsUser.getInstance().getDeviceId());
+//                        startActivity(intent);
+//                    } catch (ClassNotFoundException e) {
+//                    }
+//                }
+//            });
             setTitle(mTalk.getOtherName(GmacsChatActivity.this, defaultName(false)));
         }
     }
