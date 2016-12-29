@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.http.SslError;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
@@ -66,9 +67,7 @@ public class SoftwareProtocolActivityModel extends BaseModel {
         //设置标题颜色
         tb_protocol_title.setTitleColor(Color.BLACK);
         //设置标题栏下划线
-        tb_protocol_title.setDividerColor(Color.parseColor("#F2F2F2"));
-        //设置标题栏下划线高度
-        tb_protocol_title.setDividerHeight(2);
+        tb_protocol_title.setDividerColor(Color.parseColor("#DFE0E1"));
     }
 
     private void initWebViewContainer(){

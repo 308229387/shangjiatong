@@ -65,6 +65,8 @@ public class FundingManageModel extends BaseModel {
         tb_funding_title.setTitle("我的资金");
         //设置标题颜色
         tb_funding_title.setTitleColor(Color.BLACK);
+        //设置标题栏下划线
+        tb_funding_title.setDividerColor(Color.parseColor("#DFE0E1"));
 
     }
 

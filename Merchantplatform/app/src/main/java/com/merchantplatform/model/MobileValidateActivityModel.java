@@ -78,6 +78,8 @@ public class MobileValidateActivityModel extends BaseModel implements View.OnCli
         tb_validate_title.setTitle("手机验证");
         //设置主标题颜色
         tb_validate_title.setTitleColor(Color.BLACK);
+        //设置标题栏下划线
+        tb_validate_title.setDividerColor(Color.parseColor("#DFE0E1"));
 
     }
 

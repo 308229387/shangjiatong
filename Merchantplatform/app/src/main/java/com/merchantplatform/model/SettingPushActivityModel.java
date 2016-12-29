@@ -57,6 +57,8 @@ public class SettingPushActivityModel extends BaseModel {
                 context.onBackPressed();
             }
         });
+        //设置标题栏下划线
+        tb_push_title.setDividerColor(Color.parseColor("#DFE0E1"));
     }
 
     private void initPushData() {

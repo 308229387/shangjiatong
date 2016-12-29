@@ -94,6 +94,9 @@ public class SettingFeedbackActivityModel extends BaseModel{
                 gotoSubmit();
             }
         });
+
+        //设置标题栏下划线
+        tb_feedback_title.setDividerColor(Color.parseColor("#DFE0E1"));
     }
 
      private void initContentData(){

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="48dip"
+    android:layout_height="44dip"
     android:gravity="center_vertical"
     android:background="@drawable/common_list_item_selector"
     android:paddingLeft="@dimen/personal_center_entry_padding_left_right"

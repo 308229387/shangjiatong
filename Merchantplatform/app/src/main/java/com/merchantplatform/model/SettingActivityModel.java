@@ -75,6 +75,8 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
         tb_setting_title.setTitle("设置");
         //设置主标题颜色
         tb_setting_title.setTitleColor(Color.BLACK);
+        //设置标题栏下划线
+        tb_setting_title.setDividerColor(Color.parseColor("#DFE0E1"));
     }
 
     public void setListener(){

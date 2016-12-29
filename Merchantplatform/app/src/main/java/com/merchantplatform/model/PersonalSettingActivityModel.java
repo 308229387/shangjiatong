@@ -67,6 +67,8 @@ public class PersonalSettingActivityModel extends BaseModel implements View.OnCl
                 context.onBackPressed();
             }
         });
+        //设置标题栏下划线
+        tb_binding_title.setDividerColor(Color.parseColor("#DFE0E1"));
     }
 
     private void initMobileData(){

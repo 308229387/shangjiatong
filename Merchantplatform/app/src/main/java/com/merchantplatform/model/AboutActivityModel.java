@@ -55,6 +55,8 @@ public class AboutActivityModel extends BaseModel{
         titleBar.setTitle("关于");
         //设置主标题颜色
         titleBar.setTitleColor(Color.BLACK);
+        //设置标题栏下划线
+        titleBar.setDividerColor(Color.parseColor("#DFE0E1"));
     }
 
     public void setVersionName() {

@@ -94,6 +94,8 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
                 context.onBackPressed();
             }
         });
+        //设置标题栏下划线
+        tb_Change_title.setDividerColor(Color.parseColor("#DFE0E1"));
     }
 
 

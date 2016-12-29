@@ -45,12 +45,19 @@
                 android:background="@drawable/content_bg_white"
                 android:gravity="left|top"
                 android:hint="@string/feedback_input_hint"
+                android:textSize="@dimen/common_text_size_15"
                 android:maxLines="12"
                 android:minLines="8"
                 android:maxLength="500"
                 android:padding="15.0dip"/>
         </LinearLayout>
     </ScrollView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dip"
+        android:layout_alignParentTop="true"
+        android:background="@color/line_gray_color"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="40dip"
@@ -74,6 +81,7 @@
             android:layout_marginLeft="15dip"
             android:background="@color/white"
             android:hint="@string/feedback_contact"
+            android:textSize="@dimen/common_text_size_15"
             android:maxLines="1"
             android:inputType="number"
             android:maxLength="11"/>
@@ -92,7 +100,6 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dip"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="10dip"
             android:background="@color/line_gray_color"/>
 
     </RelativeLayout>

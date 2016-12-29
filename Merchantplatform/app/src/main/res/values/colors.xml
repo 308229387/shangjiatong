@@ -12,7 +12,7 @@
     <color name="gray_dark">#111111</color>
 
     <color name="line_inner_color">#f0f0f0</color>
-    <color name="line_gray_color">#f1f1f1</color>
+    <color name="line_gray_color">#E0E0E4</color>
     <color name="a_grade_pressed">#CCCCCC</color>
 
     <color name="text_grays">#dfdfdf</color>
