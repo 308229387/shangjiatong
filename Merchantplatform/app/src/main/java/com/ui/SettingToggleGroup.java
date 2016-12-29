@@ -27,7 +27,7 @@ public class SettingToggleGroup extends LinearLayout {
 
     private void addDivider() {
         View localView = new View(getContext());
-        localView.setBackgroundColor(getResources().getColor(R.color.line_inner_color));
+        localView.setBackgroundColor(getResources().getColor(R.color.line_gray_color));
         int i = (int) getResources().getDimension(R.dimen.personal_center_entry_padding_left_right);
         LayoutParams localLayoutParams = new LayoutParams(-1, 1);
         localLayoutParams.leftMargin = i;

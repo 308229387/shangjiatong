@@ -6,7 +6,7 @@
     <RelativeLayout
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="65dp"
         android:background="#fff">
 
         <TextView
@@ -17,7 +17,7 @@
             android:layout_marginBottom="8dp"
             android:text="最新消息"
             android:textColor="#030303"
-            android:textSize="18dp" />
+            android:textSize="19sp" />
 
         <ImageView
             android:id="@+id/call_phone"
@@ -26,7 +26,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="10dp"
             android:background="@drawable/customer_service" />
 
         <View

@@ -227,6 +227,7 @@ public class CallRecordModel extends BaseModel {
         @Override
         public void onResponse(boolean isFromCache, final CallDetailResponse callDetailResponse, Request request, @Nullable Response response) {
             if (callDetailResponse.getData() == null || callDetailResponse.getData().size() == 0) {
+                dismissDialog();
                 mXRecyclerView.setNoMore(true);
             } else {
                 new Thread(new Runnable() {
@@ -467,28 +468,28 @@ public class CallRecordModel extends BaseModel {
         @Override
         public void sendAction(final String action) {
             if (mTabLayout.getCurrentTab() == tabIndex) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        monitorCallOut(action);
+                if (action.equals(PhoneReceiver.NEW_OUTGOING_CALL)) { //呼出
+                    isCallOut = true;
+                }
+                if (isCallOut && action.equals(PhoneReceiver.CALL_OVER)) {//挂机
+                    isCallOut = false;
+                    if (clickCallList != null && callOutTimes == 0) {
+                        callOutTimes++;
+                        monitorCallOut();
                     }
-                }, 2000);
+                }
             }
         }
     };
 
-    private void monitorCallOut(String action) {
-        if (action.equals(PhoneReceiver.CALL_OUT)) { //呼出
-            isCallOut = true;
-        }
-        if (isCallOut && action.equals(PhoneReceiver.CALL_OVER)) {//挂机
-            isCallOut = false;
-            if (clickCallList != null && callOutTimes == 0) {
-                callOutTimes++;
+    private void monitorCallOut() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
                 deleteThisRecord(clickCallList);
                 upLoadUserCallLog(getUserCallLog(clickCallList));
             }
-        }
+        }, 2000);
     }
 
     private void deleteThisRecord(CallList clickCallList) {

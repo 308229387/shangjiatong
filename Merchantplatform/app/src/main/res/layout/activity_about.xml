@@ -15,7 +15,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title_bar"
-        android:layout_marginTop="80dp">
+        android:layout_marginTop="90dp">
 
         <ImageView
             android:id="@+id/iv_logo"
@@ -67,7 +67,8 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="15dip"
         android:gravity="center"
-        android:text="Copyright © 2004-2021 58.com.All Right Reserved."
+        android:text="Copyright © 2004-2021 58.com."
+        android:textSize="@dimen/common_text_size_12"
         android:textColor="#afafaf"/>
 
 </RelativeLayout>

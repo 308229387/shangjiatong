@@ -7,15 +7,14 @@ import android.content.Intent;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 
-import com.orhanobut.logger.Logger;
-
 import java.util.ArrayList;
 
 public class PhoneReceiver extends BroadcastReceiver {
 
     public static final String CALL_OVER = "call_over";
     public static final String CALL_UP = "call_up";
-    public static final String CALL_OUT = "call_out";
+    public static final String CALL_OUT_OR_IN = "call_out_or_in";
+    public static final String NEW_OUTGOING_CALL = "new_outgoing_call";
 
     public static ArrayList<BRInteraction> interactionList = new ArrayList<>();
 
@@ -30,7 +29,11 @@ public class PhoneReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)) { //如果是去电
-
+            for (BRInteraction interaction : interactionList) {
+                if (interaction != null) {
+                    interaction.sendAction(NEW_OUTGOING_CALL);
+                }
+            }
         } else {
             TelephonyManager tm = (TelephonyManager) context.getSystemService(Service.TELEPHONY_SERVICE); //获取电话服务管理类
             tm.listen(listener, PhoneStateListener.LISTEN_CALL_STATE); //侦听呼叫状态改变事件
@@ -59,7 +62,7 @@ public class PhoneReceiver extends BroadcastReceiver {
                 case TelephonyManager.CALL_STATE_OFFHOOK://摘机（有呼入）,呼出
                     for (BRInteraction interaction : interactionList) {
                         if (interaction != null) {
-                            interaction.sendAction(CALL_OUT);
+                            interaction.sendAction(CALL_OUT_OR_IN);
                         }
                     }
                     break;

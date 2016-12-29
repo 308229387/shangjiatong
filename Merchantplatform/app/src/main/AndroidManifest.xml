@@ -21,6 +21,8 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
     <!-- 读取通话记录 -->
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <!-- 监听呼出电话 -->
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
     <!-- 调用者的包名申请权限必须 -->
     <permission
         android:name="com.merchantplatform.permission.MIPUSH_RECEIVE"
@@ -52,7 +54,8 @@
             android:name="UMENG_CHANNEL"
             android:value="${CHANNEL_VALUE}" />
 
-        <activity android:name=".activity.GuideActivity"
+        <activity
+            android:name=".activity.GuideActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Splash">
 
@@ -107,10 +110,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SystemNotificationActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/GmacsTheme"
-            android:launchMode="singleTask"
-            android:windowSoftInputMode="stateUnspecified|adjustResize"/>
+            android:windowSoftInputMode="stateUnspecified|adjustResize" />
 
         <service
             android:name=".service.AppDownloadService"
@@ -153,8 +156,9 @@
         </receiver>
 
         <receiver android:name=".receiver.PhoneReceiver">
-            <intent-filter>
+            <intent-filter android:priority="1000">
                 <action android:name="android.intent.action.PHONE_STATE" />
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
             </intent-filter>
         </receiver>
 
