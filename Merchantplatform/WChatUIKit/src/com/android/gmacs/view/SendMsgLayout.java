@@ -136,14 +136,18 @@ public class SendMsgLayout extends LinearLayout implements OnClickListener, OnIn
         } else if (v == mSendEmojiButton) {
             switchSendEmoji();
         } else if (v == mSendMoreButton) {
+            LogUmengAgent.ins().log(LogUmengEnum.LOG_LIAOTIANXQY_JH);//添加埋点信息
             switchSendMore();
         } else if (v == mSendVoice) {
-            switchSendVoice();
+            LogUmengAgent.ins().log(LogUmengEnum.LOG_LIAOTIANXQY_YYLT);            switchSendVoice();
         } else if (v == mQuickButton) {
             switchSendQuickMsg();
         } else if (v == sendTextButton) {
+            LogUmengAgent.ins().log(LogUmengEnum.LOG_LIAOTIANXQY_WZFS);//添加埋点信息
             sendTextMsg();
         } else if (v == mPublicAccountMenuBtn) {
+            LogUmengAgent.ins().log(LogUmengEnum.LOG_LIAOTIANXQY_YYORJPAN);//添加埋点信息
+
             if (gmacsChatActivity.publicAccountMenu.isShown()) {
                 gmacsChatActivity.publicAccountMenu.setVisibility(GONE);
                 setVisibility(VISIBLE);

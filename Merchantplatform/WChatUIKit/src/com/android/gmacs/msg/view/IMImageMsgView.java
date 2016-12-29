@@ -23,6 +23,8 @@ import com.common.gmacs.msg.data.IMImageMsg;
 import com.common.gmacs.parse.message.Message;
 import com.common.gmacs.utils.GmacsEnvi;
 import com.common.gmacs.utils.ImageUtil;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -141,6 +143,7 @@ public class IMImageMsgView extends IMMessageView {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) { // 点击查看图片
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_LIAOTIANXQY_TPCHK);
                 // In case of IME disappears after starting new activity, it will make the animation in mass.
                 InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);

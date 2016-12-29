@@ -52,7 +52,12 @@ public class HomepageActivity extends BaseActivity<HomepageModel> {
     public void onEvent(JumpSystemNotificationAction action) {
         startActivity(new Intent(HomepageActivity.this, SystemNotificationActivity.class));
         EventBus.getDefault().post(new ShowRedDotSystemNotificationAction("dismiss"));
-        SystemNotificationOperate.updateDataRedDot(this);
+        new Thread() {
+            public void run() {
+                SystemNotificationOperate.updateDataRedDot(HomepageActivity.this);
+            }
+        };
+
     }
 
     @Subscribe

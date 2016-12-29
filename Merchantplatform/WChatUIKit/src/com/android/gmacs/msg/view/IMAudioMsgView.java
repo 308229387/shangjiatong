@@ -24,6 +24,8 @@ import com.common.gmacs.msg.MsgContentType;
 import com.common.gmacs.msg.data.IMAudioMsg;
 import com.common.gmacs.parse.message.Message;
 import com.common.gmacs.utils.GLog;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 import com.xxganji.gmacs.proto.CommonPB;
 
 import java.lang.ref.WeakReference;
@@ -67,6 +69,7 @@ public class IMAudioMsgView extends IMMessageView {
         mContentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_LIAOTIANXQY_YYBF);
                 // 把消息置为已经读过
                 GLog.d("MsgPlayStatus", String.valueOf(mAudioMsg.parentMsg.getMsgPlayStatus()));
                 if (!mAudioMsg.parentMsg.mIsSelfSendMsg && mAudioMsg.parentMsg.getMsgPlayStatus() == CommonPB.PlayStatus.MSG_NOT_PLAYED) {
