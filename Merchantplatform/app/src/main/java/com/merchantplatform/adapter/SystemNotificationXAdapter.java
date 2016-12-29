@@ -36,7 +36,7 @@ public class SystemNotificationXAdapter extends BaseRecyclerViewAdapter<SystemNo
                 .setText(R.id.time, messageTimeFormat(systemNotification.getSortId()))
                 .setVisible(R.id.system_notification_arrow, systemNotification.getContentType() == 1 ? false : true)
                 .setVisible(R.id.system_notification_line, systemNotification.getContentType() == 1 ? false : true)
-                .setText(R.id.system_notification_text, systemNotification.getDescribe());
+                .setText(R.id.system_notification_text, systemNotification.getContentType() == 1 ? systemNotification.getDescribe() : "查看详情");
 
         if (systemNotification.getContentType() == 2) {
             viewHolder.setOnClickListener(R.id.system_notification_text, new SystemNotificationWebListener(systemNotification));
