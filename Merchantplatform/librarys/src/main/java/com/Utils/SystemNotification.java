@@ -79,4 +79,5 @@ public class SystemNotification implements Serializable {
     public void setIsReaded(int isReaded) {
         this.isReaded = isReaded;
     }
+
 }

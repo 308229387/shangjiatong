@@ -153,12 +153,8 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
                 tag = "PersonalCenterFragment";
             context.getSupportFragmentManager().beginTransaction().hide(mFragment)
                     .add(R.id.main_fragment, fragment, tag).show(fragment).commit();
-            Log.i("song", "加入显示" + tag);
-        } else {
+        } else
             context.getSupportFragmentManager().beginTransaction().hide(mFragment).show(fragment).commit();
-            Log.i("song", "直接显示" + fragment.getTag());
-        }
-
 
     }
 

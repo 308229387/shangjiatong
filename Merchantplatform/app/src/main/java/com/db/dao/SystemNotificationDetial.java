@@ -11,6 +11,7 @@ import org.greenrobot.greendao.annotation.Generated;
 public class SystemNotificationDetial {
     @Id
     public Long id;
+    public String userId;
     public String content;
     public int contentType;
     public String describe;
@@ -67,6 +68,12 @@ public class SystemNotificationDetial {
     }
     public void setIsReaded(int isReaded) {
         this.isReaded = isReaded;
+    }
+    public String getUserId() {
+        return this.userId;
+    }
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
 }

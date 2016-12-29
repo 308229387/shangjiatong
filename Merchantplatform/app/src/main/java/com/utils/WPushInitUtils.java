@@ -80,6 +80,7 @@ public class WPushInitUtils implements Push.MessageListener,
         final SystemNotificationDetial data = new SystemNotificationDetial();
         data.setType(temp1.getType());
         data.setTitle(temp1.getTitle());
+        data.setUserId(UserUtils.getUserId());
         data.setSortId(temp1.getSortId());
         data.setId(temp1.getId());
         data.setContent(temp1.getContent());
