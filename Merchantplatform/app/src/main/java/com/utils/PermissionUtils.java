@@ -271,28 +271,8 @@ public class PermissionUtils {
         return permissions;
     }
 
-    /**
-     * 获取手机IMEI设备号
-     *
-     * @param activity
-     */
-    public static void getIMEIPermission(final Activity activity) {
-        if (ContextCompat.checkSelfPermission(activity, PERMISSION_READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, PERMISSION_READ_PHONE_STATE)) {
-                String[] permissionsHint = activity.getResources().getStringArray(R.array.permissions);
-                showMessageOK(activity, "说明：" + permissionsHint[CODE_READ_PHONE_STATE], new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ActivityCompat.requestPermissions(activity, new String[]{PERMISSION_READ_PHONE_STATE}, CODE_READ_PHONE_STATE);
-                    }
-                });
-            } else {
-                ActivityCompat.requestPermissions(activity, new String[]{PERMISSION_READ_PHONE_STATE}, CODE_READ_PHONE_STATE);
-            }
-        }
-    }
 
-    public static void goToPermissionCenter(Context context) {
+    private  void goToPermissionCenter(Context context) {
         String phoneBrand = AppInfoUtils.getProductBrand();
         Intent intent = new Intent();
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -336,4 +316,5 @@ public class PermissionUtils {
         intent.setComponent(comp);
         context.startActivity(intent);
     }
+
 }
