@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.widget.ListView;
 
+import com.Utils.ShowRedDotSystemNotificationAction;
 import com.Utils.SystemNotification;
 import com.android.gmacs.R;
 import com.android.gmacs.activity.BaseActivity;
@@ -152,6 +153,6 @@ public class SystemNotificationActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         SystemNotificationOperate.updateDataRedDot(this);
-        EventBus.getDefault().post("show");
+        EventBus.getDefault().post(new ShowRedDotSystemNotificationAction("show"));
     }
 }

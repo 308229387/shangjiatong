@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.Utils.JumpSystemNotificationAction;
+import com.Utils.ShowRedDotSystemNotificationAction;
 import com.Utils.SystemGetNotificationInfoAction;
 import com.Utils.SystemNotification;
 import com.Utils.SystemNotificationInfoAction;
@@ -54,6 +55,7 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
     private boolean isBackground;
     private TextView redDot;
     private TextView systemText;
+    private boolean showRed = true;
 
     /**
      * 为其添加子视图, 在会话列表为空时, 可以显示友好提示
@@ -175,13 +177,25 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
 
     }
 
+
+    @Subscribe
+    public void onEvent(ShowRedDotSystemNotificationAction temp) {//显隐红点
+        if (temp.getJump().equals("show"))
+            showRed = true;
+        else if (temp.getJump().equals("dismiss")) {
+            showRed = false;
+            redDot.setVisibility(View.GONE);
+        }
+
+    }
+
     @Subscribe
     public void onEvent(SystemNotification temp) {//来消息时更新
         setShowNotification(true);
-
         systemText.setText(temp.getDescribe());
         systemHead.setVisibility(View.VISIBLE);
-        redDot.setVisibility(View.VISIBLE);
+        if (showRed)
+            redDot.setVisibility(View.VISIBLE);
         redDot.setText(temp.getIsReaded() + "");
     }
 
@@ -190,12 +204,11 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
         if (getShowNotification()) {
             systemText.setText(temp.getJump());
             systemHead.setVisibility(View.VISIBLE);
-            redDot.setVisibility(View.VISIBLE);
-            redDot.setText(temp.getRedDot()+"");
+            if (temp.getRedDot() > 0 && showRed)
+                redDot.setVisibility(View.VISIBLE);
+            redDot.setText(temp.getRedDot() + "");
         }
     }
-
-
 
 
     @Override
