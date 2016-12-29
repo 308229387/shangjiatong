@@ -133,7 +133,8 @@ public class CallDetailModel extends BaseModel {
         WhereCondition conditionPhone = CallDetailDao.Properties.Phone.eq(phoneNum);
         WhereCondition conditionCallTime = new WhereCondition.StringCondition("date(CALL_TIME)='" + date_Day + "'");
         WhereCondition conditionType = CallDetailDao.Properties.Type.eq(2);
-        return CallDetailDaoOperate.queryByCondition(context, conditionUserId, conditionPhone, conditionCallTime, conditionType);
+        WhereCondition conditionIsDeleted = CallDetailDao.Properties.IsDeleted.eq(false);
+        return CallDetailDaoOperate.queryByCondition(context, conditionUserId, conditionPhone, conditionCallTime, conditionType, conditionIsDeleted);
     }
 
     private ArrayList<CallDetailListBean> getDetailList(ArrayList<CallDetail> newDetailDataFromDB) {

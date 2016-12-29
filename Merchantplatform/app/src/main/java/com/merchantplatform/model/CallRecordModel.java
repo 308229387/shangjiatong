@@ -361,7 +361,13 @@ public class CallRecordModel extends BaseModel {
         WhereCondition conditionUserId = CallListDao.Properties.UserId.eq(UserUtils.getUserId());
         WhereCondition conditionPhone = CallListDao.Properties.Phone.eq(bean.getPhone());
         WhereCondition conditionCallTime = new WhereCondition.StringCondition("date(CALL_TIME)='" + date_Day + "'");
-        return CallListDaoOperate.queryByCondition(context.getContext(), conditionUserId, conditionPhone, conditionCallTime);
+        WhereCondition conditionType = CallListDao.Properties.Type.eq(bean.getType());
+        if (bean.getType() == 1) {
+            WhereCondition conditionResult = CallListDao.Properties.CallResult.eq(bean.getCallResult());
+            return CallListDaoOperate.queryByCondition(context.getContext(), conditionUserId, conditionPhone, conditionCallTime, conditionType, conditionResult);
+        } else {
+            return CallListDaoOperate.queryByCondition(context.getContext(), conditionUserId, conditionPhone, conditionCallTime, conditionType);
+        }
     }
 
     private void updateOutGoingCall(ArrayList<CallList> result, String newCallTime) {
@@ -407,7 +413,7 @@ public class CallRecordModel extends BaseModel {
         callList.setLocal(bean.getLocal());
         callList.setCate(bean.getCate());
         callList.setCallTime(DateUtils.formatMillisToDateTime(bean.getCallTime()));
-        CallListDaoOperate.insertOrReplace(context.getContext(), callList);
+        CallListDaoOperate.insert(context.getContext(), callList);
     }
 
     private void saveNewDataToCallDetail(CallDetailResponse.bean bean) {
@@ -422,6 +428,7 @@ public class CallRecordModel extends BaseModel {
         callDetail.setEntryTime(bean.getEntryTime());
         callDetail.setCallResult(bean.getCallResult());
         callDetail.setType(bean.getType());
+        callDetail.setIsDeleted(false);
         CallDetailDaoOperate.insertOrReplace(context.getContext(), callDetail);
     }
 
