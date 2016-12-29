@@ -20,6 +20,7 @@ import com.merchantplatform.application.HyApplication;
 import com.merchantplatform.bean.SystemNotificationList;
 import com.okhttputils.OkHttpUtils;
 import com.utils.Urls;
+import com.utils.UserUtils;
 import com.xrecyclerview.ProgressStyle;
 import com.xrecyclerview.XRecyclerView;
 
@@ -126,6 +127,8 @@ public class SystemNotificationActivity extends BaseActivity {
     private void saveDataToDB(SystemNotification temp1) {
         final SystemNotificationDetial data = new SystemNotificationDetial();
         data.setType(temp1.getType());
+        data.setUserId(UserUtils.getUserId());
+        data.setIsReaded(0);
         data.setTitle(temp1.getTitle());
         data.setSortId(temp1.getSortId());
         data.setId(temp1.getId());

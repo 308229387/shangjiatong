@@ -6,6 +6,7 @@ import com.db.dao.CallDetail;
 import com.db.dao.SystemNotificationDetial;
 import com.db.dao.gen.CallDetailDao;
 import com.db.dao.gen.SystemNotificationDetialDao;
+import com.utils.UserUtils;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 import org.greenrobot.greendao.query.WhereCondition;
@@ -37,7 +38,8 @@ public class SystemNotificationOperate {
      **/
     public static ArrayList<SystemNotificationDetial> queryAll(Context context) {
         QueryBuilder<SystemNotificationDetial> builder = DbManager.getDaoSession(context).getSystemNotificationDetialDao().queryBuilder();
-        return (ArrayList<SystemNotificationDetial>) builder.orderDesc(SystemNotificationDetialDao.Properties.SortId).list();
+        WhereCondition conditionUserId = SystemNotificationDetialDao.Properties.UserId.eq(UserUtils.getUserId());
+        return (ArrayList<SystemNotificationDetial>) builder.where(conditionUserId).orderDesc(SystemNotificationDetialDao.Properties.SortId).list();
     }
 
 
@@ -46,7 +48,8 @@ public class SystemNotificationOperate {
      **/
     public static ArrayList<SystemNotificationDetial> checkReaded(Context context) {
         QueryBuilder<SystemNotificationDetial> builder = DbManager.getDaoSession(context).getSystemNotificationDetialDao().queryBuilder();
-        return (ArrayList<SystemNotificationDetial>) builder.where(SystemNotificationDetialDao.Properties.IsReaded.notEq(0)).list();
+        WhereCondition conditionUserId = SystemNotificationDetialDao.Properties.UserId.eq(UserUtils.getUserId());
+        return (ArrayList<SystemNotificationDetial>) builder.where(conditionUserId, SystemNotificationDetialDao.Properties.IsReaded.notEq(0)).list();
     }
 
     /**
