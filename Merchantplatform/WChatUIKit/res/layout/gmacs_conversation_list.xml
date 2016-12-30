@@ -48,6 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/ll_conversation_hiddenview"
+        android:background="#F2F2F2"
         android:divider="@null"
         android:listSelector="@color/transparent"
         android:scrollbars="none" />
