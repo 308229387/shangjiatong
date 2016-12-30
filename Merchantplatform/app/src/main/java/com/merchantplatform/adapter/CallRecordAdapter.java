@@ -32,18 +32,14 @@ import java.util.ArrayList;
 
 public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRecordAdapter.CallRecordViewHolder> {
 
-    private int tabIndex;
-
-    public CallRecordAdapter(Context context, ArrayList<CallList> mList, int tabIndex) {
+    public CallRecordAdapter(Context context, ArrayList<CallList> mList) {
         super(context, mList);
-        this.tabIndex = tabIndex;
     }
 
     @Override
     protected void bindDataToItemView(final CallRecordViewHolder callRecordViewHolder, final int position) {
         CallList callList = getItem(position);
         callRecordViewHolder
-                .setBackgroundResource(R.id.item_swipelayout, (callList.getType() == 1 && callList.getCallResult() == 20 && tabIndex == 1) ? R.color.item_missed_call_bg : R.color.item_call_bg)
                 .setText(R.id.tv_phoneNum, callList.getPhone())
                 .setTextColor(R.id.tv_phoneNum, (callList.getType() == 1 && callList.getCallResult() == 20) ? context.getResources().getColor(R.color.item_call_delete) : context.getResources().getColor(R.color.item_call_phone))
                 .setText(R.id.tv_phone_city, callList.getLocal())

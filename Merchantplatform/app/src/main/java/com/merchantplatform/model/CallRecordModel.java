@@ -74,7 +74,7 @@ public class CallRecordModel extends BaseModel {
     private static final int CALL_RESULT_FAILURE = 20;
     private int tabIndex;
     private boolean isCallOut = false;
-    private boolean isAppCallOut = false;
+    public static boolean isAppCallOut = false;
     public static CallList clickCallList;
     private int callOutTimes = 0;
     private Handler mHandler = new Handler() {
@@ -135,7 +135,7 @@ public class CallRecordModel extends BaseModel {
 
     private void initData() {
         listData = new ArrayList<>();
-        mAdapter = new CallRecordAdapter(context.getContext(), listData, tabIndex);
+        mAdapter = new CallRecordAdapter(context.getContext(), listData);
         mXRecyclerView.setAdapter(mAdapter);
     }
 
@@ -460,7 +460,7 @@ public class CallRecordModel extends BaseModel {
     }
 
     private void invokeCall(int position) {
-        isAppCallOut = true;
+        CallRecordModel.isAppCallOut = true;
         String phoneNum = listData.get(position).getPhone();
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + phoneNum));
         context.startActivity(intent);
@@ -473,9 +473,9 @@ public class CallRecordModel extends BaseModel {
                 if (action.equals(PhoneReceiver.NEW_OUTGOING_CALL)) { //呼出
                     isCallOut = true;
                 }
-                if (isAppCallOut && isCallOut && action.equals(PhoneReceiver.CALL_OVER)) {//挂机
+                if (CallRecordModel.isAppCallOut && isCallOut && action.equals(PhoneReceiver.CALL_OVER)) {//挂机
                     isCallOut = false;
-                    isAppCallOut = false;
+                    CallRecordModel.isAppCallOut = false;
                     if (clickCallList != null && callOutTimes == 0) {
                         callOutTimes++;
                         monitorCallOut();
@@ -498,8 +498,8 @@ public class CallRecordModel extends BaseModel {
     private void deleteThisRecord(CallList clickCallList) {
         if (clickCallList.getType() == 1 && clickCallList.getCallResult() == 20) {
             EventBus.getDefault().post(clickCallList);
-            deleteFromCallList(clickCallList);
             deleteFromCallDetail(clickCallList);
+            deleteFromCallList(clickCallList);
         }
     }
 
@@ -510,16 +510,16 @@ public class CallRecordModel extends BaseModel {
         }
     }
 
-    private void deleteFromCallList(CallList clickCallList) {
-        CallListDaoOperate.deleteData(context.getContext(), clickCallList);
-    }
-
     private void deleteFromCallDetail(CallList clickCallList) {
         ArrayList<CallDetail> details = getDetailByList(clickCallList);
         for (CallDetail detail : details) {
             detail.setIsDeleted(true);
             CallDetailDaoOperate.updateData(context.getContext(), detail);
         }
+    }
+
+    private void deleteFromCallList(CallList clickCallList) {
+        CallListDaoOperate.deleteData(context.getContext(), clickCallList);
     }
 
     private void upLoadUserCallLog(UserCallRecordBean usercallRecordBean) {
