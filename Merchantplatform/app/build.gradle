@@ -38,6 +38,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            signingConfig signingConfigs.key
+        }
 
     }
     lintOptions {
@@ -50,7 +53,7 @@ android {
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
             def outputFile = output.outputFile
-            def outputName ="${defaultConfig.versionName}_shangjiatong_${variant.productFlavors[0].name}_${variant.buildType.name}.apk"
+            def outputName = "${defaultConfig.versionName}_shangjiatong_${variant.productFlavors[0].name}_${variant.buildType.name}.apk"
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
                 if (variant.buildType.name.equals('release')) {
                     output.outputFile = new File(outputPath, outputName)

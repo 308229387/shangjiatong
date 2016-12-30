@@ -5,8 +5,8 @@
     <stroke android:width="0.5dip" android:color="#e0e0e4"/>
     <!-- 圆角 -->
     <corners
-        android:topLeftRadius="5dp"
-        android:topRightRadius="5dp"
-        android:bottomLeftRadius="5dp"
-        android:bottomRightRadius="5dp"/>
+        android:topLeftRadius="2.5dp"
+        android:topRightRadius="2.5dp"
+        android:bottomLeftRadius="2.5dp"
+        android:bottomRightRadius="2.5dp"/>
 </shape>
