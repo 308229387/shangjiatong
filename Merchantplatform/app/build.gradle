@@ -73,8 +73,26 @@ android {
         yingyongbao_local {
             manifestPlaceholders = [CHANNEL_VALUE: "yingyongbao_local"]
         }
-        fir {
-            manifestPlaceholders = [CHANNEL_VALUE: "fir"]
+        xiaomi {
+            manifestPlaceholders = [CHANNEL_VALUE: "xiaomi"]
+        }
+        huawei {
+            manifestPlaceholders = [CHANNEL_VALUE: "huawei"]
+        }
+        oppo {
+            manifestPlaceholders = [CHANNEL_VALUE: "oppo"]
+        }
+        vivo {
+            manifestPlaceholders = [CHANNEL_VALUE: "vivo"]
+        }
+        jiuyi {
+            manifestPlaceholders = [CHANNEL_VALUE: "91"]
+        }
+        anzhuomarket {
+            manifestPlaceholders = [CHANNEL_VALUE: "anzhuomarket"]
+        }
+        wandoujia {
+            manifestPlaceholders = [CHANNEL_VALUE: "wandoujia"]
         }
     }
 
