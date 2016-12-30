@@ -74,6 +74,7 @@ public class CallRecordModel extends BaseModel {
     private static final int CALL_RESULT_FAILURE = 20;
     private int tabIndex;
     private boolean isCallOut = false;
+    private boolean isAppCallOut = false;
     public static CallList clickCallList;
     private int callOutTimes = 0;
     private Handler mHandler = new Handler() {
@@ -459,6 +460,7 @@ public class CallRecordModel extends BaseModel {
     }
 
     private void invokeCall(int position) {
+        isAppCallOut = true;
         String phoneNum = listData.get(position).getPhone();
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + phoneNum));
         context.startActivity(intent);
@@ -471,8 +473,9 @@ public class CallRecordModel extends BaseModel {
                 if (action.equals(PhoneReceiver.NEW_OUTGOING_CALL)) { //呼出
                     isCallOut = true;
                 }
-                if (isCallOut && action.equals(PhoneReceiver.CALL_OVER)) {//挂机
+                if (isAppCallOut && isCallOut && action.equals(PhoneReceiver.CALL_OVER)) {//挂机
                     isCallOut = false;
+                    isAppCallOut = false;
                     if (clickCallList != null && callOutTimes == 0) {
                         callOutTimes++;
                         monitorCallOut();
