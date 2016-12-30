@@ -39,7 +39,7 @@ public class SystemNotificationXAdapter extends BaseRecyclerViewAdapter<SystemNo
                 .setText(R.id.system_notification_text, systemNotification.getContentType() == 1 ? systemNotification.getDescribe() : "查看详情");
 
         if (systemNotification.getContentType() == 2) {
-            viewHolder.setOnClickListener(R.id.system_notification_text, new SystemNotificationWebListener(systemNotification));
+            viewHolder.setOnClickListener(R.id.notification_click_layout, new SystemNotificationWebListener(systemNotification));
         }
     }
 

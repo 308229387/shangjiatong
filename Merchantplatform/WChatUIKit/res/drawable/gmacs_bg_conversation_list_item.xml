@@ -3,5 +3,5 @@
     <item android:drawable="@color/conversation_list_item_bg_pressed" android:state_pressed="true"></item>
     <item android:drawable="@color/conversation_list_item_bg_pressed" android:state_selected="true"></item>
     <item android:drawable="@color/conversation_list_item_bg_pressed" android:state_focused="true"></item>
-    <item android:drawable="@color/conversation_list_item_bg_default"></item>
+    <item android:drawable="@color/chat_back"></item>
 </selector>
