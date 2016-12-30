@@ -78,14 +78,13 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="8dp"
-        android:background="@drawable/gmacs_titlebar_btn_bg"
         android:gravity="center"
         android:minHeight="30dp"
         android:minWidth="54dp"
         android:paddingLeft="11dip"
         android:paddingRight="11dip"
         android:text="确定"
-        android:textColor="@color/white"
+        android:textColor="@color/light_gray"
         android:textSize="16dp"
         android:visibility="gone" />
 
