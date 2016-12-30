@@ -183,6 +183,7 @@ public class CallDetailModel extends BaseModel {
     }
 
     private void invokeCall() {
+        CallRecordModel.isAppCallOut = true;
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + phoneNum));
         context.startActivity(intent);
     }
