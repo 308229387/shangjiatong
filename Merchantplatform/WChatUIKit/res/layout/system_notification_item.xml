@@ -62,6 +62,7 @@
             android:background="#e0e0e4" />
 
         <LinearLayout
+            android:id="@+id/notification_click_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">

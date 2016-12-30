@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="chat_back">#FBFCFD</color>
     <color name="gray">#111121</color>
     <color name="black_gray">#FF404040</color>
     <color name="light_grey">#FFBFBFBF</color>
