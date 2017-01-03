@@ -73,7 +73,7 @@ android {
         yingyongbao_local {
             manifestPlaceholders = [CHANNEL_VALUE: "yingyongbao_local"]
         }
-        fir {
+        hy {
             manifestPlaceholders = [CHANNEL_VALUE: "fir"]
         }
         xiaomi {
