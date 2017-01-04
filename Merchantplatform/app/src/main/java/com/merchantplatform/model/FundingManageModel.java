@@ -135,8 +135,8 @@ public class FundingManageModel extends BaseModel {
         webView_funding.removeAllViews();
         webView_funding.destroy();
         webView_funding = null;
+        System.exit(0);
     }
-
 
     private class BaseWebClient extends WebViewClient {
         @Override

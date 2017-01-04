@@ -157,5 +157,6 @@ public class SystemNotificationActivity extends BaseActivity {
         super.onDestroy();
         SystemNotificationOperate.updateDataRedDot(this);
         EventBus.getDefault().post(new ShowRedDotSystemNotificationAction("show"));
+        EventBus.getDefault().unregister(this);
     }
 }

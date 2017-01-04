@@ -228,5 +228,9 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         }
     }
 
+    public void unregusterEventBus(){
+        EventBus.getDefault().unregister(context);
+    }
+
 
 }
