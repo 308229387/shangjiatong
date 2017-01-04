@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.gmacs.view.ResizeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/resizeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/chat_background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/person_msg_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/contentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#dbdbdb" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <!-- 聊天内容界面 -->
+            <com.android.gmacs.view.listview.XXListView
+                android:id="@+id/listview_chat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:cacheColorHint="@color/transparent"
+                android:divider="@null"
+                android:listSelector="@color/transparent"
+                android:overScrollMode="never"
+                android:transcriptMode="disabled" />
+
+            <!-- 加载最新消息进度条 -->
+            <ProgressBar
+                android:id="@+id/load_new_msgs_progressBar"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <include layout="@layout/gmacs_layout_chat_bottom" />
+
+        <include layout="@layout/gmacs_public_account_menu_layout" />
+    </LinearLayout>
+
+</com.android.gmacs.view.ResizeLayout>

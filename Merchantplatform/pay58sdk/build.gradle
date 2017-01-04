@@ -1,0 +1,27 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion '22.0.1'
+
+    defaultConfig {
+        minSdkVersion 11
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile files('libs/alipaysdk.jar')
+    compile files('libs/android-async-http-1.4.5.jar')
+    compile files('libs/utdid4all-1.0.4.jar')
+    compile files('libs/MobileSecSdk.jar')
+    compile files('libs/libPay58Sdk.jar')
+}

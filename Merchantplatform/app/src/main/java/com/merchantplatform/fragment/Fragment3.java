@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.merchantplatform.model.Fragment1Model;
 import com.merchantplatform.model.Fragment3Model;
 
 /**
@@ -25,8 +24,6 @@ public class Fragment3 extends BaseFragment<Fragment3Model> {
     private void initializationLayout(LayoutInflater inflater, ViewGroup container) {
         model.createView(inflater, container);
     }
-
-
 
     @Override
     protected Fragment3Model createModel() {

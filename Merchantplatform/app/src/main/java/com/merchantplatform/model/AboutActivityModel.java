@@ -1,13 +1,19 @@
 package com.merchantplatform.model;
 
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.AboutActivity;
-import com.ui.TitleBar;
-import com.utils.ToastUtils;
+import com.merchantplatform.activity.SoftwareProtocolActivity;
+import com.Utils.TitleBar;
+import com.utils.AppInfoUtils;
+import com.utils.PageSwitchUtils;
 
 /**
  * Created by 58 on 2016/11/25.
@@ -15,24 +21,29 @@ import com.utils.ToastUtils;
 public class AboutActivityModel extends BaseModel{
     private AboutActivity context;
 
-    private ImageView mEditView;
+    private TitleBar titleBar;
+    private TextView tv_version;
+    private TextView tv_protocol;
+
+    private String name;
 
     public  AboutActivityModel(AboutActivity context){
         this.context = context;
     }
 
+    public void initView(){
+        titleBar = (TitleBar) context.findViewById(R.id.title_bar);
+        tv_version = (TextView) context.findViewById(R.id.tv_version);
+        tv_protocol = (TextView) context.findViewById(R.id.tv_protocol);
+    }
+
     public void initTitleBar(){
-        TitleBar titleBar = (TitleBar) context.findViewById(R.id.title_bar);
         //设置透明状态栏
         titleBar.setImmersive(true);
         //设置背景颜色
-        titleBar.setBackgroundColor(Color.parseColor("#64b4ff"));
+        titleBar.setBackgroundColor(Color.WHITE);
         //设置左侧图标
         titleBar.setLeftImageResource(R.mipmap.title_back);
-        //设置左侧文案
-        titleBar.setLeftText("返回");
-        //设置左侧文案颜色
-        titleBar.setLeftTextColor(Color.WHITE);
         //设置左侧点击事件
         titleBar.setLeftClickListener(new View.OnClickListener() {
             @Override
@@ -41,31 +52,35 @@ public class AboutActivityModel extends BaseModel{
             }
         });
         //设置标题
-        titleBar.setTitle("关于\n软件协议");
+        titleBar.setTitle("关于");
         //设置主标题颜色
-        titleBar.setTitleColor(Color.WHITE);
-        //设置子标题颜色
-        titleBar.setSubTitleColor(Color.WHITE);
-        //设置标题栏下划线的颜色
-        titleBar.setDividerColor(Color.GRAY);
-        //设置标题栏下划线的高度
-        titleBar.setDividerHeight(1);
-        //设置右侧文案颜色
-        titleBar.setActionTextColor(Color.WHITE);
-        //设置右侧图标
-        mEditView = (ImageView) titleBar.addAction(new TitleBar.ImageAction(R.mipmap.title_edit) {
+        titleBar.setTitleColor(Color.BLACK);
+        //设置标题栏下划线
+        titleBar.setDividerColor(Color.parseColor("#DFE0E1"));
+    }
+
+    public void setVersionName() {
+        try {
+            name = "v" + AppInfoUtils.getVersionName(context);
+        } catch (PackageManager.NameNotFoundException e) {
+            name = "v 1.0.0";
+            e.printStackTrace();
+        }
+        tv_version.setText("版本号:" + name);
+    }
+
+    public void setSoftwareUsage(){
+        tv_protocol.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void performAction(View view) {
-                ToastUtils.showToast( "点击了编辑图标");
+            public void onClick(View v) {
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_SHEZHIXQY_YHXY);
+                oToSoftWareUsagePage();
             }
         });
-         //设置右侧文案
-        titleBar.addAction(new TitleBar.TextAction("编辑") {
-            @Override
-            public void performAction(View view) {
-                ToastUtils.showToast("点击了编辑文案");
-            }
-        });
+    }
+
+    private void oToSoftWareUsagePage(){
+        PageSwitchUtils.goToActivity(context,SoftwareProtocolActivity.class);
     }
 
 }

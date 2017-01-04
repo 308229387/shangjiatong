@@ -13,13 +13,7 @@ import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * ================================================
- * 作    者：jeasonlzy（廖子尧）
- * 版    本：1.0
- * 创建日期：2016/4/8
- * 描    述：我的Github地址  https://github.com/jeasonlzy0216
- * 修订历史：该类主要用于对所有的网络请求进行加密，防止拦截数据包进行篡改
- * ================================================
+ * 描    述：该类主要用于对所有的网络请求进行加密，防止拦截数据包进行篡改
  */
 public abstract class EncryptCallback<T> extends CommonCallback<T> {
 

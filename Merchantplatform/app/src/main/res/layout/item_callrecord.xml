@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.xrecyclerview.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_swipelayout"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:orientation="horizontal"
+    app:ios="true"
+    app:leftSwipe="true"
+    app:swipeEnable="true">
+
+    <RelativeLayout
+        android:id="@+id/rl_callrecord_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/call_item_selector">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:paddingRight="3dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="12dp">
+
+                <TextView
+                    android:id="@+id/tv_phoneNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="@dimen/phoneNum_textsize" />
+
+                <TextView
+                    android:id="@+id/tv_call_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:layout_toRightOf="@+id/tv_phoneNum"
+                    android:gravity="center"
+                    android:textSize="@dimen/phoneCount_textsize" />
+
+                <TextView
+                    android:id="@+id/tv_call_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="9dp"
+                    android:gravity="center"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:paddingLeft="6dp">
+
+                <ImageView
+                    android:id="@+id/iv_phoneState"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true" />
+
+                <TextView
+                    android:id="@+id/tv_phone_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="7dp"
+                    android:layout_toRightOf="@+id/iv_phoneState"
+                    android:gravity="center"
+                    android:textColor="@color/item_call_city"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_call_cate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@+id/tv_phone_city"
+                    android:gravity="center"
+                    android:textColor="@color/tab_unselected_text"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@mipmap/iv_setting_arrow" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/divider_sample" />
+
+        <View
+            android:id="@+id/iv_call_detail"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/transparent" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_delete"
+        android:layout_width="66dp"
+        android:layout_height="match_parent"
+        android:background="@color/item_call_delete"
+        android:gravity="center"
+        android:text="删除"
+        android:textColor="@color/text_white"
+        android:textSize="@dimen/phoneNum_textsize" />
+</com.xrecyclerview.SwipeMenuLayout>

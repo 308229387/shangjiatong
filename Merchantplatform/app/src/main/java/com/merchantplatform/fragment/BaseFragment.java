@@ -23,4 +23,5 @@ public abstract class BaseFragment<T extends BaseModel> extends android.support.
     }
 
     protected abstract T createModel();
+
 }

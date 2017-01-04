@@ -1,0 +1,193 @@
+<resources>
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="GmacsBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="GmacsTheme" parent="GmacsBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowDisablePreview">true</item>
+        <!-- toolbar（actionbar）颜色 -->
+        <item name="colorPrimary">@drawable/titlebar_background</item>
+        <!-- 窗口的背景颜色 -->
+        <item name="colorPrimaryDark">@drawable/titlebar_background</item>
+        <item name="android:statusBarColor">@color/transparent_half</item>
+        <!--button style-->
+        <item name="android:buttonStyle">@style/GmacsTheme.Button</item>
+        <!--<item name="android:windowAnimationStyle">@style/Animation_Right</item>-->
+    </style>
+
+    <style name="WChatTheme" parent="GmacsTheme">
+        <item name="android:windowEnableSplitTouch">false</item>
+        <item name="android:splitMotionEvents">false</item>
+    </style>
+
+    <style name="ImageViewerTheme" parent="GmacsTheme">
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="GmacsTheme.Button" parent="@style/Widget.AppCompat.Button">
+        <item name="android:paddingBottom">3dip</item>
+        <item name="android:paddingTop">3dip</item>
+        <item name="android:paddingLeft">10dip</item>
+        <item name="android:paddingRight">10dip</item>
+        <item name="android:gravity">center</item>
+        <item name="android:minHeight">30dip</item>
+        <item name="android:minWidth">30dip</item>
+        <item name="android:textSize">@dimen/size_m</item>
+    </style>
+
+    <style name="publish_btn_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <!-- 边框 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">false</item>
+        <!-- 半透明 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowBackground">@color/transparent</item>
+        <!-- 背景透明 -->
+        <item name="android:backgroundDimEnabled">false</item>
+        <!-- 模糊 -->
+    </style>
+
+    <style name="dialog" parent="publish_btn_dialog">
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="DottedLine">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">#ffd9d9d9</item>
+    </style>
+    <!-- 聊天里的文本内容的格式 -->
+    <style name="style_talk_text_content">
+        <item name="android:paddingTop">9dp</item>
+        <item name="android:paddingBottom">9dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">16dp</item>
+    </style>
+    <!-- 聊天里的文本内容的格式 右边-->
+    <style name="style_talk_text_content_right">
+        <item name="android:paddingTop">9dp</item>
+        <item name="android:paddingBottom">9dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:textSize">16dp</item>
+    </style>
+    <!-- 聊天里的文本内容的格式 左边-->
+    <style name="style_talk_text_content_left">
+        <item name="android:paddingTop">9dp</item>
+        <item name="android:paddingBottom">9dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textSize">16dp</item>
+    </style>
+
+    <style name="style_remark_text_content">
+        <item name="android:textSize">15dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginLeft">@dimen/conversation_list_margin_left</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="style_gray_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/conversation_list_divider</item>
+        <item name="android:layout_height">1px</item>
+    </style>
+    <style name="style_audio_size_right">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">38dip</item>
+    </style>
+    <style name="style_audio_size_left">
+        <item name="android:layout_width">70dip</item>
+        <item name="android:layout_height">38dip</item>
+    </style>
+    <style name="style_gmacs_progress">
+        <item name="android:indeterminateDrawable">@drawable/gmacs_ic_progressbar</item>
+        <item name="android:indeterminateDuration">800</item>
+        <item name="android:minWidth">15dp</item>
+        <item name="android:minHeight">15dp</item>
+        <item name="android:maxWidth">15dp</item>
+        <item name="android:maxHeight">15dp</item>
+        <item name="android:layout_width">15dp</item>
+        <item name="android:layout_height">15dp</item>
+    </style>
+    <!-- 聊天界面中的EditText -->
+    <style name="style_chat_edittext">
+        <item name="android:maxLines">5</item>
+        <item name="android:maxLength">500</item>
+        <item name="android:paddingLeft">4dip</item>
+    </style>
+    <!-- TitleBar back button -->
+    <style name="style_title_bar_back_btn">
+        <item name="android:layout_width">@dimen/titlebar_height</item>
+        <item name="android:layout_height">@dimen/titlebar_height</item>
+    </style>
+
+    <style name="style_chat_send_failed">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="style_chat_send_button">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:paddingBottom">3dip</item>
+        <item name="android:paddingTop">3dip</item>
+        <item name="android:paddingLeft">10dip</item>
+        <item name="android:paddingRight">10dip</item>
+        <item name="android:minHeight">30dip</item>
+        <item name="android:minWidth">30dip</item>
+        <item name="android:textSize">@dimen/size_b_b</item>
+        <item name="android:textColor">@color/gmacs_color_send_button</item>
+        <item name="android:text">@string/send</item>
+    </style>
+
+    <style name="style_remark_name">
+        <item name="android:maxLength">15</item>
+        <item name="android:maxLines">1</item>
+    </style>
+    <style name="style_remark_info">
+        <item name="android:maxLength">50</item>
+    </style>
+    <style name="Animation_Right" >
+        <item name="android:activityOpenEnterAnimation">@anim/gmacs_slide_from_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/gmacs_slide_out_to_left</item>
+        <!--<item name="android:activityCloseEnterAnimation">@anim/gmacs_slide_in_from_left</item>-->
+        <!--<item name="android:activityCloseExitAnimation">@anim/gmacs_slide_out_to_right</item>-->
+    </style>
+
+    <style name="popupwindow_anim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/popupwindow_enter</item>
+        <item name="android:windowExitAnimation">@anim/popupwindow_exit</item>
+    </style>
+</resources>

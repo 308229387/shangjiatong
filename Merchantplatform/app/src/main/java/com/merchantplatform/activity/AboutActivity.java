@@ -14,8 +14,14 @@ public class AboutActivity extends BaseActivity<AboutActivityModel>{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+        init();
+    }
 
+    private void init(){
+        model.initView();
         model.initTitleBar();
+        model.setVersionName();
+        model.setSoftwareUsage();
     }
 
     @Override

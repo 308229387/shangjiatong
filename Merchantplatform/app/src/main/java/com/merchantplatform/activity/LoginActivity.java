@@ -15,10 +15,24 @@ public class LoginActivity extends BaseActivity<LoginActivityModel> {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_layout);
+        removeOtherActivity();
+        init();
+    }
 
+    private void removeOtherActivity() {
+        model.removeOtherActivity();
+    }
+
+    private void init() {
         model.createCallback();
-        model.setCallback();
+        model.registerCallback();
         model.createRequest();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        model.unregisterLoginSDK();
     }
 
     @Override

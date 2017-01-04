@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="310dp"
+        android:layout_height="146dp"
+        android:src="@mipmap/call_empty" />
+
+    <TextView
+        android:layout_width="89dp"
+        android:layout_height="17dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="暂无通话记录"
+        android:textColor="@color/item_call_emptytext"
+        android:textSize="14sp" />
+
+</LinearLayout>

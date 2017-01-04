@@ -25,8 +25,6 @@ public class Fragment1 extends BaseFragment<Fragment1Model> {
         model.createView(inflater, container);
     }
 
-
-
     @Override
     protected Fragment1Model createModel() {
         return new Fragment1Model(this);

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="GifTextureView">
+        <attr name="gifSource" format="reference|string"/>
+        <attr name="isOpaque" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="GifView">
+        <attr name="freezesAnimation" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="TagFlowLayout">
+        <attr name="gmacs_maxLineCount" format="integer" />
+        <attr name="gmacs_gravity" format="string" />
+        <attr name="gmacs_lineSpace" format="dimension" />
+        <attr name="gmacs_itemSpace" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="NetworkImageView">
+        <attr name="drawShape" format="string"/>
+        <attr name="drawDecorate" format="reference"/>
+        <attr name="drawSideLine" format="reference"/>
+    </declare-styleable>
+
+</resources>

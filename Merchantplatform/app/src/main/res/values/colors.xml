@@ -7,4 +7,48 @@
     <color name="text_yellow">#FFC800</color>
     <color name="bg_white">#FFFFFF</color>
     <color name="text_white">#FFFFFF</color>
+    <color name="text_black">#000000</color>
+    <color name="call_tab_background">#58697D</color>
+    <color name="gray_dark">#111111</color>
+
+    <color name="detail_line_color">#E0E0E0</color>
+    <color name="line_inner_color">#f0f0f0</color>
+    <color name="line_gray_color">#FFE0E0E0</color>
+    <color name="a_grade_pressed">#CCCCCC</color>
+
+    <color name="text_grays">#dfdfdf</color>
+    <color name="whitedark">#efefef</color>
+    <color name="content_bg_color">#f9f9f9</color>
+    <color name="gray_ababab">#ababab</color>
+
+    <color name="item_call_bg">#FBFCFD</color>
+    <color name="item_call_pressed_color">#F2F2F2</color>
+    <color name="tabbg_white">#E5FFFFFF</color>
+    <color name="tab_selected_text">#FF552E</color>
+    <color name="tab_unselected_text">#A4AAB3</color>
+    <color name="item_cate_line">#D8D8D8</color>
+    <color name="item_cate_solid">#F3F6F9</color>
+    <color name="item_call_phone">#030303</color>
+    <color name="item_call_city">#A8A8A8</color>
+    <color name="item_call_divider">#E0E0E4</color>
+    <color name="item_call_emptytext">#A4AAB3</color>
+    <color name="item_call_delete">#FF552E</color>
+    <color name="call_detail_call">#3DCA50</color>
+
+    <color name="common_background_color">#F2F2F2</color>
+
+    <color name="actionsheet_background">#F1F1F1</color>
+    <color name="actionsheet_gray">#8F8F8F</color>
+    <color name="alertdialog_text">#FF552E</color>
+    <color name="actionsheet_black">#000000</color>
+    <color name="actionsheet_white">#FFFFFF</color>
+    <color name="actionsheet_pressed">#f5f5f5</color>
+
+    <color name="light_text_color">#808080</color>
+    <color name="home_bottom_color">#ff552e</color>
+    <color name="home_bottom_not_color">#A4AAB3</color>
+    <color name="white_btn_pressed">#f0f0f0</color>
+
+    <color name="center_background">#FBFCFD</color>
+
 </resources>

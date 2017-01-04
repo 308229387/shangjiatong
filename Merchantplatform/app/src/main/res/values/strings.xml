@@ -1,6 +1,41 @@
 <resources>
-    <string name="app_name">Merchant platform</string>
-
+    <string name="app_name">58商家通</string>
     <string name="tab_menu_alert">提醒</string>
+    <string-array name="permissions">
+        <item>请授予获取录音的权限，否则相关功能可能无法正常使用</item>
+        <item>请授予获取账户信息的权限，否则相关功能可能无法正常使用</item>
+        <item>请授予获取电话状态的权限，否则相关功能可能无法正常使用</item>
+        <item>请授予直接拨打电话的权限，否则相关功能可能无法正常使用</item>
+        <item>请授予使用相机的权限，否则相关功能可能无法正常使用</item>
+        <item>请授予获取精确位置的权限，否则相关功能可能无法正常使用</item>
+        <item>请授予获取粗略位置的权限，否则相关功能可能无法正常使用</item>
+        <item>请授予读取存储空间的权限，否则相关功能可能无法正常使用</item>
+        <item>请授予写入存储空间的权限，否则相关功能可能无法正常使用</item>
+        <item>请授予获取通话记录的权限，否则相关功能可能无法正常使用</item>
+    </string-array>
 
+    <item name="delete_tag_vh" type="id" />
+    <item name="delete_tag_position" type="id" />
+
+    <string name="no_internet">当前没有网络,稍后重试</string>
+    <string name="mobile_notice"> 58同城提醒您:当前填写的手机号码将成为客服及客户联系您的重要方式.请填写您的正确的手机号码。</string>
+    <string name="feedback_input_hint">请填写您的宝贵意见，让58不断进步，谢谢！</string>
+    <string name="feedback_contact">请填写有效的联系方式</string>
+    <string name="feedback_input_empty">您还没输入文字呢</string>
+    <!--<string name="feedback_submit_error">提交失败，意见反馈每天只能提交一次哦</string>-->
+    <!--<string name="feedback_submit_success">提交成功,58已经收到您的反馈，我们会尽快做出改进~</string>-->
+
+    <string name="update_version_tip">版本更新</string>
+    <string name="update_version_downloading">正在下载新版本...</string>
+    <string name="update_download_done">下载完成</string>
+    <string name="update_download_failure">下载失败</string>
+    <string name="update_download_please_retry">请重新检查更新</string>
+    <string name="update_download_apk_file_no_find">没有找到安装包！</string>
+    <string name="update_download_apk_file_path_empty">安装包路径名为空！</string>
+
+    <string name="validate_code_already_send">验证码已发送,请耐心等待</string>
+    <string name="bind_success">绑定手机号成功！</string>
+
+    <string name="force_exit">账号在其他手机登录，您已被迫下线.\n请注意密码安全。</string>
+    <string name="ppu_expired">PPU过期，请重新登录</string>
 </resources>

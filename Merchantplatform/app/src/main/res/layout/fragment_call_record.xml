@@ -1,0 +1,17 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.xrecyclerview.XRecyclerView
+        android:id="@+id/xrv_callrecord"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <include
+        android:id="@+id/layout_call_empty"
+        layout="@layout/call_empty_layout"
+        android:layout_width="310dp"
+        android:layout_height="179dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="115dp" />
+</RelativeLayout>
