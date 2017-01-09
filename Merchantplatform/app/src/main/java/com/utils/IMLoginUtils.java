@@ -27,7 +27,6 @@ import okhttp3.Response;
  */
 
 public class IMLoginUtils {
-    private Activity context;
 
     String userId = LoginClient.getUserID(HyApplication.getApplication());
     String keyValue = "wb@D11ncE2Ym4xOJnSWknzi";
@@ -41,7 +40,7 @@ public class IMLoginUtils {
     ImGetTokenResponse tokenResponse;
 
     public IMLoginUtils(Activity context) {
-        this.context = context;
+        //this.context = context;
         calculationKey();
         getToken();
     }
