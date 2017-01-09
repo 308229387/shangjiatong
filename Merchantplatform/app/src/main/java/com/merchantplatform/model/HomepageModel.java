@@ -31,6 +31,7 @@ import com.ui.HomepageBottomButton;
 import com.utils.AppInfoUtils;
 import com.utils.StringUtil;
 import com.utils.Urls;
+import com.utils.UserUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -209,7 +210,9 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         public void onResponse(boolean isFromCache, GlobalResponse globalResponse, Request request, @Nullable Response response) {
             if (globalResponse != null) {
                 String appUrl = globalResponse.getData().getAppUrl();
+                String isPayOpen = globalResponse.getData().getIsPayOpen();
                 String version = globalResponse.getData().getVersion();
+                UserUtils.setPay(context,isPayOpen);
                 updateVersion(appUrl, version);
             }
         }

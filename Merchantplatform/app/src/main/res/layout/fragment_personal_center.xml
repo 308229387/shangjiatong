@@ -39,7 +39,8 @@
         android:id="@+id/rl_personal_funding"
         android:layout_width="fill_parent"
         android:layout_height="44dp"
-        android:background="@color/center_background">
+        android:background="@color/center_background"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/iv_funding"
@@ -67,6 +68,13 @@
             android:layout_marginRight="10dip"
             android:src="@mipmap/iv_setting_arrow" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dip"
+            android:layout_marginLeft="15dip"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line_gray_color"/>
+
 
     </RelativeLayout>
 
@@ -76,11 +84,6 @@
         android:layout_height="44dp"
         android:background="@color/center_background">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dip"
-            android:layout_marginLeft="15dip"
-            android:background="@color/line_gray_color"/>
 
         <ImageView
             android:id="@+id/iv_setting"

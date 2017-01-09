@@ -20,11 +20,13 @@ public class UserUtils {
     private static final String USER_SOUND = "sound";
     private static final String USER_SHAKE = "shake";
     private static final String USER_MOBILE = "mobile";
+    private static final String PAY = "pay";
     private static String userId = "";
     public static int hasValidate = 0; //默认未认证，1代表已经认证
     private static String face = "";
     private static String name = "";
     private static String mobile = "";
+    private static String pay = "";
 
     public static void setUserId(Context context, String userId) {
         SharedPreferences sp = context.getSharedPreferences(USER_SP_NAME, 0);
@@ -104,13 +106,28 @@ public class UserUtils {
         return mobile;
     }
 
+    public static void setPay(Context context, String pay) {
+        SharedPreferences sp = context.getSharedPreferences(USER_SP_NAME, 0);
+        UserUtils.pay = pay;
+        sp.edit().putString(PAY, pay).commit();
+    }
+
+    public static String getPay() {
+        if (TextUtils.isEmpty(pay)) {
+            pay = HyApplication.getApplication().getSharedPreferences(USER_SP_NAME, 0).getString(PAY, "");
+        }
+        return pay;
+    }
+
     public static void clearUserInfo(Context context) {
         context.getSharedPreferences(USER_SP_NAME, 0).edit().putString(USER_ID, "").commit();
         context.getSharedPreferences(USER_SP_NAME, 0).edit().putInt(USER_VALIDATE, 0).commit();
-        context.getSharedPreferences(USER_SP_NAME, 0).edit().putInt(USER_MOBILE, 0).commit();
+        context.getSharedPreferences(USER_SP_NAME, 0).edit().putString(USER_MOBILE, "").commit();
+        context.getSharedPreferences(USER_SP_NAME, 0).edit().putString(PAY, "").commit();
         userId = "";
         hasValidate = 0;
         mobile = "";
+        pay ="";
     }
 
     public static void setSoundState(Context context, boolean soundState) {
