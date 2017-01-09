@@ -107,13 +107,14 @@ public class IMLoginUtils {
             imToken = tokenResponse.getToken();
 
             Gmacs.getInstance().setGmacsUserInfo(gmacsUserInfo);
-            Gmacs.getInstance().loginAsync(tempUserId, "", 2, "", imToken, 0, new ClientManager.LoginCb() {
+            if (imToken != null)
+                Gmacs.getInstance().loginAsync(tempUserId, "", 2, "", imToken, 0, new ClientManager.LoginCb() {
 
-                @Override
-                public void done(int i, String s) {
-                    GmacsManager.getInstance().startGmacs(new MessageNotifyHelper());
-                }
-            });
+                    @Override
+                    public void done(int i, String s) {
+                        GmacsManager.getInstance().startGmacs(new MessageNotifyHelper());
+                    }
+                });
         }
     }
 }
