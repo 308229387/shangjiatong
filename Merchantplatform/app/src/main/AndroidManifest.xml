@@ -86,7 +86,6 @@
         <!-- 这个Activity不要启用单独的Process，否则支付SDK的回调不会执行 -->
         <activity
             android:name=".activity.FundingManageActivity"
-            android:process=":funding.webview"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SettingActivity"
