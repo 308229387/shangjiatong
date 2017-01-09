@@ -57,6 +57,7 @@ public class PersonalCenterModel extends BaseModel implements View.OnClickListen
 
     public void initData(){
         getUserInfo();
+        judgePayView();
     }
 
     public void setListener(){
@@ -72,6 +73,17 @@ public class PersonalCenterModel extends BaseModel implements View.OnClickListen
     private void getUserInfo(){
         OkHttpUtils.get(Urls.PERSONAL_CENTER)
                 .execute(new userInfoCallback(context.getActivity()));
+    }
+
+    private void judgePayView(){
+        String isPayOpen = UserUtils.getPay();
+        if(!StringUtils.isEmpty(isPayOpen)){
+            if("1".equals(isPayOpen)){
+                rl_personal_funding.setVisibility(View.VISIBLE);
+            }else{
+                rl_personal_funding.setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override

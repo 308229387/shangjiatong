@@ -115,6 +115,18 @@
             android:theme="@style/GmacsTheme"
             android:windowSoftInputMode="stateUnspecified|adjustResize" />
 
+        <activity
+            android:name=".activity.PromoteMessageActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.UpPromoteActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.PrecisionPromoteActivity"
+            android:screenOrientation="portrait" />
+
         <service
             android:name=".service.AppDownloadService"
             android:enabled="true"

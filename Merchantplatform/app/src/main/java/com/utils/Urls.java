@@ -88,5 +88,17 @@ public class Urls {
      * 拉取系统通知
      */
     public static final String SYSTEM_NOTIFICATION = BASE_URL_APP + "message/push/system";
+    /**
+     * 推广助手页
+     */
+    public static final String PROMOTE_MESSAGE = "http://m.cube.58.com/cube/m/manage/initMessage?sourceId=205000";
+    /**
+     * 置顶推广
+     */
+    public static final String UP_PROMOTE = "http://mcube.58.com/cube/infotop/loadpage/17131403/";
+    /**
+     * 精准推广
+     */
+    public static final String PRECISION_PROMOTE ="http://mcube.58.com/cube/m/pm/1/205000/";
 
 }

@@ -20,7 +20,7 @@ public class GlobalResponse implements Serializable{
 
     public class data implements Serializable{
         private String appUrl;
-        private String isPayOpen; //ios支付开关
+        private String isPayOpen; //充值支付开关
         private String version ;
 
         public String getAppUrl() {
