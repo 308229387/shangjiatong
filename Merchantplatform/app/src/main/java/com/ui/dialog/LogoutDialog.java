@@ -40,6 +40,7 @@ public class LogoutDialog {
 
                 @Override
                 public void onDialogClickCancel() {
+                    mLogoutDialog.dismiss();
                     new LogoutInintUtils(HyApplication.getApplication());
                 }
 

@@ -13,9 +13,15 @@ import android.widget.ProgressBar;
 
 import com.Utils.TitleBar;
 import com.merchantplatform.R;
+import com.merchantplatform.activity.FundingManageActivity;
 import com.merchantplatform.activity.PromoteMessageActivity;
+import com.ta.utdid2.android.utils.StringUtils;
+import com.ui.dialog.LogoutDialog;
+import com.ui.dialog.PayAlertDialog;
 import com.utils.AppInfoUtils;
+import com.utils.PageSwitchUtils;
 import com.utils.Urls;
+import com.utils.UserUtils;
 
 /**
  * Created by 58 on 2017/1/6.
@@ -134,12 +140,18 @@ public class PromoteMessageActivityModel extends BaseModel{
             if (context == null) {
                 return false;
             }
-//            //调用拨号程序
-//            if (url.startsWith("mailto:") || url.startsWith("geo:") || url.startsWith("tel:") || url.startsWith("smsto:")) {
-//                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-//                context.startActivity(intent);
-//                return true;
-//            }
+            //点击充值
+            if (url.startsWith("http://paycenter.58.com/wappay")) {
+                String isPayOpen = UserUtils.getPay();
+                if(!StringUtils.isEmpty(isPayOpen)){
+                    if("1".equals(isPayOpen)){
+                        PageSwitchUtils.goToActivity(context,FundingManageActivity.class);
+                    }else{
+                        new PayAlertDialog(context, "本APP暂不支持充值业务，请在58同城APP上进行充值");
+                    }
+                }
+                return true;
+            }
 
             return super.shouldOverrideUrlLoading(view, url);
         }
