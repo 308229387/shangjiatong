@@ -5,10 +5,11 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:id="@+id/system_notification_layout"
+        android:id="@+id/extend_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/gmacs_bg_conversation_list_item">
+        android:background="@drawable/gmacs_bg_conversation_list_item"
+        >
 
         <com.android.gmacs.view.NetworkImageView
             android:id="@+id/iv_avatar"
@@ -53,7 +54,7 @@
 
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="系统通知"
+                    android:text="推广助手"
                     android:textColor="@color/conversation_list_name"
                     android:textSize="@dimen/conversation_list_name" />
 
@@ -87,8 +88,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:text="暂无系统消息"
                 android:includeFontPadding="false"
+                android:text="点我推广，生意机会翻倍哦！"
                 android:maxLines="1"
                 android:textColor="@color/conversation_list_msg"
                 android:textSize="@dimen/conversation_list_msg" />

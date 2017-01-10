@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
+import com.Utils.JumpExtendAction;
 import com.Utils.JumpSystemNotificationAction;
 import com.Utils.ShowRedDotSystemNotificationAction;
 import com.Utils.SystemGetNotificationInfoAction;
@@ -56,8 +57,12 @@ public class HomepageActivity extends BaseActivity<HomepageModel> {
             public void run() {
                 SystemNotificationOperate.updateDataRedDot(HomepageActivity.this);
             }
-        };
+        }.start();
 
+    }
+    @Subscribe
+    public void onEvent(JumpExtendAction action) {
+        startActivity(new Intent(HomepageActivity.this, PromoteMessageActivity.class));
     }
 
     @Subscribe

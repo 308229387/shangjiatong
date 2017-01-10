@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.Utils.JumpExtendAction;
 import com.Utils.JumpSystemNotificationAction;
 import com.Utils.ShowRedDotSystemNotificationAction;
 import com.Utils.SystemGetNotificationInfoAction;
@@ -73,6 +73,7 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
     protected ArrayList<Talk> mTalks = new ArrayList<>();
     private RelativeLayout titleBar;
     private ImageView callPhone;
+    private RelativeLayout extendHead;
 
 
     @Override
@@ -125,7 +126,9 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
         View v = inflater.inflate(R.layout.system_notification_list_layout, null);
+        View vv = inflater.inflate(R.layout.extend_list_layout, null);
         systemHead = (RelativeLayout) v.findViewById(R.id.system_notification_layout);
+        extendHead = (RelativeLayout) vv.findViewById(R.id.extend_layout);
 
         redDot = (TextView) systemHead.findViewById(R.id.tv_conversation_msg_count);
         systemText = (TextView) systemHead.findViewById(R.id.tv_conversation_msg_text);
@@ -136,19 +139,10 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
                 EventBus.getDefault().post(new JumpSystemNotificationAction("jump"));
             }
         });
-        systemHead.setOnLongClickListener(new View.OnLongClickListener() {
+        extendHead.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View v) {
-                final GmacsDialog.Builder dialog = new GmacsDialog.Builder(getActivity(), GmacsDialog.Builder.DIALOG_TYPE_LIST_NO_BUTTON);
-                dialog.setListTexts(new String[]{"删除系统通知"});
-                dialog.initDialog(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        systemHead.setVisibility(View.GONE);
-                        setShowNotification(false);
-                    }
-                }).create().show();
-                return true;
+            public void onClick(View v) {
+                EventBus.getDefault().post(new JumpExtendAction("jump"));
             }
         });
 
@@ -175,6 +169,7 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
         }
         mListView.addHeaderView(mHeaderView);
         mListView.addHeaderView(v);
+        mListView.addHeaderView(vv);
 
     }
 
@@ -192,9 +187,7 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
 
     @Subscribe
     public void onEvent(SystemNotification temp) {//来消息时更新
-        setShowNotification(true);
         systemText.setText(temp.getDescribe());
-        systemHead.setVisibility(View.VISIBLE);
         if (showRed)
             redDot.setVisibility(View.VISIBLE);
         redDot.setText(temp.getIsReaded() + "");
@@ -202,13 +195,10 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
 
     @Subscribe
     public void onEvent(SystemNotificationInfoAction temp) {//进来时拉取
-        if (getShowNotification()) {
             systemText.setText(temp.getJump());
-            systemHead.setVisibility(View.VISIBLE);
             if (temp.getRedDot() > 0 && showRed)
                 redDot.setVisibility(View.VISIBLE);
             redDot.setText(temp.getRedDot() + "");
-        }
     }
 
 
@@ -426,17 +416,6 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
                 mConnectionStatusTextView.setText(R.string.connection_status_kickedoff);
                 break;
         }
-    }
-
-    public void setShowNotification(boolean trag) {
-        SharedPreferences sp = getActivity().getSharedPreferences("user", 0);
-        sp.edit().putBoolean("showNotification", trag).commit();
-    }
-
-    public boolean getShowNotification() {
-        boolean tag = false;
-        tag = getActivity().getSharedPreferences("user", 0).getBoolean("showNotification", false);
-        return tag;
     }
 
 }
