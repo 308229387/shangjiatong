@@ -31,13 +31,13 @@ public class DisplayUtils {
     /**
      * Convert Dp to Pixel
      */
-    public static int dpToPx(float dp, Resources resources) {
-        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.getDisplayMetrics());
+    public static int dpToPx(float dp, Context context) {
+        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
         return (int) px;
     }
 
-    public static int spToPx(float sp, Resources resources) {
-        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, resources.getDisplayMetrics());
+    public static int spToPx(float sp, Context context) {
+        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
         return (int) px;
     }
 
