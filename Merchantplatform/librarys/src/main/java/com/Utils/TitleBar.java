@@ -104,7 +104,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
         addView(mLeftText, layoutParams);
         addView(mCenterLayout);
         addView(mRightLayout, layoutParams);
-        addView(mDividerView, new LayoutParams(LayoutParams.MATCH_PARENT, 1));
+        addView(mDividerView, new LayoutParams(LayoutParams.MATCH_PARENT, dip2px(0.5f)));
     }
 
     public void setImmersive(boolean immersive) {
@@ -399,7 +399,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
         mDividerView.layout(0, getMeasuredHeight() - mDividerView.getMeasuredHeight(), getMeasuredWidth(), getMeasuredHeight());
     }
 
-    public static int dip2px(int dpValue) {
+    public static int dip2px(float dpValue) {
         final float scale = Resources.getSystem().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
@@ -421,7 +421,6 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
         }
         return result;
     }
-
 
     /**
      * A {@link LinkedList} that holds a list of {@link Action}s.
