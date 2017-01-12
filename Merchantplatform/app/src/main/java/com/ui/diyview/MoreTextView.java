@@ -1,6 +1,7 @@
 package com.ui.diyview;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +22,7 @@ public class MoreTextView extends FrameLayout {
     private TextView tv_description_content;
     private String content;
     private TextView tv_more;
-    private int limiteCount = 2;//行数限制 两个都设置已line为准
+    private int limiteCount = 6;//行数限制 两个都设置已line为准
     private LimiteTypeEnum limiteTypeEnum = LimiteTypeEnum.LINE_LIMITE;
 
     public MoreTextView(Context context) {
@@ -69,24 +70,31 @@ public class MoreTextView extends FrameLayout {
         tv_more.setText(moreText);
     }
 
-    public void setContent(String content) {
+    public void setContent(final String content) {
         this.content = content;
-        if (limiteTypeEnum == LimiteTypeEnum.LINE_LIMITE) {
-            tv_description_content.setText(content);
-            if (tv_description_content.getLineCount() > limiteCount) {
-                tv_more.setVisibility(View.VISIBLE);
-                tv_description_content.setMaxLines(limiteCount);
-            } else {
-                tv_more.setVisibility(View.GONE);
+
+        tv_description_content.setText(content);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (limiteTypeEnum == LimiteTypeEnum.LINE_LIMITE) {
+                    if (tv_description_content.getLineCount() > limiteCount) {
+                        tv_more.setVisibility(View.VISIBLE);
+                        tv_description_content.setMaxLines(limiteCount);
+                    } else {
+                        tv_more.setVisibility(View.GONE);
+                    }
+                } else {
+                    if (content.length() > limiteCount) {
+                        tv_more.setVisibility(View.VISIBLE);
+                        tv_description_content.setText(content.substring(0, limiteCount));
+                    } else {
+                        tv_more.setVisibility(View.GONE);
+                    }
+                }
             }
-        } else {
-            if (content.length() > limiteCount) {
-                tv_more.setVisibility(View.VISIBLE);
-                tv_description_content.setText(content.substring(0, limiteCount));
-            } else {
-                tv_more.setVisibility(View.GONE);
-            }
-        }
+        }, 100);
+
     }
 
     public enum LimiteTypeEnum {

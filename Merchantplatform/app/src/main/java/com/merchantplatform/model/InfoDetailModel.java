@@ -69,7 +69,7 @@ public class InfoDetailModel extends BaseModel {
     private View iv_info_detail_back;
     private String infoId;
 
-    private TestLoopAdapter adapter;
+    private InfoDetailAdapter adapter;
     private List<String> pics;
 
 
@@ -79,7 +79,7 @@ public class InfoDetailModel extends BaseModel {
 
     public void initView() {
         rollPagerView = (RollPagerView) activity.findViewById(R.id.rpv_info_detail);
-        adapter = new TestLoopAdapter(rollPagerView);
+        adapter = new InfoDetailAdapter(rollPagerView);
         iv_info_detail_back = activity.findViewById(R.id.iv_info_detail_back);
 
         tv_title_info_detail = (TextView) activity.findViewById(R.id.tv_title_info_detail);
@@ -206,9 +206,9 @@ public class InfoDetailModel extends BaseModel {
 
     }
 
-    private class TestLoopAdapter extends LoopPagerAdapter {
+    private class InfoDetailAdapter extends LoopPagerAdapter {
 
-        public TestLoopAdapter(RollPagerView viewPager) {
+        public InfoDetailAdapter(RollPagerView viewPager) {
             super(viewPager);
         }
 
