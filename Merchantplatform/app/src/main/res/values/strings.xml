@@ -38,4 +38,7 @@
 
     <string name="force_exit">账号在其他手机登录，您已被迫下线.\n请注意密码安全。</string>
     <string name="ppu_expired">PPU过期，请重新登录</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
