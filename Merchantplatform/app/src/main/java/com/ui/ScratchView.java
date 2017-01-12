@@ -257,7 +257,7 @@ public class ScratchView extends View {
         mMaskTextPaint.setAntiAlias(true);
         mMaskTextPaint.setDither(true);
         mMaskTextPaint.setColor(Color.BLACK);
-        mMaskTextPaint.setTextSize(60);
+        mMaskTextPaint.setTextSize(30);
     }
 
     public void reset() {
