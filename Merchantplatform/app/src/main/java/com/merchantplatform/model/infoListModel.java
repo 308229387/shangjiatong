@@ -39,7 +39,7 @@ public class infoListModel extends BaseModel {
     InfoListAdapter infoListAdapter;
     XRecyclerView xrv_post;
     ArrayList<InfoListBean> postBeanList = new ArrayList();
-    TitleBar titleBar;
+    //View title_bar;
 
     public infoListModel(Activity context) {
         this.activity = context;
@@ -55,6 +55,7 @@ public class infoListModel extends BaseModel {
     public View initView(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.fragment_info, container, false);
 
+        //title_bar = view.findViewById(R.id.title_bar);
         xrv_post = (XRecyclerView) view.findViewById(R.id.xrv_info);
 
         //recyclerView设置布局样式
@@ -82,23 +83,30 @@ public class infoListModel extends BaseModel {
                 xrv_post.loadMoreComplete();
             }
         });
+
+//        title_bar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                infoListAdapter.getClickViewHolder().setText(R.id.tv_title_info_list,"haha");
+//            }
+//        });
         return view;
     }
 
-    /**
-     * 由于沉浸式状态栏需要设置布局高度
-     */
-    public void setHeaderHeight() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            //透明状态栏
-            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            int height = DisplayUtils.getStatusBarHeight(activity);
-            int more = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, activity.getResources().getDisplayMetrics());
-            if (titleBar != null) {
-                titleBar.setPadding(0, height + more, 0, 0);
-            }
-        }
-    }
+//    /**
+//     * 由于沉浸式状态栏需要设置布局高度
+//     */
+//    public void setHeaderHeight() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            //透明状态栏
+//            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            int height = DisplayUtils.getStatusBarHeight(activity);
+//            int more = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, activity.getResources().getDisplayMetrics());
+//            if (titleBar != null) {
+//                titleBar.setPadding(0, height + more, 0, 0);
+//            }
+//        }
+//    }
 
     /**
      * 获取数据

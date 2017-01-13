@@ -74,6 +74,7 @@ public class MoreTextView extends FrameLayout {
         this.content = content;
 
         tv_description_content.setText(content);
+        //getLineCount()方法必须必须在Text加载完成之后才能获取
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

@@ -32,6 +32,13 @@ import java.util.Map;
 
 public class InfoListAdapter extends BaseRecyclerViewAdapter<InfoListBean, InfoListAdapter.InfoViewHolder> {
 
+
+    private InfoViewHolder clickViewHolder;
+
+    public InfoViewHolder getClickViewHolder() {
+        return clickViewHolder;
+    }
+
     public InfoListAdapter(final Context context, ArrayList<InfoListBean> postListBeen) {
         super(context, postListBeen);
         setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
@@ -45,8 +52,11 @@ public class InfoListAdapter extends BaseRecyclerViewAdapter<InfoListBean, InfoL
         });
     }
 
+
+
     @Override
-    protected void bindDataToItemView(InfoViewHolder InfoViewHolder, int position) {
+    protected void bindDataToItemView(final InfoViewHolder InfoViewHolder, int position) {
+
         final InfoListBean infoListBean = getItem(position);
         //添加图片
         ImageView imageView = InfoViewHolder.getView(R.id.iv_info_list);
@@ -91,6 +101,7 @@ public class InfoListAdapter extends BaseRecyclerViewAdapter<InfoListBean, InfoL
             InfoViewHolder.setOnClickListener(R.id.ll_info_list_accurate, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    clickViewHolder = InfoViewHolder;
                     Map map = new HashMap<>();
                     map.put(Constant.INFOID, infoListBean.getInfoId());
                     PageSwitchUtils.goToActivityWithString(context, PrecisionPromoteActivity.class, map);

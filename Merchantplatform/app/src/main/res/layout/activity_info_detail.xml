@@ -26,13 +26,6 @@
                 android:layout_alignParentTop="true"
                 android:background="@mipmap/info_detail_no_pic"></com.rollerview.RollPagerView>
 
-            <ImageView
-                android:id="@+id/iv_info_detail_back"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="26dp"
-                android:src="@mipmap/info_back" />
 
             <TextView
                 android:id="@+id/tv_title_info_detail"
@@ -98,7 +91,7 @@
                 android:drawableLeft="@mipmap/info_read"
                 android:drawablePadding="8dp"
                 android:gravity="center"
-                android:text="2016"
+                android:text=""
                 android:textColor="@color/common_text_gray"
                 android:textSize="12dp" />
 
@@ -114,7 +107,7 @@
                 android:drawableLeft="@mipmap/info_date"
                 android:drawablePadding="8dp"
                 android:gravity="center"
-                android:text="2016"
+                android:text=""
                 android:textColor="@color/common_text_gray"
                 android:textSize="12dp" />
 
@@ -216,7 +209,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_info_detail_address"
                 android:layout_marginLeft="13dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="25dp"
                 android:text="服务详情"
                 android:textColor="@color/common_text_gray"
                 android:textSize="17dp" />
@@ -244,7 +237,8 @@
         android:layout_width="match_parent"
         android:layout_height="49dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/common_bg_white">
+        android:background="@color/common_bg_white"
+        android:visibility="gone">
 
 
         <LinearLayout
@@ -300,4 +294,13 @@
         android:layout_height="0.5dp"
         android:layout_above="@id/ll_bottom_bar"
         android:background="@color/common_line_gray" />
+
+
+    <ImageView
+        android:id="@+id/iv_info_detail_back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="26dp"
+        android:src="@mipmap/info_back" />
 </RelativeLayout>
