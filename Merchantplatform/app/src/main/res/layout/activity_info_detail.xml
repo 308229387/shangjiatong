@@ -46,7 +46,7 @@
                 android:layout_below="@id/tv_title_info_detail"
                 android:layout_marginLeft="13dp"
                 android:layout_marginTop="6dp"
-                android:text="显示中"
+                android:text=""
                 android:textColor="@color/common_text_gray"
                 android:textSize="15dp" />
 
@@ -61,6 +61,7 @@
                 android:background="@drawable/info_list_state_bg"
                 android:padding="2dp"
                 android:text="置顶"
+                android:visibility="gone"
                 android:textColor="@color/common_text_orange"
                 android:textSize="9dp" />
 
@@ -75,6 +76,7 @@
                 android:background="@drawable/info_list_state_bg"
                 android:padding="2dp"
                 android:text="精准"
+                android:visibility="gone"
                 android:textColor="@color/common_text_orange"
                 android:textSize="9dp" />
 

@@ -22,6 +22,7 @@ public class MoreTextView extends FrameLayout {
     private TextView tv_description_content;
     private String content;
     private TextView tv_more;
+    private View line;
     private int limiteCount = 6;//行数限制 两个都设置已line为准
     private LimiteTypeEnum limiteTypeEnum = LimiteTypeEnum.LINE_LIMITE;
 
@@ -47,6 +48,7 @@ public class MoreTextView extends FrameLayout {
         View view = LayoutInflater.from(context).inflate(R.layout.more_text_view, this, true);
         tv_description_content = (TextView) view.findViewById(R.id.tv_description_content);
         tv_more = (TextView) view.findViewById(R.id.tv_more);
+        line = view.findViewById(R.id.line);
 
         tv_more.setOnClickListener(new OnClickListener() {
             @Override
@@ -80,17 +82,21 @@ public class MoreTextView extends FrameLayout {
             public void run() {
                 if (limiteTypeEnum == LimiteTypeEnum.LINE_LIMITE) {
                     if (tv_description_content.getLineCount() > limiteCount) {
+                        line.setVisibility(View.VISIBLE);
                         tv_more.setVisibility(View.VISIBLE);
                         tv_description_content.setMaxLines(limiteCount);
                     } else {
                         tv_more.setVisibility(View.GONE);
+                        line.setVisibility(View.GONE);
                     }
                 } else {
                     if (content.length() > limiteCount) {
                         tv_more.setVisibility(View.VISIBLE);
+                        line.setVisibility(View.VISIBLE);
                         tv_description_content.setText(content.substring(0, limiteCount));
                     } else {
                         tv_more.setVisibility(View.GONE);
+                        line.setVisibility(View.GONE);
                     }
                 }
             }
