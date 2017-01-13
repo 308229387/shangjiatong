@@ -16,19 +16,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.Utils.TitleBar;
+import com.Utils.UserUtils;
 import com.callback.DialogCallback;
 import com.log.LogUmengAgent;
 import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.MobileBindChangeActivity;
 import com.merchantplatform.bean.TempResponse;
-import com.merchantplatform.bean.UpdateMobileResponse;
 import com.okhttputils.OkHttpUtils;
 import com.ui.dialog.CommonDialog;
 import com.utils.StringUtil;
 import com.utils.ToastUtils;
 import com.utils.Urls;
-import com.utils.UserUtils;
 
 import okhttp3.Request;
 import okhttp3.Response;
@@ -101,7 +100,7 @@ public class MobileBindChangeModel extends BaseModel implements View.OnClickList
 
     private void setNowBindMobile(){
         if (TextUtils.isEmpty(mobile)) {
-            mobile = UserUtils.getMobile();
+            mobile = UserUtils.getMobile(context);
             et_now_bind_mobile.setText(mobile);
         } else {
             et_now_bind_mobile.setText(mobile);

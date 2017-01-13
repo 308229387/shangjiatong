@@ -3,9 +3,13 @@ package com.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.view.View;
 
 import com.merchantplatform.R;
 import com.merchantplatform.application.HyApplication;
+import com.merchantplatform.service.AppDownloadService;
+import com.ui.dialog.AppDownLoadDialog;
+import com.ui.dialog.UpdateDialog;
 
 import java.io.File;
 
@@ -17,6 +21,8 @@ public class UpdateUtils {
     private static UpdateUtils mInstance;
     private static final String SAVE_FILE_NAME = "update.apk";
 
+    private UpdateDialog mUpdateDialog;
+    private AppDownLoadDialog mAppDownLoadDialog;
     public static UpdateUtils getInstance(){
         if(mInstance == null){
             mInstance = new UpdateUtils();
@@ -43,5 +49,25 @@ public class UpdateUtils {
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.setDataAndType(Uri.parse("file://" + apkfile.toString()), "application/vnd.android.package-archive");
         context.startActivity(i);
+    }
+
+    public UpdateDialog showUpateDialog(final Context context,final String appUrl,final String isForce){
+        mUpdateDialog = new UpdateDialog(context);
+        mUpdateDialog.setForceUpdateFlag(isForce);
+        mUpdateDialog.setOkOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if("1".equals(isForce)){
+                    mAppDownLoadDialog = new AppDownLoadDialog(context);
+                    mAppDownLoadDialog.setCanceledOnTouchOutside(false);
+                    mAppDownLoadDialog.setAppVersionData(appUrl);
+                    mAppDownLoadDialog.show();
+                }else{
+                    AppDownloadService.startService(context, appUrl);
+                }
+            }
+        });
+        mUpdateDialog.show();
+        return mUpdateDialog;
     }
 }

@@ -13,11 +13,15 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.Utils.TitleBar;
+import com.dataStore.PromotePrefersUtil;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.UpPromoteActivity;
 import com.utils.AppInfoUtils;
 import com.utils.Constant;
+import com.utils.DateUtils;
 import com.utils.Urls;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by 58 on 2017/1/9.
@@ -148,12 +152,16 @@ public class UpPromoteActivityModel extends BaseModel{
             if (context == null) {
                 return false;
             }
-//            //调用拨号程序
-//            if (url.startsWith("mailto:") || url.startsWith("geo:") || url.startsWith("tel:") || url.startsWith("smsto:")) {
-//                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-//                context.startActivity(intent);
-//                return true;
-//            }
+            if(url.startsWith(Urls.PROMOTE_MESSAGE)){
+                String upTime =  PromotePrefersUtil.getInstance().getUpPromote();
+                if(DateUtils.isEmptyAndNotToday(upTime)){
+                    EventBus.getDefault().post(upTime);//todo 需要修改
+                }
+                String currentTime = DateUtils.getCurrentDateTime();
+                PromotePrefersUtil.getInstance().saveUpPromote(currentTime);
+                context.onBackPressed();
+                return true;
+            }
 
             return super.shouldOverrideUrlLoading(view, url);
         }

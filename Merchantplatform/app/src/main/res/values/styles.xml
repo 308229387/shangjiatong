@@ -88,4 +88,21 @@
         <item name="android:windowBackground">@mipmap/iv_splash</item>
     </style>
 
+    <style name="NumberProgressBar_Default">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+
+        <item name="progress_max">100</item>
+        <item name="progress_current">0</item>
+
+        <item name="progress_unreached_color">@color/line_gray_color</item>
+        <item name="progress_reached_color">@color/red</item>
+
+        <item name="progress_text_size">10sp</item>
+        <item name="progress_text_color">@color/gray_dark</item>
+
+        <item name="progress_reached_bar_height">3dp</item>
+        <item name="progress_unreached_bar_height">1.5dp</item>
+    </style>
+
 </resources>

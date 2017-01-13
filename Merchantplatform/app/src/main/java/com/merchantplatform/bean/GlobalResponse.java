@@ -19,9 +19,12 @@ public class GlobalResponse implements Serializable{
     }
 
     public class data implements Serializable{
-        private String appUrl;
-        private String isPayOpen; //充值支付开关
-        private String version ;
+        private String appUrl; //app下载Url地址
+        private String isPayOpen; //我的资金开关
+        private String version ; //app版本号
+        private String isForceUpdate; //是否强制更新
+        private String staffContactPhone; //客服联系电话
+        private String isUserFundsOpen; //充值开关
 
         public String getAppUrl() {
             return appUrl;
@@ -45,6 +48,30 @@ public class GlobalResponse implements Serializable{
 
         public void setVersion(String version) {
             this.version = version;
+        }
+
+        public String getIsForceUpdate() {
+            return isForceUpdate;
+        }
+
+        public void setIsForceUpdate(String isForceUpdate) {
+            this.isForceUpdate = isForceUpdate;
+        }
+
+        public String getStaffContactPhone() {
+            return staffContactPhone;
+        }
+
+        public void setStaffContactPhone(String staffContactPhone) {
+            this.staffContactPhone = staffContactPhone;
+        }
+
+        public String getIsUserFundsOpen() {
+            return isUserFundsOpen;
+        }
+
+        public void setIsUserFundsOpen(String isUserFundsOpen) {
+            this.isUserFundsOpen = isUserFundsOpen;
         }
     }
 }

@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
+import com.Utils.UserUtils;
 import com.callback.DialogCallback;
 import com.dataStore.DeviceUuidFactory;
 import com.log.LogUmengAgent;
@@ -21,7 +22,6 @@ import com.ui.dialog.CommonDialog;
 import com.utils.IMLoginUtils;
 import com.utils.PageSwitchUtils;
 import com.utils.Urls;
-import com.utils.UserUtils;
 import com.wuba.loginsdk.external.LoginCallback;
 import com.wuba.loginsdk.external.LoginClient;
 import com.wuba.loginsdk.external.Request;
@@ -87,7 +87,7 @@ public class LoginActivityModel extends BaseModel {
 
     private void bindAlias() {
         StringBuilder temp = new StringBuilder();
-        temp.append(UserUtils.getUserId() + "_");
+        temp.append(UserUtils.getUserId(context) + "_");
         temp.append(DeviceUuidFactory.getInstance().getDeviceUuidString());
         String alias = temp.toString();
         Log.i("song", alias);
@@ -103,7 +103,7 @@ public class LoginActivityModel extends BaseModel {
 
     private void GoToWhere(LoginResponse loginResponse) {
 //        if (hasValidated(loginResponse)) {
-        UserUtils.hasValidate(context.getApplicationContext());
+        UserUtils.hasValidate(context);
         PageSwitchUtils.goToActivity(context, HomepageActivity.class);
 //        } else {
 //            PageSwitchUtils.goToActivity(context, MobileValidateActivity.class);

@@ -8,7 +8,6 @@ import com.merchantplatform.application.HyApplication;
 import com.okhttputils.callback.AbsCallback;
 import com.okhttputils.request.BaseRequest;
 import com.utils.AppInfoUtils;
-import com.utils.UserUtils;
 import com.wuba.loginsdk.external.LoginClient;
 
 /**

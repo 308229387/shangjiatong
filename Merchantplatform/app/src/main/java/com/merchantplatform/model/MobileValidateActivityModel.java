@@ -6,19 +6,16 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.Utils.UserUtils;
 import com.callback.DialogCallback;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.HomepageActivity;
-import com.merchantplatform.activity.LoginActivity;
 import com.merchantplatform.activity.MobileValidateActivity;
-import com.merchantplatform.bean.BindMobileResponse;
-import com.merchantplatform.bean.GetCodeResponse;
 import com.merchantplatform.bean.TempResponse;
 import com.okhttputils.OkHttpUtils;
 import com.Utils.TitleBar;
@@ -27,7 +24,6 @@ import com.utils.PageSwitchUtils;
 import com.utils.StringUtil;
 import com.utils.ToastUtils;
 import com.utils.Urls;
-import com.utils.UserUtils;
 
 import okhttp3.Request;
 import okhttp3.Response;

@@ -4,15 +4,13 @@ package com.merchantplatform.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
-import android.widget.ListView;
 
 import com.Utils.ShowRedDotSystemNotificationAction;
 import com.Utils.SystemNotification;
+import com.Utils.UserUtils;
 import com.android.gmacs.R;
 import com.android.gmacs.activity.BaseActivity;
 import com.callback.DialogCallback;
-import com.common.gmacs.utils.ToastUtil;
 import com.db.dao.SystemNotificationDetial;
 import com.db.helper.SystemNotificationOperate;
 import com.merchantplatform.adapter.SystemNotificationXAdapter;
@@ -20,7 +18,6 @@ import com.merchantplatform.application.HyApplication;
 import com.merchantplatform.bean.SystemNotificationList;
 import com.okhttputils.OkHttpUtils;
 import com.utils.Urls;
-import com.utils.UserUtils;
 import com.xrecyclerview.ProgressStyle;
 import com.xrecyclerview.XRecyclerView;
 
@@ -127,7 +124,7 @@ public class SystemNotificationActivity extends BaseActivity {
     private void saveDataToDB(SystemNotification temp1) {
         final SystemNotificationDetial data = new SystemNotificationDetial();
         data.setType(temp1.getType());
-        data.setUserId(UserUtils.getUserId());
+        data.setUserId(UserUtils.getUserId(this));
         data.setIsReaded(0);
         data.setTitle(temp1.getTitle());
         data.setSortId(temp1.getSortId());

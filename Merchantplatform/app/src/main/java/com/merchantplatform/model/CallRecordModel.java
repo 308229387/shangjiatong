@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.Utils.UserUtils;
 import com.callback.DialogCallback;
 import com.db.dao.CallDetail;
 import com.db.dao.CallList;
@@ -38,7 +39,6 @@ import com.tablayout.SlidingTabLayout;
 import com.utils.DateUtils;
 import com.utils.PermissionUtils;
 import com.utils.Urls;
-import com.utils.UserUtils;
 import com.xrecyclerview.BaseRecyclerViewAdapter;
 import com.merchantplatform.adapter.CallRecordAdapter;
 import com.merchantplatform.fragment.CallRecordFragment;
@@ -190,7 +190,7 @@ public class CallRecordModel extends BaseModel {
 
     private ArrayList<CallList> getMoreListDataFromDB() {
         ArrayList<CallList> moreList;
-        WhereCondition conditionUserId = CallListDao.Properties.UserId.eq(UserUtils.getUserId());
+        WhereCondition conditionUserId = CallListDao.Properties.UserId.eq(UserUtils.getUserId(context.getContext()));
         if (tabIndex == 0) {
             WhereCondition conditionType = CallListDao.Properties.Type.eq(1);
             WhereCondition conditionCallResult = CallListDao.Properties.CallResult.eq(20);
@@ -314,7 +314,7 @@ public class CallRecordModel extends BaseModel {
     }
 
     private ArrayList<CallList> getNewListDataFromDB() {
-        WhereCondition conditionUserId = CallListDao.Properties.UserId.eq(UserUtils.getUserId());
+        WhereCondition conditionUserId = CallListDao.Properties.UserId.eq(UserUtils.getUserId(context.getContext()));
         if (tabIndex == 0) {
             WhereCondition conditionType = CallListDao.Properties.Type.eq(1);
             WhereCondition conditionCallResult = CallListDao.Properties.CallResult.eq(20);
@@ -353,14 +353,14 @@ public class CallRecordModel extends BaseModel {
 
     private boolean isExistInDetail(CallDetailResponse.bean bean) {
         WhereCondition conditionId = CallDetailDao.Properties.Id.eq(bean.getId());
-        WhereCondition conditionUserId = CallDetailDao.Properties.UserId.eq(UserUtils.getUserId());
+        WhereCondition conditionUserId = CallDetailDao.Properties.UserId.eq(UserUtils.getUserId(context.getContext()));
         ArrayList<CallDetail> dataInDetail = CallDetailDaoOperate.queryByCondition(context.getContext(), conditionId, conditionUserId);
         return dataInDetail != null && dataInDetail.size() > 0;
     }
 
     private ArrayList<CallList> getDataFromList(CallDetailResponse.bean bean) {
         String date_Day = DateUtils.formatMillisToDate(bean.getCallTime());
-        WhereCondition conditionUserId = CallListDao.Properties.UserId.eq(UserUtils.getUserId());
+        WhereCondition conditionUserId = CallListDao.Properties.UserId.eq(UserUtils.getUserId(context.getContext()));
         WhereCondition conditionPhone = CallListDao.Properties.Phone.eq(bean.getPhone());
         WhereCondition conditionCallTime = new WhereCondition.StringCondition("date(CALL_TIME)='" + date_Day + "'");
         WhereCondition conditionType = CallListDao.Properties.Type.eq(bean.getType());
@@ -407,7 +407,7 @@ public class CallRecordModel extends BaseModel {
 
     private void insertNewDataIntoList(CallDetailResponse.bean bean) {
         CallList callList = new CallList();
-        callList.setUserId(UserUtils.getUserId());
+        callList.setUserId(UserUtils.getUserId(context.getContext()));
         callList.setPhone(bean.getPhone());
         callList.setPhoneCount(1);
         callList.setCallResult(bean.getCallResult());
@@ -421,7 +421,7 @@ public class CallRecordModel extends BaseModel {
     private void saveNewDataToCallDetail(CallDetailResponse.bean bean) {
         CallDetail callDetail = new CallDetail();
         callDetail.setId(bean.getId());
-        callDetail.setUserId(UserUtils.getUserId());
+        callDetail.setUserId(UserUtils.getUserId(context.getContext()));
         callDetail.setPhone(bean.getPhone());
         callDetail.setLocal(bean.getLocal());
         callDetail.setCate(bean.getCate());
@@ -561,7 +561,7 @@ public class CallRecordModel extends BaseModel {
 
     private ArrayList<CallDetail> getDetailByList(CallList callList) {
         String date_Day = DateUtils.formatDateTimeToDate(callList.getCallTime());
-        WhereCondition conditionUserId = CallDetailDao.Properties.UserId.eq(UserUtils.getUserId());
+        WhereCondition conditionUserId = CallDetailDao.Properties.UserId.eq(UserUtils.getUserId(context.getContext()));
         WhereCondition conditionDate = new WhereCondition.StringCondition("date(CALL_TIME)='" + date_Day + "'");
         WhereCondition conditionPhone = CallDetailDao.Properties.Phone.eq(callList.getPhone());
         WhereCondition conditionType = CallDetailDao.Properties.Type.eq(callList.getType());

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.Utils.UserUtils;
 import com.db.dao.CallDetail;
 import com.db.dao.CallList;
 import com.db.dao.gen.CallDetailDao;
@@ -18,7 +19,6 @@ import com.merchantplatform.activity.CallDetailActivity;
 import com.merchantplatform.bean.CallDetailListBean;
 import com.merchantplatform.model.CallRecordModel;
 import com.utils.DateUtils;
-import com.utils.UserUtils;
 import com.xrecyclerview.BaseRecyclerViewAdapter;
 
 import org.greenrobot.eventbus.EventBus;
@@ -109,7 +109,7 @@ public class CallRecordAdapter extends BaseRecyclerViewAdapter<CallList, CallRec
 
     private ArrayList<CallDetail> getDetailByList(CallList callList) {
         String date_Day = DateUtils.formatDateTimeToDate(callList.getCallTime());
-        WhereCondition conditionUserId = CallDetailDao.Properties.UserId.eq(UserUtils.getUserId());
+        WhereCondition conditionUserId = CallDetailDao.Properties.UserId.eq(UserUtils.getUserId(context));
         WhereCondition conditionDate = new WhereCondition.StringCondition("date(CALL_TIME)='" + date_Day + "'");
         WhereCondition conditionPhone = CallDetailDao.Properties.Phone.eq(callList.getPhone());
         WhereCondition conditionType = CallDetailDao.Properties.Type.eq(callList.getType());

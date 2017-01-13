@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.Utils.UserUtils;
 import com.log.LogUmengAgent;
 import com.log.LogUmengEnum;
 import com.merchantplatform.R;
@@ -13,7 +14,6 @@ import com.merchantplatform.activity.PersonalSettingActivity;
 import com.Utils.TitleBar;
 import com.utils.Constant;
 import com.utils.PageSwitchUtils;
-import com.utils.UserUtils;
 
 import java.util.HashMap;
 
@@ -72,7 +72,7 @@ public class PersonalSettingActivityModel extends BaseModel implements View.OnCl
     }
 
     private void initMobileData(){
-        String mobile = UserUtils.getMobile();
+        String mobile = UserUtils.getMobile(context);
         tv_now_binding_mobile.setText("已绑定" + mobile);
     }
 

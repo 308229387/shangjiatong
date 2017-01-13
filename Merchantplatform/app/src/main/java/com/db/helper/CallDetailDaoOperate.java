@@ -2,9 +2,9 @@ package com.db.helper;
 
 import android.content.Context;
 
+import com.Utils.UserUtils;
 import com.db.dao.CallDetail;
 import com.db.dao.gen.CallDetailDao;
-import com.utils.UserUtils;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 import org.greenrobot.greendao.query.WhereCondition;
@@ -51,7 +51,7 @@ public class CallDetailDaoOperate {
      * @desc 查询最大BackTime
      **/
     public static long queryMaxBackTime(Context context) {
-        WhereCondition conditionUserId = CallDetailDao.Properties.UserId.eq(UserUtils.getUserId());
+        WhereCondition conditionUserId = CallDetailDao.Properties.UserId.eq(UserUtils.getUserId(context));
         QueryBuilder<CallDetail> builder = DbManager.getDaoSession(context).getCallDetailDao().queryBuilder();
         List<CallDetail> list = builder.where(new WhereCondition.StringCondition("IS_DELETED='0'"), conditionUserId).orderDesc(CallDetailDao.Properties.BackTime).limit(1).list();
         if (list != null && list.size() > 0)
@@ -64,7 +64,7 @@ public class CallDetailDaoOperate {
      * @desc 查询最小BackTime
      **/
     public static long queryMinBackTime(Context context) {
-        WhereCondition conditionUserId = CallDetailDao.Properties.UserId.eq(UserUtils.getUserId());
+        WhereCondition conditionUserId = CallDetailDao.Properties.UserId.eq(UserUtils.getUserId(context));
         QueryBuilder<CallDetail> builder = DbManager.getDaoSession(context).getCallDetailDao().queryBuilder();
         List<CallDetail> list = builder.where(new WhereCondition.StringCondition("IS_DELETED='0'"), conditionUserId).orderAsc(CallDetailDao.Properties.BackTime).limit(1).list();
         if (list != null && list.size() > 0)

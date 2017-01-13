@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/transparent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/bg_common_dialog"
+        android:minHeight="80dip"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dialog_content_vertical_padding"
+            android:layout_marginLeft="@dimen/dialog_content_horizontal_padding"
+            android:layout_marginRight="@dimen/dialog_content_horizontal_padding"
+            android:layout_marginTop="@dimen/dialog_content_vertical_padding"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:text="@string/update_download_process_title"
+                android:textColor="@color/gray_light"
+                android:textSize="@dimen/common_text_size_14"/>
+
+            <LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:custom="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/ll_processbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/common_divider_padding"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/common_divider_padding"
+                android:paddingTop="@dimen/common_divider_padding">
+
+                <com.ui.progressbar.NumberProgressBar
+                    android:id="@+id/numberbar"
+                    style="@style/NumberProgressBar_Default"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    custom:progress_current="0"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

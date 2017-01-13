@@ -1,15 +1,19 @@
 package com.merchantplatform.model;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.Utils.SystemNotificationInfoAction;
+import com.Utils.UserUtils;
 import com.android.gmacs.fragment.ConversationListFragment;
 import com.callback.DialogCallback;
+import com.dataStore.AppPrefersUtil;
 import com.db.dao.SystemNotificationDetial;
 import com.db.helper.SystemNotificationOperate;
 import com.log.LogUmengAgent;
@@ -23,10 +27,11 @@ import com.merchantplatform.fragment.PersonalCenterFragment;
 import com.merchantplatform.service.AppDownloadService;
 import com.okhttputils.OkHttpUtils;
 import com.ui.HomepageBottomButton;
+import com.ui.dialog.UpdateDialog;
 import com.utils.AppInfoUtils;
 import com.utils.StringUtil;
+import com.utils.UpdateUtils;
 import com.utils.Urls;
-import com.utils.UserUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -48,6 +53,8 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
     private InfoListFragment infoListFragment;
     private Fragment mFragment;
     private FragmentManager fragmentManager;
+
+    private UpdateDialog mUpdateDialog;
 
     public HomepageModel(HomepageActivity context) {
         this.context = context;
@@ -226,27 +233,64 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         @Override
         public void onResponse(boolean isFromCache, GlobalResponse globalResponse, Request request, @Nullable Response response) {
             if (globalResponse != null) {
-                String appUrl = globalResponse.getData().getAppUrl();
-                String isPayOpen = globalResponse.getData().getIsPayOpen();
-                String version = globalResponse.getData().getVersion();
-                UserUtils.setPay(context,isPayOpen);
-                updateVersion(appUrl, version);
+                saveGlobalParams(globalResponse);
+                updateVersion(globalResponse);
             }
         }
     }
 
-    private void updateVersion(String appUrl, String version) {
+    private void saveGlobalParams(GlobalResponse globalResponse) {
+        String isPayOpen = globalResponse.getData().getIsPayOpen();
+        String isUserFundsOpen = globalResponse.getData().getIsUserFundsOpen();
+        String staffContactPhone = globalResponse.getData().getStaffContactPhone();
+        if(!TextUtils.isEmpty(isPayOpen))
+        UserUtils.setPay(context,isPayOpen);
+        if(!TextUtils.isEmpty(isUserFundsOpen))
+        UserUtils.setFundsOpen(context,isUserFundsOpen);
+        if(!TextUtils.isEmpty(staffContactPhone))
+        UserUtils.setStaffPhone(context,staffContactPhone);
+    }
+
+    private void updateVersion(GlobalResponse globalResponse) {
+        final String version = globalResponse.getData().getVersion();
+        String appUrl = globalResponse.getData().getAppUrl();
+        String isForceUpdate = globalResponse.getData().getIsForceUpdate();
+
         try {
-            int currentVersionNum = Integer.parseInt(AppInfoUtils.getVersionCode(context));
-            int versionNum = Integer.parseInt(version);
-            boolean isUpdate = StringUtil.compareVersion(versionNum, currentVersionNum);
-            if (isUpdate) {
-                AppDownloadService.startService(context, appUrl);
+            if(!TextUtils.isEmpty(version) && !TextUtils.isEmpty(appUrl) && !TextUtils.isEmpty(isForceUpdate)){
+                int currentVersionNum = Integer.parseInt(AppInfoUtils.getVersionCode(context));
+                int versionNum = Integer.parseInt(version);
+                boolean isUpdate = StringUtil.compareVersion(versionNum, currentVersionNum);
+                String  saveVersion =AppPrefersUtil.getInstance().getCheckVersionUpdateFlag();
+                if(!TextUtils.isEmpty(saveVersion)){
+                    int saveVersionFlag = Integer.parseInt(saveVersion);
+                    boolean isAlertUpdate = StringUtil.compareVersion(versionNum, saveVersionFlag);
+                    if(isAlertUpdate){
+                        checkUpdate(version, appUrl, isForceUpdate, isUpdate);
+                    }
+
+                }else{
+                    checkUpdate(version, appUrl, isForceUpdate, isUpdate);
+                }
             }
+
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
     }
+
+    private void checkUpdate(final String version, String appUrl, String isForceUpdate, boolean isUpdate) {
+        if (isUpdate) {
+            mUpdateDialog = UpdateUtils.getInstance().showUpateDialog(context,appUrl,isForceUpdate);
+            mUpdateDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    AppPrefersUtil.getInstance().saveCheckVersionUpdateFlag(version);
+                }
+            });
+        }
+    }
+
 
     public void unregusterEventBus() {
         EventBus.getDefault().unregister(context);

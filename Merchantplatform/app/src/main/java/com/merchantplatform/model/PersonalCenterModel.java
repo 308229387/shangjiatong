@@ -2,7 +2,6 @@ package com.merchantplatform.model;
 
 import android.app.Activity;
 import android.support.annotation.Nullable;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.Utils.CircleImageView;
+import com.Utils.UserUtils;
 import com.callback.DialogCallback;
 import com.log.LogUmengAgent;
 import com.log.LogUmengEnum;
@@ -20,11 +20,9 @@ import com.merchantplatform.bean.UserInfoResponse;
 import com.merchantplatform.fragment.PersonalCenterFragment;
 import com.okhttputils.OkHttpUtils;
 import com.ta.utdid2.android.utils.StringUtils;
-import com.utils.DisplayUtils;
 import com.utils.PageSwitchUtils;
 import com.utils.StringUtil;
 import com.utils.Urls;
-import com.utils.UserUtils;
 
 import okhttp3.Request;
 import okhttp3.Response;
@@ -76,9 +74,10 @@ public class PersonalCenterModel extends BaseModel implements View.OnClickListen
     }
 
     private void judgePayView(){
-        String isPayOpen = UserUtils.getPay();
-        if(!StringUtils.isEmpty(isPayOpen)){
-            if("1".equals(isPayOpen)){
+        String isPayOpen = UserUtils.getPay(context.getActivity());
+        String isUserFundsOpen = UserUtils.getFundsOpen(context.getActivity());
+        if(!StringUtils.isEmpty(isPayOpen) && !StringUtils.isEmpty(isUserFundsOpen) ){
+            if("1".equals(isPayOpen) && "1".equals(isUserFundsOpen)){
                 rl_personal_funding.setVisibility(View.VISIBLE);
             }else{
                 rl_personal_funding.setVisibility(View.GONE);
@@ -123,7 +122,7 @@ public class PersonalCenterModel extends BaseModel implements View.OnClickListen
 
                 if(!StringUtil.isEmpty(phone)){
                     tv_personal_userPhone.setText(phone);
-                    UserUtils.setMobile(context.getContext(),phone);
+                    UserUtils.setMobile(context.getActivity(),phone);
                 }else{
                    if(!StringUtil.isEmpty(username)){
                        tv_personal_userPhone.setText(username);

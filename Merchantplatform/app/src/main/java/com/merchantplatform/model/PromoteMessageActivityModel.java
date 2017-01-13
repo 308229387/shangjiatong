@@ -1,5 +1,6 @@
 package com.merchantplatform.model;
 
+import android.database.DatabaseUtils;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.http.SslError;
@@ -12,16 +13,19 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.Utils.TitleBar;
+import com.Utils.UserUtils;
+import com.dataStore.PromotePrefersUtil;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.FundingManageActivity;
 import com.merchantplatform.activity.PromoteMessageActivity;
 import com.ta.utdid2.android.utils.StringUtils;
-import com.ui.dialog.LogoutDialog;
 import com.ui.dialog.PayAlertDialog;
 import com.utils.AppInfoUtils;
+import com.utils.DateUtils;
 import com.utils.PageSwitchUtils;
 import com.utils.Urls;
-import com.utils.UserUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by 58 on 2017/1/6.
@@ -35,7 +39,8 @@ public class PromoteMessageActivityModel extends BaseModel{
     private View no_internet_view;
     private WebView webView_promote;
     private String url;
-
+    private boolean isUpIntercept = false;
+    private boolean isPercisionIntercept = false;
 
    public PromoteMessageActivityModel(PromoteMessageActivity context){
        this.context = context;
@@ -142,14 +147,39 @@ public class PromoteMessageActivityModel extends BaseModel{
             }
             //点击充值
             if (url.startsWith("http://paycenter.58.com/wappay")) {
-                String isPayOpen = UserUtils.getPay();
-                if(!StringUtils.isEmpty(isPayOpen)){
-                    if("1".equals(isPayOpen)){
+                String isPayOpen = UserUtils.getPay(context);
+                String isUserFundsOpen = UserUtils.getFundsOpen(context);
+                if(!StringUtils.isEmpty(isPayOpen) && !StringUtils.isEmpty(isUserFundsOpen)){
+                    if("1".equals(isPayOpen) && "1".equals(isUserFundsOpen)){
                         PageSwitchUtils.goToActivity(context,FundingManageActivity.class);
                     }else{
                         new PayAlertDialog(context, "本APP暂不支持充值业务，请在58同城APP上进行充值");
                     }
                 }
+                return true;
+            }else if(url.startsWith(Urls.UP_PROMOTE) ){
+                isUpIntercept = true;
+                return true;
+            }else if(url.startsWith(Urls.PRECISION_PROMOTE)){
+                isPercisionIntercept = true;
+                return true;
+            }else if(url.startsWith(Urls.PROMOTE_MESSAGE) && isUpIntercept){
+                String upTime =  PromotePrefersUtil.getInstance().getUpPromote();
+                if(DateUtils.isEmptyAndNotToday(upTime)){
+                    EventBus.getDefault().post(upTime);//todo 需要修改
+                }
+                String currentTime = DateUtils.getCurrentDateTime();
+                PromotePrefersUtil.getInstance().saveUpPromote(currentTime);
+                isUpIntercept = false;
+                return true;
+            }else if(url.startsWith(Urls.PROMOTE_MESSAGE) && isPercisionIntercept){
+                String precisionTime =  PromotePrefersUtil.getInstance().getPercisionPromote();
+                if(DateUtils.isEmptyAndNotToday(precisionTime)){
+                    EventBus.getDefault().post(precisionTime); //todo 需要修改
+                }
+                String currentTime = DateUtils.getCurrentDateTime();
+                PromotePrefersUtil.getInstance().savePercisionPromote(currentTime);
+                isPercisionIntercept = false;
                 return true;
             }
 

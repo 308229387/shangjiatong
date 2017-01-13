@@ -1,7 +1,6 @@
 package com.merchantplatform.model;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
+import com.Utils.UserUtils;
 import com.merchantplatform.activity.GuideActivity;
 import com.merchantplatform.activity.HomepageActivity;
 import com.merchantplatform.activity.LoginActivity;
@@ -21,7 +21,6 @@ import com.merchantplatform.application.HyApplication;
 import com.ui.dialog.CommonDialog;
 import com.utils.IMLoginUtils;
 import com.utils.PageSwitchUtils;
-import com.utils.UserUtils;
 import com.wuba.loginsdk.external.LoginClient;
 
 /**
@@ -130,7 +129,7 @@ public class GuideActivityModel extends BaseModel {
     }
 
     private boolean neverCome() {
-        return TextUtils.isEmpty(UserUtils.getUserId())
+        return TextUtils.isEmpty(UserUtils.getUserId(context))
                 || !UserUtils.isValidate(context)
                 || TextUtils.isEmpty(LoginClient.doGetPPUOperate(HyApplication.getApplication()));
     }
