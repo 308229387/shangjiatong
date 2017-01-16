@@ -14,13 +14,18 @@ import com.Utils.TitleBar;
 import com.callback.DialogCallback;
 import com.merchantplatform.R;
 import com.merchantplatform.adapter.InfoListAdapter;
+import com.merchantplatform.bean.InfoDetailBean;
+import com.merchantplatform.bean.InfoDetailResponse;
 import com.merchantplatform.bean.InfoListBean;
 import com.merchantplatform.bean.InfoListResponse;
 import com.okhttputils.OkHttpUtils;
+import com.utils.Constant;
 import com.utils.DisplayUtils;
 import com.utils.Urls;
 import com.xrecyclerview.ProgressStyle;
 import com.xrecyclerview.XRecyclerView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -40,6 +45,8 @@ public class infoListModel extends BaseModel {
     XRecyclerView xrv_post;
     ArrayList<InfoListBean> postBeanList = new ArrayList();
     //View title_bar;
+
+    private final static int PAGE_SIZE = 10;
 
     public infoListModel(Activity context) {
         this.activity = context;
@@ -103,7 +110,7 @@ public class infoListModel extends BaseModel {
                 sortId = postBeanList.get(postBeanList.size() - 1).getSortId();
         }
 
-        OkHttpUtils.get(Urls.POST_LIST).params("sortId", sortId).execute(
+        OkHttpUtils.get(Urls.POST_LIST).params(Constant.SORTID, sortId).execute(
                 new DialogCallback<InfoListResponse>(activity) {
                     @Override
                     public void onResponse(boolean isFromCache, InfoListResponse infoListResponse, Request request, @Nullable Response response) {
@@ -111,7 +118,7 @@ public class infoListModel extends BaseModel {
                             postBeanList.addAll(infoListResponse.getData());
                             infoListAdapter.notifyDataSetChanged();
 
-                            if (infoListResponse.getData().size() < 10) {
+                            if (infoListResponse.getData().size() < PAGE_SIZE) {
                                 xrv_post.setNoMore(true);
                             }
                         } else {
@@ -135,6 +142,32 @@ public class infoListModel extends BaseModel {
                     }
                 });
 
+    }
+
+    public void refreshItem(String infoId) {
+        OkHttpUtils.get(Urls.POST_DETAIL).params(Constant.INFOID, infoId).execute(
+                new DialogCallback<InfoDetailResponse>(activity) {
+                    @Override
+                    public void onResponse(boolean isFromCache, InfoDetailResponse infoDetailResponse, Request request, @Nullable Response response) {
+                        InfoDetailBean infoDetailBean = infoDetailResponse.getData();
+                        if (infoDetailBean.getJzShow() == 1)//1为显示精准 0为不显示
+                            infoListAdapter.getClickViewHolder().setVisible(R.id.tv_info_list_isaccurate, true);
+                        else
+                            infoListAdapter.getClickViewHolder().setVisible(R.id.tv_info_list_isaccurate, false);
+                        if (infoDetailBean.getTopShow() == 1)//1为显示置顶 0为不显示
+                            infoListAdapter.getClickViewHolder().setVisible(R.id.tv_info_list_istop, true);
+                        else
+                            infoListAdapter.getClickViewHolder().setVisible(R.id.tv_info_list_istop, false);
+                    }
+                });
+    }
+
+    public void registerEventBus() {
+        EventBus.getDefault().register(activity);
+    }
+
+    public void unRegisterEventBus() {
+        EventBus.getDefault().unregister(activity);
     }
 
 

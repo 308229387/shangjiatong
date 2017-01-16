@@ -33,6 +33,8 @@ import com.utils.PageSwitchUtils;
 import com.utils.StringUtil;
 import com.utils.Urls;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -230,4 +232,13 @@ public class InfoDetailModel extends BaseModel {
             return 0;
         }
     }
+
+    public void registerEventBus(){
+        EventBus.getDefault().register(activity);
+    }
+
+    public void unRegisterEventBus(){
+        EventBus.getDefault().unregister(activity);
+    }
+
 }
