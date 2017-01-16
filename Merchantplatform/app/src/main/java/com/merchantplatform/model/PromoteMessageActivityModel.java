@@ -1,6 +1,5 @@
 package com.merchantplatform.model;
 
-import android.database.DatabaseUtils;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.http.SslError;
@@ -24,6 +23,8 @@ import com.utils.AppInfoUtils;
 import com.utils.DateUtils;
 import com.utils.PageSwitchUtils;
 import com.utils.Urls;
+import com.utils.eventbus.EventAction;
+import com.utils.eventbus.EventType;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -41,6 +42,8 @@ public class PromoteMessageActivityModel extends BaseModel{
     private String url;
     private boolean isUpIntercept = false;
     private boolean isPercisionIntercept = false;
+    private String upPromote_infoId;
+    private String precisionPromote_infoId;
 
    public PromoteMessageActivityModel(PromoteMessageActivity context){
        this.context = context;
@@ -158,24 +161,38 @@ public class PromoteMessageActivityModel extends BaseModel{
                 }
                 return true;
             }else if(url.startsWith(Urls.UP_PROMOTE) ){
+                String[] arrayString = url.split("[?]")[0].split("/");
+                upPromote_infoId = arrayString[arrayString.length -1];
                 isUpIntercept = true;
                 return true;
             }else if(url.startsWith(Urls.PRECISION_PROMOTE)){
+                String[] arrayString = url.split("[?]")[0].split("/");
+                precisionPromote_infoId = arrayString[arrayString.length -1];
                 isPercisionIntercept = true;
                 return true;
-            }else if(url.startsWith(Urls.PROMOTE_MESSAGE) && isUpIntercept){
+            }else if((url.startsWith(Urls.PROMOTE_MESSAGE) && isUpIntercept)||(url.startsWith(Urls.PROMOTE_OTHER_MESSAGE)&& isUpIntercept)){
+
+                EventAction action = new EventAction(EventType.UP_PROMOTE_SUCCESS,upPromote_infoId);
+                EventBus.getDefault().post(action);
+
                 String upTime =  PromotePrefersUtil.getInstance().getUpPromote();
                 if(DateUtils.isEmptyAndNotToday(upTime)){
-                    EventBus.getDefault().post(upTime);//todo 需要修改
+                    EventAction up_action = new EventAction(EventType.UP_PROMOTE_FIRST_SUCCESS,upTime);
+                    EventBus.getDefault().post(up_action);
                 }
                 String currentTime = DateUtils.getCurrentDateTime();
                 PromotePrefersUtil.getInstance().saveUpPromote(currentTime);
                 isUpIntercept = false;
                 return true;
-            }else if(url.startsWith(Urls.PROMOTE_MESSAGE) && isPercisionIntercept){
+            }else if((url.startsWith(Urls.PROMOTE_MESSAGE) && isPercisionIntercept)|| (url.startsWith(Urls.PROMOTE_OTHER_MESSAGE)&& isUpIntercept)){
+
+                EventAction action = new EventAction(EventType.PRECISION_PROMOTE_SUCCESS,precisionPromote_infoId);
+                EventBus.getDefault().post(action);
+
                 String precisionTime =  PromotePrefersUtil.getInstance().getPercisionPromote();
                 if(DateUtils.isEmptyAndNotToday(precisionTime)){
-                    EventBus.getDefault().post(precisionTime); //todo 需要修改
+                    EventAction precision_action = new EventAction(EventType.PRECISION_PROMOTE_FIRST_SUCCESS,precisionTime);
+                    EventBus.getDefault().post(precision_action);
                 }
                 String currentTime = DateUtils.getCurrentDateTime();
                 PromotePrefersUtil.getInstance().savePercisionPromote(currentTime);
@@ -191,6 +208,7 @@ public class PromoteMessageActivityModel extends BaseModel{
 
         }
     }
+
 
     private class WebChromeBaseClient extends WebChromeClient {
         @Override

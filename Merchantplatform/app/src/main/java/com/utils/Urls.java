@@ -96,6 +96,7 @@ public class Urls {
      * 推广助手页
      */
     public static final String PROMOTE_MESSAGE = "http://m.cube.58.com/cube/m/manage/initMessage?sourceId=205000";
+    public static final String PROMOTE_OTHER_MESSAGE = "http://mcube.58.com/cube/m/manage/initMessage?sourceId=205000";
     /**
      * 置顶推广
      */

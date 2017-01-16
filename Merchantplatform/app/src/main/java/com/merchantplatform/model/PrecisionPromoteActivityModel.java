@@ -20,6 +20,8 @@ import com.utils.AppInfoUtils;
 import com.utils.Constant;
 import com.utils.DateUtils;
 import com.utils.Urls;
+import com.utils.eventbus.EventAction;
+import com.utils.eventbus.EventType;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -152,10 +154,11 @@ public class PrecisionPromoteActivityModel extends BaseModel {
             if (context == null) {
                 return false;
             }
-            if(url.startsWith(Urls.PROMOTE_MESSAGE) ){
+            if(url.startsWith(Urls.PROMOTE_MESSAGE)|| url.startsWith(Urls.PROMOTE_OTHER_MESSAGE)){
                 String precisionTime =  PromotePrefersUtil.getInstance().getPercisionPromote();
                 if(DateUtils.isEmptyAndNotToday(precisionTime)){
-                    EventBus.getDefault().post(precisionTime); //todo 需要修改
+                    EventAction precision_action = new EventAction(EventType.PRECISION_PROMOTE_FIRST_SUCCESS,precisionTime);
+                    EventBus.getDefault().post(precision_action);
                 }
                 String currentTime = DateUtils.getCurrentDateTime();
                 PromotePrefersUtil.getInstance().savePercisionPromote(currentTime);

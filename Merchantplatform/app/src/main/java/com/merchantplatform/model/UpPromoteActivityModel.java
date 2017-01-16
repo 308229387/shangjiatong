@@ -20,6 +20,8 @@ import com.utils.AppInfoUtils;
 import com.utils.Constant;
 import com.utils.DateUtils;
 import com.utils.Urls;
+import com.utils.eventbus.EventAction;
+import com.utils.eventbus.EventType;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -152,10 +154,11 @@ public class UpPromoteActivityModel extends BaseModel{
             if (context == null) {
                 return false;
             }
-            if(url.startsWith(Urls.PROMOTE_MESSAGE)){
+            if(url.startsWith(Urls.PROMOTE_MESSAGE) ||url.startsWith(Urls.PROMOTE_OTHER_MESSAGE)){
                 String upTime =  PromotePrefersUtil.getInstance().getUpPromote();
                 if(DateUtils.isEmptyAndNotToday(upTime)){
-                    EventBus.getDefault().post(upTime);//todo 需要修改
+                    EventAction up_action = new EventAction(EventType.UP_PROMOTE_FIRST_SUCCESS,upTime);
+                    EventBus.getDefault().post(up_action);
                 }
                 String currentTime = DateUtils.getCurrentDateTime();
                 PromotePrefersUtil.getInstance().saveUpPromote(currentTime);
