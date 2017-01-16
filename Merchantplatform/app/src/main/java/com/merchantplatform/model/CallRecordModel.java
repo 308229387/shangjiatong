@@ -489,8 +489,11 @@ public class CallRecordModel extends BaseModel {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                deleteThisRecord(clickCallList);
-                upLoadUserCallLog(getUserCallLog(clickCallList));
+                UserCallRecordBean userCallRecord = getUserCallLog(clickCallList);
+                if (userCallRecord != null) {
+                    deleteThisRecord(clickCallList);
+                    upLoadUserCallLog(userCallRecord);
+                }
             }
         }, 2000);
     }
@@ -523,17 +526,15 @@ public class CallRecordModel extends BaseModel {
     }
 
     private void upLoadUserCallLog(UserCallRecordBean usercallRecordBean) {
-        if (usercallRecordBean != null) {
-            OkHttpUtils.post(Urls.PHONE_UPLOAD_DATA)
-                    .params("backTime", usercallRecordBean.getBackTime() + "")
-                    .params("refreshType", "1")
-                    .params("ids", usercallRecordBean.getIds())
-                    .params("beginTime", usercallRecordBean.getBeginTime() + "")
-                    .params("endTime", usercallRecordBean.getEndTime() + "")
-                    .params("recordState", usercallRecordBean.getRecordState() + "")
-                    .execute(new getPhoneIncreaseDataResponse(context.getActivity(), false));
-            callOutTimes = 0;
-        }
+        OkHttpUtils.post(Urls.PHONE_UPLOAD_DATA)
+                .params("backTime", usercallRecordBean.getBackTime() + "")
+                .params("refreshType", "1")
+                .params("ids", usercallRecordBean.getIds())
+                .params("beginTime", usercallRecordBean.getBeginTime() + "")
+                .params("endTime", usercallRecordBean.getEndTime() + "")
+                .params("recordState", usercallRecordBean.getRecordState() + "")
+                .execute(new getPhoneIncreaseDataResponse(context.getActivity(), false));
+        callOutTimes = 0;
     }
 
     private UserCallRecordBean getUserCallLog(CallList clickCallList) {
