@@ -29,6 +29,7 @@ import com.okhttputils.OkHttpUtils;
 import com.ui.HomepageBottomButton;
 import com.ui.dialog.UpdateDialog;
 import com.utils.AppInfoUtils;
+import com.utils.DateUtils;
 import com.utils.StringUtil;
 import com.utils.UpdateUtils;
 import com.utils.Urls;
@@ -257,20 +258,13 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         String isForceUpdate = globalResponse.getData().getIsForceUpdate();
 
         try {
-            if(!TextUtils.isEmpty(version) && !TextUtils.isEmpty(appUrl) && !TextUtils.isEmpty(isForceUpdate)){
+            if (!TextUtils.isEmpty(version) && !TextUtils.isEmpty(appUrl) && !TextUtils.isEmpty(isForceUpdate)) {
                 int currentVersionNum = Integer.parseInt(AppInfoUtils.getVersionCode(context));
                 int versionNum = Integer.parseInt(version);
                 boolean isUpdate = StringUtil.compareVersion(versionNum, currentVersionNum);
-                String  saveVersion =AppPrefersUtil.getInstance().getCheckVersionUpdateFlag();
-                if(!TextUtils.isEmpty(saveVersion)){
-                    int saveVersionFlag = Integer.parseInt(saveVersion);
-                    boolean isAlertUpdate = StringUtil.compareVersion(versionNum, saveVersionFlag);
-                    if(isAlertUpdate){
-                        checkUpdate(version, appUrl, isForceUpdate, isUpdate);
-                    }
-
-                }else{
-                    checkUpdate(version, appUrl, isForceUpdate, isUpdate);
+                String saveTime = AppPrefersUtil.getInstance().getCheckVersionUpdateFlag();
+                if (DateUtils.isEmptyAndNotToday(saveTime)) {
+                    checkUpdate(appUrl, isForceUpdate, isUpdate);
                 }
             }
 
@@ -279,13 +273,14 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         }
     }
 
-    private void checkUpdate(final String version, String appUrl, String isForceUpdate, boolean isUpdate) {
+    private void checkUpdate(String appUrl, String isForceUpdate, boolean isUpdate) {
         if (isUpdate) {
             mUpdateDialog = UpdateUtils.getInstance().showUpateDialog(context,appUrl,isForceUpdate);
             mUpdateDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialog) {
-                    AppPrefersUtil.getInstance().saveCheckVersionUpdateFlag(version);
+                    String currentTime = DateUtils.getCurrentDateTime();
+                    AppPrefersUtil.getInstance().saveCheckVersionUpdateFlag(currentTime);
                 }
             });
         }
