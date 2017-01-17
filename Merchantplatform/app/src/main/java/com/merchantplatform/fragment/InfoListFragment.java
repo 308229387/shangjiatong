@@ -29,7 +29,7 @@ public class InfoListFragment extends BaseFragment<infoListModel> {
 
     @Override
     protected infoListModel createModel() {
-        return new infoListModel(getActivity());
+        return new infoListModel(this);
     }
 
     @Subscribe

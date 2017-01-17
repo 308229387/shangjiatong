@@ -19,8 +19,10 @@ import com.merchantplatform.application.HyApplication;
 import com.merchantplatform.bean.LoginResponse;
 import com.okhttputils.OkHttpUtils;
 import com.ui.dialog.CommonDialog;
+import com.umeng.analytics.MobclickAgent;
 import com.utils.IMLoginUtils;
 import com.utils.PageSwitchUtils;
+import com.utils.StringUtil;
 import com.utils.Urls;
 import com.wuba.loginsdk.external.LoginCallback;
 import com.wuba.loginsdk.external.LoginClient;
@@ -68,7 +70,18 @@ public class LoginActivityModel extends BaseModel {
         bindAlias();
         loginLocal();
         initIM();
-//        PageSwitchUtils.goToActivity(context, HomepageActivity.class);
+        savelog();
+    }
+
+    /**
+     * 存储日志信息
+     */
+    private void savelog() {
+        LogUmengAgent.ins().log(LogUmengEnum.LOG_HY_LOGIN);
+        String userId = UserUtils.getUserId(context);
+        if (StringUtil.isNotEmpty(userId)) {
+            MobclickAgent.onProfileSignIn(userId);
+        }
     }
 
     private void loginLocal() {
@@ -96,7 +109,6 @@ public class LoginActivityModel extends BaseModel {
 
 
     private void LoginSuccess(LoginResponse loginResponse) {
-        LogUmengAgent.ins().log(LogUmengEnum.LOG_HY_LOGIN);
         GoToWhere(loginResponse);
         context.finish();
     }

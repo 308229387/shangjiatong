@@ -5,15 +5,18 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
+import com.Utils.UserUtils;
 import com.db.helper.DbManager;
 import com.facebook.stetho.Stetho;
 import com.log.LogUmengAgent;
 import com.merchantplatform.BuildConfig;
 import com.okhttputils.OkHttpUtils;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.umeng.analytics.MobclickAgent;
 import com.utils.Constant;
 import com.utils.IMInitAppUtils;
 import com.utils.LoginRegisterUtils;
+import com.utils.StringUtil;
 import com.utils.WPushInitUtils;
 
 import java.util.LinkedList;
@@ -92,6 +95,10 @@ public class HyApplication extends MultiDexApplication {
 
     private void initUmeng() {
         LogUmengAgent.init(application);
+        String userId = UserUtils.getUserId(application);
+        if (StringUtil.isNotEmpty(userId)) {
+            MobclickAgent.onProfileSignIn(userId);
+        }
     }
 
     public void addActivity(Activity activity) {
@@ -122,7 +129,7 @@ public class HyApplication extends MultiDexApplication {
         }
     }
 
-    public List<Activity> getActivityList(){
+    public List<Activity> getActivityList() {
         return activityList;
     }
 

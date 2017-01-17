@@ -41,12 +41,6 @@ public class InfoListAdapter extends BaseRecyclerViewAdapter<InfoListBean, InfoL
 
     public InfoListAdapter(final Context context, ArrayList<InfoListBean> postListBeen) {
         super(context, postListBeen);
-        setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-
-            }
-        });
     }
 
 

@@ -124,15 +124,20 @@ public class InfoDetailModel extends BaseModel {
 
     private void bindDataToView(final InfoDetailBean infoDetailBean) {
 
+        //图片的处理
         pics = infoDetailBean.getPic();
         if (null != pics && pics.size() > 0) {
             rollPagerView.setHintView(new TextHintView(activity));
             rollPagerView.setHintPadding(Util.dip2px(activity, 5), Util.dip2px(activity, 2), Util.dip2px(activity, 5), Util.dip2px(activity, 2));
             rollPagerView.setAdapter(adapter);
+            if(pics.size()==1){
+                rollPagerView.setNoScroll(true);
+            }
         } else {
             rollPagerView.setHintView(null);
         }
 
+        //回退按钮
         iv_info_detail_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
