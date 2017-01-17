@@ -2,7 +2,6 @@ package com.android.gmacs.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,6 +21,7 @@ import com.Utils.ShowRedDotSystemNotificationAction;
 import com.Utils.SystemGetNotificationInfoAction;
 import com.Utils.SystemNotification;
 import com.Utils.SystemNotificationInfoAction;
+import com.Utils.UserUtils;
 import com.android.gmacs.R;
 import com.android.gmacs.adapter.ConversationListAdapter;
 import com.android.gmacs.event.RecentTalksEvent;
@@ -117,7 +117,7 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
             public void onClick(View v) {
                 LogUmengAgent.ins().log(LogUmengEnum.LOG_DY_KFDH);
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                Uri data = Uri.parse("tel:" + "4007585858");
+                Uri data = Uri.parse("tel:" + UserUtils.getStaffPhone(getActivity()));
                 intent.setData(data);
                 startActivity(intent);
             }
@@ -195,10 +195,10 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
 
     @Subscribe
     public void onEvent(SystemNotificationInfoAction temp) {//进来时拉取
-            systemText.setText(temp.getJump());
-            if (temp.getRedDot() > 0 && showRed)
-                redDot.setVisibility(View.VISIBLE);
-            redDot.setText(temp.getRedDot() + "");
+        systemText.setText(temp.getJump());
+        if (temp.getRedDot() > 0 && showRed)
+            redDot.setVisibility(View.VISIBLE);
+        redDot.setText(temp.getRedDot() + "");
     }
 
 
