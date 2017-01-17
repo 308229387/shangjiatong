@@ -44,14 +44,10 @@ public class InfoListAdapter extends BaseRecyclerViewAdapter<InfoListBean, InfoL
         setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                InfoListBean infoListBean = getItem(position);
-                Map map = new HashMap<>();
-                map.put(Constant.INFOID, infoListBean.getInfoId());
-                PageSwitchUtils.goToActivityWithString(context, InfoDetailActivity.class, map);
+
             }
         });
     }
-
 
 
     @Override
@@ -68,7 +64,7 @@ public class InfoListAdapter extends BaseRecyclerViewAdapter<InfoListBean, InfoL
         //审核未通过状态设置，未通过原因
         if (infoStateEnum == InfoStateEnum.REFUSED && StringUtil.isNotEmpty(infoListBean.getAuditFailMsg())) {
             String failMsg = infoListBean.getAuditFailMsg();
-            if (failMsg.length() > 7) {
+            if (failMsg.length() > 7) { //列表页审核不通过原因只显示7个字,多余...
                 failMsg = failMsg.substring(0, 7) + "...";
             }
             failMsg = "(" + failMsg + ")";
@@ -85,11 +81,11 @@ public class InfoListAdapter extends BaseRecyclerViewAdapter<InfoListBean, InfoL
             //设置状态字体颜色
             InfoViewHolder.setTextColor(R.id.tv_state_info_list, context.getResources().getColor(R.color.state_showing_green));
             //设置状态精准置顶是否显示
-            if (infoListBean.getJzShow() == 1)
+            if (infoListBean.getJzShow() == 1)//1为显示精准 0为不显示
                 InfoViewHolder.setVisible(R.id.tv_info_list_isaccurate, true);
             else
                 InfoViewHolder.setVisible(R.id.tv_info_list_isaccurate, false);
-            if (infoListBean.getTopShow() == 1)
+            if (infoListBean.getTopShow() == 1)//1为显示置顶 0为不显示
                 InfoViewHolder.setVisible(R.id.tv_info_list_istop, true);
             else
                 InfoViewHolder.setVisible(R.id.tv_info_list_istop, false);
@@ -126,6 +122,17 @@ public class InfoListAdapter extends BaseRecyclerViewAdapter<InfoListBean, InfoL
 
         //设置发布日期
         InfoViewHolder.setText(R.id.tv_date_info_list, infoListBean.getAddDate());
+
+        InfoViewHolder.setOnClickListener(R.id.rl_infolist_item, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickViewHolder = InfoViewHolder;
+                Map map = new HashMap<>();
+                map.put(Constant.INFOID, infoListBean.getInfoId());
+                PageSwitchUtils.goToActivityWithString(context, InfoDetailActivity.class, map);
+            }
+        });
+
 
     }
 
