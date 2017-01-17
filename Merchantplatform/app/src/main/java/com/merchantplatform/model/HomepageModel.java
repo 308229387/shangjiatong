@@ -263,26 +263,21 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
                 int versionNum = Integer.parseInt(version);
                 boolean isUpdate = StringUtil.compareVersion(versionNum, currentVersionNum);
                 String saveTime = AppPrefersUtil.getInstance().getCheckVersionUpdateFlag();
-                if (DateUtils.isEmptyAndNotToday(saveTime)) {
-                    checkUpdate(appUrl, isForceUpdate, isUpdate);
+                if (DateUtils.isEmptyAndNotToday(saveTime) && isUpdate) {
+                    mUpdateDialog = UpdateUtils.getInstance().showUpateDialog(context,appUrl,isForceUpdate);
+                    mUpdateDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            String currentTime = DateUtils.getCurrentDateTime();
+                            AppPrefersUtil.getInstance().saveCheckVersionUpdateFlag(currentTime);
+                        }
+                 });
+
                 }
             }
 
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
-        }
-    }
-
-    private void checkUpdate(String appUrl, String isForceUpdate, boolean isUpdate) {
-        if (isUpdate) {
-            mUpdateDialog = UpdateUtils.getInstance().showUpateDialog(context,appUrl,isForceUpdate);
-            mUpdateDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    String currentTime = DateUtils.getCurrentDateTime();
-                    AppPrefersUtil.getInstance().saveCheckVersionUpdateFlag(currentTime);
-                }
-            });
         }
     }
 
