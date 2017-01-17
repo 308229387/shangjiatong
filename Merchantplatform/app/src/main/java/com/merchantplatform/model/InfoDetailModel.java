@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.callback.DialogCallback;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.PrecisionPromoteActivity;
 import com.merchantplatform.activity.UpPromoteActivity;
@@ -141,6 +143,7 @@ public class InfoDetailModel extends BaseModel {
         iv_info_detail_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_TZXQ_FH);
                 activity.finish();
             }
         });
@@ -182,6 +185,7 @@ public class InfoDetailModel extends BaseModel {
             ll_info_detail_accurate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    LogUmengAgent.ins().log(LogUmengEnum.LOG_TZXQ_JZ);
                     Map map = new HashMap<>();
                     map.put(Constant.INFOID, infoDetailBean.getInfoId());
                     PageSwitchUtils.goToActivityWithString(activity, PrecisionPromoteActivity.class, map);
@@ -190,6 +194,7 @@ public class InfoDetailModel extends BaseModel {
             ll_info_detail_top.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    LogUmengAgent.ins().log(LogUmengEnum.LOG_TZXQ_ZD);
                     Map map = new HashMap<>();
                     map.put(Constant.INFOID, infoDetailBean.getInfoId());
                     PageSwitchUtils.goToActivityWithString(activity, UpPromoteActivity.class, map);
