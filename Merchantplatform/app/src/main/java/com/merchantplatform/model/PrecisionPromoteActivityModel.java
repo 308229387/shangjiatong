@@ -13,11 +13,17 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.Utils.TitleBar;
+import com.dataStore.PromotePrefersUtil;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.PrecisionPromoteActivity;
 import com.utils.AppInfoUtils;
 import com.utils.Constant;
+import com.utils.DateUtils;
 import com.utils.Urls;
+import com.utils.eventbus.EventAction;
+import com.utils.eventbus.EventType;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by 58 on 2017/1/9.
@@ -148,12 +154,17 @@ public class PrecisionPromoteActivityModel extends BaseModel {
             if (context == null) {
                 return false;
             }
-//            //调用拨号程序
-//            if (url.startsWith("mailto:") || url.startsWith("geo:") || url.startsWith("tel:") || url.startsWith("smsto:")) {
-//                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-//                context.startActivity(intent);
-//                return true;
-//            }
+            if(url.startsWith(Urls.PROMOTE_MESSAGE)|| url.startsWith(Urls.PROMOTE_OTHER_MESSAGE)){
+                String precisionTime =  PromotePrefersUtil.getInstance().getPercisionPromote();
+                if(DateUtils.isEmptyAndNotToday(precisionTime)){
+                    EventAction precision_action = new EventAction(EventType.PRECISION_PROMOTE_FIRST_SUCCESS,precisionTime);
+                    EventBus.getDefault().post(precision_action);
+                }
+                String currentTime = DateUtils.getCurrentDateTime();
+                PromotePrefersUtil.getInstance().savePercisionPromote(currentTime);
+                context.onBackPressed();
+                return true;
+            }
 
             return super.shouldOverrideUrlLoading(view, url);
         }

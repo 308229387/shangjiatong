@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_infolist_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="6dp"
+    android:layout_marginTop="6dp"
+    android:background="@drawable/info_list_item_bg">
+
+    <ImageView
+        android:id="@+id/iv_info_list"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="6dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/blue" />
+
+    <TextView
+        android:id="@+id/tv_title_info_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="12dp"
+        android:layout_toRightOf="@id/iv_info_list"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text=""
+        android:textColor="@color/common_text_black"
+        android:textSize="17dp" />
+
+    <TextView
+        android:id="@+id/tv_state_info_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title_info_list"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="6dp"
+        android:layout_toRightOf="@id/iv_info_list"
+        android:text="显示中"
+        android:textColor="@color/common_text_gray"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/tv_info_list_istop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title_info_list"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_toRightOf="@id/tv_state_info_list"
+        android:background="@drawable/info_list_state_bg"
+        android:padding="2dp"
+        android:text="置顶"
+        android:textColor="@color/common_text_orange"
+        android:textSize="9dp" />
+
+    <TextView
+        android:id="@+id/tv_info_list_isaccurate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title_info_list"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_toRightOf="@id/tv_info_list_istop"
+        android:background="@drawable/info_list_state_bg"
+        android:padding="2dp"
+        android:text="精准"
+        android:textColor="@color/common_text_orange"
+        android:textSize="9dp" />
+
+
+    <TextView
+        android:id="@+id/tv_date_info_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_state_info_list"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="6dp"
+        android:layout_toRightOf="@id/iv_info_list"
+        android:drawableLeft="@mipmap/info_date"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        android:text="2016"
+        android:textColor="@color/common_text_gray"
+        android:textSize="12dp" />
+
+
+    <TextView
+        android:id="@+id/tv_readcount_info_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_state_info_list"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="6dp"
+        android:layout_toRightOf="@id/tv_date_info_list"
+        android:drawableLeft="@mipmap/info_read"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        android:text="2016"
+        android:textColor="@color/common_text_gray"
+        android:textSize="12dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/iv_info_list"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:background="@color/common_line_gray" />
+
+    <LinearLayout
+        android:id="@+id/ll_info_list_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@id/iv_info_list"
+        android:gravity="center">
+
+        <LinearLayout
+            android:id="@+id/ll_info_list_accurate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_info_list_accurate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="精准"
+                android:textColor="@color/common_text_orange"
+                android:textSize="12dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="6dp"
+            android:layout_marginTop="6dp"
+            android:background="@color/common_line_gray" />
+
+        <LinearLayout
+            android:id="@+id/ll_info_list_top"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_info_list_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="置顶"
+                android:textColor="@color/common_text_orange"
+                android:textSize="12dp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

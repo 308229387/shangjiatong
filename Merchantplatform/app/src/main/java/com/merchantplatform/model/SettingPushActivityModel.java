@@ -5,7 +5,7 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.CompoundButton;
 
-import com.android.gmacs.logic.MessageLogic;
+import com.Utils.UserUtils;
 import com.dataStore.SettingPushPreferUtil;
 import com.log.LogUmengAgent;
 import com.log.LogUmengEnum;
@@ -13,7 +13,6 @@ import com.merchantplatform.R;
 import com.merchantplatform.activity.SettingPushActivity;
 import com.ui.SettingToggleGroup;
 import com.Utils.TitleBar;
-import com.utils.UserUtils;
 
 /**
  * Created by 58 on 2016/12/9.

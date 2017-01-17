@@ -2,11 +2,9 @@ package com.db.helper;
 
 import android.content.Context;
 
-import com.db.dao.CallDetail;
+import com.Utils.UserUtils;
 import com.db.dao.SystemNotificationDetial;
-import com.db.dao.gen.CallDetailDao;
 import com.db.dao.gen.SystemNotificationDetialDao;
-import com.utils.UserUtils;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 import org.greenrobot.greendao.query.WhereCondition;
@@ -38,7 +36,7 @@ public class SystemNotificationOperate {
      **/
     public static ArrayList<SystemNotificationDetial> queryAll(Context context) {
         QueryBuilder<SystemNotificationDetial> builder = DbManager.getDaoSession(context).getSystemNotificationDetialDao().queryBuilder();
-        WhereCondition conditionUserId = SystemNotificationDetialDao.Properties.UserId.eq(UserUtils.getUserId());
+        WhereCondition conditionUserId = SystemNotificationDetialDao.Properties.UserId.eq(UserUtils.getUserId(context));
         return (ArrayList<SystemNotificationDetial>) builder.where(conditionUserId).orderDesc(SystemNotificationDetialDao.Properties.SortId).list();
     }
 
@@ -48,7 +46,7 @@ public class SystemNotificationOperate {
      **/
     public static ArrayList<SystemNotificationDetial> checkReaded(Context context) {
         QueryBuilder<SystemNotificationDetial> builder = DbManager.getDaoSession(context).getSystemNotificationDetialDao().queryBuilder();
-        WhereCondition conditionUserId = SystemNotificationDetialDao.Properties.UserId.eq(UserUtils.getUserId());
+        WhereCondition conditionUserId = SystemNotificationDetialDao.Properties.UserId.eq(UserUtils.getUserId(context));
         return (ArrayList<SystemNotificationDetial>) builder.where(conditionUserId, SystemNotificationDetialDao.Properties.IsReaded.notEq(0)).list();
     }
 

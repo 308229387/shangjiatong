@@ -1,19 +1,19 @@
 package com.merchantplatform.model;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 
-import com.Utils.SystemGetNotificationInfoAction;
 import com.Utils.SystemNotificationInfoAction;
+import com.Utils.UserUtils;
 import com.android.gmacs.fragment.ConversationListFragment;
 import com.callback.DialogCallback;
-import com.common.gmacs.utils.ToastUtil;
+import com.dataStore.AppPrefersUtil;
 import com.db.dao.SystemNotificationDetial;
 import com.db.helper.SystemNotificationOperate;
 import com.log.LogUmengAgent;
@@ -21,17 +21,17 @@ import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.HomepageActivity;
 import com.merchantplatform.bean.GlobalResponse;
-import com.merchantplatform.fragment.BaseFragment;
 import com.merchantplatform.fragment.CallMessageFragment;
-import com.merchantplatform.fragment.Fragment3;
+import com.merchantplatform.fragment.InfoListFragment;
 import com.merchantplatform.fragment.PersonalCenterFragment;
 import com.merchantplatform.service.AppDownloadService;
 import com.okhttputils.OkHttpUtils;
 import com.ui.HomepageBottomButton;
+import com.ui.dialog.UpdateDialog;
 import com.utils.AppInfoUtils;
 import com.utils.StringUtil;
+import com.utils.UpdateUtils;
 import com.utils.Urls;
-import com.utils.UserUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -46,12 +46,15 @@ import okhttp3.Response;
 
 public class HomepageModel extends BaseModel implements View.OnClickListener {
     private HomepageActivity context;
-    private HomepageBottomButton bottomButton1, bottomButton2, bottomButton4;
+    private HomepageBottomButton bottomButton1, bottomButton2, bottomButton3, bottomButton4;
     private ConversationListFragment conversationListFragment;
     private CallMessageFragment callMessageFragment;
     private PersonalCenterFragment personalCenterFragment;
+    private InfoListFragment infoListFragment;
     private Fragment mFragment;
     private FragmentManager fragmentManager;
+
+    private UpdateDialog mUpdateDialog;
 
     public HomepageModel(HomepageActivity context) {
         this.context = context;
@@ -60,6 +63,7 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
     public void init() {
         bottomButton1 = (HomepageBottomButton) context.findViewById(R.id.homepage_bottom_button1);
         bottomButton2 = (HomepageBottomButton) context.findViewById(R.id.homepage_bottom_button2);
+        bottomButton3 = (HomepageBottomButton) context.findViewById(R.id.homepage_bottom_button3);
         bottomButton4 = (HomepageBottomButton) context.findViewById(R.id.homepage_bottom_button4);
         setListener();
         setInfo();
@@ -69,6 +73,7 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
     private void setListener() {
         bottomButton1.setOnClickListener(this);
         bottomButton2.setOnClickListener(this);
+        bottomButton3.setOnClickListener(this);
         bottomButton4.setOnClickListener(this);
     }
 
@@ -76,9 +81,11 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         bottomButton1.setSelectedState();
         bottomButton1.setTextInfo("消息");
         bottomButton2.setTextInfo("电话");
+        bottomButton3.setTextInfo("帖子");
         bottomButton4.setTextInfo("我");
         bottomButton1.setDrawableInfo(R.drawable.tab_menu_setting);
         bottomButton2.setDrawableInfo(R.drawable.tab_menu_call);
+        bottomButton3.setDrawableInfo(R.drawable.tab_menu_info);
         bottomButton4.setDrawableInfo(R.drawable.tab_menu_mine);
     }
 
@@ -96,6 +103,7 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
     private void registerState() {
         bottomButton1.registerState();
         bottomButton2.registerState();
+        bottomButton3.registerState();
         bottomButton4.registerState();
     }
 
@@ -119,6 +127,13 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         else
             personalCenterFragment = (PersonalCenterFragment) fragmentManager.findFragmentByTag("PersonalCenterFragment");
 
+
+        if (fragmentManager.findFragmentByTag("InfoListFragment") == null)
+            infoListFragment = new InfoListFragment();
+        else
+            infoListFragment = (InfoListFragment) fragmentManager.findFragmentByTag("InfoListFragment");
+
+
         mFragment = conversationListFragment;
     }
 
@@ -126,10 +141,13 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         judgeFragmentAdded(conversationListFragment);
 
         if (callMessageFragment.isAdded())
-            context.getSupportFragmentManager().beginTransaction().hide(callMessageFragment).commit();
+            fragmentManager.beginTransaction().hide(callMessageFragment).commit();
 
         if (personalCenterFragment.isAdded())
-            context.getSupportFragmentManager().beginTransaction().hide(personalCenterFragment).commit();
+            fragmentManager.beginTransaction().hide(personalCenterFragment).commit();
+
+        if (infoListFragment.isAdded())
+            fragmentManager.beginTransaction().hide(infoListFragment).commit();
 
     }
 
@@ -152,10 +170,12 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
                 tag = "CallMessageFragment";
             if (fragment.equals(personalCenterFragment))
                 tag = "PersonalCenterFragment";
-            context.getSupportFragmentManager().beginTransaction().hide(mFragment)
+            if(fragment.equals(infoListFragment))
+                tag = "InfoListFragment";
+            fragmentManager.beginTransaction().hide(mFragment)
                     .add(R.id.main_fragment, fragment, tag).show(fragment).commit();
         } else
-            context.getSupportFragmentManager().beginTransaction().hide(mFragment).show(fragment).commit();
+            fragmentManager.beginTransaction().hide(mFragment).show(fragment).commit();
 
     }
 
@@ -179,6 +199,10 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
             case R.id.homepage_bottom_button2:
                 LogUmengAgent.ins().log(LogUmengEnum.LOG_DY_DH);//添加埋点信息
                 dealWithClick(bottomButton2, callMessageFragment);
+                break;
+            case R.id.homepage_bottom_button3:
+                //LogUmengAgent.ins().log(LogUmengEnum.LOG_DY_DH);//添加埋点信息
+                dealWithClick(bottomButton3, infoListFragment);
                 break;
             case R.id.homepage_bottom_button4:
                 LogUmengAgent.ins().log(LogUmengEnum.LOG_DY_WD);//添加埋点信息
@@ -209,29 +233,66 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         @Override
         public void onResponse(boolean isFromCache, GlobalResponse globalResponse, Request request, @Nullable Response response) {
             if (globalResponse != null) {
-                String appUrl = globalResponse.getData().getAppUrl();
-                String isPayOpen = globalResponse.getData().getIsPayOpen();
-                String version = globalResponse.getData().getVersion();
-                UserUtils.setPay(context,isPayOpen);
-                updateVersion(appUrl, version);
+                saveGlobalParams(globalResponse);
+                updateVersion(globalResponse);
             }
         }
     }
 
-    private void updateVersion(String appUrl, String version) {
+    private void saveGlobalParams(GlobalResponse globalResponse) {
+        String isPayOpen = globalResponse.getData().getIsPayOpen();
+        String isUserFundsOpen = globalResponse.getData().getIsUserFundsOpen();
+        String staffContactPhone = globalResponse.getData().getStaffContactPhone();
+        if(!TextUtils.isEmpty(isPayOpen))
+        UserUtils.setPay(context,isPayOpen);
+        if(!TextUtils.isEmpty(isUserFundsOpen))
+        UserUtils.setFundsOpen(context,isUserFundsOpen);
+        if(!TextUtils.isEmpty(staffContactPhone))
+        UserUtils.setStaffPhone(context,staffContactPhone);
+    }
+
+    private void updateVersion(GlobalResponse globalResponse) {
+        final String version = globalResponse.getData().getVersion();
+        String appUrl = globalResponse.getData().getAppUrl();
+        String isForceUpdate = globalResponse.getData().getIsForceUpdate();
+
         try {
-            int currentVersionNum = Integer.parseInt(AppInfoUtils.getVersionCode(context));
-            int versionNum = Integer.parseInt(version);
-            boolean isUpdate = StringUtil.compareVersion(versionNum, currentVersionNum);
-            if (isUpdate) {
-                AppDownloadService.startService(context, appUrl);
+            if(!TextUtils.isEmpty(version) && !TextUtils.isEmpty(appUrl) && !TextUtils.isEmpty(isForceUpdate)){
+                int currentVersionNum = Integer.parseInt(AppInfoUtils.getVersionCode(context));
+                int versionNum = Integer.parseInt(version);
+                boolean isUpdate = StringUtil.compareVersion(versionNum, currentVersionNum);
+                String  saveVersion =AppPrefersUtil.getInstance().getCheckVersionUpdateFlag();
+                if(!TextUtils.isEmpty(saveVersion)){
+                    int saveVersionFlag = Integer.parseInt(saveVersion);
+                    boolean isAlertUpdate = StringUtil.compareVersion(versionNum, saveVersionFlag);
+                    if(isAlertUpdate){
+                        checkUpdate(version, appUrl, isForceUpdate, isUpdate);
+                    }
+
+                }else{
+                    checkUpdate(version, appUrl, isForceUpdate, isUpdate);
+                }
             }
+
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    public void unregusterEventBus(){
+    private void checkUpdate(final String version, String appUrl, String isForceUpdate, boolean isUpdate) {
+        if (isUpdate) {
+            mUpdateDialog = UpdateUtils.getInstance().showUpateDialog(context,appUrl,isForceUpdate);
+            mUpdateDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    AppPrefersUtil.getInstance().saveCheckVersionUpdateFlag(version);
+                }
+            });
+        }
+    }
+
+
+    public void unregusterEventBus() {
         EventBus.getDefault().unregister(context);
     }
 

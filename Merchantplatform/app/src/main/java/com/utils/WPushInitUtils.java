@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.Utils.SystemNotification;
+import com.Utils.UserUtils;
 import com.db.dao.SystemNotificationDetial;
 import com.db.helper.SystemNotificationOperate;
 import com.google.gson.Gson;
@@ -28,7 +29,10 @@ public class WPushInitUtils implements Push.MessageListener,
         Push.DeviceIDAvalibleListener,
         Push.NotificationClickedListener {
 
+    private  Context mContext;
+
     public WPushInitUtils(Context context) {
+        this.mContext = context;
         Push.getInstance().registerMessageListener(this);//消息到达监听器
         Push.getInstance().setErrorListener(this);//设置错误监听器
         Push.getInstance().setDeviceIDAvalibleListener(this);//设置设备ID监听器
@@ -64,7 +68,7 @@ public class WPushInitUtils implements Push.MessageListener,
                 List<Activity> list = HyApplication.getInstance().getActivityList();
                 if (list != null && list.size() > 0) {
                     Activity activity = list.get(list.size() - 1);
-                    new LogoutDialog(activity, activity.getString(R.string.force_exit));
+                    new LogoutDialog(activity, bean.getDescribe());
                 }
             }
         } catch (Exception e) {
@@ -80,7 +84,7 @@ public class WPushInitUtils implements Push.MessageListener,
         final SystemNotificationDetial data = new SystemNotificationDetial();
         data.setType(temp1.getType());
         data.setTitle(temp1.getTitle());
-        data.setUserId(UserUtils.getUserId());
+        data.setUserId(UserUtils.getUserId(mContext));
         data.setSortId(temp1.getSortId());
         data.setId(temp1.getId());
         data.setContent(temp1.getContent());

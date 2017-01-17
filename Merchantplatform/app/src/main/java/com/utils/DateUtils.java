@@ -91,4 +91,32 @@ public class DateUtils {
             return date.substring(index, date.length()).replace("-", "/");
         }
     }
+
+    public static boolean isEmptyAndNotToday(String dateTime) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        if (TextUtils.isEmpty(dateTime)) {
+            return true;
+        }
+        Date dateParser = null;
+        try {
+            dateParser = format.parse(dateTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar current = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();    //今天
+        today.set(Calendar.YEAR, current.get(Calendar.YEAR));
+        today.set(Calendar.MONTH, current.get(Calendar.MONTH));
+        today.set(Calendar.DAY_OF_MONTH, current.get(Calendar.DAY_OF_MONTH));
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        today.set(Calendar.MINUTE, 0);
+        today.set(Calendar.SECOND, 0);
+        current.setTime(dateParser);
+        if (current.after(today)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 }

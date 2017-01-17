@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/bg_common_dialog"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dialog_content_vertical_padding"
+            android:layout_marginLeft="@dimen/dialog_content_horizontal_padding"
+            android:layout_marginRight="@dimen/dialog_content_horizontal_padding"
+            android:layout_marginTop="@dimen/dialog_content_vertical_padding"
+            android:gravity="center"
+            android:minHeight="@dimen/dialog_content_min_height"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/common_text_size_16"
+                android:text="是否对APP进行版本更新"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_divider_line_height"
+                android:background="@color/line_gray_color"/>
+
+            <LinearLayout
+                android:id="@+id/ll_bottom_bar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dialog_btn_bar_height"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/dialog_white_blr_btn_selector"
+                    android:gravity="center"
+                    android:text="@string/update_later"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/common_text_size_16"/>
+
+                <View
+                    android:id="@+id/v_divider"
+                    android:layout_width="@dimen/common_divider_line_height"
+                    android:layout_height="match_parent"
+                    android:background="@color/line_gray_color" />
+
+                <Button
+                    android:id="@+id/btn_ok"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/dialog_white_brr_btn_selector"
+                    android:gravity="center"
+                    android:text="@string/update_goto_update"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="@dimen/common_text_size_16" />
+            </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

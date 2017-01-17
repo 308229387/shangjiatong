@@ -26,7 +26,7 @@ public class Constant {
      */
     public static final String DATABASE_CALL = "merchantplatform.db";
 
-    public  static final String MOBILE = "mobile";
+    public static final String MOBILE = "mobile";
 
 
     /**
@@ -61,6 +61,10 @@ public class Constant {
     }
 
 
-    public  static final String INFOID  = "infoId";
+    public static final String INFOID = "infoId";
+
+    public static final String SORTID = "sortId";
+
+
 
 }

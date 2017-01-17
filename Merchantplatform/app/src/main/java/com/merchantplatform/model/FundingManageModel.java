@@ -14,6 +14,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.Utils.TitleBar;
+import com.Utils.UserUtils;
 import com.loadview.ShapeLoadingDialog;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.FundingManageActivity;
@@ -25,7 +26,6 @@ import com.pay58.sdk.common.PayResult;
 import com.pay58.sdk.order.Order;
 import com.utils.AppInfoUtils;
 import com.utils.Urls;
-import com.utils.UserUtils;
 import com.wuba.loginsdk.external.LoginClient;
 
 /**
@@ -206,7 +206,7 @@ public class FundingManageModel extends BaseModel {
      */
     private Order generateOrder(String merid, String productName, String productDesc, float orderMoney, String rechargeType) {
         String cookie = "PPU=" + LoginClient.doGetPPUOperate(context);//用户登录cookie，直接使用PPU
-        String buyAccountId = UserUtils.getUserId();//购买用户的ID
+        String buyAccountId = UserUtils.getUserId(context);//购买用户的ID
         RechargeOrder rechargeOrder = new RechargeOrder();
         rechargeOrder.setOrderContent(merid, productName, productDesc, orderMoney);
         rechargeOrder.setCookie(cookie);

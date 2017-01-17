@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.Utils.TitleBar;
+import com.Utils.UserUtils;
 import com.db.dao.CallDetail;
 import com.db.dao.gen.CallDetailDao;
 import com.db.helper.CallDetailDaoOperate;
@@ -24,7 +25,6 @@ import com.merchantplatform.bean.CallDetailListBean;
 import com.merchantplatform.bean.CallListNotificationDetail;
 import com.utils.DateUtils;
 import com.utils.PermissionUtils;
-import com.utils.UserUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.greendao.query.WhereCondition;
@@ -129,7 +129,7 @@ public class CallDetailModel extends BaseModel {
 
     private ArrayList<CallDetail> getNewDetailDataFromDB() {
         String date_Day = DateUtils.getCurrentDate();
-        WhereCondition conditionUserId = CallDetailDao.Properties.UserId.eq(UserUtils.getUserId());
+        WhereCondition conditionUserId = CallDetailDao.Properties.UserId.eq(UserUtils.getUserId(context));
         WhereCondition conditionPhone = CallDetailDao.Properties.Phone.eq(phoneNum);
         WhereCondition conditionCallTime = new WhereCondition.StringCondition("date(CALL_TIME)='" + date_Day + "'");
         WhereCondition conditionType = CallDetailDao.Properties.Type.eq(2);

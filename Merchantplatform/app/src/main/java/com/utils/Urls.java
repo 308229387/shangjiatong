@@ -32,6 +32,10 @@ public class Urls {
      */
     public static final String BASE_URL_GLOBAL = BASE_URL_APP + "global/";
     /**
+     * 基础帖子相关url_info
+     */
+    public static final String BASE_URL_INFO = BASE_URL_APP + "info/";
+    /**
      * im获取登陆token
      */
     public static final String IM_TOKEN = "https://ppuswapapi.58.com/swap/im";
@@ -92,6 +96,7 @@ public class Urls {
      * 推广助手页
      */
     public static final String PROMOTE_MESSAGE = "http://m.cube.58.com/cube/m/manage/initMessage?sourceId=205000";
+    public static final String PROMOTE_OTHER_MESSAGE = "http://mcube.58.com/cube/m/manage/initMessage?sourceId=205000";
     /**
      * 置顶推广
      */
@@ -100,5 +105,15 @@ public class Urls {
      * 精准推广
      */
     public static final String PRECISION_PROMOTE ="http://mcube.58.com/cube/m/pm/1/205000/";
+
+    /**
+     * 帖子列表
+     */
+    public static final String POST_LIST = BASE_URL_INFO + "list";
+
+    /**
+     * 帖子详情
+     */
+    public static final String POST_DETAIL = BASE_URL_INFO + "detail";
 
 }

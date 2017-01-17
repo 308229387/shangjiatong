@@ -1,10 +1,9 @@
-package com.utils;
+package com.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
-import com.merchantplatform.application.HyApplication;
 
 /**
  * Created by SongYongmeng on 2016/11/30.
@@ -21,12 +20,16 @@ public class UserUtils {
     private static final String USER_SHAKE = "shake";
     private static final String USER_MOBILE = "mobile";
     private static final String PAY = "pay";
+    private static final String FUNDS_OPEN  = "funds_open";
+    private static final String STAFF_PHONE  = "staff_Phone";
     private static String userId = "";
     public static int hasValidate = 0; //默认未认证，1代表已经认证
     private static String face = "";
     private static String name = "";
     private static String mobile = "";
     private static String pay = "";
+    private static String funds = "";
+    private static String staffPhone = "";
 
     public static void setUserId(Context context, String userId) {
         SharedPreferences sp = context.getSharedPreferences(USER_SP_NAME, 0);
@@ -34,9 +37,9 @@ public class UserUtils {
         sp.edit().putString(USER_ID, userId).commit();
     }
 
-    public static String getUserId() {
+    public static String getUserId(Context context) {
         if (TextUtils.isEmpty(userId)) {
-            userId = HyApplication.getApplication().getSharedPreferences(USER_SP_NAME, 0).getString(USER_ID, "");
+            userId = context.getSharedPreferences(USER_SP_NAME, 0).getString(USER_ID, "");
         }
         return userId;
     }
@@ -73,9 +76,9 @@ public class UserUtils {
         sp.edit().putString(USER_FACE, face).commit();
     }
 
-    public static String getFace() {
+    public static String getFace(Context context) {
         if (TextUtils.isEmpty(face)) {
-            face = HyApplication.getApplication().getSharedPreferences(USER_SP_NAME, 0).getString(USER_FACE, "");
+            face = context.getSharedPreferences(USER_SP_NAME, 0).getString(USER_FACE, "");
         }
         return face;
     }
@@ -86,9 +89,9 @@ public class UserUtils {
         sp.edit().putString(USER_NAME, name).commit();
     }
 
-    public static String getName() {
+    public static String getName(Context context) {
         if (TextUtils.isEmpty(name)) {
-            name = HyApplication.getApplication().getSharedPreferences(USER_SP_NAME, 0).getString(USER_NAME, "");
+            name = context.getSharedPreferences(USER_SP_NAME, 0).getString(USER_NAME, "");
         }
         return name;
     }
@@ -99,9 +102,9 @@ public class UserUtils {
         sp.edit().putString(USER_MOBILE, mobile).commit();
     }
 
-    public static String getMobile() {
+    public static String getMobile(Context context) {
         if (TextUtils.isEmpty(mobile)) {
-            mobile = HyApplication.getApplication().getSharedPreferences(USER_SP_NAME, 0).getString(USER_MOBILE, "");
+            mobile = context.getSharedPreferences(USER_SP_NAME, 0).getString(USER_MOBILE, "");
         }
         return mobile;
     }
@@ -112,11 +115,37 @@ public class UserUtils {
         sp.edit().putString(PAY, pay).commit();
     }
 
-    public static String getPay() {
+    public static String getPay(Context context) {
         if (TextUtils.isEmpty(pay)) {
-            pay = HyApplication.getApplication().getSharedPreferences(USER_SP_NAME, 0).getString(PAY, "");
+            pay = context.getSharedPreferences(USER_SP_NAME, 0).getString(PAY, "");
         }
         return pay;
+    }
+
+    public static void setFundsOpen(Context context, String funds) {
+        SharedPreferences sp = context.getSharedPreferences(USER_SP_NAME, 0);
+        UserUtils.funds = funds;
+        sp.edit().putString(FUNDS_OPEN, funds).commit();
+    }
+
+    public static String getFundsOpen(Context context) {
+        if (TextUtils.isEmpty(funds)) {
+            funds = context.getSharedPreferences(USER_SP_NAME, 0).getString(FUNDS_OPEN, "");
+        }
+        return funds;
+    }
+
+    public static void setStaffPhone(Context context, String staffPhone) {
+        SharedPreferences sp = context.getSharedPreferences(USER_SP_NAME, 0);
+        UserUtils.staffPhone = staffPhone;
+        sp.edit().putString(STAFF_PHONE, staffPhone).commit();
+    }
+
+    public static String getStaffPhone(Context context) {
+        if (TextUtils.isEmpty(staffPhone)) {
+            staffPhone = context.getSharedPreferences(USER_SP_NAME, 0).getString(STAFF_PHONE, "");
+        }
+        return staffPhone;
     }
 
     public static void clearUserInfo(Context context) {
@@ -124,10 +153,14 @@ public class UserUtils {
         context.getSharedPreferences(USER_SP_NAME, 0).edit().putInt(USER_VALIDATE, 0).commit();
         context.getSharedPreferences(USER_SP_NAME, 0).edit().putString(USER_MOBILE, "").commit();
         context.getSharedPreferences(USER_SP_NAME, 0).edit().putString(PAY, "").commit();
+        context.getSharedPreferences(USER_SP_NAME, 0).edit().putString(FUNDS_OPEN, "").commit();
+        context.getSharedPreferences(USER_SP_NAME, 0).edit().putString(STAFF_PHONE, "").commit();
         userId = "";
         hasValidate = 0;
         mobile = "";
         pay ="";
+        funds = "";
+        staffPhone = "";
     }
 
     public static void setSoundState(Context context, boolean soundState) {
@@ -136,8 +169,8 @@ public class UserUtils {
     }
 
 
-    public static boolean getSoundState() {
-        boolean soundState = HyApplication.getApplication().getSharedPreferences(USER_SP_NAME, 0).getBoolean(USER_SOUND, false);
+    public static boolean getSoundState(Context context) {
+        boolean soundState = context.getSharedPreferences(USER_SP_NAME, 0).getBoolean(USER_SOUND, false);
         return soundState;
     }
 
@@ -147,8 +180,8 @@ public class UserUtils {
     }
 
 
-    public static boolean getShakeState() {
-        boolean shakeState = HyApplication.getApplication().getSharedPreferences(USER_SP_NAME, 0).getBoolean(USER_SHAKE, false);
+    public static boolean getShakeState(Context context) {
+        boolean shakeState = context.getSharedPreferences(USER_SP_NAME, 0).getBoolean(USER_SHAKE, false);
         return shakeState;
     }
 }

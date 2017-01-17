@@ -15,7 +15,7 @@
         android:layout_height="0.5dp"
         android:background="#c8c8c8" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/ly_tab_menu"
         android:layout_width="match_parent"
         android:layout_height="56dp"
@@ -23,25 +23,31 @@
 
         <com.ui.HomepageBottomButton
             android:id="@+id/homepage_bottom_button1"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-
-            android:layout_marginLeft="35dp"></com.ui.HomepageBottomButton>
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"></com.ui.HomepageBottomButton>
 
         <com.ui.HomepageBottomButton
             android:id="@+id/homepage_bottom_button2"
-            android:layout_width="80dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"></com.ui.HomepageBottomButton>
 
+        <com.ui.HomepageBottomButton
+            android:id="@+id/homepage_bottom_button3"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"></com.ui.HomepageBottomButton>
 
         <com.ui.HomepageBottomButton
             android:id="@+id/homepage_bottom_button4"
-            android:layout_width="80dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="35dp"></com.ui.HomepageBottomButton>
-    </RelativeLayout>
+            android:layout_alignParentRight="true"></com.ui.HomepageBottomButton>
+    </LinearLayout>
 
 
 </LinearLayout>

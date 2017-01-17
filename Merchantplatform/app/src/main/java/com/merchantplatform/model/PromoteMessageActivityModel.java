@@ -12,16 +12,21 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.Utils.TitleBar;
+import com.Utils.UserUtils;
+import com.dataStore.PromotePrefersUtil;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.FundingManageActivity;
 import com.merchantplatform.activity.PromoteMessageActivity;
 import com.ta.utdid2.android.utils.StringUtils;
-import com.ui.dialog.LogoutDialog;
 import com.ui.dialog.PayAlertDialog;
 import com.utils.AppInfoUtils;
+import com.utils.DateUtils;
 import com.utils.PageSwitchUtils;
 import com.utils.Urls;
-import com.utils.UserUtils;
+import com.utils.eventbus.EventAction;
+import com.utils.eventbus.EventType;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by 58 on 2017/1/6.
@@ -35,7 +40,10 @@ public class PromoteMessageActivityModel extends BaseModel{
     private View no_internet_view;
     private WebView webView_promote;
     private String url;
-
+    private boolean isUpIntercept = false;
+    private boolean isPercisionIntercept = false;
+    private String upPromote_infoId;
+    private String precisionPromote_infoId;
 
    public PromoteMessageActivityModel(PromoteMessageActivity context){
        this.context = context;
@@ -142,14 +150,53 @@ public class PromoteMessageActivityModel extends BaseModel{
             }
             //点击充值
             if (url.startsWith("http://paycenter.58.com/wappay")) {
-                String isPayOpen = UserUtils.getPay();
-                if(!StringUtils.isEmpty(isPayOpen)){
-                    if("1".equals(isPayOpen)){
+                String isPayOpen = UserUtils.getPay(context);
+                String isUserFundsOpen = UserUtils.getFundsOpen(context);
+                if(!StringUtils.isEmpty(isPayOpen) && !StringUtils.isEmpty(isUserFundsOpen)){
+                    if("1".equals(isPayOpen) && "1".equals(isUserFundsOpen)){
                         PageSwitchUtils.goToActivity(context,FundingManageActivity.class);
                     }else{
                         new PayAlertDialog(context, "本APP暂不支持充值业务，请在58同城APP上进行充值");
                     }
                 }
+                return true;
+            }else if(url.startsWith(Urls.UP_PROMOTE) ){
+                String[] arrayString = url.split("[?]")[0].split("/");
+                upPromote_infoId = arrayString[arrayString.length -1];
+                isUpIntercept = true;
+                return true;
+            }else if(url.startsWith(Urls.PRECISION_PROMOTE)){
+                String[] arrayString = url.split("[?]")[0].split("/");
+                precisionPromote_infoId = arrayString[arrayString.length -1];
+                isPercisionIntercept = true;
+                return true;
+            }else if((url.startsWith(Urls.PROMOTE_MESSAGE) && isUpIntercept)||(url.startsWith(Urls.PROMOTE_OTHER_MESSAGE)&& isUpIntercept)){
+
+                EventAction action = new EventAction(EventType.UP_PROMOTE_SUCCESS,upPromote_infoId);
+                EventBus.getDefault().post(action);
+
+                String upTime =  PromotePrefersUtil.getInstance().getUpPromote();
+                if(DateUtils.isEmptyAndNotToday(upTime)){
+                    EventAction up_action = new EventAction(EventType.UP_PROMOTE_FIRST_SUCCESS,upTime);
+                    EventBus.getDefault().post(up_action);
+                }
+                String currentTime = DateUtils.getCurrentDateTime();
+                PromotePrefersUtil.getInstance().saveUpPromote(currentTime);
+                isUpIntercept = false;
+                return true;
+            }else if((url.startsWith(Urls.PROMOTE_MESSAGE) && isPercisionIntercept)|| (url.startsWith(Urls.PROMOTE_OTHER_MESSAGE)&& isUpIntercept)){
+
+                EventAction action = new EventAction(EventType.PRECISION_PROMOTE_SUCCESS,precisionPromote_infoId);
+                EventBus.getDefault().post(action);
+
+                String precisionTime =  PromotePrefersUtil.getInstance().getPercisionPromote();
+                if(DateUtils.isEmptyAndNotToday(precisionTime)){
+                    EventAction precision_action = new EventAction(EventType.PRECISION_PROMOTE_FIRST_SUCCESS,precisionTime);
+                    EventBus.getDefault().post(precision_action);
+                }
+                String currentTime = DateUtils.getCurrentDateTime();
+                PromotePrefersUtil.getInstance().savePercisionPromote(currentTime);
+                isPercisionIntercept = false;
                 return true;
             }
 
@@ -161,6 +208,7 @@ public class PromoteMessageActivityModel extends BaseModel{
 
         }
     }
+
 
     private class WebChromeBaseClient extends WebChromeClient {
         @Override

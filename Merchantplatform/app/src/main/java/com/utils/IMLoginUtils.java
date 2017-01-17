@@ -3,6 +3,7 @@ package com.utils;
 import android.app.Activity;
 import android.support.annotation.Nullable;
 
+import com.Utils.UserUtils;
 import com.android.gmacs.core.GmacsManager;
 import com.callback.JsonCallback;
 import com.common.gmacs.core.ClientManager;
@@ -27,6 +28,7 @@ import okhttp3.Response;
  */
 
 public class IMLoginUtils {
+    private Activity context;
 
     String userId = LoginClient.getUserID(HyApplication.getApplication());
     String keyValue = "wb@D11ncE2Ym4xOJnSWknzi";
@@ -40,7 +42,7 @@ public class IMLoginUtils {
     ImGetTokenResponse tokenResponse;
 
     public IMLoginUtils(Activity context) {
-        //this.context = context;
+        this.context = context;
         calculationKey();
         getToken();
     }
@@ -98,12 +100,12 @@ public class IMLoginUtils {
 
 
             GmacsUserInfo gmacsUserInfo = new GmacsUserInfo();
-            gmacsUserInfo.avatar = UserUtils.getFace();
-            gmacsUserInfo.userId = UserUtils.getUserId();
-            gmacsUserInfo.userName = UserUtils.getName();
+            gmacsUserInfo.avatar = UserUtils.getFace(context);
+            gmacsUserInfo.userId = UserUtils.getUserId(context);
+            gmacsUserInfo.userName = UserUtils.getName(context);
             gmacsUserInfo.userSource = 2;
 
-            tempUserId = UserUtils.getUserId();
+            tempUserId = UserUtils.getUserId(context);
             imToken = tokenResponse.getToken();
 
             Gmacs.getInstance().setGmacsUserInfo(gmacsUserInfo);
