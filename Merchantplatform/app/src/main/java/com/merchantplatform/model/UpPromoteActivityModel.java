@@ -14,6 +14,8 @@ import android.widget.ProgressBar;
 
 import com.Utils.TitleBar;
 import com.dataStore.PromotePrefersUtil;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.UpPromoteActivity;
 import com.utils.AppInfoUtils;
@@ -79,6 +81,7 @@ public class UpPromoteActivityModel extends BaseModel{
         tb_up_promote_title.setLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_TZ_ZDSDK_FH);
                 context.onBackPressed();
             }
         });
