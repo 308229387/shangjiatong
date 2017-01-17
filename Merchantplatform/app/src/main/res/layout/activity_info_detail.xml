@@ -222,6 +222,7 @@
                 android:textSize="17dp" />
 
             <View
+                android:id="@+id/line4"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_below="@id/tv_info_detail_description"
@@ -234,7 +235,7 @@
                 android:id="@+id/mtv_info_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_info_detail_description" />
+                android:layout_below="@id/line4" />
         </RelativeLayout>
 
     </ScrollView>
