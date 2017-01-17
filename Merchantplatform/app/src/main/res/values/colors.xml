@@ -7,6 +7,7 @@
     <color name="common_line_gray">#E0E0E4</color>
     <color name="common_text_orange">#FF552E</color>
     <color name="common_bg_white">#FBFCFD</color>
+    <color name="common_bg_grey">#F1F1F1</color>
 
 
     <color name="colorPrimary">#3F51B5</color>

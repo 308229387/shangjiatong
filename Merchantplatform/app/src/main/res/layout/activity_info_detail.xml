@@ -153,7 +153,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
                 android:layout_below="@id/tv_info_detail_name"
-                android:background="@color/common_line_gray" />
+                android:background="@color/actionsheet_background" />
 
             <TextView
                 android:id="@+id/tv_info_detail_cate"
@@ -208,7 +208,7 @@
                 android:layout_height="5dp"
                 android:layout_below="@id/tv_info_detail_address_content"
                 android:layout_marginTop="10dp"
-                android:background="@color/common_line_gray" />
+                android:background="@color/common_bg_grey" />
 
             <TextView
                 android:id="@+id/tv_info_detail_description"
