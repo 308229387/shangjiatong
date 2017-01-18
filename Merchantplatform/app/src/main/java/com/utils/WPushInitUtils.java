@@ -2,6 +2,7 @@ package com.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.Utils.SystemNotification;
@@ -68,7 +69,12 @@ public class WPushInitUtils implements Push.MessageListener,
                 List<Activity> list = HyApplication.getInstance().getActivityList();
                 if (list != null && list.size() > 0) {
                     Activity activity = list.get(list.size() - 1);
-                    new LogoutDialog(activity, bean.getDescribe());
+                    if(!TextUtils.isEmpty(bean.getDescribe())){
+                        new LogoutDialog(activity, bean.getDescribe());
+                    }else{
+                        new LogoutDialog(activity, activity.getString(R.string.force_exit));
+                    }
+
                 }
             }
         } catch (Exception e) {

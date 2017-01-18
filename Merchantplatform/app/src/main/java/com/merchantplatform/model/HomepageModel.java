@@ -24,7 +24,6 @@ import com.merchantplatform.bean.GlobalResponse;
 import com.merchantplatform.fragment.CallMessageFragment;
 import com.merchantplatform.fragment.InfoListFragment;
 import com.merchantplatform.fragment.PersonalCenterFragment;
-import com.merchantplatform.service.AppDownloadService;
 import com.okhttputils.OkHttpUtils;
 import com.ui.HomepageBottomButton;
 import com.ui.dialog.UpdateDialog;
@@ -283,11 +282,6 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-
-    public void unregusterEventBus() {
-        EventBus.getDefault().unregister(context);
     }
 
 
