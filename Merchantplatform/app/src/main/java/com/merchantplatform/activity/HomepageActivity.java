@@ -8,7 +8,6 @@ import com.Utils.JumpExtendAction;
 import com.Utils.JumpSystemNotificationAction;
 import com.Utils.ShowRedDotSystemNotificationAction;
 import com.Utils.SystemGetNotificationInfoAction;
-import com.Utils.SystemNotificationInfoAction;
 import com.db.helper.SystemNotificationOperate;
 import com.merchantplatform.R;
 import com.merchantplatform.model.HomepageModel;
@@ -49,6 +48,12 @@ public class HomepageActivity extends BaseActivity<HomepageModel> {
         return new HomepageModel(this);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        model.unregister();
+    }
+
     @Subscribe
     public void onEvent(JumpSystemNotificationAction action) {
         startActivity(new Intent(HomepageActivity.this, SystemNotificationActivity.class));
@@ -60,6 +65,7 @@ public class HomepageActivity extends BaseActivity<HomepageModel> {
         }.start();
 
     }
+
     @Subscribe
     public void onEvent(JumpExtendAction action) {
         startActivity(new Intent(HomepageActivity.this, PromoteMessageActivity.class));

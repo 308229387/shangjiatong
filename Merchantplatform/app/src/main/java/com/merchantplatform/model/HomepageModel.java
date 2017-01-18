@@ -224,6 +224,10 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
 
     }
 
+    public void unregister() {
+        EventBus.getDefault().unregister(context);
+    }
+
     private class globalCallback extends DialogCallback<GlobalResponse> {
 
         public globalCallback(Activity activity) {
