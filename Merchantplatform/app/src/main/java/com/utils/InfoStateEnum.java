@@ -7,7 +7,7 @@ package com.utils;
 public enum InfoStateEnum {
     SHOWING(1, "显示中"),
     CHECKING(2, "审核中"),
-    REFUSED(3, "审核未通过"),
+    REFUSED(3, "审核失败"),
     DELETE(4, "已删除");
 
 

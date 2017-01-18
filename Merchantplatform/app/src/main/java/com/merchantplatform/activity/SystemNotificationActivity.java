@@ -4,6 +4,7 @@ package com.merchantplatform.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.widget.Toast;
 
 import com.Utils.ShowRedDotSystemNotificationAction;
 import com.Utils.SystemNotification;
@@ -68,6 +69,15 @@ public class SystemNotificationActivity extends BaseActivity {
         temp = SystemNotificationOperate.queryAll(SystemNotificationActivity.this);
         xAdapter = new SystemNotificationXAdapter(SystemNotificationActivity.this, temp);
         mXRecyclerView.setAdapter(xAdapter);
+        if (temp.size() <= 0) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(SystemNotificationActivity.this, "暂无系统消息", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
     }
 
     public void setListener() {
@@ -102,6 +112,7 @@ public class SystemNotificationActivity extends BaseActivity {
 
         @Override
         public void onLoadMore() {
+
         }
 
     }
