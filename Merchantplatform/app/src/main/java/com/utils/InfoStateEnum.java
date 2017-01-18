@@ -6,10 +6,9 @@ package com.utils;
 
 public enum InfoStateEnum {
     SHOWING(1, "显示中"),
-    VIPSHOWING(11, "显示中"),
     CHECKING(2, "审核中"),
-    REFUSED(4, "审核未通过"),
-    DELETE(0, "已删除");
+    REFUSED(3, "审核未通过"),
+    DELETE(4, "已删除");
 
 
     private int id;

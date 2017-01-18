@@ -99,7 +99,6 @@ public class infoListModel extends BaseModel {
         //参数中sortId默认为0，正常读取最后一个item的sortId
         String sortId = "0";
         if (isRefresh) {
-            postBeanList.clear();
         } else {
             if (null != postBeanList && postBeanList.size() > 0)
                 sortId = postBeanList.get(postBeanList.size() - 1).getSortId();
@@ -109,16 +108,18 @@ public class infoListModel extends BaseModel {
                 new DialogCallback<InfoListResponse>(fragment.getActivity()) {
                     @Override
                     public void onResponse(boolean isFromCache, InfoListResponse infoListResponse, Request request, @Nullable Response response) {
+
                         if (infoListResponse != null && infoListResponse.getData() != null && infoListResponse.getData().size() > 0) {
+                            if (isRefresh) {
+                                postBeanList.clear();
+                            }
                             postBeanList.addAll(infoListResponse.getData());
                             infoListAdapter.notifyDataSetChanged();
 
-                            if (infoListResponse.getData().size() < PAGE_SIZE) {
-                                xrv_post.setNoMore(true);
-                            }
                         } else {
                             xrv_post.setNoMore(true);
                         }
+
                         if (isRefresh) {
                             xrv_post.refreshComplete();
                         } else {

@@ -73,7 +73,7 @@ public class InfoListAdapter extends BaseRecyclerViewAdapter<InfoListBean, InfoL
         }
 
         //根据状态绑定不同的View和数据
-        if (infoStateEnum == InfoStateEnum.SHOWING || infoStateEnum == InfoStateEnum.VIPSHOWING) {
+        if (infoStateEnum == InfoStateEnum.SHOWING ) {
             //设置状态字体颜色
             InfoViewHolder.setTextColor(R.id.tv_state_info_list, context.getResources().getColor(R.color.state_showing_green));
             //设置状态精准置顶是否显示
