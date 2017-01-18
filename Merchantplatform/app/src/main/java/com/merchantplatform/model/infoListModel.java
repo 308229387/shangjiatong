@@ -1,16 +1,13 @@
 package com.merchantplatform.model;
 
-import android.app.Activity;
-import android.os.Build;
+
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 
-import com.Utils.TitleBar;
 import com.callback.DialogCallback;
 import com.merchantplatform.R;
 import com.merchantplatform.adapter.InfoListAdapter;
@@ -20,7 +17,6 @@ import com.merchantplatform.bean.InfoListBean;
 import com.merchantplatform.bean.InfoListResponse;
 import com.okhttputils.OkHttpUtils;
 import com.utils.Constant;
-import com.utils.DisplayUtils;
 import com.utils.Urls;
 import com.xrecyclerview.ProgressStyle;
 import com.xrecyclerview.XRecyclerView;
@@ -39,7 +35,7 @@ import okhttp3.Response;
 
 public class infoListModel extends BaseModel {
 
-    private Activity activity;
+    private Fragment fragment;
 
     InfoListAdapter infoListAdapter;
     XRecyclerView xrv_post;
@@ -48,8 +44,8 @@ public class infoListModel extends BaseModel {
 
     private final static int PAGE_SIZE = 10;
 
-    public infoListModel(Activity context) {
-        this.activity = context;
+    public infoListModel(Fragment fragment) {
+        this.fragment = fragment;
     }
 
     /**
@@ -66,11 +62,11 @@ public class infoListModel extends BaseModel {
         xrv_post = (XRecyclerView) view.findViewById(R.id.xrv_info);
 
         //recyclerView设置布局样式
-        LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(fragment.getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         xrv_post.setLayoutManager(layoutManager);
 
-        infoListAdapter = new InfoListAdapter(activity, postBeanList);
+        infoListAdapter = new InfoListAdapter(fragment.getActivity(), postBeanList);
         xrv_post.setAdapter(infoListAdapter);
 
         xrv_post.setLayoutManager(layoutManager);
@@ -104,14 +100,13 @@ public class infoListModel extends BaseModel {
         String sortId = "0";
         if (isRefresh) {
             postBeanList.clear();
-            xrv_post.setNoMore(false);
         } else {
             if (null != postBeanList && postBeanList.size() > 0)
                 sortId = postBeanList.get(postBeanList.size() - 1).getSortId();
         }
 
         OkHttpUtils.get(Urls.POST_LIST).params(Constant.SORTID, sortId).execute(
-                new DialogCallback<InfoListResponse>(activity) {
+                new DialogCallback<InfoListResponse>(fragment.getActivity()) {
                     @Override
                     public void onResponse(boolean isFromCache, InfoListResponse infoListResponse, Request request, @Nullable Response response) {
                         if (infoListResponse != null && infoListResponse.getData() != null && infoListResponse.getData().size() > 0) {
@@ -146,7 +141,7 @@ public class infoListModel extends BaseModel {
 
     public void refreshItem(String infoId) {
         OkHttpUtils.get(Urls.POST_DETAIL).params(Constant.INFOID, infoId).execute(
-                new DialogCallback<InfoDetailResponse>(activity) {
+                new DialogCallback<InfoDetailResponse>(fragment.getActivity()) {
                     @Override
                     public void onResponse(boolean isFromCache, InfoDetailResponse infoDetailResponse, Request request, @Nullable Response response) {
                         InfoDetailBean infoDetailBean = infoDetailResponse.getData();
@@ -163,11 +158,11 @@ public class infoListModel extends BaseModel {
     }
 
     public void registerEventBus() {
-        EventBus.getDefault().register(activity);
+        EventBus.getDefault().register(fragment);
     }
 
     public void unRegisterEventBus() {
-        EventBus.getDefault().unregister(activity);
+        EventBus.getDefault().unregister(fragment);
     }
 
 

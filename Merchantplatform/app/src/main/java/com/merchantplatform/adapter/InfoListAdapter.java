@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.InfoDetailActivity;
 import com.merchantplatform.activity.PrecisionPromoteActivity;
@@ -41,12 +43,6 @@ public class InfoListAdapter extends BaseRecyclerViewAdapter<InfoListBean, InfoL
 
     public InfoListAdapter(final Context context, ArrayList<InfoListBean> postListBeen) {
         super(context, postListBeen);
-        setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-
-            }
-        });
     }
 
 
@@ -97,6 +93,7 @@ public class InfoListAdapter extends BaseRecyclerViewAdapter<InfoListBean, InfoL
             InfoViewHolder.setOnClickListener(R.id.ll_info_list_accurate, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    LogUmengAgent.ins().log(LogUmengEnum.LOG_TZLB_JZ);
                     clickViewHolder = InfoViewHolder;
                     Map map = new HashMap<>();
                     map.put(Constant.INFOID, infoListBean.getInfoId());
@@ -106,6 +103,7 @@ public class InfoListAdapter extends BaseRecyclerViewAdapter<InfoListBean, InfoL
             InfoViewHolder.setOnClickListener(R.id.ll_info_list_top, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    LogUmengAgent.ins().log(LogUmengEnum.LOG_TZLB_ZD);
                     Map map = new HashMap<>();
                     map.put(Constant.INFOID, infoListBean.getInfoId());
                     PageSwitchUtils.goToActivityWithString(context, UpPromoteActivity.class, map);
@@ -126,6 +124,7 @@ public class InfoListAdapter extends BaseRecyclerViewAdapter<InfoListBean, InfoL
         InfoViewHolder.setOnClickListener(R.id.rl_infolist_item, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_TZLB_TZQY);
                 clickViewHolder = InfoViewHolder;
                 Map map = new HashMap<>();
                 map.put(Constant.INFOID, infoListBean.getInfoId());

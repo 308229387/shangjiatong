@@ -8,6 +8,7 @@ package com.log;
  */
 public enum LogUmengEnum {
 
+    /**1.0.0版本埋点*/
     LOG_DIANHUAXQY_BDDH("dianhuaXQY_BDDH", "电话详情页_点击拨打电话"),
     LOG_DIANHUAXQY_RETURN("dianhuaXQY_return", "电话详情页_点击返回上一级"),
     LOG_DY_DH("DY_DH", "单页-电话"),
@@ -55,8 +56,21 @@ public enum LogUmengEnum {
     LOG_WODELBY_SZ("wodeLBY_SZ", "我的列表页-设置"),
     LOG_WODELBY_WDZJ("wodeLBY_WDZJ", "我的列表页_我的资金"),
     LOG_XIAOXILBY_DELETE("xiaoxiLBY_delete", "消息列表页-删除对话（左滑）"),
-    LOG_XIAOXILBY_HHDJ("xiaoxiLBY_HHDJ", "消息列表页-会话点击");
+    LOG_XIAOXILBY_HHDJ("xiaoxiLBY_HHDJ", "消息列表页-会话点击"),
 
+    /**1.0.1版本埋点*/
+    LOG_DH_TZ("DH_TZ", "底部导航_帖子"),
+    LOG_XX_TGZS(" XX_TGZS", "消息_推广助手"),
+    LOG_TZLB_TZQY(" TZLB_TZQY", "帖子列表_帖子区域"),
+    LOG_TZLB_JZ(" TZLB_JZ", "帖子列表_精准"),
+    LOG_TZLB_ZD(" TZLB_ZD", "帖子列表_置顶"),
+    LOG_TZXQ_JZ(" TZXQ_JZ", "帖子详情_精准"),
+    LOG_CZTSTC_QD(" CZTSTC_QD", "充值提示弹窗_确定按钮"),
+    LOG_TZ_JZSDK_FH(" TZ_JZSDK_FH", "帖子_精准SDK_返回"),
+    LOG_TZ_ZDSDK_FH(" TZ_ZDSDK_FH", "帖子_置顶SDK_返回"),
+    LOG_TGSDK_FH(" TGSDK_FH", "推广SDK_返回"),
+    LOG_TZXQ_FH(" TZXQ_FH", "帖子详情页_返回"),
+    LOG_TZXQ_ZD(" TZXQ_ZD", "帖子详情页_置顶");
 
     private String eventid;
     private String eventDescription;

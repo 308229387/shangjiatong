@@ -11,7 +11,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="6dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text=""
         android:textColor="@color/common_text_black"
         android:textSize="17dp" />
@@ -30,7 +30,8 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:drawableRight="@mipmap/info_phone"
+        android:drawablePadding="5dp"
+        android:drawableRight="@mipmap/info_detail_moretext"
         android:text="显示更多"
         android:textColor="@color/common_text_black"
         android:textSize="17dp" />

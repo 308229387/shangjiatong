@@ -3,6 +3,8 @@ package com.ui.dialog;
 import android.app.Activity;
 import android.view.View;
 
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 import com.merchantplatform.activity.LoginActivity;
 import com.utils.PageSwitchUtils;
 
@@ -32,6 +34,7 @@ public class PayAlertDialog {
 
             @Override
             public void onDialogClickCancel() {
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_CZTSTC_QD);
                 mPayAlertDialog.dismiss();
             }
 

@@ -22,6 +22,7 @@ import com.merchantplatform.bean.TempResponse;
 import com.okhttputils.OkHttpUtils;
 import com.ui.sheet.NormalActionSheet;
 import com.Utils.TitleBar;
+import com.umeng.analytics.MobclickAgent;
 import com.utils.PageSwitchUtils;
 import com.utils.Urls;
 import com.wuba.loginsdk.external.LoginClient;
@@ -36,19 +37,19 @@ import okhttp3.Response;
  * Created by 58 on 2016/12/8.
  */
 
-public class SettingActivityModel  extends BaseModel implements View.OnClickListener{
+public class SettingActivityModel extends BaseModel implements View.OnClickListener {
 
     private SettingActivity context;
     private TitleBar tb_setting_title;
-    private RelativeLayout rl_setting_push,rl_setting_feedback,rl_setting_binding,rl_setting_about,rl_setting_exit;
+    private RelativeLayout rl_setting_push, rl_setting_feedback, rl_setting_binding, rl_setting_about, rl_setting_exit;
 
     private String[] otherLables = new String[]{"退出登录"};
 
-    public SettingActivityModel(SettingActivity context){
+    public SettingActivityModel(SettingActivity context) {
         this.context = context;
     }
 
-    public void initView(){
+    public void initView() {
         tb_setting_title = (TitleBar) context.findViewById(R.id.tb_setting_title);
         rl_setting_push = (RelativeLayout) context.findViewById(R.id.rl_setting_push);
         rl_setting_feedback = (RelativeLayout) context.findViewById(R.id.rl_setting_feedback);
@@ -57,7 +58,7 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
         rl_setting_exit = (RelativeLayout) context.findViewById(R.id.rl_setting_exit);
     }
 
-    public void initData(){
+    public void initData() {
         //设置透明状态栏
         tb_setting_title.setImmersive(true);
         //设置背景颜色
@@ -79,7 +80,7 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
         tb_setting_title.setDividerColor(Color.parseColor("#DFE0E1"));
     }
 
-    public void setListener(){
+    public void setListener() {
         rl_setting_push.setOnClickListener(this);
         rl_setting_feedback.setOnClickListener(this);
 //        rl_setting_binding.setOnClickListener(this);
@@ -90,7 +91,7 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.rl_setting_push:
                 LogUmengAgent.ins().log(LogUmengEnum.LOG_SHEZHIXQY_XXTS);
                 goToSettingPushActivity();
@@ -115,20 +116,20 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
     }
 
 
-    private void goToSettingPushActivity(){
-        PageSwitchUtils.goToActivity(context,SettingPushActivity.class);
+    private void goToSettingPushActivity() {
+        PageSwitchUtils.goToActivity(context, SettingPushActivity.class);
     }
 
-    private void goToSettingFeedbackActivity(){
-        PageSwitchUtils.goToActivity(context,SettingFeedbackActivity.class);
+    private void goToSettingFeedbackActivity() {
+        PageSwitchUtils.goToActivity(context, SettingFeedbackActivity.class);
     }
 
-    private void goToSettingBindingActivity(){
-        PageSwitchUtils.goToActivity(context,PersonalSettingActivity.class);
+    private void goToSettingBindingActivity() {
+        PageSwitchUtils.goToActivity(context, PersonalSettingActivity.class);
     }
 
-    private void goToSettingAboutActivity(){
-        PageSwitchUtils.goToActivity(context,AboutActivity.class);
+    private void goToSettingAboutActivity() {
+        PageSwitchUtils.goToActivity(context, AboutActivity.class);
     }
 
     private void exit() {
@@ -138,7 +139,6 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
                     @Override
                     public void onClick(String value) {
                         if (value.equals("退出登录")) {
-                            LogUmengAgent.ins().log(LogUmengEnum.LOG_SHEZHIXQY_QRTCHDL);
                             logoutOperate();
                         }
                     }
@@ -151,11 +151,17 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
         setWPushBindsAlias();
         clearUserInfo();
         resetUserPreference();
+        resetLog();//Umeng退出登录
         goToLogin();
     }
 
+    private void resetLog() {
+        LogUmengAgent.ins().log(LogUmengEnum.LOG_SHEZHIXQY_QRTCHDL);
+        MobclickAgent.onProfileSignOff();
+    }
 
-    private void logout(){
+
+    private void logout() {
         OkHttpUtils.get(Urls.LOGOUT)
                 .execute(new logoutCallback(context));
     }
@@ -164,15 +170,15 @@ public class SettingActivityModel  extends BaseModel implements View.OnClickList
         LoginClient.doLogoutOperate(context);
     }
 
-    private void setWPushBindsAlias(){
+    private void setWPushBindsAlias() {
         Push.getInstance().binderAlias("");
     }
 
-    private void clearUserInfo(){
+    private void clearUserInfo() {
         UserUtils.clearUserInfo(context);
     }
 
-    private void resetUserPreference(){
+    private void resetUserPreference() {
         SettingPushPreferUtil.getInstance(context).resetPushSettingState();
     }
 
