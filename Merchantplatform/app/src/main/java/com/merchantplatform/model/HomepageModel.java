@@ -24,6 +24,7 @@ import com.merchantplatform.bean.GlobalResponse;
 import com.merchantplatform.fragment.CallMessageFragment;
 import com.merchantplatform.fragment.InfoListFragment;
 import com.merchantplatform.fragment.PersonalCenterFragment;
+import com.merchantplatform.fragment.WelfareFragment;
 import com.okhttputils.OkHttpUtils;
 import com.ui.HomepageBottomButton;
 import com.ui.dialog.UpdateDialog;
@@ -46,10 +47,11 @@ import okhttp3.Response;
 
 public class HomepageModel extends BaseModel implements View.OnClickListener {
     private HomepageActivity context;
-    private HomepageBottomButton bottomButton1, bottomButton2, bottomButton3, bottomButton4;
+    private HomepageBottomButton bottomButton1, bottomButton2, bottomButton3, bottomButton4,bottomButton5;
     private ConversationListFragment conversationListFragment;
     private CallMessageFragment callMessageFragment;
     private PersonalCenterFragment personalCenterFragment;
+    private WelfareFragment welfareFragment;
     private InfoListFragment infoListFragment;
     private Fragment mFragment;
     private FragmentManager fragmentManager;
@@ -65,6 +67,7 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         bottomButton2 = (HomepageBottomButton) context.findViewById(R.id.homepage_bottom_button2);
         bottomButton3 = (HomepageBottomButton) context.findViewById(R.id.homepage_bottom_button3);
         bottomButton4 = (HomepageBottomButton) context.findViewById(R.id.homepage_bottom_button4);
+        bottomButton5 = (HomepageBottomButton) context.findViewById(R.id.homepage_bottom_button5);
         setListener();
         setInfo();
         registerEventBus();
@@ -75,6 +78,7 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         bottomButton2.setOnClickListener(this);
         bottomButton3.setOnClickListener(this);
         bottomButton4.setOnClickListener(this);
+        bottomButton5.setOnClickListener(this);
     }
 
     public void setInfo() {
@@ -82,11 +86,13 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         bottomButton1.setTextInfo("消息");
         bottomButton2.setTextInfo("电话");
         bottomButton3.setTextInfo("帖子");
-        bottomButton4.setTextInfo("我");
+        bottomButton4.setTextInfo("福利");
+        bottomButton5.setTextInfo("我");
         bottomButton1.setDrawableInfo(R.drawable.tab_menu_setting);
         bottomButton2.setDrawableInfo(R.drawable.tab_menu_call);
         bottomButton3.setDrawableInfo(R.drawable.tab_menu_info);
         bottomButton4.setDrawableInfo(R.drawable.tab_menu_mine);
+        bottomButton5.setDrawableInfo(R.drawable.tab_menu_mine);
     }
 
     private void registerEventBus() {
@@ -105,6 +111,7 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         bottomButton2.registerState();
         bottomButton3.registerState();
         bottomButton4.registerState();
+        bottomButton5.registerState();
     }
 
     public void createFragmentManager() {
@@ -127,12 +134,15 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         else
             personalCenterFragment = (PersonalCenterFragment) fragmentManager.findFragmentByTag("PersonalCenterFragment");
 
+        if (fragmentManager.findFragmentByTag("WelfareFragment") == null)
+            welfareFragment = new WelfareFragment();
+        else
+            welfareFragment = (WelfareFragment) fragmentManager.findFragmentByTag("WelfareFragment");
 
         if (fragmentManager.findFragmentByTag("InfoListFragment") == null)
             infoListFragment = new InfoListFragment();
         else
             infoListFragment = (InfoListFragment) fragmentManager.findFragmentByTag("InfoListFragment");
-
 
         mFragment = conversationListFragment;
     }
@@ -145,6 +155,9 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
 
         if (personalCenterFragment.isAdded())
             fragmentManager.beginTransaction().hide(personalCenterFragment).commit();
+
+        if (welfareFragment.isAdded())
+            fragmentManager.beginTransaction().hide(welfareFragment).commit();
 
         if (infoListFragment.isAdded())
             fragmentManager.beginTransaction().hide(infoListFragment).commit();
@@ -170,6 +183,8 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
                 tag = "CallMessageFragment";
             if (fragment.equals(personalCenterFragment))
                 tag = "PersonalCenterFragment";
+            if (fragment.equals(welfareFragment))
+                tag = "WelfareFragment";
             if(fragment.equals(infoListFragment))
                 tag = "InfoListFragment";
             fragmentManager.beginTransaction().hide(mFragment)
@@ -193,20 +208,23 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.homepage_bottom_button1:
-                LogUmengAgent.ins().log(LogUmengEnum.LOG_DY_XX);//添加埋点信息
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_DY_XX);
                 dealWithClick(bottomButton1, conversationListFragment);
                 break;
             case R.id.homepage_bottom_button2:
-                LogUmengAgent.ins().log(LogUmengEnum.LOG_DY_DH);//添加埋点信息
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_DY_DH);
                 dealWithClick(bottomButton2, callMessageFragment);
                 break;
             case R.id.homepage_bottom_button3:
-                LogUmengAgent.ins().log(LogUmengEnum.LOG_DH_TZ);//添加埋点信息
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_DH_TZ);
                 dealWithClick(bottomButton3, infoListFragment);
                 break;
             case R.id.homepage_bottom_button4:
-                LogUmengAgent.ins().log(LogUmengEnum.LOG_DY_WD);//添加埋点信息
-                dealWithClick(bottomButton4, personalCenterFragment);
+                dealWithClick(bottomButton4, welfareFragment);
+                break;
+            case R.id.homepage_bottom_button5:
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_DY_WD);
+                dealWithClick(bottomButton5, personalCenterFragment);
                 break;
             default:
                 break;
