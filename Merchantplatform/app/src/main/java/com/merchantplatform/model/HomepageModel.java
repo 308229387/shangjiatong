@@ -91,7 +91,7 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         bottomButton1.setDrawableInfo(R.drawable.tab_menu_setting);
         bottomButton2.setDrawableInfo(R.drawable.tab_menu_call);
         bottomButton3.setDrawableInfo(R.drawable.tab_menu_info);
-        bottomButton4.setDrawableInfo(R.drawable.tab_menu_mine);
+        bottomButton4.setDrawableInfo(R.drawable.tab_menu_welfare);
         bottomButton5.setDrawableInfo(R.drawable.tab_menu_mine);
     }
 
