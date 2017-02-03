@@ -58,6 +58,31 @@
         android:layout_height="225dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="170dp"
-        android:background="@drawable/gmacs_bg_border"></RelativeLayout>
+        android:background="@drawable/gmacs_bg_border">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="今日奖品"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:layout_marginTop="15dp"
+            android:layout_centerHorizontal="true"/>
+
+        <View
+            android:layout_width="300dp"
+            android:layout_height="1dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="45dp"
+            android:background="#E0E0E4"></View>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/my_recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="65dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
 
 </RelativeLayout>

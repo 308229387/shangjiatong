@@ -28,6 +28,6 @@ public class WelfareFragment extends BaseFragment<WelfareModel> {
 
     @Override
     protected WelfareModel createModel() {
-        return new WelfareModel();
+        return new WelfareModel(this);
     }
 }
