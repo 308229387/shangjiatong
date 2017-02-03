@@ -48,7 +48,6 @@ public class SystemNotificationActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
         mXRecyclerView = (XRecyclerView) findViewById(com.merchantplatform.R.id.xrv_callrecord);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -72,8 +71,6 @@ public class SystemNotificationActivity extends BaseActivity {
 
     public void setListener() {
         mXRecyclerView.setLoadingListener(new RecyclerViewLoadingListener());
-
-
     }
 
     @Override
