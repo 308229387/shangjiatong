@@ -24,7 +24,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:background="@mipmap/info_detail_no_pic"></com.rollerview.RollPagerView>
+                android:background="@mipmap/info_detail_no_pic" />
 
 
             <TextView
@@ -115,6 +115,7 @@
 
 
             <View
+                android:id="@+id/line1"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_below="@id/tv_date_info_detail"
@@ -148,18 +149,19 @@
                 android:textSize="17dp" />
 
             <View
+                android:id="@+id/line2"
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
                 android:layout_below="@id/tv_info_detail_name"
-                android:background="@color/common_line_gray" />
+                android:background="@color/actionsheet_background" />
 
             <TextView
                 android:id="@+id/tv_info_detail_cate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_info_detail_name"
+                android:layout_below="@id/line2"
                 android:layout_marginLeft="13dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:text="类别"
                 android:textColor="@color/common_text_gray"
                 android:textSize="17dp" />
@@ -168,9 +170,9 @@
                 android:id="@+id/tv_info_detail_cate_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_info_detail_name"
+                android:layout_below="@id/line2"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/tv_info_detail_cate"
                 android:text=""
                 android:textColor="@color/common_text_black"
@@ -201,24 +203,26 @@
                 android:textSize="17dp" />
 
             <View
+                android:id="@+id/line3"
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
-                android:layout_below="@id/tv_info_detail_address"
+                android:layout_below="@id/tv_info_detail_address_content"
                 android:layout_marginTop="10dp"
-                android:background="@color/common_line_gray" />
+                android:background="@color/common_bg_grey" />
 
             <TextView
                 android:id="@+id/tv_info_detail_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_info_detail_address"
+                android:layout_below="@id/line3"
                 android:layout_marginLeft="13dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="10dp"
                 android:text="服务详情"
                 android:textColor="@color/common_text_gray"
                 android:textSize="17dp" />
 
             <View
+                android:id="@+id/line4"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_below="@id/tv_info_detail_description"
@@ -231,7 +235,7 @@
                 android:id="@+id/mtv_info_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_info_detail_description" />
+                android:layout_below="@id/line4" />
         </RelativeLayout>
 
     </ScrollView>

@@ -14,6 +14,8 @@ import android.widget.ProgressBar;
 import com.Utils.TitleBar;
 import com.Utils.UserUtils;
 import com.dataStore.PromotePrefersUtil;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.FundingManageActivity;
 import com.merchantplatform.activity.PromoteMessageActivity;
@@ -76,6 +78,7 @@ public class PromoteMessageActivityModel extends BaseModel{
         tb_promote_title.setLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_TGSDK_FH);
                 context.onBackPressed();
             }
         });
@@ -156,7 +159,7 @@ public class PromoteMessageActivityModel extends BaseModel{
                     if("1".equals(isPayOpen) && "1".equals(isUserFundsOpen)){
                         PageSwitchUtils.goToActivity(context,FundingManageActivity.class);
                     }else{
-                        new PayAlertDialog(context, "本APP暂不支持充值业务，请在58同城APP上进行充值");
+                        new PayAlertDialog(context, "请到58平台PC端完成充值");
                     }
                 }
                 return true;

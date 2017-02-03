@@ -19,7 +19,7 @@
             android:layout_marginLeft="@dimen/conversation_list_margin_left"
             android:layout_marginRight="@dimen/conversation_list_avatar_margin_right"
             android:layout_marginTop="@dimen/conversation_list_margin_top"
-            android:background="@drawable/system_notification"
+            android:background="@drawable/extend_icon"
             android:scaleType="centerCrop"
             app:drawShape="@string/drawShape" />
 

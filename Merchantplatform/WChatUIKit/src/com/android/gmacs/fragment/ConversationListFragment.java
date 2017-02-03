@@ -142,7 +142,9 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
         extendHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_XX_TGZS);
                 EventBus.getDefault().post(new JumpExtendAction("jump"));
+
             }
         });
 

@@ -33,7 +33,7 @@ import java.util.TimerTask;
  */
 public class RollPagerView extends RelativeLayout implements OnPageChangeListener {
 
-    private ViewPager mViewPager;
+    private NoScrollViewPager mViewPager;
     private PagerAdapter mAdapter;
     private OnItemClickListener mOnItemClickListener;
     private GestureDetector mGestureDetector;
@@ -114,7 +114,7 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
         paddingTop = (int) type.getDimension(R.styleable.RollViewPager_rollviewpager_hint_paddingTop, 0);
         paddingBottom = (int) type.getDimension(R.styleable.RollViewPager_rollviewpager_hint_paddingBottom, Util.dip2px(getContext(), 4));
 
-        mViewPager = new ViewPager(getContext());
+        mViewPager = new NoScrollViewPager(getContext());
         mViewPager.setId(R.id.viewpager_inner);
         mViewPager.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         addView(mViewPager);
@@ -224,7 +224,7 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
     /**
      * 加载hintview的容器
      */
-    private void loadHintView(){
+    private void loadHintView() {
         addView(mHintView);
         mHintView.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -422,6 +422,60 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
     @Override
     public void onPageSelected(int arg0) {
         mHintViewDelegate.setCurrentPosition(arg0, (HintView) mHintView);
+    }
+
+    public void setNoScroll(boolean noScroll) {
+        mViewPager.setNoScroll(noScroll);
+    }
+
+    public class NoScrollViewPager extends ViewPager {
+        private boolean noScroll = false;
+
+        public NoScrollViewPager(Context context, AttributeSet attrs) {
+            super(context, attrs);
+            // TODO Auto-generated constructor stub
+        }
+
+        public NoScrollViewPager(Context context) {
+            super(context);
+        }
+
+        public void setNoScroll(boolean noScroll) {
+            this.noScroll = noScroll;
+        }
+
+        @Override
+        public void scrollTo(int x, int y) {
+            super.scrollTo(x, y);
+        }
+
+        @Override
+        public boolean onTouchEvent(MotionEvent arg0) {
+        /* return false;//super.onTouchEvent(arg0); */
+            if (noScroll)
+                return false;
+            else
+                return super.onTouchEvent(arg0);
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(MotionEvent arg0) {
+            if (noScroll)
+                return false;
+            else
+                return super.onInterceptTouchEvent(arg0);
+        }
+
+        @Override
+        public void setCurrentItem(int item, boolean smoothScroll) {
+            super.setCurrentItem(item, smoothScroll);
+        }
+
+        @Override
+        public void setCurrentItem(int item) {
+            super.setCurrentItem(item);
+        }
+
     }
 
 }

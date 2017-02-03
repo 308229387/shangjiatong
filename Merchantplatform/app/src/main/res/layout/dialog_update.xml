@@ -29,7 +29,7 @@
                 android:gravity="center"
                 android:textColor="@color/gray_dark"
                 android:textSize="@dimen/common_text_size_16"
-                android:text="是否对APP进行版本更新"/>
+                android:text="是否进行版本更新"/>
             </LinearLayout>
 
             <View
