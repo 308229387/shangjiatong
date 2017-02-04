@@ -12,6 +12,7 @@ import com.merchantplatform.adapter.GridDrawAdapter;
 import com.merchantplatform.adapter.WelfareTaskAdapter;
 import com.merchantplatform.fragment.WelfareFragment;
 import com.ui.SpaceItemDecoration;
+import com.xrecyclerview.XRecyclerView;
 
 /**
  * Created by songyongmeng on 2017/2/3.
@@ -21,7 +22,7 @@ public class WelfareModel extends BaseModel {
     private WelfareFragment context;
     private View view;
     private RecyclerView gridRecyclerView;
-    private RecyclerView listRecyclerView;
+    private XRecyclerView listRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private GridLayoutManager mGridManager;
     private GridDrawAdapter mAdapter;
@@ -35,7 +36,7 @@ public class WelfareModel extends BaseModel {
     public void createView(LayoutInflater inflater, ViewGroup container) {
         view = inflater.inflate(R.layout.fragment_welfare_layout, container, false);
         gridRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
-        listRecyclerView = (RecyclerView) view.findViewById(R.id.welfare_recycler_view);
+        listRecyclerView = (XRecyclerView) view.findViewById(R.id.welfare_recycler_view);
         mLayoutManager = new LinearLayoutManager(context.getActivity());
         mGridManager = new GridLayoutManager(context.getActivity(), 3);
         gridViewSetting();
@@ -55,6 +56,8 @@ public class WelfareModel extends BaseModel {
         listRecyclerView.setHasFixedSize(true);
         welfareTaskAdapter = new WelfareTaskAdapter(context.getActivity());
         listRecyclerView.setAdapter(welfareTaskAdapter);
+        listRecyclerView.addHeaderView(LayoutInflater.from(context.getActivity()).inflate(R.layout.welfare_list_header, listRecyclerView,false));
+
     }
 
     public View getView() {

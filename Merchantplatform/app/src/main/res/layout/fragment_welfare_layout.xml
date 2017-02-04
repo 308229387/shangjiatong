@@ -99,13 +99,13 @@
 
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <com.xrecyclerview.XRecyclerView
         android:id="@+id/welfare_recycler_view"
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:layout_below="@id/draw_layout"
         android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
-        android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+        android:scrollbars="vertical"></com.xrecyclerview.XRecyclerView>
 
 </RelativeLayout>
