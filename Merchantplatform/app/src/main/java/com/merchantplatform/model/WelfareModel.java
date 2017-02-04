@@ -62,7 +62,7 @@ public class WelfareModel extends BaseModel {
 
         @Override
         public int getItemCount() {
-            return 3;
+            return 4;
         }
     }
 
@@ -88,8 +88,6 @@ public class WelfareModel extends BaseModel {
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
             outRect.left = space;
             outRect.right = space;
-
-
         }
     }
 }
