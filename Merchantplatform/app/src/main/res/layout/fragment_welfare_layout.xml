@@ -54,6 +54,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/draw_layout"
         android:layout_width="340dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -97,5 +98,14 @@
             android:background="@drawable/welfare_button_back"/>
 
     </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/welfare_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/draw_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>
