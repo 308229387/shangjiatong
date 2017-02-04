@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,9 +12,9 @@ import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,15 +25,12 @@ import com.merchantplatform.R;
 public class ScratchView extends View {
 
     private final static float DEFAULT_ERASER_SIZE = 50f;
-    private final static int DEFAULT_MASKER_COLOR = 0xffcccccc;
-    private final static int DEFAULT_PERCENT = 50;
-    private Paint mMaskPaint;
+    private final static int DEFAULT_PERCENT = 60;
     private Bitmap mMaskBitmap;
     private Canvas mMaskCanvas;
+    private Paint mMaskPaint;
     private Paint mBitmapPaint;
-    private Paint mMaskTextPaint;
-    private Rect mMaskTextBound;
-    private String maskText;
+    private BitmapDrawable mMaskImage;
     private Paint mErasePaint;
     private Path mErasePath;
     private float mStartX;
@@ -70,19 +68,18 @@ public class ScratchView extends View {
     }
 
     private void init(TypedArray typedArray) {
-        int maskColor = typedArray.getColor(R.styleable.ScratchView_maskColor, DEFAULT_MASKER_COLOR);
-        maskText = typedArray.getString(R.styleable.ScratchView_maskText);
+        int imageId = typedArray.getResourceId(R.styleable.ScratchView_imageSrc, -1);
         float eraseSize = typedArray.getFloat(R.styleable.ScratchView_eraseSize, DEFAULT_ERASER_SIZE);
         mMaxPercent = typedArray.getInt(R.styleable.ScratchView_maxPercent, DEFAULT_PERCENT);
         typedArray.recycle();
         mMaskPaint = new Paint();
         mMaskPaint.setAntiAlias(true);
         mMaskPaint.setDither(true);
-        setMaskColor(maskColor);
+        mMaskPaint.setColor(Color.TRANSPARENT);
         mBitmapPaint = new Paint();
         mBitmapPaint.setAntiAlias(true);
         mBitmapPaint.setDither(true);
-        setMaskPaint();
+        setMaskImage(imageId);
         mErasePaint = new Paint();
         mErasePaint.setAntiAlias(true);
         mErasePaint.setDither(true);
@@ -97,14 +94,6 @@ public class ScratchView extends View {
 
     public void setEraserSize(float eraserSize) {
         mErasePaint.setStrokeWidth(eraserSize);
-    }
-
-    public void setMaskColor(int color) {
-        mMaskPaint.setColor(color);
-    }
-
-    public void setMaskText(String maskText) {
-        this.maskText = maskText;
     }
 
     public void setMaxPercent(int max) {
@@ -161,9 +150,10 @@ public class ScratchView extends View {
         mMaskCanvas = new Canvas(mMaskBitmap);
         Rect rect = new Rect(0, 0, width, height);
         mMaskCanvas.drawRect(rect, mMaskPaint);
-        if (mMaskTextPaint != null && !TextUtils.isEmpty(maskText)) {
-            mMaskTextPaint.getTextBounds(maskText, 0, maskText.length(), mMaskTextBound);
-            mMaskCanvas.drawText(maskText, width / 2 - mMaskTextBound.width() / 2, height / 2 + mMaskTextBound.height() / 2, mMaskTextPaint);
+        if (mMaskImage != null) {
+            Rect bounds = new Rect(rect);
+            mMaskImage.setBounds(bounds);
+            mMaskImage.draw(mMaskCanvas);
         }
         mPixels = new int[width * height];
     }
@@ -250,14 +240,13 @@ public class ScratchView extends View {
         this.mEraseStatusListener = listener;
     }
 
-    private void setMaskPaint() {
-        mMaskTextPaint = new Paint();
-        mMaskTextBound = new Rect();
-        mMaskTextPaint.setStyle(Paint.Style.FILL);
-        mMaskTextPaint.setAntiAlias(true);
-        mMaskTextPaint.setDither(true);
-        mMaskTextPaint.setColor(Color.BLACK);
-        mMaskTextPaint.setTextSize(30);
+    public void setMaskImage(int resId) {
+        if (resId == -1) {
+            mMaskImage = null;
+        } else {
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resId);
+            mMaskImage = new BitmapDrawable(bitmap);
+        }
     }
 
     public void reset() {
