@@ -37,8 +37,18 @@ public class WelfareModel extends BaseModel {
         view = inflater.inflate(R.layout.fragment_welfare_layout, container, false);
         gridRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         listRecyclerView = (XRecyclerView) view.findViewById(R.id.welfare_recycler_view);
-        mLayoutManager = new LinearLayoutManager(context.getActivity());
-        mGridManager = new GridLayoutManager(context.getActivity(), 3);
+        mLayoutManager = new LinearLayoutManager(context.getActivity()){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        mGridManager = new GridLayoutManager(context.getActivity(), 3){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
         gridViewSetting();
         listViewSetting();
     }
@@ -57,7 +67,8 @@ public class WelfareModel extends BaseModel {
         welfareTaskAdapter = new WelfareTaskAdapter(context.getActivity());
         listRecyclerView.setAdapter(welfareTaskAdapter);
         listRecyclerView.addHeaderView(LayoutInflater.from(context.getActivity()).inflate(R.layout.welfare_list_header, listRecyclerView,false));
-
+        listRecyclerView.setPullRefreshEnabled(false);
+        listRecyclerView.setLoadingMoreEnabled(false);
     }
 
     public View getView() {

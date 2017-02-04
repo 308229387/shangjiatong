@@ -12,11 +12,11 @@ import com.merchantplatform.R;
  * Created by songyongmeng on 2017/2/4.
  */
 
-public class WelfareTaskAdapter extends RecyclerView.Adapter<WelfareTaskAdapter.ViewHolder>{
+public class WelfareTaskAdapter extends RecyclerView.Adapter<WelfareTaskAdapter.ViewHolder> {
     private LayoutInflater inflater;
     private Context context;
 
-    public WelfareTaskAdapter( Context context) {
+    public WelfareTaskAdapter(Context context) {
         this.context = context;
         inflater = LayoutInflater.from(context);
     }
@@ -28,7 +28,6 @@ public class WelfareTaskAdapter extends RecyclerView.Adapter<WelfareTaskAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
     }
 
     @Override
