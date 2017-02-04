@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.callback.DialogCallback;
 import com.merchantplatform.R;
@@ -16,6 +17,7 @@ import com.merchantplatform.bean.InfoDetailResponse;
 import com.merchantplatform.bean.InfoListBean;
 import com.merchantplatform.bean.InfoListResponse;
 import com.okhttputils.OkHttpUtils;
+import com.ui.diyview.EmptyView;
 import com.utils.Constant;
 import com.utils.Urls;
 import com.xrecyclerview.ProgressStyle;
@@ -42,6 +44,8 @@ public class infoListModel extends BaseModel {
     ArrayList<InfoListBean> postBeanList = new ArrayList();
     //View title_bar;
 
+    EmptyView emptyView;
+
     private final static int PAGE_SIZE = 10;
 
     public infoListModel(Fragment fragment) {
@@ -56,7 +60,7 @@ public class infoListModel extends BaseModel {
      * @return
      */
     public View initView(LayoutInflater inflater, ViewGroup container) {
-        View view = inflater.inflate(R.layout.fragment_info, container, false);
+        LinearLayout view = (LinearLayout) inflater.inflate(R.layout.fragment_info, container, false);
 
         //title_bar = view.findViewById(R.id.title_bar);
         xrv_post = (XRecyclerView) view.findViewById(R.id.xrv_info);
@@ -72,7 +76,19 @@ public class infoListModel extends BaseModel {
         xrv_post.setLayoutManager(layoutManager);
         xrv_post.setRefreshProgressStyle(ProgressStyle.BallPulse);
         xrv_post.setLoadingMoreProgressStyle(ProgressStyle.SquareSpin);
-        //mXRecyclerView.setEmptyView(emptyView);
+
+        //处理空白页面
+        emptyView = new EmptyView(fragment.getActivity());
+        view.addView(emptyView,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        xrv_post.setEmptyView(emptyView);
+        emptyView.setText("您还没有发布信息,\n可以到58平台PC端进行发布哦~");
+
+        emptyView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getData(true);
+            }
+        });
 
         xrv_post.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override

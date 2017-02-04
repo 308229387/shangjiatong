@@ -73,7 +73,7 @@
     <string name="connection_status_connecting">正在连接…</string>
     <string name="connection_status_kickedoff">您已被踢下线</string>
     <string name="connection_error_or_kickedoff">网络异常或已被踢下线</string>
-    <string name="network_unavailable">无网络</string>
+    <string name="network_unavailable">当前网络不可用，请检查你的网络设置</string>
 
     <string name="default_user_name"></string>
 
