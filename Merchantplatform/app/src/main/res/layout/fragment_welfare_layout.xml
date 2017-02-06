@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:scrollbars="none"
     android:layout_height="match_parent">
 
     <RelativeLayout
@@ -90,16 +91,16 @@
                 android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
 
             <TextView
+                android:id="@+id/luck_draw"
                 android:layout_width="200dp"
                 android:layout_height="45dp"
-                android:layout_below="@id/my_recycler_view"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="25dp"
-                android:layout_marginTop="10dp"
                 android:background="@drawable/welfare_button_back"
                 android:gravity="center"
                 android:text="我要抽奖"
-                android:textColor="#fff" />
+                android:textColor="#fff"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@+id/my_recycler_view"
+                android:layout_centerHorizontal="true" />
 
         </RelativeLayout>
 

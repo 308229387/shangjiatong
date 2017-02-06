@@ -6,19 +6,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.merchantplatform.R;
 import com.merchantplatform.adapter.GridDrawAdapter;
 import com.merchantplatform.adapter.WelfareTaskAdapter;
 import com.merchantplatform.fragment.WelfareFragment;
 import com.ui.SpaceItemDecoration;
+import com.utils.ToastUtils;
 import com.xrecyclerview.XRecyclerView;
 
 /**
  * Created by songyongmeng on 2017/2/3.
  */
 
-public class WelfareModel extends BaseModel {
+public class WelfareModel extends BaseModel implements View.OnClickListener {
     private WelfareFragment context;
     private View view;
     private RecyclerView gridRecyclerView;
@@ -27,7 +30,7 @@ public class WelfareModel extends BaseModel {
     private GridLayoutManager mGridManager;
     private GridDrawAdapter mAdapter;
     private WelfareTaskAdapter welfareTaskAdapter;
-
+    private TextView luckDraw;
 
     public WelfareModel(WelfareFragment context) {
         this.context = context;
@@ -37,13 +40,15 @@ public class WelfareModel extends BaseModel {
         view = inflater.inflate(R.layout.fragment_welfare_layout, container, false);
         gridRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         listRecyclerView = (XRecyclerView) view.findViewById(R.id.welfare_recycler_view);
-        mLayoutManager = new LinearLayoutManager(context.getActivity()){
+        luckDraw = (TextView) view.findViewById(R.id.luck_draw);
+//        luckDraw.setOnClickListener(this);
+        mLayoutManager = new LinearLayoutManager(context.getActivity()) {
             @Override
             public boolean canScrollVertically() {
                 return false;
             }
         };
-        mGridManager = new GridLayoutManager(context.getActivity(), 3){
+        mGridManager = new GridLayoutManager(context.getActivity(), 3) {
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -57,6 +62,14 @@ public class WelfareModel extends BaseModel {
         gridRecyclerView.setLayoutManager(mGridManager);
         gridRecyclerView.setHasFixedSize(true);
         mAdapter = new GridDrawAdapter(context.getActivity());
+        mAdapter.setOnItemClick(new GridDrawAdapter.ItemClick() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(context.getActivity(), position + "", Toast.LENGTH_SHORT).show();
+                TextView t = (TextView) view.findViewById(R.id.welfare_type);
+                t.setText("ttt");
+            }
+        });
         gridRecyclerView.setAdapter(mAdapter);
         gridRecyclerView.addItemDecoration(new SpaceItemDecoration(15));
     }
@@ -66,7 +79,7 @@ public class WelfareModel extends BaseModel {
         listRecyclerView.setHasFixedSize(true);
         welfareTaskAdapter = new WelfareTaskAdapter(context.getActivity());
         listRecyclerView.setAdapter(welfareTaskAdapter);
-        listRecyclerView.addHeaderView(LayoutInflater.from(context.getActivity()).inflate(R.layout.welfare_list_header, listRecyclerView,false));
+        listRecyclerView.addHeaderView(LayoutInflater.from(context.getActivity()).inflate(R.layout.welfare_list_header, listRecyclerView, false));
         listRecyclerView.setPullRefreshEnabled(false);
         listRecyclerView.setLoadingMoreEnabled(false);
     }
@@ -75,4 +88,11 @@ public class WelfareModel extends BaseModel {
         return view;
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.luck_draw:
+                ToastUtils.showToast("luckdraw");
+        }
+    }
 }

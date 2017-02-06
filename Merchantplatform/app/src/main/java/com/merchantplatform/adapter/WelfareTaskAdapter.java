@@ -27,7 +27,13 @@ public class WelfareTaskAdapter extends RecyclerView.Adapter<WelfareTaskAdapter.
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     @Override
@@ -36,8 +42,11 @@ public class WelfareTaskAdapter extends RecyclerView.Adapter<WelfareTaskAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public ViewHolder(View itemView) {
+        public View view;
+
+        public ViewHolder(final View itemView) {
             super(itemView);
+            this.view = itemView;
         }
     }
 }
