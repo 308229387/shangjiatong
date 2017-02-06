@@ -45,7 +45,6 @@ public class GridDrawAdapter extends RecyclerView.Adapter<GridDrawAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView mTextView;
         public View view;
 
         public ViewHolder(View view) {

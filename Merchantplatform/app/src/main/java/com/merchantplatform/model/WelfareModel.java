@@ -1,5 +1,6 @@
 package com.merchantplatform.model;
 
+import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,11 +11,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.merchantplatform.R;
+import com.merchantplatform.activity.DailyLotteryActivity;
 import com.merchantplatform.adapter.GridDrawAdapter;
 import com.merchantplatform.adapter.WelfareTaskAdapter;
 import com.merchantplatform.fragment.WelfareFragment;
 import com.ui.SpaceItemDecoration;
-import com.utils.ToastUtils;
 import com.xrecyclerview.XRecyclerView;
 
 /**
@@ -31,6 +32,7 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
     private GridDrawAdapter mAdapter;
     private WelfareTaskAdapter welfareTaskAdapter;
     private TextView luckDraw;
+    private TextView fraction;
 
     public WelfareModel(WelfareFragment context) {
         this.context = context;
@@ -41,7 +43,8 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
         gridRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         listRecyclerView = (XRecyclerView) view.findViewById(R.id.welfare_recycler_view);
         luckDraw = (TextView) view.findViewById(R.id.luck_draw);
-//        luckDraw.setOnClickListener(this);
+        fraction = (TextView)view.findViewById(R.id.welfare_fraction) ;
+        luckDraw.setOnClickListener(this);
         mLayoutManager = new LinearLayoutManager(context.getActivity()) {
             @Override
             public boolean canScrollVertically() {
@@ -56,6 +59,7 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
         };
         gridViewSetting();
         listViewSetting();
+        fraction.setText("9999");
     }
 
     private void gridViewSetting() {
@@ -92,7 +96,7 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.luck_draw:
-                ToastUtils.showToast("luckdraw");
+                context.getActivity().startActivity(new Intent(context.getContext(), DailyLotteryActivity.class));
         }
     }
 }

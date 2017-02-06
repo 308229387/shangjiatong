@@ -32,6 +32,7 @@
         android:textSize="13sp" />
 
     <TextView
+        android:id="@+id/task_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -42,6 +43,7 @@
         android:textSize="17sp" />
 
     <TextView
+        android:id="@+id/task_to_do"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
