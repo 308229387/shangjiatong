@@ -65,4 +65,5 @@
     <!-- color in post -->
     <color name="accurate_yellow">#DA941F</color>
     <color name="state_showing_green">#67C15E</color>
+    <color name="lottery_explain_color">#9B9B9B</color>
 </resources>

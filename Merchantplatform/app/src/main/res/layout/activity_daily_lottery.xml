@@ -35,7 +35,7 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/tv_daily_lottery_lottery"
+                android:id="@+id/tv_daily_lottery_grade"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="3dp"
-                android:layout_toLeftOf="@+id/tv_daily_lottery_lottery"
+                android:layout_toLeftOf="@+id/tv_daily_lottery_grade"
                 android:text="积分"
                 android:textColor="#A4AAB3"
                 android:textSize="15sp" />
@@ -103,6 +103,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="35dp"
+                android:text="恭喜您！抽中全额商机100元"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <LinearLayout
@@ -165,6 +167,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="刮奖结束倒计时"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
 
                 <TextView
@@ -174,9 +177,9 @@
                     android:layout_marginLeft="5dp"
                     android:background="@mipmap/daily_lottery_count_down"
                     android:gravity="center"
+                    android:textColor="@color/black"
                     android:textSize="15sp" />
             </LinearLayout>
-
 
             <Button
                 android:id="@+id/bt_daily_lottery_start"
@@ -205,5 +208,16 @@
             android:textSize="12sp" />
 
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="13dp"
+        android:lineSpacingMultiplier="1.2"
+        android:text="@string/lottery_explain_text"
+        android:textColor="@color/lottery_explain_color"
+        android:textSize="13sp" />
 
 </LinearLayout>
