@@ -1,6 +1,5 @@
 package com.merchantplatform.model;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -83,7 +82,7 @@ public class DailyLotteryModel extends BaseModel {
         bt_daily_lottery_again.setOnClickListener(new OnLotteryAgain());
     }
 
-    public void initData(Intent intent) {
+    public void initData() {
 
     }
 

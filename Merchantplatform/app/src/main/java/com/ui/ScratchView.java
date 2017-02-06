@@ -25,7 +25,7 @@ import com.merchantplatform.R;
 public class ScratchView extends View {
 
     private final static float DEFAULT_ERASER_SIZE = 50f;
-    private final static int DEFAULT_PERCENT = 60;
+    private final static int DEFAULT_PERCENT = 50;
     private Bitmap mMaskBitmap;
     private Canvas mMaskCanvas;
     private Paint mMaskPaint;
