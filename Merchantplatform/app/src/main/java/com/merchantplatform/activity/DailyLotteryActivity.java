@@ -1,6 +1,5 @@
 package com.merchantplatform.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.merchantplatform.R;
@@ -13,7 +12,7 @@ public class DailyLotteryActivity extends BaseActivity<DailyLotteryModel> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_lottery);
         initView();
-        initData(getIntent());
+        initData();
     }
 
     private void initView() {
@@ -23,8 +22,8 @@ public class DailyLotteryActivity extends BaseActivity<DailyLotteryModel> {
         model.setListener();
     }
 
-    private void initData(Intent intent) {
-        model.initData(intent);
+    private void initData() {
+        model.initData();
     }
 
     @Override
