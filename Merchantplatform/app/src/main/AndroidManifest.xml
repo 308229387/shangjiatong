@@ -112,15 +112,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/GmacsTheme"
             android:windowSoftInputMode="stateUnspecified|adjustResize" />
-
         <activity
             android:name=".activity.PromoteMessageActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.UpPromoteActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.PrecisionPromoteActivity"
             android:screenOrientation="portrait" />
@@ -171,8 +168,15 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.CallDetailActivity" />
-        <activity android:name=".activity.InfoDetailActivity"></activity>
+        <activity
+            android:name=".activity.CallDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.InfoDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DailyLotteryActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
