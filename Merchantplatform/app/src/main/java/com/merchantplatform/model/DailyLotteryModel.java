@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.Utils.TitleBar;
@@ -27,6 +29,7 @@ public class DailyLotteryModel extends BaseModel {
     private Button bt_daily_lottery_start, bt_daily_lottery_check, bt_daily_lottery_again;
     private ScratchView sv_daily_lottery;
     private RelativeLayout rl_daily_lottery_start, rl_daily_lottery_result;
+    private ScrollView scrollview;
     private GridDrawAdapter mAdapter;
 
     public DailyLotteryModel(DailyLotteryActivity context) {
@@ -34,6 +37,7 @@ public class DailyLotteryModel extends BaseModel {
     }
 
     public void initView() {
+        scrollview = (ScrollView) context.findViewById(R.id.scrollview);
         tb_daily_lottery_title = (TitleBar) context.findViewById(R.id.tb_daily_lottery_title);
         rv_daily_lottery_award = (RecyclerView) context.findViewById(R.id.rv_daily_lottery_award);
         tv_daily_lottery_grade = (TextView) context.findViewById(R.id.tv_daily_lottery_grade);
@@ -75,6 +79,7 @@ public class DailyLotteryModel extends BaseModel {
         tb_daily_lottery_title.setLeftClickListener(new OnBackPressed());
         bt_daily_lottery_start.setOnClickListener(new OnStartLottery());
         sv_daily_lottery.setEraseStatusListener(new OnEraserStatusListener());
+        sv_daily_lottery.setOnTouchListener(new OnLotteryTouchListener());
         bt_daily_lottery_again.setOnClickListener(new OnLotteryAgain());
     }
 
@@ -93,6 +98,8 @@ public class DailyLotteryModel extends BaseModel {
         @Override
         public void onClick(View v) {
             rl_daily_lottery_start.setVisibility(View.GONE);
+            sv_daily_lottery.setVisibility(View.VISIBLE);
+            rl_daily_lottery_result.setVisibility(View.VISIBLE);
         }
     }
 
@@ -101,6 +108,18 @@ public class DailyLotteryModel extends BaseModel {
         public void onCompleted(View view) {
             sv_daily_lottery.clear();
             sv_daily_lottery.setVisibility(View.GONE);
+        }
+    }
+
+    private class OnLotteryTouchListener implements View.OnTouchListener {
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_UP)
+                scrollview.requestDisallowInterceptTouchEvent(false);
+            else
+                scrollview.requestDisallowInterceptTouchEvent(true);
+            return false;
         }
     }
 
