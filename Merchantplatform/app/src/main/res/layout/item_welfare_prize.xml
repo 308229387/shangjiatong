@@ -15,13 +15,14 @@
         android:textColor="#DC9F32" />
 
     <TextView
+        android:id="@+id/welfare_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="100元"
-        android:textSize="16sp"
-        android:layout_marginTop="5dp"
         android:layout_below="@id/welfare_type"
         android:layout_marginLeft="10dp"
-        android:textColor="#DC9F32" />
+        android:layout_marginTop="5dp"
+        android:text="100元"
+        android:textColor="#DC9F32"
+        android:textSize="16sp" />
 
 </RelativeLayout>

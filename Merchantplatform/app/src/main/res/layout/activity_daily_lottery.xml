@@ -53,7 +53,6 @@
                     android:paddingLeft="3.5dp"
                     android:paddingRight="3.5dp"
                     android:paddingTop="1.6dp"
-                    android:text="6723"
                     android:textColor="#FF552E"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -111,7 +110,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="35dp"
-                    android:text="恭喜您！抽中全额商机100元"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -175,7 +173,6 @@
                         android:id="@+id/tv_daily_lottery_start"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="刮奖结束倒计时"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 

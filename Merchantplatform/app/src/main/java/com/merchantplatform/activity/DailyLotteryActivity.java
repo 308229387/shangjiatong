@@ -17,13 +17,14 @@ public class DailyLotteryActivity extends BaseActivity<DailyLotteryModel> {
 
     private void initView() {
         model.initView();
+        model.setTitleBar();
         model.setLotteryAward();
         model.setLotteryExplain();
-        model.setTitleBar();
         model.setListener();
     }
 
     private void initData() {
+        model.getServerTime();
         model.initData();
     }
 

@@ -65,8 +65,8 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
         gridRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         listRecyclerView = (XRecyclerView) view.findViewById(R.id.welfare_recycler_view);
         luckDraw = (TextView) view.findViewById(R.id.luck_draw);
-        fraction = (TextView)view.findViewById(R.id.welfare_fraction) ;
-        alredyAddCount = (TextView)view.findViewById(R.id.alredy_add_count);
+        fraction = (TextView) view.findViewById(R.id.welfare_fraction);
+        alredyAddCount = (TextView) view.findViewById(R.id.alredy_add_count);
         luckDraw.setOnClickListener(this);
         mLayoutManager = new LinearLayoutManager(context.getActivity()) {
             @Override
@@ -100,7 +100,7 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
         welfareTaskAdapter = new WelfareTaskAdapter(context.getActivity());
         listRecyclerView.setAdapter(welfareTaskAdapter);
         headView = LayoutInflater.from(context.getActivity()).inflate(R.layout.welfare_list_header, listRecyclerView, false);
-        countDownText =(RushBuyCountDownTimerView) headView.findViewById(R.id.timerView);
+        countDownText = (RushBuyCountDownTimerView) headView.findViewById(R.id.timerView);
         listRecyclerView.addHeaderView(headView);
         listRecyclerView.setPullRefreshEnabled(false);
         listRecyclerView.setLoadingMoreEnabled(false);
@@ -137,13 +137,13 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
             String a = s.getData().getOpentime();
             String[] b = a.split(":");
             taskTime = dealWithTimeToSecond(b);
-            alredyAddCount.setText(String.format(context.getString(R.string.alredy_add_count),s.getData().getGainscore()));
+            alredyAddCount.setText(String.format(context.getString(R.string.alredy_add_count), s.getData().getGainscore()));
 
 
         }
     }
 
-    public int dealWithTimeToSecond(String[] a) {
+    public static int dealWithTimeToSecond(String[] a) {
         int hour = Integer.parseInt(a[0]) * 3600;
         int minute = Integer.parseInt(a[1]) * 60;
         int second = Integer.parseInt(a[2]);
@@ -167,8 +167,8 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
         return a;
     }
 
-    public void setTextToCountDown(){
-        countDownText.setTime(calculateResult()[0],calculateResult()[1],calculateResult()[2]);
+    public void setTextToCountDown() {
+        countDownText.setTime(calculateResult()[0], calculateResult()[1], calculateResult()[2]);
         countDownText.start();
     }
 }

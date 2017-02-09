@@ -9,7 +9,7 @@ public class Urls {
     /**
      * 基础Url
      */
-    public static final String BASE_URL = "https://hyapp.58.com/";
+    public static final String BASE_URL = "http://hyapp.58.com/";
     /**
      * 外网测试域名
      */
@@ -122,4 +122,20 @@ public class Urls {
      */
     public static final String GET_TASK = BASE_URL_APP + "task/info";
 
+    /**
+     * 抽奖详情页
+     */
+    public static final String DAILY_LOTTERY = BASE_URL_APP + "prize/prizedraw/detail";
+    /**
+     * 获取奖品接口
+     */
+    public static final String GET_LOTTERY = BASE_URL_APP + "prize/lucky";
+    /**
+     * 中奖记录列表
+     */
+    public static final String LOTTERY_HISTORY = BASE_URL_APP + "prizerecord/list";
+    /**
+     * 我的奖品列表
+     */
+    public static final String MY_AWARD_LIST = BASE_URL_APP + "prizerecord/mylist";
 }

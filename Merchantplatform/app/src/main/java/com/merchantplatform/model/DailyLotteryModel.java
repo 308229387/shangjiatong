@@ -1,6 +1,9 @@
 package com.merchantplatform.model;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,17 +14,26 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.Utils.TitleBar;
+import com.callback.DialogCallback;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.DailyLotteryActivity;
+import com.merchantplatform.adapter.DailyAwardAdapter;
 import com.merchantplatform.adapter.ExplainMessageAdapter;
-import com.merchantplatform.adapter.GridDrawAdapter;
+import com.merchantplatform.bean.LotteryDetailResponse;
+import com.merchantplatform.service.GetServiceTime;
+import com.okhttputils.OkHttpUtils;
 import com.ui.ScratchView;
 import com.ui.SpaceItemDecoration;
 import com.utils.DisplayUtils;
+import com.utils.Urls;
 
 import java.util.ArrayList;
+
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class DailyLotteryModel extends BaseModel {
 
@@ -33,9 +45,12 @@ public class DailyLotteryModel extends BaseModel {
     private ScratchView sv_daily_lottery;
     private RelativeLayout rl_daily_lottery_start, rl_daily_lottery_result;
     private ScrollView scrollview;
-    private GridDrawAdapter mAdapter;
+    private DailyAwardAdapter dailyAwardAdapter;
+    private ArrayList<LotteryDetailResponse.award> dailyAward;
     private ExplainMessageAdapter explainAdapter;
     private ArrayList<String> explainMsg;
+    private int openTime = -1;
+    private int endTime = -1;
 
     public DailyLotteryModel(DailyLotteryActivity context) {
         this.context = context;
@@ -59,6 +74,14 @@ public class DailyLotteryModel extends BaseModel {
         rv_lottery_explain = (RecyclerView) context.findViewById(R.id.rv_lottery_explain);
     }
 
+    public void setTitleBar() {
+        tb_daily_lottery_title.setImmersive(true);
+        tb_daily_lottery_title.setBackgroundColor(Color.WHITE);
+        tb_daily_lottery_title.setLeftImageResource(R.mipmap.title_back);
+        tb_daily_lottery_title.setTitle("每日抽奖");
+        tb_daily_lottery_title.setTitleColor(Color.BLACK);
+    }
+
     public void setLotteryAward() {
         GridLayoutManager layoutManager = new GridLayoutManager(context, 3) {
             @Override
@@ -68,8 +91,9 @@ public class DailyLotteryModel extends BaseModel {
         };
         rv_daily_lottery_award.setLayoutManager(layoutManager);
         rv_daily_lottery_award.setHasFixedSize(true);
-        mAdapter = new GridDrawAdapter(context);
-        rv_daily_lottery_award.setAdapter(mAdapter);
+        dailyAward = new ArrayList<>();
+        dailyAwardAdapter = new DailyAwardAdapter(context, dailyAward);
+        rv_daily_lottery_award.setAdapter(dailyAwardAdapter);
         rv_daily_lottery_award.addItemDecoration(new SpaceItemDecoration(15));
     }
 
@@ -87,29 +111,24 @@ public class DailyLotteryModel extends BaseModel {
         rv_lottery_explain.setAdapter(explainAdapter);
     }
 
-    public void setTitleBar() {
-        tb_daily_lottery_title.setImmersive(true);
-        tb_daily_lottery_title.setBackgroundColor(Color.WHITE);
-        tb_daily_lottery_title.setLeftImageResource(R.mipmap.title_back);
-        tb_daily_lottery_title.setTitle("每日抽奖");
-        tb_daily_lottery_title.setTitleColor(Color.BLACK);
-    }
-
     public void setListener() {
         tb_daily_lottery_title.setLeftClickListener(new OnBackPressed());
         bt_daily_lottery_start.setOnClickListener(new OnStartLottery());
         sv_daily_lottery.setEraseStatusListener(new OnEraserStatusListener());
         sv_daily_lottery.setOnTouchListener(new OnLotteryTouchListener());
+        bt_daily_lottery_check.setOnClickListener(new OnCheckLottery());
         bt_daily_lottery_again.setOnClickListener(new OnLotteryAgain());
+        tv_detail_lottery_gotorecord.setOnClickListener(new OnGoToRecord());
+    }
+
+    public void getServerTime() {
+        Intent startIntent = new Intent(context, GetServiceTime.class);
+        context.startService(startIntent);
     }
 
     public void initData() {
-        explainMsg.add("抽奖说明:");
-        explainMsg.add("每日抽奖时间为10:00-22:00");
-        explainMsg.add("中奖后，工作人员会在2个工作日将奖品充值到您58账户");
-        explainMsg.add("每个奖品的有效期为7天，请在中奖后7天内使用");
-        explainMsg.add("所有抽奖活动由58同城提供");
-        explainAdapter.notifyDataSetChanged();
+        OkHttpUtils.get(Urls.DAILY_LOTTERY)
+                .execute(new getDailyLottery(context, false));
     }
 
     private class OnBackPressed implements View.OnClickListener {
@@ -117,6 +136,44 @@ public class DailyLotteryModel extends BaseModel {
         public void onClick(View v) {
             context.onBackPressed();
         }
+    }
+
+    private class getDailyLottery extends DialogCallback<LotteryDetailResponse> {
+
+        public getDailyLottery(Activity activity, boolean isShowDialog) {
+            super(activity, isShowDialog);
+        }
+
+        @Override
+        public void onResponse(boolean isFromCache, LotteryDetailResponse lotteryDetailResponse, Request request, @Nullable Response response) {
+            if (lotteryDetailResponse != null && lotteryDetailResponse.getData() != null) {
+                setGrade(lotteryDetailResponse);
+                setDailyAward(lotteryDetailResponse);
+                setTimeSection(lotteryDetailResponse);
+                setExplainMessage(lotteryDetailResponse);
+            }
+        }
+    }
+
+    private void setGrade(LotteryDetailResponse lotteryDetailResponse) {
+        tv_daily_lottery_grade.setText(lotteryDetailResponse.getData().getScore() + "");
+    }
+
+    private void setDailyAward(LotteryDetailResponse lotteryDetailResponse) {
+        dailyAward.addAll(lotteryDetailResponse.getData().getPrizeList());
+        dailyAwardAdapter.notifyDataSetChanged();
+    }
+
+    private void setTimeSection(LotteryDetailResponse lotteryDetailResponse) {
+        String openTimes = lotteryDetailResponse.getData().getOpenTime();
+        String endTimes = lotteryDetailResponse.getData().getEndTime();
+        openTime = WelfareModel.dealWithTimeToSecond(openTimes.split(":"));
+        endTime = WelfareModel.dealWithTimeToSecond(endTimes.split(":"));
+    }
+
+    private void setExplainMessage(LotteryDetailResponse lotteryDetailResponse) {
+        explainMsg.addAll(lotteryDetailResponse.getData().getDescription());
+        explainAdapter.notifyDataSetChanged();
     }
 
     private class OnStartLottery implements View.OnClickListener {
@@ -133,6 +190,14 @@ public class DailyLotteryModel extends BaseModel {
         public void onCompleted(View view) {
             sv_daily_lottery.clear();
             sv_daily_lottery.setVisibility(View.GONE);
+        }
+    }
+
+    private class OnCheckLottery implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(context, "查看自己的中奖记录", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -166,6 +231,14 @@ public class DailyLotteryModel extends BaseModel {
                 layoutParams.width = layoutParams.width - DisplayUtils.dpToPx(60, context);
                 bt_daily_lottery_again.setLayoutParams(layoutParams);
             }
+        }
+    }
+
+    private class OnGoToRecord implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(context, "查看所有人中奖记录", Toast.LENGTH_SHORT).show();
         }
     }
 }
