@@ -16,19 +16,13 @@ public class ExplainMessageAdapter extends BaseRecyclerViewAdapter<String, Expla
     }
 
     @Override
-    public int getItemCount() {
-        return mList.size() + 1;
-    }
-
-    @Override
     protected void bindDataToItemView(ExplainMessageViewHolder explainMessageViewHolder, int position) {
         if (position == 0) {
-            explainMessageViewHolder.setVisible(R.id.tv_explain_index, false)
-                    .setText(R.id.tv_explain_content, "抽奖说明:");
+            explainMessageViewHolder.setVisible(R.id.tv_explain_index, false);
         } else {
-            explainMessageViewHolder.setText(R.id.tv_explain_index, (position) + ".")
-                    .setText(R.id.tv_explain_content, mList.get(position - 1));
+            explainMessageViewHolder.setText(R.id.tv_explain_index, position + ".");
         }
+        explainMessageViewHolder.setText(R.id.tv_explain_content, mList.get(position));
     }
 
     @Override

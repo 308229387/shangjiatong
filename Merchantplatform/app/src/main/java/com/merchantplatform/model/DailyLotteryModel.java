@@ -104,6 +104,7 @@ public class DailyLotteryModel extends BaseModel {
     }
 
     public void initData() {
+        explainMsg.add("抽奖说明:");
         explainMsg.add("每日抽奖时间为10:00-22:00");
         explainMsg.add("中奖后，工作人员会在2个工作日将奖品充值到您58账户");
         explainMsg.add("每个奖品的有效期为7天，请在中奖后7天内使用");
