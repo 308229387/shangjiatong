@@ -2,6 +2,7 @@ package com.merchantplatform.model;
 
 import android.graphics.Color;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,22 +15,27 @@ import android.widget.TextView;
 import com.Utils.TitleBar;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.DailyLotteryActivity;
+import com.merchantplatform.adapter.ExplainMessageAdapter;
 import com.merchantplatform.adapter.GridDrawAdapter;
 import com.ui.ScratchView;
 import com.ui.SpaceItemDecoration;
 import com.utils.DisplayUtils;
 
+import java.util.ArrayList;
+
 public class DailyLotteryModel extends BaseModel {
 
     private DailyLotteryActivity context;
     private TitleBar tb_daily_lottery_title;
-    private RecyclerView rv_daily_lottery_award;
+    private RecyclerView rv_daily_lottery_award, rv_lottery_explain;
     private TextView tv_daily_lottery_grade, tv_daily_lottery_start, tv_daily_lottery_count_down, tv_daily_lottery_result, tv_detail_lottery_gotorecord;
     private Button bt_daily_lottery_start, bt_daily_lottery_check, bt_daily_lottery_again;
     private ScratchView sv_daily_lottery;
     private RelativeLayout rl_daily_lottery_start, rl_daily_lottery_result;
     private ScrollView scrollview;
     private GridDrawAdapter mAdapter;
+    private ExplainMessageAdapter explainAdapter;
+    private ArrayList<String> explainMsg;
 
     public DailyLotteryModel(DailyLotteryActivity context) {
         this.context = context;
@@ -50,9 +56,10 @@ public class DailyLotteryModel extends BaseModel {
         sv_daily_lottery = (ScratchView) context.findViewById(R.id.sv_daily_lottery);
         rl_daily_lottery_start = (RelativeLayout) context.findViewById(R.id.rl_daily_lottery_start);
         rl_daily_lottery_result = (RelativeLayout) context.findViewById(R.id.rl_daily_lottery_result);
+        rv_lottery_explain = (RecyclerView) context.findViewById(R.id.rv_lottery_explain);
     }
 
-    public void setRecyclerView() {
+    public void setLotteryAward() {
         GridLayoutManager layoutManager = new GridLayoutManager(context, 3) {
             @Override
             public boolean canScrollVertically() {
@@ -64,6 +71,20 @@ public class DailyLotteryModel extends BaseModel {
         mAdapter = new GridDrawAdapter(context);
         rv_daily_lottery_award.setAdapter(mAdapter);
         rv_daily_lottery_award.addItemDecoration(new SpaceItemDecoration(15));
+    }
+
+    public void setLotteryExplain() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        rv_lottery_explain.setLayoutManager(layoutManager);
+        rv_lottery_explain.setHasFixedSize(true);
+        explainMsg = new ArrayList<>();
+        explainAdapter = new ExplainMessageAdapter(context, explainMsg);
+        rv_lottery_explain.setAdapter(explainAdapter);
     }
 
     public void setTitleBar() {
@@ -83,7 +104,11 @@ public class DailyLotteryModel extends BaseModel {
     }
 
     public void initData() {
-
+        explainMsg.add("每日抽奖时间为10:00-22:00");
+        explainMsg.add("中奖后，工作人员会在2个工作日将奖品充值到您58账户");
+        explainMsg.add("每个奖品的有效期为7天，请在中奖后7天内使用");
+        explainMsg.add("所有抽奖活动由58同城提供");
+        explainAdapter.notifyDataSetChanged();
     }
 
     private class OnBackPressed implements View.OnClickListener {

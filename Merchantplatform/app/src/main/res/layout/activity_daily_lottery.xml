@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/common_bg_grey"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -217,17 +218,14 @@
 
         </RelativeLayout>
 
-        <TextView
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_lottery_explain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
-            android:layout_marginTop="13dp"
-            android:lineSpacingMultiplier="1.2"
-            android:text="@string/lottery_explain_text"
-            android:textColor="@color/lottery_explain_color"
-            android:textSize="13sp" />
+            android:layout_marginTop="13dp" />
     </LinearLayout>
 
 </ScrollView>

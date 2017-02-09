@@ -43,6 +43,4 @@
     <string name="update_later">下次再说</string>
     <string name="update_download_process_title">新版本下载进度</string>
 
-    <string name="lottery_explain_text">抽奖说明：\n1、每日抽奖时间为10:00-22:00；\n2、中奖后，工作人员会在2个工作日将奖品充值到您58账户；\n3、每个奖品的有效期为7天，请在中奖后7天内使用；\n4、所有抽奖活动由58同城提供；</string>
-
 </resources>
