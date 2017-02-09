@@ -18,6 +18,7 @@ import com.merchantplatform.activity.GuideActivity;
 import com.merchantplatform.activity.HomepageActivity;
 import com.merchantplatform.activity.LoginActivity;
 import com.merchantplatform.application.HyApplication;
+import com.merchantplatform.service.GetServiceTime;
 import com.ui.dialog.CommonDialog;
 import com.utils.IMLoginUtils;
 import com.utils.PageSwitchUtils;
@@ -153,5 +154,10 @@ public class GuideActivityModel extends BaseModel {
         if (mAlertDialog != null && mAlertDialog.isShowing()) {
             mAlertDialog.dismiss();
         }
+    }
+
+    public void getServiceTime() {
+        Intent startIntent = new Intent(context, GetServiceTime.class);
+        context.startService(startIntent);
     }
 }

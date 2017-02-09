@@ -16,6 +16,7 @@ public class GuideActivity extends BaseActivity<GuideActivityModel> {
     protected void onStart() {
         super.onRestart();
         model.getPhoneStatePermission();
+        model.getServiceTime();
     }
 
 

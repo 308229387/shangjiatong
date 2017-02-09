@@ -177,6 +177,8 @@
         <activity
             android:name=".activity.DailyLotteryActivity"
             android:screenOrientation="portrait" />
+
+        <service android:name="com.merchantplatform.service.GetServiceTime"></service>
     </application>
 
 </manifest>

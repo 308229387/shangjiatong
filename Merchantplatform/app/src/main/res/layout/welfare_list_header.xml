@@ -13,12 +13,27 @@
         android:textColor="#000" />
 
     <TextView
+        android:id="@+id/text_temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="后更新"
+        android:textSize="15sp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="15dp"
-        android:text="23:23:11后更新" />
+        android:textColor="#A4AAB3"/>
+
+
+    <com.ui.RushBuyCountDownTimerView
+        android:id="@+id/timerView"
+        android:layout_width="wrap_content"
+        android:layout_marginRight="2dp"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/text_temp"
+        android:layout_centerVertical="true"
+        >
+    </com.ui.RushBuyCountDownTimerView>
+
 
     <View
         android:layout_width="match_parent"

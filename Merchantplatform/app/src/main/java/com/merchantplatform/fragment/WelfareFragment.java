@@ -18,8 +18,14 @@ public class WelfareFragment extends BaseFragment<WelfareModel> {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         initializationLayout(inflater, container);
-
+        getTask();
         return model.getView();
+    }
+
+    private void getTask() {
+        model.getTask();
+        model.dealWithTimeToResult();
+        model.setTextToCountDown();
     }
 
     private void initializationLayout(LayoutInflater inflater, ViewGroup container) {

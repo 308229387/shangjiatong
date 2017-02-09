@@ -16,7 +16,6 @@ import com.merchantplatform.R;
 public class GridDrawAdapter extends RecyclerView.Adapter<GridDrawAdapter.ViewHolder> {
     private LayoutInflater inflater;
     private Context context;
-    private ItemClick itemClick;
 
     public GridDrawAdapter(Context context) {
         this.context = context;
@@ -30,13 +29,6 @@ public class GridDrawAdapter extends RecyclerView.Adapter<GridDrawAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(GridDrawAdapter.ViewHolder holder, final int position) {
-        holder.view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (itemClick != null)
-                    itemClick.onItemClick(view, position);
-            }
-        });
     }
 
     @Override
@@ -53,13 +45,6 @@ public class GridDrawAdapter extends RecyclerView.Adapter<GridDrawAdapter.ViewHo
         }
     }
 
-    public interface ItemClick {
-        void onItemClick(View view, int position);
-    }
-
-    public void setOnItemClick(ItemClick itemClick) {
-        this.itemClick = itemClick;
-    }
 
 }
 

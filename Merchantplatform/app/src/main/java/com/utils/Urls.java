@@ -104,16 +104,22 @@ public class Urls {
     /**
      * 精准推广
      */
-    public static final String PRECISION_PROMOTE ="http://mcube.58.com/cube/m/pm/1/205000/";
-
+    public static final String PRECISION_PROMOTE = "http://mcube.58.com/cube/m/pm/1/205000/";
     /**
      * 帖子列表
      */
     public static final String POST_LIST = BASE_URL_INFO + "list";
-
     /**
      * 帖子详情
      */
     public static final String POST_DETAIL = BASE_URL_INFO + "detail";
+    /**
+     * 获取服务器时间
+     */
+    public static final String GET_SERVICE_TIME = BASE_URL_GLOBAL + "currentTime";
+    /**
+     * 获取服务器时间
+     */
+    public static final String GET_TASK = BASE_URL_APP + "task/info";
 
 }
