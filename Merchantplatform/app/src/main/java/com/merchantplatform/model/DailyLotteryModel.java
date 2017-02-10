@@ -187,8 +187,8 @@ public class DailyLotteryModel extends BaseModel {
     private void setTimeSection(LotteryDetailResponse lotteryDetailResponse) {
         String openTimes = lotteryDetailResponse.getData().getOpenTime();
         String endTimes = lotteryDetailResponse.getData().getEndTime();
-        openTime = WelfareModel.dealWithTimeToSecond(openTimes.split(":"));
-        endTime = WelfareModel.dealWithTimeToSecond(endTimes.split(":"));
+        openTime = dealWithTimeToSecond(openTimes.split(":"));
+        endTime = dealWithTimeToSecond(endTimes.split(":"));
         if (isInTimeSection()) {
             surplusTime = endTime - GetServiceTime.systemTimeSecond;
         } else {
@@ -197,6 +197,14 @@ public class DailyLotteryModel extends BaseModel {
             else
                 surplusTime = openTime - GetServiceTime.systemTimeSecond;
         }
+    }
+
+    private int dealWithTimeToSecond(String[] a) {
+        int hour = Integer.parseInt(a[0]) * 3600;
+        int minute = Integer.parseInt(a[1]) * 60;
+        int second = Integer.parseInt(a[2]);
+        int testAll = hour + minute + second;
+        return testAll;
     }
 
     private void setExplainMessage(LotteryDetailResponse lotteryDetailResponse) {
@@ -299,8 +307,8 @@ public class DailyLotteryModel extends BaseModel {
         score = lotteryResultResponse.getData().getScore();
         String openTimes = lotteryResultResponse.getData().getOpenTime();
         String endTimes = lotteryResultResponse.getData().getEndTime();
-        openTime = WelfareModel.dealWithTimeToSecond(openTimes.split(":"));
-        endTime = WelfareModel.dealWithTimeToSecond(endTimes.split(":"));
+        openTime = dealWithTimeToSecond(openTimes.split(":"));
+        endTime = dealWithTimeToSecond(endTimes.split(":"));
     }
 
     private void setScratchUI() {
