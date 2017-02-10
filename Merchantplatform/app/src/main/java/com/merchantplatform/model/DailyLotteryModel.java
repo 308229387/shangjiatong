@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +24,10 @@ import com.merchantplatform.activity.DailyLotteryActivity;
 import com.merchantplatform.adapter.DailyAwardAdapter;
 import com.merchantplatform.adapter.ExplainMessageAdapter;
 import com.merchantplatform.bean.LotteryDetailResponse;
+import com.merchantplatform.bean.LotteryResultResponse;
 import com.merchantplatform.service.GetServiceTime;
 import com.okhttputils.OkHttpUtils;
+import com.ui.ScratchCountDownTimerView;
 import com.ui.ScratchView;
 import com.ui.SpaceItemDecoration;
 import com.utils.DisplayUtils;
@@ -40,7 +43,8 @@ public class DailyLotteryModel extends BaseModel {
     private DailyLotteryActivity context;
     private TitleBar tb_daily_lottery_title;
     private RecyclerView rv_daily_lottery_award, rv_lottery_explain;
-    private TextView tv_daily_lottery_grade, tv_daily_lottery_start, tv_daily_lottery_count_down, tv_daily_lottery_result, tv_detail_lottery_gotorecord;
+    private TextView tv_daily_lottery_grade, tv_daily_lottery_start, tv_daily_lottery_result, tv_detail_lottery_gotorecord;
+    private ScratchCountDownTimerView sc_daily_lottery_count_down;
     private Button bt_daily_lottery_start, bt_daily_lottery_check, bt_daily_lottery_again;
     private ScratchView sv_daily_lottery;
     private RelativeLayout rl_daily_lottery_start, rl_daily_lottery_result;
@@ -49,8 +53,10 @@ public class DailyLotteryModel extends BaseModel {
     private ArrayList<LotteryDetailResponse.award> dailyAward;
     private ExplainMessageAdapter explainAdapter;
     private ArrayList<String> explainMsg;
+    private int score = 0;
     private int openTime = -1;
     private int endTime = -1;
+    private int surplusTime;
 
     public DailyLotteryModel(DailyLotteryActivity context) {
         this.context = context;
@@ -62,7 +68,7 @@ public class DailyLotteryModel extends BaseModel {
         rv_daily_lottery_award = (RecyclerView) context.findViewById(R.id.rv_daily_lottery_award);
         tv_daily_lottery_grade = (TextView) context.findViewById(R.id.tv_daily_lottery_grade);
         tv_daily_lottery_start = (TextView) context.findViewById(R.id.tv_daily_lottery_start);
-        tv_daily_lottery_count_down = (TextView) context.findViewById(R.id.tv_daily_lottery_count_down);
+        sc_daily_lottery_count_down = (ScratchCountDownTimerView) context.findViewById(R.id.sc_daily_lottery_count_down);
         tv_daily_lottery_result = (TextView) context.findViewById(R.id.tv_daily_lottery_result);
         tv_detail_lottery_gotorecord = (TextView) context.findViewById(R.id.tv_detail_lottery_gotorecord);
         bt_daily_lottery_start = (Button) context.findViewById(R.id.bt_daily_lottery_start);
@@ -113,11 +119,11 @@ public class DailyLotteryModel extends BaseModel {
 
     public void setListener() {
         tb_daily_lottery_title.setLeftClickListener(new OnBackPressed());
-        bt_daily_lottery_start.setOnClickListener(new OnStartLottery());
+        sc_daily_lottery_count_down.setOnCountDownListener(new OnCountDownFinish());
         sv_daily_lottery.setEraseStatusListener(new OnEraserStatusListener());
         sv_daily_lottery.setOnTouchListener(new OnLotteryTouchListener());
         bt_daily_lottery_check.setOnClickListener(new OnCheckLottery());
-        bt_daily_lottery_again.setOnClickListener(new OnLotteryAgain());
+        bt_daily_lottery_again.setOnClickListener(new OnStartLottery());
         tv_detail_lottery_gotorecord.setOnClickListener(new OnGoToRecord());
     }
 
@@ -138,6 +144,16 @@ public class DailyLotteryModel extends BaseModel {
         }
     }
 
+    private class OnCountDownFinish implements ScratchCountDownTimerView.OnCountDownListener {
+
+        @Override
+        public void onFinish() {
+            //倒计时结束
+            //刮奖开始倒计时结束之后，倒计时重置为刮奖结束倒计时，然后按钮变为可点击
+            //刮奖结束倒计时结束后，倒计时重置为刮奖开始倒计时，按钮置灰并不可点击
+        }
+    }
+
     private class getDailyLottery extends DialogCallback<LotteryDetailResponse> {
 
         public getDailyLottery(Activity activity, boolean isShowDialog) {
@@ -151,17 +167,21 @@ public class DailyLotteryModel extends BaseModel {
                 setDailyAward(lotteryDetailResponse);
                 setTimeSection(lotteryDetailResponse);
                 setExplainMessage(lotteryDetailResponse);
+                setIfCanStartScratch();
             }
         }
     }
 
     private void setGrade(LotteryDetailResponse lotteryDetailResponse) {
-        tv_daily_lottery_grade.setText(lotteryDetailResponse.getData().getScore() + "");
+        score = lotteryDetailResponse.getData().getScore();
+        tv_daily_lottery_grade.setText(score + "");
     }
 
     private void setDailyAward(LotteryDetailResponse lotteryDetailResponse) {
-        dailyAward.addAll(lotteryDetailResponse.getData().getPrizeList());
-        dailyAwardAdapter.notifyDataSetChanged();
+        if (lotteryDetailResponse.getData().getPrizeList() != null) {
+            dailyAward.addAll(lotteryDetailResponse.getData().getPrizeList());
+            dailyAwardAdapter.notifyDataSetChanged();
+        }
     }
 
     private void setTimeSection(LotteryDetailResponse lotteryDetailResponse) {
@@ -169,6 +189,14 @@ public class DailyLotteryModel extends BaseModel {
         String endTimes = lotteryDetailResponse.getData().getEndTime();
         openTime = WelfareModel.dealWithTimeToSecond(openTimes.split(":"));
         endTime = WelfareModel.dealWithTimeToSecond(endTimes.split(":"));
+        if (isInTimeSection()) {
+            surplusTime = endTime - GetServiceTime.systemTimeSecond;
+        } else {
+            if (GetServiceTime.systemTimeSecond < 86400)
+                surplusTime = 86400 - GetServiceTime.systemTimeSecond + openTime;
+            else
+                surplusTime = openTime - GetServiceTime.systemTimeSecond;
+        }
     }
 
     private void setExplainMessage(LotteryDetailResponse lotteryDetailResponse) {
@@ -176,12 +204,133 @@ public class DailyLotteryModel extends BaseModel {
         explainAdapter.notifyDataSetChanged();
     }
 
+    private void setIfCanStartScratch() {
+        if (isInTimeSection() && score > 0) {
+            canScratchLottery();
+        } else if (score <= 0) {
+            noMoreScore();
+        } else {
+            notInTimeSection();
+        }
+    }
+
+    private boolean isInTimeSection() {
+        return GetServiceTime.systemTimeSecond >= openTime && GetServiceTime.systemTimeSecond <= endTime;
+    }
+
+    private void canScratchLottery() {
+        tv_daily_lottery_start.setText("刮奖结束倒计时");
+        sc_daily_lottery_count_down.setVisibility(View.VISIBLE);
+        sc_daily_lottery_count_down.setTime(calculateResult()[0], calculateResult()[1], calculateResult()[2]);
+        sc_daily_lottery_count_down.start();
+        bt_daily_lottery_start.setOnClickListener(new OnStartLottery());
+        bt_daily_lottery_start.setText("点我刮奖");
+        bt_daily_lottery_start.setBackgroundColor(context.getResources().getColor(R.color.home_bottom_color));
+    }
+
+    private void noMoreScore() {
+        tv_daily_lottery_start.setText("积分已耗尽，无法参与抽奖~");
+        sc_daily_lottery_count_down.setVisibility(View.GONE);
+        bt_daily_lottery_start.setOnClickListener(new OnGoToWelfare());
+        bt_daily_lottery_start.setText("去做任务攒积分");
+        bt_daily_lottery_start.setClickable(true);
+        bt_daily_lottery_start.setBackgroundColor(context.getResources().getColor(R.color.home_bottom_color));
+    }
+
+    private void notInTimeSection() {
+        tv_daily_lottery_start.setText("刮奖开始倒计时");
+        sc_daily_lottery_count_down.setVisibility(View.VISIBLE);
+        sc_daily_lottery_count_down.setTime(calculateResult()[0], calculateResult()[1], calculateResult()[2]);
+        sc_daily_lottery_count_down.start();
+        bt_daily_lottery_start.setClickable(false);
+        bt_daily_lottery_start.setText("点我刮奖");
+        bt_daily_lottery_start.setBackgroundColor(context.getResources().getColor(R.color.a_grade_pressed));
+    }
+
+    private int[] calculateResult() {
+        int[] a = new int[3];
+        a[0] = surplusTime / 3600;
+        a[1] = (surplusTime % 3600) / 60;
+        a[2] = (surplusTime % 3600) % 60;
+        return a;
+    }
+
     private class OnStartLottery implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            rl_daily_lottery_start.setVisibility(View.GONE);
-            sv_daily_lottery.setVisibility(View.VISIBLE);
-            rl_daily_lottery_result.setVisibility(View.VISIBLE);
+            requestLotteryResult();
+        }
+    }
+
+    private void requestLotteryResult() {
+        if (score > 0) {
+            if (isInTimeSection()) {
+                getLotteryResult();
+            } else {
+                notInTimeSection();
+            }
+        } else {
+            noMoreScore();
+        }
+    }
+
+    private void getLotteryResult() {
+        OkHttpUtils.get(Urls.GET_LOTTERY)
+                .execute(new getLotteryResult(context, false));
+    }
+
+    private class getLotteryResult extends DialogCallback<LotteryResultResponse> {
+
+        public getLotteryResult(Activity activity, boolean isShowDialog) {
+            super(activity, isShowDialog);
+        }
+
+        @Override
+        public void onResponse(boolean isFromCache, LotteryResultResponse lotteryResultResponse, Request request, @Nullable Response response) {
+            if (lotteryResultResponse != null && lotteryResultResponse.getData() != null) {
+                updateNewestMessage(lotteryResultResponse);
+                setScratchUI();
+                setLotteryResult(lotteryResultResponse);
+            }
+        }
+    }
+
+    private void updateNewestMessage(LotteryResultResponse lotteryResultResponse) {
+        score = lotteryResultResponse.getData().getScore();
+        String openTimes = lotteryResultResponse.getData().getOpenTime();
+        String endTimes = lotteryResultResponse.getData().getEndTime();
+        openTime = WelfareModel.dealWithTimeToSecond(openTimes.split(":"));
+        endTime = WelfareModel.dealWithTimeToSecond(endTimes.split(":"));
+    }
+
+    private void setScratchUI() {
+        tv_daily_lottery_grade.setText(score + "");
+        rl_daily_lottery_start.setVisibility(View.GONE);
+        sv_daily_lottery.reset();
+        sv_daily_lottery.setVisibility(View.VISIBLE);
+        rl_daily_lottery_result.setVisibility(View.VISIBLE);
+    }
+
+    private void setLotteryResult(LotteryResultResponse lotteryResultResponse) {
+        if (lotteryResultResponse.getData().getPrizeDrawState() == 0) {
+            if (!TextUtils.isEmpty(lotteryResultResponse.getData().getMsg())) {
+                Toast.makeText(context, lotteryResultResponse.getData().getMsg(), Toast.LENGTH_SHORT).show();
+                context.finish();
+            }
+        } else if (lotteryResultResponse.getData().getPrizeDrawState() == 1) {
+            tv_daily_lottery_result.setText("很遗憾，没刮中，请再接再厉！");
+            bt_daily_lottery_check.setVisibility(View.GONE);
+            ViewGroup.LayoutParams layoutParams = bt_daily_lottery_again.getLayoutParams();
+            layoutParams.width = layoutParams.width + DisplayUtils.dpToPx(60, context);
+            bt_daily_lottery_again.setLayoutParams(layoutParams);
+        } else if (lotteryResultResponse.getData().getPrizeDrawState() == 2) {
+            if (!TextUtils.isEmpty(lotteryResultResponse.getData().getPrizeName())) {
+                tv_daily_lottery_result.setText("恭喜您！抽中" + lotteryResultResponse.getData().getPrizeName());
+            }
+            bt_daily_lottery_check.setVisibility(View.VISIBLE);
+            ViewGroup.LayoutParams layoutParams = bt_daily_lottery_again.getLayoutParams();
+            layoutParams.width = layoutParams.width - DisplayUtils.dpToPx(60, context);
+            bt_daily_lottery_again.setLayoutParams(layoutParams);
         }
     }
 
@@ -190,6 +339,14 @@ public class DailyLotteryModel extends BaseModel {
         public void onCompleted(View view) {
             sv_daily_lottery.clear();
             sv_daily_lottery.setVisibility(View.GONE);
+        }
+    }
+
+    private class OnGoToWelfare implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            context.finish();
         }
     }
 
@@ -210,27 +367,6 @@ public class DailyLotteryModel extends BaseModel {
             else
                 scrollview.requestDisallowInterceptTouchEvent(true);
             return false;
-        }
-    }
-
-    private class OnLotteryAgain implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            sv_daily_lottery.reset();
-            sv_daily_lottery.setVisibility(View.VISIBLE);
-            if (bt_daily_lottery_check.getVisibility() == View.VISIBLE) {
-                tv_daily_lottery_result.setText("很遗憾，没刮中，请再接再厉！");
-                bt_daily_lottery_check.setVisibility(View.GONE);
-                ViewGroup.LayoutParams layoutParams = bt_daily_lottery_again.getLayoutParams();
-                layoutParams.width = layoutParams.width + DisplayUtils.dpToPx(60, context);
-                bt_daily_lottery_again.setLayoutParams(layoutParams);
-            } else {
-                tv_daily_lottery_result.setText("恭喜您！抽中全额商机100元");
-                bt_daily_lottery_check.setVisibility(View.VISIBLE);
-                ViewGroup.LayoutParams layoutParams = bt_daily_lottery_again.getLayoutParams();
-                layoutParams.width = layoutParams.width - DisplayUtils.dpToPx(60, context);
-                bt_daily_lottery_again.setLayoutParams(layoutParams);
-            }
         }
     }
 

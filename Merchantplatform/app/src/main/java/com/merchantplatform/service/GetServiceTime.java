@@ -37,11 +37,11 @@ public class GetServiceTime extends Service {
     public static int systemTimeSecond = -1;
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-//        getSystemTime();
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        getSystemTime();
         systemTimeSecond = messageTimeFormat(tempSystemTime);
         CereatTimer();
+        return super.onStartCommand(intent, flags, startId);
     }
 
     public void getSystemTime() {

@@ -176,15 +176,11 @@
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
-                    <TextView
-                        android:id="@+id/tv_daily_lottery_count_down"
+                    <com.ui.ScratchCountDownTimerView
+                        android:id="@+id/sc_daily_lottery_count_down"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:background="@mipmap/daily_lottery_count_down"
-                        android:gravity="center"
-                        android:textColor="@color/black"
-                        android:textSize="15sp" />
+                        android:layout_marginLeft="5dp" />
                 </LinearLayout>
 
                 <Button
@@ -194,7 +190,7 @@
                     android:layout_below="@+id/ll_daily_lottery_start"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
-                    android:background="@color/home_bottom_color"
+                    android:background="@color/a_grade_pressed"
                     android:text="点我刮奖"
                     android:textColor="@color/text_white"
                     android:textSize="16sp" />
