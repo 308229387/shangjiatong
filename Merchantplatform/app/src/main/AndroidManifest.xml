@@ -29,7 +29,6 @@
         android:protectionLevel="signature" />
 
     <uses-permission android:name="com.merchantplatform.permission.MIPUSH_RECEIVE" />
-    <!-- 接入个推新增的申请权限 -->
     <uses-permission android:name="getui.permission.GetuiService.com.merchantplatform" />
 
     <permission
@@ -79,6 +78,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.TaskRecordActivity"
             android:screenOrientation="portrait" />
 
         <!-- 这个Activity不要启用单独的Process，否则支付SDK的回调不会执行 -->

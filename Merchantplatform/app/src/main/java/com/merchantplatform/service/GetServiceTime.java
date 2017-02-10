@@ -33,13 +33,11 @@ public class GetServiceTime extends Service {
     private TimerTask task;
     final Handler handler = new TempHandler();
     final int WHAT = 102;
-    private long tempSystemTime = 1486537996648l;
     public static int systemTimeSecond = -1;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         getSystemTime();
-        systemTimeSecond = messageTimeFormat(tempSystemTime);
         CereatTimer();
         return super.onStartCommand(intent, flags, startId);
     }

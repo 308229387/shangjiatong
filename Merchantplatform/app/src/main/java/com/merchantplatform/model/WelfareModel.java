@@ -1,8 +1,6 @@
 package com.merchantplatform.model;
 
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.callback.JsonCallback;
 import com.merchantplatform.R;
@@ -24,12 +21,10 @@ import com.merchantplatform.service.GetServiceTime;
 import com.okhttputils.OkHttpUtils;
 import com.ui.RushBuyCountDownTimerView;
 import com.ui.SpaceItemDecoration;
-import com.utils.ToastUtils;
 import com.utils.Urls;
 import com.xrecyclerview.XRecyclerView;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.ArrayList;
 
 import okhttp3.Request;
 import okhttp3.Response;
@@ -52,6 +47,7 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
     private TextView fraction;
     private TextView alredyAddCount;
     private RushBuyCountDownTimerView countDownText;
+    private ArrayList<GetTask.taskData> list;
 
     private int taskTime = -1;
     private int surplusTime;
@@ -97,7 +93,7 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
     private void listViewSetting() {
         listRecyclerView.setLayoutManager(mLayoutManager);
         listRecyclerView.setHasFixedSize(true);
-        welfareTaskAdapter = new WelfareTaskAdapter(context.getActivity());
+        welfareTaskAdapter = new WelfareTaskAdapter(context.getActivity(), list);
         listRecyclerView.setAdapter(welfareTaskAdapter);
         headView = LayoutInflater.from(context.getActivity()).inflate(R.layout.welfare_list_header, listRecyclerView, false);
         countDownText = (RushBuyCountDownTimerView) headView.findViewById(R.id.timerView);
@@ -138,12 +134,13 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
             String[] b = a.split(":");
             taskTime = dealWithTimeToSecond(b);
             alredyAddCount.setText(String.format(context.getString(R.string.alredy_add_count), s.getData().getGainscore()));
-
-
+            fraction.setText(s.getData().getScore() + "");
+            list = s.getData().getTasklist();
+            welfareTaskAdapter.setData(list);
         }
     }
 
-    public static int dealWithTimeToSecond(String[] a) {
+    public int dealWithTimeToSecond(String[] a) {
         int hour = Integer.parseInt(a[0]) * 3600;
         int minute = Integer.parseInt(a[1]) * 60;
         int second = Integer.parseInt(a[2]);
