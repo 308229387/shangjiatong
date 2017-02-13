@@ -16,11 +16,20 @@ public class LotteryDetailResponse implements Serializable {
     }
 
     public class data implements Serializable {
+        private int isVip;
         private ArrayList<String> description;
         private ArrayList<award> prizeList;
         private int score;
         private String openTime;
         private String endTime;
+
+        public int getIsVip() {
+            return isVip;
+        }
+
+        public void setIsVip(int isVip) {
+            this.isVip = isVip;
+        }
 
         public ArrayList<String> getDescription() {
             return description;

@@ -31,6 +31,7 @@ import com.ui.ScratchCountDownTimerView;
 import com.ui.ScratchView;
 import com.ui.SpaceItemDecoration;
 import com.utils.DisplayUtils;
+import com.utils.ToastUtils;
 import com.utils.Urls;
 
 import java.util.ArrayList;
@@ -163,11 +164,16 @@ public class DailyLotteryModel extends BaseModel {
         @Override
         public void onResponse(boolean isFromCache, LotteryDetailResponse lotteryDetailResponse, Request request, @Nullable Response response) {
             if (lotteryDetailResponse != null && lotteryDetailResponse.getData() != null) {
-                setGrade(lotteryDetailResponse);
-                setDailyAward(lotteryDetailResponse);
-                setTimeSection(lotteryDetailResponse);
-                setExplainMessage(lotteryDetailResponse);
-                setIfCanStartScratch();
+                if (lotteryDetailResponse.getData().getIsVip() == 1) {
+                    setGrade(lotteryDetailResponse);
+                    setDailyAward(lotteryDetailResponse);
+                    setTimeSection(lotteryDetailResponse);
+                    setExplainMessage(lotteryDetailResponse);
+                    setIfCanStartScratch();
+                } else {
+                    ToastUtils.showToast("只有VIP客户可以参与刮奖");
+                    context.finish();
+                }
             }
         }
     }
