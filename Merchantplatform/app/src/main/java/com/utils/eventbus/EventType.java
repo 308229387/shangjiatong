@@ -11,4 +11,7 @@ public class EventType {
     //每天第一次精准推送成功
     public static final String PRECISION_PROMOTE_FIRST_SUCCESS = "precision_promote_first_success";
 
+    //分享朋友圈成功
+    public static final String SHARE_WECHAT_CIRCLE_SUCCESS = "share_wechat_circle_success";
+
 }

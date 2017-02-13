@@ -40,6 +40,8 @@ import com.utils.InfoStateEnum;
 import com.utils.PageSwitchUtils;
 import com.utils.StringUtil;
 import com.utils.Urls;
+import com.utils.eventbus.EventAction;
+import com.utils.eventbus.EventType;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -160,6 +162,8 @@ public class InfoDetailModel extends BaseModel {
         iv_info_detail_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //配置分享的参数
                 UMImage imagelocal = new UMImage(activity, R.mipmap.iv_logo);
                 imagelocal.compressFormat = Bitmap.CompressFormat.PNG;
                 new ShareAction(activity)
@@ -170,17 +174,18 @@ public class InfoDetailModel extends BaseModel {
                         .setCallback(new UMShareListener() {
                             @Override
                             public void onResult(SHARE_MEDIA share_media) {
-                                Toast.makeText(activity, "onResult", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(activity, "分享成功", Toast.LENGTH_SHORT).show();
+                                EventBus.getDefault().post(new EventAction(EventType.SHARE_WECHAT_CIRCLE_SUCCESS));
                             }
 
                             @Override
                             public void onError(SHARE_MEDIA share_media, Throwable throwable) {
-                                Toast.makeText(activity, "onError", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(activity, "分享失败", Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
                             public void onCancel(SHARE_MEDIA share_media) {
-                                Toast.makeText(activity, "onCancel", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(activity, "取消分享", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .share();
