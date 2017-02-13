@@ -24,6 +24,7 @@ public class InfoDetailBean {
     private String address;//地址
     private String serviceintroduce;//服务介绍
     private String auditFailMsg;//审核失败原因
+    private String shareurl;
 
 
     public String getInfoId() {
@@ -144,5 +145,13 @@ public class InfoDetailBean {
 
     public void setAuditFailMsg(String auditFailMsg) {
         this.auditFailMsg = auditFailMsg;
+    }
+
+    public String getShareurl() {
+        return shareurl;
+    }
+
+    public void setShareurl(String shareurl) {
+        this.shareurl = shareurl;
     }
 }

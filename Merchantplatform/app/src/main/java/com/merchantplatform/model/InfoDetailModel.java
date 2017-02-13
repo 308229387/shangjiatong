@@ -1,6 +1,7 @@
 package com.merchantplatform.model;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.callback.DialogCallback;
@@ -29,6 +31,10 @@ import com.rollerview.Util;
 import com.rollerview.adapter.LoopPagerAdapter;
 import com.rollerview.hintview.TextHintView;
 import com.ui.diyview.MoreTextView;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 import com.utils.Constant;
 import com.utils.InfoStateEnum;
 import com.utils.PageSwitchUtils;
@@ -71,6 +77,8 @@ public class InfoDetailModel extends BaseModel {
     private View ll_info_detail_accurate;
     private View ll_info_detail_top;
     private View iv_info_detail_back;
+    private View iv_info_detail_share;
+
     private String infoId;
 
     private InfoDetailAdapter adapter;
@@ -85,7 +93,7 @@ public class InfoDetailModel extends BaseModel {
         rollPagerView = (RollPagerView) activity.findViewById(R.id.rpv_info_detail);
         adapter = new InfoDetailAdapter(rollPagerView);
         iv_info_detail_back = activity.findViewById(R.id.iv_info_detail_back);
-
+        iv_info_detail_share = activity.findViewById(R.id.iv_info_detail_share);
         tv_title_info_detail = (TextView) activity.findViewById(R.id.tv_title_info_detail);
         tv_state_info_detail = (TextView) activity.findViewById(R.id.tv_state_info_detail);
         tv_info_detail_isaccurate = (TextView) activity.findViewById(R.id.tv_info_detail_isaccurate);
@@ -132,7 +140,7 @@ public class InfoDetailModel extends BaseModel {
             rollPagerView.setHintView(new TextHintView(activity));
             rollPagerView.setHintPadding(Util.dip2px(activity, 5), Util.dip2px(activity, 2), Util.dip2px(activity, 5), Util.dip2px(activity, 2));
             rollPagerView.setAdapter(adapter);
-            if(pics.size()==1){
+            if (pics.size() == 1) {
                 rollPagerView.setNoScroll(true);
             }
         } else {
@@ -145,6 +153,37 @@ public class InfoDetailModel extends BaseModel {
             public void onClick(View v) {
                 LogUmengAgent.ins().log(LogUmengEnum.LOG_TZXQ_FH);
                 activity.finish();
+            }
+        });
+
+        //分享按钮
+        iv_info_detail_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UMImage imagelocal = new UMImage(activity, R.mipmap.iv_logo);
+                imagelocal.compressFormat = Bitmap.CompressFormat.PNG;
+                new ShareAction(activity)
+                        .withTitle(infoDetailBean.getTitle())
+                        .withMedia(imagelocal)
+                        .withTargetUrl(infoDetailBean.getShareurl())
+                        .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
+                        .setCallback(new UMShareListener() {
+                            @Override
+                            public void onResult(SHARE_MEDIA share_media) {
+                                Toast.makeText(activity, "onResult", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+                                Toast.makeText(activity, "onError", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onCancel(SHARE_MEDIA share_media) {
+                                Toast.makeText(activity, "onCancel", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .share();
             }
         });
 
@@ -243,11 +282,11 @@ public class InfoDetailModel extends BaseModel {
         }
     }
 
-    public void registerEventBus(){
+    public void registerEventBus() {
         EventBus.getDefault().register(activity);
     }
 
-    public void unRegisterEventBus(){
+    public void unRegisterEventBus() {
         EventBus.getDefault().unregister(activity);
     }
 
