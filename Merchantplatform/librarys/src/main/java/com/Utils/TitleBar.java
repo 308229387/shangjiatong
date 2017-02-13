@@ -42,6 +42,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
     private int mActionPadding;
     private int mOutPadding;
     private int mActionTextColor;
+    private int mActionTextSize;
     private int mHeight;
 
     public TitleBar(Context context) {
@@ -234,6 +235,10 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
         mActionTextColor = colorResId;
     }
 
+    public void setActionTextSize(int textSize) {
+        mActionTextSize = textSize;
+    }
+
     /**
      * Function to set a click listener for Title TextView
      *
@@ -254,6 +259,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     /**
      * Adds a list of {@link Action}s.
+     *
      * @param actionList the actions to add
      */
     public void addActions(ActionList actionList) {
@@ -265,6 +271,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     /**
      * Adds a new {@link Action}.
+     *
      * @param action the action to add
      */
     public View addAction(Action action) {
@@ -274,8 +281,9 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     /**
      * Adds a new {@link Action} at the specified index.
+     *
      * @param action the action to add
-     * @param index the position at which to add the action
+     * @param index  the position at which to add the action
      */
     public View addAction(Action action, int index) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
@@ -294,6 +302,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     /**
      * Remove a action from the action bar.
+     *
      * @param index position of action to remove
      */
     public void removeActionAt(int index) {
@@ -302,6 +311,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     /**
      * Remove a action from the action bar.
+     *
      * @param action The action to remove
      */
     public void removeAction(Action action) {
@@ -319,6 +329,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     /**
      * Returns the number of actions currently registered with the action bar.
+     *
      * @return action count
      */
     public int getActionCount() {
@@ -327,6 +338,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     /**
      * Inflates a {@link View} with the given {@link Action}.
+     *
      * @param action the action to inflate
      * @return a view
      */
@@ -343,6 +355,9 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
             text.setTextSize(DEFAULT_ACTION_TEXT_SIZE);
             if (mActionTextColor != 0) {
                 text.setTextColor(mActionTextColor);
+            }
+            if (mActionTextSize != 0) {
+                text.setTextSize(dip2px(mActionTextSize));
             }
             view = text;
         }
@@ -407,6 +422,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
     /**
      * 计算状态栏高度高度
      * getStatusBarHeight
+     *
      * @return
      */
     public static int getStatusBarHeight() {
@@ -435,7 +451,9 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
      */
     public interface Action {
         String getText();
+
         int getDrawable();
+
         void performAction(View view);
     }
 

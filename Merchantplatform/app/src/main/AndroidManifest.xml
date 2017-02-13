@@ -24,7 +24,6 @@
     <!-- 监听呼出电话 -->
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
     <!-- 调用者的包名申请权限必须 -->
-
     <permission
         android:name="com.merchantplatform.permission.MIPUSH_RECEIVE"
         android:protectionLevel="signature" />
@@ -181,14 +180,21 @@
             android:name=".activity.DailyLotteryActivity"
             android:screenOrientation="portrait" />
 
-        <service android:name="com.merchantplatform.service.GetServiceTime"></service>
-
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <service android:name=".service.GetServiceTime" />
+
+        <activity
+            android:name=".activity.MyAwardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AwardHistoryActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

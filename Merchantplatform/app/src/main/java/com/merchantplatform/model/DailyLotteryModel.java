@@ -20,7 +20,9 @@ import android.widget.Toast;
 import com.Utils.TitleBar;
 import com.callback.DialogCallback;
 import com.merchantplatform.R;
+import com.merchantplatform.activity.AwardHistoryActivity;
 import com.merchantplatform.activity.DailyLotteryActivity;
+import com.merchantplatform.activity.MyAwardActivity;
 import com.merchantplatform.adapter.DailyAwardAdapter;
 import com.merchantplatform.adapter.ExplainMessageAdapter;
 import com.merchantplatform.bean.LotteryDetailResponse;
@@ -152,6 +154,7 @@ public class DailyLotteryModel extends BaseModel {
             //倒计时结束
             //刮奖开始倒计时结束之后，倒计时重置为刮奖结束倒计时，然后按钮变为可点击
             //刮奖结束倒计时结束后，倒计时重置为刮奖开始倒计时，按钮置灰并不可点击
+            ToastUtils.showToast("倒计时结束了");
         }
     }
 
@@ -368,7 +371,8 @@ public class DailyLotteryModel extends BaseModel {
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(context, "查看自己的中奖记录", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context, MyAwardActivity.class);
+            context.startActivity(intent);
         }
     }
 
@@ -388,7 +392,8 @@ public class DailyLotteryModel extends BaseModel {
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(context, "查看所有人中奖记录", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context, AwardHistoryActivity.class);
+            context.startActivity(intent);
         }
     }
 }
