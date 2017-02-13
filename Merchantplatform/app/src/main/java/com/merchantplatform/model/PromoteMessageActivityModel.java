@@ -167,12 +167,12 @@ public class PromoteMessageActivityModel extends BaseModel{
                 String[] arrayString = url.split("[?]")[0].split("/");
                 upPromote_infoId = arrayString[arrayString.length -1];
                 isUpIntercept = true;
-                return true;
+                return false;
             }else if(url.startsWith(Urls.PRECISION_PROMOTE)){
                 String[] arrayString = url.split("[?]")[0].split("/");
                 precisionPromote_infoId = arrayString[arrayString.length -1];
                 isPercisionIntercept = true;
-                return true;
+                return false;
             }else if((url.startsWith(Urls.PROMOTE_MESSAGE) && isUpIntercept)||(url.startsWith(Urls.PROMOTE_OTHER_MESSAGE)&& isUpIntercept)){
 
                 EventAction action = new EventAction(EventType.UP_PROMOTE_SUCCESS,upPromote_infoId);
@@ -186,7 +186,7 @@ public class PromoteMessageActivityModel extends BaseModel{
                 String currentTime = DateUtils.getCurrentDateTime();
                 PromotePrefersUtil.getInstance().saveUpPromote(currentTime);
                 isUpIntercept = false;
-                return true;
+                return false;
             }else if((url.startsWith(Urls.PROMOTE_MESSAGE) && isPercisionIntercept)|| (url.startsWith(Urls.PROMOTE_OTHER_MESSAGE)&& isUpIntercept)){
 
                 EventAction action = new EventAction(EventType.PRECISION_PROMOTE_SUCCESS,precisionPromote_infoId);
@@ -200,7 +200,7 @@ public class PromoteMessageActivityModel extends BaseModel{
                 String currentTime = DateUtils.getCurrentDateTime();
                 PromotePrefersUtil.getInstance().savePercisionPromote(currentTime);
                 isPercisionIntercept = false;
-                return true;
+                return false;
             }
 
             return super.shouldOverrideUrlLoading(view, url);

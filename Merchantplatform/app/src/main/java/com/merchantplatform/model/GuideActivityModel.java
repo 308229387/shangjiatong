@@ -36,6 +36,7 @@ public class GuideActivityModel extends BaseModel {
     private CommonDialog mAlertDialog;
 
     private static final int CODE_READ_PHONE_STATE = 128;
+    private static final int CODE_WRITE_STORAGE = 129;
 
     public GuideActivityModel(GuideActivity context) {
         this.context = context;
@@ -65,7 +66,8 @@ public class GuideActivityModel extends BaseModel {
                 return;
 
             } else {
-                waitAndGo();
+                getStoragePermission();
+//                waitAndGo();
             }
 
         } else {
@@ -73,14 +75,47 @@ public class GuideActivityModel extends BaseModel {
         }
     }
 
-    private void showAlertDialog() {
+
+    /**
+     * 获取SD卡写权限
+     */
+    public void getStoragePermission() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            boolean findMethod = true;
+            try {
+                ContextCompat.class.getMethod("checkSelfPermission", Context.class, String.class);
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+                findMethod = false;
+            }
+
+            if (findMethod && ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, CODE_WRITE_STORAGE);
+                    return;
+                }
+
+                ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, CODE_WRITE_STORAGE);
+                return;
+
+            } else {
+                waitAndGo();
+            }
+
+//        } else {
+//            waitAndGo();
+//        }
+    }
+
+    private void showAlertDialog(String content) {
         if (mAlertDialog != null && mAlertDialog.isShowing()) {
             mAlertDialog.dismiss();
         }
         mAlertDialog = new CommonDialog(context);
         mAlertDialog.setCancelable(false);
         mAlertDialog.setCanceledOnTouchOutside(false);
-        mAlertDialog.setContent("未取得您的手机权限，58商家通无法正常启动。请在设置-应用-58商家通-权限中，允许获取手机设备信息。");
+        mAlertDialog.setContent(content);
         mAlertDialog.setBtnSureText("设置");
         mAlertDialog.setOnDialogClickListener(new CommonDialog.OnDialogClickListener() {
             @Override
@@ -139,9 +174,16 @@ public class GuideActivityModel extends BaseModel {
     public void requestPermissionResult(int requestCode, @NonNull int[] grantResults) {
         if (requestCode == CODE_READ_PHONE_STATE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                waitAndGo();
+                getStoragePermission();
+            } else {
+                showAlertDialog("未取得您的手机权限，58商家通无法正常启动。请在设置-应用-58商家通-权限中，允许获取手机设备信息。");
+            }
+        }else if (requestCode == CODE_WRITE_STORAGE){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 waitAndGo();
             } else {
-                showAlertDialog();
+                showAlertDialog("未取得您的存储权限，58商家通无法正常启动。请在设置-应用-58商家通-权限中，允许获取手机设备信息。");
             }
         }
     }
