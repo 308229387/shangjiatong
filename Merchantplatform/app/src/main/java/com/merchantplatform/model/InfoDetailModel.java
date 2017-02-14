@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.Utils.eventbus.ShareWechatCircleSuccessEvent;
 import com.bumptech.glide.Glide;
 import com.callback.DialogCallback;
 import com.log.LogUmengAgent;
@@ -175,7 +176,7 @@ public class InfoDetailModel extends BaseModel {
                             @Override
                             public void onResult(SHARE_MEDIA share_media) {
                                 Toast.makeText(activity, "分享成功", Toast.LENGTH_SHORT).show();
-                                EventBus.getDefault().post(new EventAction(EventType.SHARE_WECHAT_CIRCLE_SUCCESS));
+                                EventBus.getDefault().post(new ShareWechatCircleSuccessEvent());
                             }
 
                             @Override
