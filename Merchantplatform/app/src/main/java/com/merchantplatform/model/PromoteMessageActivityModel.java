@@ -29,8 +29,6 @@ import com.utils.AppInfoUtils;
 import com.utils.DateUtils;
 import com.utils.PageSwitchUtils;
 import com.utils.Urls;
-import com.utils.eventbus.EventAction;
-import com.utils.eventbus.EventType;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -181,7 +179,6 @@ public class PromoteMessageActivityModel extends BaseModel{
 
                 UpPromoteSuccessEvent upPromoteSuccessEvent = new UpPromoteSuccessEvent();
                 upPromoteSuccessEvent.setData(upPromote_infoId);
-                //EventAction action = new EventAction(EventType.UP_PROMOTE_SUCCESS,upPromote_infoId);
                 EventBus.getDefault().post(upPromoteSuccessEvent);
 
                 String upTime =  PromotePrefersUtil.getInstance().getUpPromote();

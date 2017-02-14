@@ -11,8 +11,6 @@ import com.Utils.eventbus.PrecisionPromoteSuccessEvent;
 import com.Utils.eventbus.UpPromoteSuccessEvent;
 import com.merchantplatform.model.infoListModel;
 import com.utils.StringUtil;
-import com.utils.eventbus.EventAction;
-import com.utils.eventbus.EventType;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

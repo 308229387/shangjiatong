@@ -2,13 +2,10 @@ package com.merchantplatform.activity;
 
 import android.os.Bundle;
 
-import com.Utils.eventbus.PrecisionPromoteFirstSuccessEvent;
 import com.Utils.eventbus.PrecisionPromoteSuccessEvent;
 import com.Utils.eventbus.UpPromoteSuccessEvent;
 import com.merchantplatform.R;
 import com.merchantplatform.model.InfoDetailModel;
-import com.utils.eventbus.EventAction;
-import com.utils.eventbus.EventType;
 
 import org.greenrobot.eventbus.Subscribe;
 
