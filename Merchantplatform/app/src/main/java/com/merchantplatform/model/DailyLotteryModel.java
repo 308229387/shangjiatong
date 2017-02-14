@@ -151,10 +151,7 @@ public class DailyLotteryModel extends BaseModel {
 
         @Override
         public void onFinish() {
-            //倒计时结束
-            //刮奖开始倒计时结束之后，倒计时重置为刮奖结束倒计时，然后按钮变为可点击
-            //刮奖结束倒计时结束后，倒计时重置为刮奖开始倒计时，按钮置灰并不可点击
-            ToastUtils.showToast("倒计时结束了");
+            setIfCanStartScratch();
         }
     }
 
