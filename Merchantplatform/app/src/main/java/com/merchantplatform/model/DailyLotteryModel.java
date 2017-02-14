@@ -151,10 +151,7 @@ public class DailyLotteryModel extends BaseModel {
 
         @Override
         public void onFinish() {
-            //倒计时结束
-            //刮奖开始倒计时结束之后，倒计时重置为刮奖结束倒计时，然后按钮变为可点击
-            //刮奖结束倒计时结束后，倒计时重置为刮奖开始倒计时，按钮置灰并不可点击
-            ToastUtils.showToast("倒计时结束了");
+            setIfCanStartScratch();
         }
     }
 
@@ -314,10 +311,6 @@ public class DailyLotteryModel extends BaseModel {
 
     private void updateNewestMessage(LotteryResultResponse lotteryResultResponse) {
         score = lotteryResultResponse.getData().getScore();
-        String openTimes = lotteryResultResponse.getData().getOpenTime();
-        String endTimes = lotteryResultResponse.getData().getEndTime();
-        openTime = dealWithTimeToSecond(openTimes.split(":"));
-        endTime = dealWithTimeToSecond(endTimes.split(":"));
     }
 
     private void setScratchUI() {
@@ -335,14 +328,16 @@ public class DailyLotteryModel extends BaseModel {
                 context.finish();
             }
         } else if (lotteryResultResponse.getData().getPrizeDrawState() == 1) {
-            tv_daily_lottery_result.setText("很遗憾，没刮中，请再接再厉！");
+            if (!TextUtils.isEmpty(lotteryResultResponse.getData().getMsg())) {
+                tv_daily_lottery_result.setText(lotteryResultResponse.getData().getMsg());
+            }
             bt_daily_lottery_check.setVisibility(View.GONE);
             ViewGroup.LayoutParams layoutParams = bt_daily_lottery_again.getLayoutParams();
             layoutParams.width = layoutParams.width + DisplayUtils.dpToPx(60, context);
             bt_daily_lottery_again.setLayoutParams(layoutParams);
         } else if (lotteryResultResponse.getData().getPrizeDrawState() == 2) {
-            if (!TextUtils.isEmpty(lotteryResultResponse.getData().getPrizeName())) {
-                tv_daily_lottery_result.setText("恭喜您！抽中" + lotteryResultResponse.getData().getPrizeName());
+            if (!TextUtils.isEmpty(lotteryResultResponse.getData().getMsg())) {
+                tv_daily_lottery_result.setText(lotteryResultResponse.getData().getMsg());
             }
             bt_daily_lottery_check.setVisibility(View.VISIBLE);
             ViewGroup.LayoutParams layoutParams = bt_daily_lottery_again.getLayoutParams();
