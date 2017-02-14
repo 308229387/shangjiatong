@@ -323,6 +323,7 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         UserUtils.setFundsOpen(context,isUserFundsOpen);
         if(!TextUtils.isEmpty(staffContactPhone))
         UserUtils.setStaffPhone(context,staffContactPhone);
+        UserUtils.setIsVip(context,globalResponse.getData().getIsVip());
     }
 
     private void updateVersion(GlobalResponse globalResponse) {

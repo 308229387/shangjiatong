@@ -20,8 +20,9 @@ public class UserUtils {
     private static final String USER_SHAKE = "shake";
     private static final String USER_MOBILE = "mobile";
     private static final String PAY = "pay";
-    private static final String FUNDS_OPEN  = "funds_open";
-    private static final String STAFF_PHONE  = "staff_Phone";
+    private static final String VIP = "vip";
+    private static final String FUNDS_OPEN = "funds_open";
+    private static final String STAFF_PHONE = "staff_Phone";
     private static String userId = "";
     public static int hasValidate = 0; //默认未认证，1代表已经认证
     private static String face = "";
@@ -30,6 +31,7 @@ public class UserUtils {
     private static String pay = "";
     private static String funds = "";
     private static String staffPhone = "";
+    public static int vip = 0;
 
     public static void setUserId(Context context, String userId) {
         SharedPreferences sp = context.getSharedPreferences(USER_SP_NAME, 0);
@@ -158,7 +160,7 @@ public class UserUtils {
         userId = "";
         hasValidate = 0;
         mobile = "";
-        pay ="";
+        pay = "";
         funds = "";
         staffPhone = "";
     }
@@ -183,5 +185,16 @@ public class UserUtils {
     public static boolean getShakeState(Context context) {
         boolean shakeState = context.getSharedPreferences(USER_SP_NAME, 0).getBoolean(USER_SHAKE, false);
         return shakeState;
+    }
+
+    public static void setIsVip(Context context, int vip) {
+        SharedPreferences sp = context.getSharedPreferences(USER_SP_NAME, 0);
+        UserUtils.vip = vip;
+        sp.edit().putInt(VIP, vip).commit();
+    }
+
+    public static int getIsVip(Context context) {
+        vip = context.getSharedPreferences(USER_SP_NAME, 0).getInt(VIP, 0);
+        return vip;
     }
 }

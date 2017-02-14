@@ -25,6 +25,11 @@ public class GlobalResponse implements Serializable{
         private String isForceUpdate; //是否强制更新
         private String staffContactPhone; //客服联系电话
         private String isUserFundsOpen; //充值开关
+        private int isVip;
+
+        public int getIsVip() {
+            return isVip;
+        }
 
         public String getAppUrl() {
             return appUrl;

@@ -28,12 +28,14 @@ public class TaskRecordAdapter extends RecyclerView.Adapter<TaskRecordAdapter.Vi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(inflater.inflate(R.layout.welfare_list_item, parent, false));
+        return new ViewHolder(inflater.inflate(R.layout.integral_record_item, parent, false));
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
+        holder.title.setText(list.get(position).getDescription());
+        holder.time.setText(list.get(position).getInfo_complete_time());
+        holder.count.setText(list.get(position).getScore());
     }
 
     public void setData(ArrayList<IntegralRecordResponse.dataInfo> list) {
@@ -48,12 +50,16 @@ public class TaskRecordAdapter extends RecyclerView.Adapter<TaskRecordAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public View view;
-        public TextView taskCount;
+        public TextView title;
+        public TextView time;
+        public TextView count;
 
         public ViewHolder(final View itemView) {
             super(itemView);
             this.view = itemView;
-            taskCount = (TextView) view.findViewById(R.id.task_count);
+            title = (TextView) view.findViewById(R.id.integral_title);
+            time = (TextView) view.findViewById(R.id.integral_time);
+            count = (TextView) view.findViewById(R.id.integral_count);
         }
     }
 }

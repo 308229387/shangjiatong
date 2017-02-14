@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.Utils.UserUtils;
 import com.callback.JsonCallback;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.DailyLotteryActivity;
@@ -114,7 +115,8 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.luck_draw:
-                context.getActivity().startActivity(new Intent(context.getContext(), DailyLotteryActivity.class));
+                if (UserUtils.getIsVip(context.getActivity()) == 1)
+                    context.getActivity().startActivity(new Intent(context.getContext(), DailyLotteryActivity.class));
                 break;
             case R.id.welfare_fraction:
                 context.getActivity().startActivity(new Intent(context.getContext(), TaskRecordActivity.class));

@@ -18,7 +18,6 @@ import com.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
 
-import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -45,6 +44,7 @@ public class TaskRecordModel extends BaseModel {
         listRecyclerView.setLayoutManager(mLayoutManager);
         listRecyclerView.setHasFixedSize(true);
         listRecyclerView.setAdapter(adapter);
+        listRecyclerView.setLoadingListener(new RecyclerViewLoadingListener());
         initData();
         getData();
     }
@@ -59,25 +59,41 @@ public class TaskRecordModel extends BaseModel {
                 context.onBackPressed();
             }
         });
-        title.setTitle("中奖记录");
+        title.setTitle("积分记录");
         title.setTitleColor(Color.BLACK);
         title.setDividerColor(Color.parseColor("#DFE0E1"));
     }
 
-    public void getData(){
+    public void getData() {
         OkHttpUtils.get(Urls.INTEGRAL_LIST)
                 .params("id", "")
-                .params("refreshType",1+"")
+                .params("refreshType", 1 + "")
                 .execute(new GetTaskRecord());
     }
 
-    public class GetTaskRecord extends JsonCallback<IntegralRecordResponse>{
+    private class RecyclerViewLoadingListener implements XRecyclerView.LoadingListener {
+        @Override
+        public void onRefresh() {
+            listRecyclerView.setNoMore(true);
+        }
+
+        @Override
+        public void onLoadMore() {
+
+        }
+
+    }
+
+    public class GetTaskRecord extends JsonCallback<IntegralRecordResponse> {
 
         @Override
         public void onResponse(boolean isFromCache, IntegralRecordResponse s, Request request, @Nullable Response response) {
-            ToastUtils.showToast(s.getData().get(0).getDescription());
-            list = s.getData();
-            adapter.setData(list);
+            try {
+                list = s.getData();
+                adapter.setData(list);
+            } catch (Exception e) {
+                ToastUtils.showToast("解析错误");
+            }
         }
 
     }
