@@ -11,8 +11,11 @@ import android.view.View;
 
 import com.Utils.SystemNotificationInfoAction;
 import com.Utils.UserUtils;
+import com.Utils.eventbus.IMReconnectEvent;
+import com.android.gmacs.core.GmacsManager;
 import com.android.gmacs.fragment.ConversationListFragment;
 import com.callback.DialogCallback;
+import com.commonview.CommonDialog;
 import com.dataStore.AppPrefersUtil;
 import com.db.dao.SystemNotificationDetial;
 import com.db.helper.SystemNotificationOperate;
@@ -47,7 +50,7 @@ import okhttp3.Response;
 
 public class HomepageModel extends BaseModel implements View.OnClickListener {
     private HomepageActivity context;
-    private HomepageBottomButton bottomButton1, bottomButton2, bottomButton3, bottomButton4,bottomButton5;
+    private HomepageBottomButton bottomButton1, bottomButton2, bottomButton3, bottomButton4, bottomButton5;
     private ConversationListFragment conversationListFragment;
     private CallMessageFragment callMessageFragment;
     private PersonalCenterFragment personalCenterFragment;
@@ -55,7 +58,7 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
     private InfoListFragment infoListFragment;
     private Fragment mFragment;
     private FragmentManager fragmentManager;
-
+    CommonDialog commonDialog;
     private UpdateDialog mUpdateDialog;
 
     public HomepageModel(HomepageActivity context) {
@@ -171,26 +174,35 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
 
     private void isNotShowing(Fragment fragment) {
         judgeFragmentAdded(fragment);
-        mFragment = fragment;
+
     }
 
     private void judgeFragmentAdded(Fragment fragment) {
+
+
         if (!fragment.isAdded()) {
             String tag = "";
-            if (fragment.equals(conversationListFragment))
+            if (fragment.equals(conversationListFragment)) {
                 tag = "ConversationListFragment";
+
+            }
             if (fragment.equals(callMessageFragment))
                 tag = "CallMessageFragment";
             if (fragment.equals(personalCenterFragment))
                 tag = "PersonalCenterFragment";
             if (fragment.equals(welfareFragment))
                 tag = "WelfareFragment";
-            if(fragment.equals(infoListFragment))
+            if (fragment.equals(infoListFragment))
                 tag = "InfoListFragment";
             fragmentManager.beginTransaction().hide(mFragment)
                     .add(R.id.main_fragment, fragment, tag).show(fragment).commit();
         } else
             fragmentManager.beginTransaction().hide(mFragment).show(fragment).commit();
+
+        mFragment = fragment;
+        if (fragment.equals(conversationListFragment)) {
+            showImKickoffDialog();
+        }
 
     }
 
@@ -246,6 +258,43 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
         EventBus.getDefault().unregister(context);
     }
 
+    /**
+     * 展示IM连接断开的Dialog
+     */
+    public void showImKickoffDialog() {
+        //判断条件 1.当前fragment在前台显示 2.IM当前已变成非登录状态
+        if (mFragment.equals(conversationListFragment) && !GmacsManager.isLoginState) {
+            //如果当前dialog没有创建，则创建
+            if (null == commonDialog) {
+                commonDialog = new CommonDialog(context);
+                commonDialog.setBtnCancelColor(com.android.gmacs.R.color.common_text_gray);
+                commonDialog.setContent("您的消息在别处链接，请重新连接");
+                commonDialog.setContentColor(com.android.gmacs.R.color.common_text_gray);
+                commonDialog.setTitle("提示");
+                commonDialog.setBtnCancelColor(com.android.gmacs.R.color.common_text_gray);
+                commonDialog.setBtnSureText("重新连接");
+                commonDialog.setOnDialogClickListener(new CommonDialog.OnDialogClickListener() {
+                    @Override
+                    public void onDialogClickSure() {
+                        EventBus.getDefault().post(new IMReconnectEvent());
+                    }
+
+                    @Override
+                    public void onDialogClickCancel() {
+                        commonDialog.dismiss();
+                    }
+                });
+
+
+            }
+            //dialog没有展示,则展示
+            if (!commonDialog.isShowing()) {
+                commonDialog.show();
+            }
+        }
+    }
+
+
     private class globalCallback extends DialogCallback<GlobalResponse> {
 
         public globalCallback(Activity activity) {
@@ -259,18 +308,19 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
                 updateVersion(globalResponse);
             }
         }
+
     }
 
     private void saveGlobalParams(GlobalResponse globalResponse) {
         String isPayOpen = globalResponse.getData().getIsPayOpen();
         String isUserFundsOpen = globalResponse.getData().getIsUserFundsOpen();
         String staffContactPhone = globalResponse.getData().getStaffContactPhone();
-        if(!TextUtils.isEmpty(isPayOpen))
-        UserUtils.setPay(context,isPayOpen);
-        if(!TextUtils.isEmpty(isUserFundsOpen))
-        UserUtils.setFundsOpen(context,isUserFundsOpen);
-        if(!TextUtils.isEmpty(staffContactPhone))
-        UserUtils.setStaffPhone(context,staffContactPhone);
+        if (!TextUtils.isEmpty(isPayOpen))
+            UserUtils.setPay(context, isPayOpen);
+        if (!TextUtils.isEmpty(isUserFundsOpen))
+            UserUtils.setFundsOpen(context, isUserFundsOpen);
+        if (!TextUtils.isEmpty(staffContactPhone))
+            UserUtils.setStaffPhone(context, staffContactPhone);
     }
 
     private void updateVersion(GlobalResponse globalResponse) {
@@ -285,14 +335,14 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
                 boolean isUpdate = StringUtil.compareVersion(versionNum, currentVersionNum);
                 String saveTime = AppPrefersUtil.getInstance().getCheckVersionUpdateFlag();
                 if (DateUtils.isEmptyAndNotToday(saveTime) && isUpdate) {
-                    mUpdateDialog = UpdateUtils.getInstance().showUpateDialog(context,appUrl,isForceUpdate);
+                    mUpdateDialog = UpdateUtils.getInstance().showUpateDialog(context, appUrl, isForceUpdate);
                     mUpdateDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                         @Override
                         public void onDismiss(DialogInterface dialog) {
                             String currentTime = DateUtils.getCurrentDateTime();
                             AppPrefersUtil.getInstance().saveCheckVersionUpdateFlag(currentTime);
                         }
-                 });
+                    });
 
                 }
             }

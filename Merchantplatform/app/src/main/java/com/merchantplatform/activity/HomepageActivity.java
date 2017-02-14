@@ -8,12 +8,16 @@ import com.Utils.JumpExtendAction;
 import com.Utils.JumpSystemNotificationAction;
 import com.Utils.ShowRedDotSystemNotificationAction;
 import com.Utils.SystemGetNotificationInfoAction;
+import com.Utils.eventbus.IMKickoffEvent;
+import com.Utils.eventbus.IMReconnectEvent;
 import com.db.helper.SystemNotificationOperate;
 import com.merchantplatform.R;
 import com.merchantplatform.model.HomepageModel;
+import com.utils.IMLoginUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Created by SongYongmeng on 2016/11/24.
@@ -31,6 +35,12 @@ public class HomepageActivity extends BaseActivity<HomepageModel> {
         model.createFragment();
         model.createFragmentManagerAndShow();
         model.getGlobalParams();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        model.showImKickoffDialog();
     }
 
 
@@ -75,5 +85,17 @@ public class HomepageActivity extends BaseActivity<HomepageModel> {
     public void onEvent(SystemGetNotificationInfoAction action) {
         model.getSystemNotificationInfo();
     }
+
+    @Subscribe
+    public void onEvent(IMReconnectEvent action) {
+        new IMLoginUtils(this);
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(IMKickoffEvent action) {
+        model.showImKickoffDialog();
+    }
+
 
 }
