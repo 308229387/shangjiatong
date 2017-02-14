@@ -1221,31 +1221,33 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
 
     public void showImKickoffDialog() {
 
-        if (null == commonDialog) {
-            commonDialog = new CommonDialog(this);
-            commonDialog.setBtnCancelColor(com.android.gmacs.R.color.common_text_gray);
-            commonDialog.setContent("您的消息在别处链接，请重新连接");
-            commonDialog.setContentColor(com.android.gmacs.R.color.common_text_gray);
-            commonDialog.setTitle("提示");
-            commonDialog.setBtnCancelColor(com.android.gmacs.R.color.common_text_gray);
-            commonDialog.setBtnSureText("重新连接");
-            commonDialog.setOnDialogClickListener(new CommonDialog.OnDialogClickListener() {
-                @Override
-                public void onDialogClickSure() {
-                    EventBus.getDefault().post(new IMReconnectEvent());
-                }
+        if (GmacsManager.isLoginState == false) {
+            if (null == commonDialog) {
+                commonDialog = new CommonDialog(this);
+                commonDialog.setBtnCancelColor(com.android.gmacs.R.color.common_text_gray);
+                commonDialog.setContent("您的消息在别处链接，请重新连接");
+                commonDialog.setContentColor(com.android.gmacs.R.color.common_text_gray);
+                commonDialog.setTitle("提示");
+                commonDialog.setBtnCancelColor(com.android.gmacs.R.color.common_text_gray);
+                commonDialog.setBtnSureText("重新连接");
+                commonDialog.setOnDialogClickListener(new CommonDialog.OnDialogClickListener() {
+                    @Override
+                    public void onDialogClickSure() {
+                        EventBus.getDefault().post(new IMReconnectEvent());
+                    }
 
-                @Override
-                public void onDialogClickCancel() {
-                    commonDialog.dismiss();
-                }
-            });
+                    @Override
+                    public void onDialogClickCancel() {
+                        commonDialog.dismiss();
+                    }
+                });
 
 
-        }
-        //dialog没有展示,则展示
-        if (!commonDialog.isShowing()) {
-            commonDialog.show();
+            }
+            //dialog没有展示,则展示
+            if (!commonDialog.isShowing()) {
+                commonDialog.show();
+            }
         }
     }
 
