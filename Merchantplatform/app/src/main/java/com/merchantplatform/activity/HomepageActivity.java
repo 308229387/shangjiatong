@@ -12,6 +12,7 @@ import com.Utils.eventbus.IMKickoffEvent;
 import com.Utils.eventbus.IMReconnectEvent;
 import com.db.helper.SystemNotificationOperate;
 import com.merchantplatform.R;
+import com.merchantplatform.adapter.WelfareTaskAdapter;
 import com.merchantplatform.model.HomepageModel;
 import com.utils.IMLoginUtils;
 
@@ -35,12 +36,6 @@ public class HomepageActivity extends BaseActivity<HomepageModel> {
         model.createFragment();
         model.createFragmentManagerAndShow();
         model.getGlobalParams();
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-        model.showImKickoffDialog();
     }
 
 
@@ -90,6 +85,11 @@ public class HomepageActivity extends BaseActivity<HomepageModel> {
     public void onEvent(IMReconnectEvent action) {
         new IMLoginUtils(this);
 
+    }
+
+    @Subscribe
+    public void onEvent(WelfareTaskAdapter.HomePageNeedJump action) {
+        model.jumpPost();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -121,6 +121,10 @@ public class Urls {
      * 获取服务器时间
      */
     public static final String GET_TASK = BASE_URL_APP + "task/info";
+    /**
+     * 获取服务器时间
+     */
+    public static final String GET_WELFARE = BASE_URL_APP + "task/welfarehome";
 
     /**
      * 抽奖详情页
@@ -138,4 +142,12 @@ public class Urls {
      * 我的奖品列表
      */
     public static final String MY_AWARD_LIST = BASE_URL_APP + "prizerecord/mylist";
+    /**
+     * 我的任务列表
+     */
+    public static final String INTEGRAL_LIST = BASE_URL_APP + "score/list";
+
+
+
+
 }
