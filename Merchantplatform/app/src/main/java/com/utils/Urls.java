@@ -9,7 +9,7 @@ public class Urls {
     /**
      * 基础Url
      */
-    public static final String BASE_URL = "http://hyapp.58.com/";
+    public static final String BASE_URL = "https://hyapp.58.com/";
     /**
      * 外网测试域名
      */
