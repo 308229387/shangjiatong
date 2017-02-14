@@ -23,8 +23,6 @@ import com.utils.AppInfoUtils;
 import com.utils.Constant;
 import com.utils.DateUtils;
 import com.utils.Urls;
-import com.utils.eventbus.EventAction;
-import com.utils.eventbus.EventType;
 
 import org.greenrobot.eventbus.EventBus;
 
