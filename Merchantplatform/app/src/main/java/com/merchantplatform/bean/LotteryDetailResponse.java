@@ -75,6 +75,7 @@ public class LotteryDetailResponse implements Serializable {
     public class award implements Serializable {
         private String prizeLevel;
         private String prizeName;
+        private String prizeDescribe;
 
         public String getPrizeLevel() {
             return prizeLevel;
@@ -90,6 +91,14 @@ public class LotteryDetailResponse implements Serializable {
 
         public void setPrizeName(String prizeName) {
             this.prizeName = prizeName;
+        }
+
+        public String getPrizeDescribe() {
+            return prizeDescribe;
+        }
+
+        public void setPrizeDescribe(String prizeDescribe) {
+            this.prizeDescribe = prizeDescribe;
         }
     }
 }

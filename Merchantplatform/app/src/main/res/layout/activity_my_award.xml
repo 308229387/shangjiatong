@@ -10,9 +10,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/my_award_top_decoration" />
+
     <com.xrecyclerview.XRecyclerView
         android:id="@+id/xrv_my_award"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp" />
+        android:background="@color/bg_white" />
 </LinearLayout>

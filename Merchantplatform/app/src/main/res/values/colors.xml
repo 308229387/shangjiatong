@@ -66,6 +66,7 @@
     <color name="accurate_yellow">#DA941F</color>
     <color name="state_showing_green">#67C15E</color>
     <color name="lottery_explain_color">#9B9B9B</color>
+    <color name="my_award_top_decoration">#DCDCDC</color>
     <color name="my_award_decoration">#EEEEEE</color>
     <color name="my_award_validity">#989898</color>
     <color name="my_award_text_color">#333333</color>
