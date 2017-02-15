@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.TextView;
 
 import com.Utils.TitleBar;
 import com.callback.DialogCallback;
@@ -28,6 +29,8 @@ public class AwardHistoryModel extends BaseModel {
     private AwardHistoryActivity context;
     private TitleBar tb_my_award_title;
     private XRecyclerView xrv_my_award;
+    private View emptyView;
+    private TextView tv_award_list_empty;
     private ArrayList<AwardHistoryResponse.AwardHistory> awardHistoryList;
     private AwardHistoryAdapter awardHistoryAdapter;
 
@@ -38,6 +41,9 @@ public class AwardHistoryModel extends BaseModel {
     public void initView() {
         tb_my_award_title = (TitleBar) context.findViewById(R.id.tb_my_award_title);
         xrv_my_award = (XRecyclerView) context.findViewById(R.id.xrv_my_award);
+        emptyView = context.findViewById(R.id.layout_award_list_empty);
+        tv_award_list_empty = (TextView) context.findViewById(R.id.tv_award_list_empty);
+        tv_award_list_empty.setText("暂时还没有人中奖哦~");
     }
 
     public void setTitleBar() {
@@ -53,6 +59,7 @@ public class AwardHistoryModel extends BaseModel {
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         xrv_my_award.setLayoutManager(layoutManager);
+        xrv_my_award.setEmptyView(emptyView);
     }
 
     public void setListener() {

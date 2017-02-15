@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/common_background_color"
-    android:orientation="vertical">
+    android:background="@color/common_background_color">
 
     <com.Utils.TitleBar
         android:id="@+id/tb_my_award_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" />
 
     <View
+        android:id="@+id/view_award_list"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_below="@+id/tb_my_award_title"
         android:layout_marginTop="10dp"
         android:background="@color/my_award_top_decoration" />
 
@@ -20,5 +22,14 @@
         android:id="@+id/xrv_my_award"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/view_award_list"
         android:background="@color/bg_white" />
-</LinearLayout>
+
+    <include
+        android:id="@+id/layout_award_list_empty"
+        layout="@layout/award_list_empty_layout"
+        android:layout_width="162dp"
+        android:layout_height="210dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="115dp" />
+</RelativeLayout>
