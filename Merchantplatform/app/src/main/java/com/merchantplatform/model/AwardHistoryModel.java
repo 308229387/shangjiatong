@@ -126,6 +126,7 @@ public class AwardHistoryModel extends BaseModel {
                 awardHistoryList.clear();
                 awardHistoryList.addAll(awardHistoryResponse.getData());
                 awardHistoryAdapter.notifyDataSetChanged();
+                xrv_my_award.refreshComplete();
             }
         }
     }
@@ -139,8 +140,13 @@ public class AwardHistoryModel extends BaseModel {
         @Override
         public void onResponse(boolean isFromCache, AwardHistoryResponse awardHistoryResponse, Request request, @Nullable Response response) {
             if (awardHistoryResponse != null && awardHistoryResponse.getData() != null) {
-                awardHistoryList.addAll(awardHistoryResponse.getData());
-                awardHistoryAdapter.notifyDataSetChanged();
+                if (awardHistoryResponse.getData().size() > 0) {
+                    awardHistoryList.addAll(awardHistoryResponse.getData());
+                    awardHistoryAdapter.notifyDataSetChanged();
+                    xrv_my_award.loadMoreComplete();
+                } else {
+                    xrv_my_award.setNoMore(true);
+                }
             }
         }
     }

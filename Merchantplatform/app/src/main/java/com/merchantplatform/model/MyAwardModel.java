@@ -110,6 +110,7 @@ public class MyAwardModel extends BaseModel {
                 myAwardList.clear();
                 myAwardList.addAll(myAwardResponse.getData());
                 myAwardAdapter.notifyDataSetChanged();
+                xrv_my_award.refreshComplete();
             }
         }
     }
@@ -123,8 +124,13 @@ public class MyAwardModel extends BaseModel {
         @Override
         public void onResponse(boolean isFromCache, MyAwardResponse myAwardResponse, Request request, @Nullable Response response) {
             if (myAwardResponse != null && myAwardResponse.getData() != null) {
-                myAwardList.addAll(myAwardResponse.getData());
-                myAwardAdapter.notifyDataSetChanged();
+                if (myAwardResponse.getData().size() > 0) {
+                    myAwardList.addAll(myAwardResponse.getData());
+                    myAwardAdapter.notifyDataSetChanged();
+                    xrv_my_award.loadMoreComplete();
+                } else {
+                    xrv_my_award.setNoMore(true);
+                }
             }
         }
     }
