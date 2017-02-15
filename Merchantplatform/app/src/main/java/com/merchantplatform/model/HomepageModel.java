@@ -15,6 +15,7 @@ import com.Utils.eventbus.IMReconnectEvent;
 import com.android.gmacs.core.GmacsManager;
 import com.android.gmacs.fragment.ConversationListFragment;
 import com.callback.DialogCallback;
+import com.callback.JsonCallback;
 import com.commonview.CommonDialog;
 import com.dataStore.AppPrefersUtil;
 import com.db.dao.SystemNotificationDetial;
@@ -50,7 +51,7 @@ import okhttp3.Response;
 
 public class HomepageModel extends BaseModel implements View.OnClickListener {
     private HomepageActivity context;
-    private HomepageBottomButton bottomButton1, bottomButton2, bottomButton3, bottomButton4,bottomButton5;
+    private HomepageBottomButton bottomButton1, bottomButton2, bottomButton3, bottomButton4, bottomButton5;
     private ConversationListFragment conversationListFragment;
     private CallMessageFragment callMessageFragment;
     private PersonalCenterFragment personalCenterFragment;
@@ -190,7 +191,7 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
                 tag = "PersonalCenterFragment";
             if (fragment.equals(welfareFragment))
                 tag = "WelfareFragment";
-            if(fragment.equals(infoListFragment))
+            if (fragment.equals(infoListFragment))
                 tag = "InfoListFragment";
             fragmentManager.beginTransaction().hide(mFragment)
                     .add(R.id.main_fragment, fragment, tag).show(fragment).commit();
@@ -308,22 +309,30 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
             if (globalResponse != null) {
                 saveGlobalParams(globalResponse);
                 updateVersion(globalResponse);
+                loginSuccessTask();
             }
         }
 
+    }
+
+    public void loginSuccessTask() {
+        OkHttpUtils.get(Urls.TASK_SUCCESS)
+                .params("module_code", "DL")
+                .params("process_code", "DLSU")
+                .execute(new Task());
     }
 
     private void saveGlobalParams(GlobalResponse globalResponse) {
         String isPayOpen = globalResponse.getData().getIsPayOpen();
         String isUserFundsOpen = globalResponse.getData().getIsUserFundsOpen();
         String staffContactPhone = globalResponse.getData().getStaffContactPhone();
-        if(!TextUtils.isEmpty(isPayOpen))
-        UserUtils.setPay(context,isPayOpen);
-        if(!TextUtils.isEmpty(isUserFundsOpen))
-        UserUtils.setFundsOpen(context,isUserFundsOpen);
-        if(!TextUtils.isEmpty(staffContactPhone))
-        UserUtils.setStaffPhone(context,staffContactPhone);
-        UserUtils.setIsVip(context,globalResponse.getData().getIsVip());
+        if (!TextUtils.isEmpty(isPayOpen))
+            UserUtils.setPay(context, isPayOpen);
+        if (!TextUtils.isEmpty(isUserFundsOpen))
+            UserUtils.setFundsOpen(context, isUserFundsOpen);
+        if (!TextUtils.isEmpty(staffContactPhone))
+            UserUtils.setStaffPhone(context, staffContactPhone);
+        UserUtils.setIsVip(context, globalResponse.getData().getIsVip());
     }
 
     private void updateVersion(GlobalResponse globalResponse) {
@@ -356,4 +365,14 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
     }
 
 
+    private class Task extends JsonCallback<String> {
+
+
+
+
+        @Override
+        public void onResponse(boolean isFromCache, String o, Request request, @Nullable Response response) {
+
+        }
+    }
 }

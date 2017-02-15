@@ -23,6 +23,21 @@ public class GetTask implements Serializable {
         private int gainscore;
         private String opentime;
         private ArrayList<taskData> tasklist;
+        private String msg;
+        private int prizeListType;
+        private String prizeTitle;
+
+        public int getPrizeListType() {
+            return prizeListType;
+        }
+
+        public String getPrizeTitle() {
+            return prizeTitle;
+        }
+
+        public String getMsg() {
+            return msg;
+        }
 
         public int getScore() {
             return score;
@@ -42,7 +57,7 @@ public class GetTask implements Serializable {
     }
 
     public class taskData implements Serializable {
-        public int id;
+        public long id;
         public int state;
         public int task_score;
         public String task_name;
@@ -59,7 +74,7 @@ public class GetTask implements Serializable {
             return module_code;
         }
 
-        public int getId() {
+        public long getId() {
             return id;
         }
 

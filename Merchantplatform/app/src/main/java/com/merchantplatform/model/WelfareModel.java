@@ -24,12 +24,16 @@ import com.merchantplatform.service.GetServiceTime;
 import com.okhttputils.OkHttpUtils;
 import com.ui.RushBuyCountDownTimerView;
 import com.ui.SpaceItemDecoration;
+import com.ui.dialog.NotIsVipDialog;
 import com.utils.ToastUtils;
 import com.utils.Urls;
 import com.xrecyclerview.XRecyclerView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 
+import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -52,7 +56,6 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
     private TextView alredyAddCount;
     private RushBuyCountDownTimerView countDownText;
     private ArrayList<GetTask.taskData> list;
-    private ArrayList<GetWelfareResponse.prizeData> prizeList;
 
     private int taskTime = -1;
     private int surplusTime;
@@ -68,8 +71,21 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
         luckDraw = (TextView) view.findViewById(R.id.luck_draw);
         fraction = (TextView) view.findViewById(R.id.welfare_fraction);
         alredyAddCount = (TextView) view.findViewById(R.id.alredy_add_count);
+    }
+
+    public void setting() {
+        setListener();
+        creatManager();
+        gridViewSetting();
+        listViewSetting();
+    }
+
+    private void setListener() {
         luckDraw.setOnClickListener(this);
         fraction.setOnClickListener(this);
+    }
+
+    private void creatManager() {
         mLayoutManager = new LinearLayoutManager(context.getActivity()) {
             @Override
             public boolean canScrollVertically() {
@@ -82,15 +98,13 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
                 return false;
             }
         };
-        gridViewSetting();
-        listViewSetting();
-
     }
+
 
     private void gridViewSetting() {
         gridRecyclerView.setLayoutManager(mGridManager);
         gridRecyclerView.setHasFixedSize(true);
-        mAdapter = new GridDrawAdapter(context.getActivity(), prizeList);
+        mAdapter = new GridDrawAdapter(context.getActivity());
         gridRecyclerView.setAdapter(mAdapter);
         gridRecyclerView.addItemDecoration(new SpaceItemDecoration(15));
     }
@@ -117,6 +131,8 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
             case R.id.luck_draw:
                 if (UserUtils.getIsVip(context.getActivity()) == 1)
                     context.getActivity().startActivity(new Intent(context.getContext(), DailyLotteryActivity.class));
+                else
+                    new NotIsVipDialog(context.getActivity(), "只有VIP用户可以参与抽奖");
                 break;
             case R.id.welfare_fraction:
                 context.getActivity().startActivity(new Intent(context.getContext(), TaskRecordActivity.class));
@@ -142,12 +158,17 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
         return testAll;
     }
 
-    public int dealWithTimeToResult() {
+    public void dealWithTimeToResult() {
+        if (taskTime != -1)
+            getTime();
+        setTextToCountDown();
+    }
+
+    public void getTime() {
         if (taskTime - GetServiceTime.systemTimeSecond > 0)
             surplusTime = taskTime - GetServiceTime.systemTimeSecond;
         else
             surplusTime = taskTime + (86400 - GetServiceTime.systemTimeSecond);
-        return surplusTime;
     }
 
     public int[] calculateResult() {
@@ -163,11 +184,37 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
         countDownText.start();
     }
 
+    public void registEventBus() {
+        EventBus.getDefault().register(context);
+    }
+
+    public void shareSuccess() {
+        OkHttpUtils.get(Urls.TASK_SUCCESS)
+                .params("module_code", welfareTaskAdapter.getShareTaskInfo().getModule_code())
+                .params("process_code", welfareTaskAdapter.getShareTaskInfo().getProcess_code())
+                .execute(new WelfareData());
+    }
+
+    public void topSuccess() {
+        OkHttpUtils.get(Urls.TASK_SUCCESS)
+                .params("module_code", welfareTaskAdapter.getTopTaskInfo().getModule_code())
+                .params("process_code", welfareTaskAdapter.getTopTaskInfo().getProcess_code())
+                .execute(new WelfareData());
+    }
+
+    public void precisionSuccess() {
+        OkHttpUtils.get(Urls.TASK_SUCCESS)
+                .params("module_code", welfareTaskAdapter.getPrecisionTaskInfo().getModule_code())
+                .params("process_code", welfareTaskAdapter.getPrecisionTaskInfo().getProcess_code())
+                .execute(new WelfareData());
+    }
+
     private class Task extends JsonCallback<GetTask> {
         @Override
         public void onResponse(boolean isFromCache, GetTask s, Request request, @Nullable Response response) {
             try {
                 dealWithData(s);
+                dealWithTimeToResult();
             } catch (Exception e) {
                 ToastUtils.showToast("数据解析错误");
             }
@@ -182,6 +229,12 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
             list = s.getData().getTasklist();
             welfareTaskAdapter.setData(list);
         }
+
+        @Override
+        public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+            super.onError(isFromCache, call, response, e);
+            ToastUtils.showToast(e.getMessage());
+        }
     }
 
     private class WelfareData extends JsonCallback<GetWelfareResponse> {
@@ -189,6 +242,12 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
         @Override
         public void onResponse(boolean isFromCache, GetWelfareResponse s, Request request, @Nullable Response response) {
             mAdapter.setData(s.getData().getPrizeList());
+        }
+
+        @Override
+        public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+            super.onError(isFromCache, call, response, e);
+            ToastUtils.showToast(e.getMessage());
         }
     }
 }

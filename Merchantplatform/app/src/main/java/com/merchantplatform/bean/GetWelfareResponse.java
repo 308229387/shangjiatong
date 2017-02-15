@@ -22,8 +22,11 @@ public class GetWelfareResponse implements Serializable {
         private int score;
         private int gainscore;
         private String opentime;
+        private String prizeListType;
+        private String msg;
         private ArrayList<taskData> tasklist;
         private ArrayList<prizeData> prizeList;
+        private String prizeTitle;
 
         public ArrayList<prizeData> getPrizeList() {
             return prizeList;
@@ -44,10 +47,22 @@ public class GetWelfareResponse implements Serializable {
         public ArrayList<taskData> getTasklist() {
             return tasklist;
         }
+
+        public String getMsg() {
+            return msg;
+        }
+
+        public String getPrizeListType() {
+            return prizeListType;
+        }
+
+        public String getPrizeTitle() {
+            return prizeTitle;
+        }
     }
 
     public class taskData implements Serializable {
-        public int id;
+        public long id;
         public int state;
         public int task_score;
         public String task_name;
@@ -64,7 +79,7 @@ public class GetWelfareResponse implements Serializable {
             return module_code;
         }
 
-        public int getId() {
+        public long getId() {
             return id;
         }
 
@@ -89,9 +104,10 @@ public class GetWelfareResponse implements Serializable {
         }
     }
 
-    public class prizeData implements Serializable{
+    public class prizeData implements Serializable {
         public String prizeLevel;
         public String prizeName;
+        public String prizeDescribe;
 
         public String getPrizeLevel() {
             return prizeLevel;
@@ -99,6 +115,10 @@ public class GetWelfareResponse implements Serializable {
 
         public String getPrizeName() {
             return prizeName;
+        }
+
+        public String getPrizeDescribe() {
+            return prizeDescribe;
         }
     }
 }

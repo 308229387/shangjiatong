@@ -146,8 +146,9 @@ public class Urls {
      * 我的任务列表
      */
     public static final String INTEGRAL_LIST = BASE_URL_APP + "score/list";
-
-
-
+    /**
+     * 任务成功接口
+     */
+    public static final String TASK_SUCCESS = BASE_URL_APP + "task/donetask";
 
 }

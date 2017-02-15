@@ -74,12 +74,13 @@ public class TaskRecordModel extends BaseModel {
     private class RecyclerViewLoadingListener implements XRecyclerView.LoadingListener {
         @Override
         public void onRefresh() {
-            listRecyclerView.setNoMore(true);
+            listRecyclerView.refreshComplete();
+
         }
 
         @Override
         public void onLoadMore() {
-
+            listRecyclerView.loadMoreComplete();
         }
 
     }

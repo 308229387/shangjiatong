@@ -25,6 +25,11 @@ public class WelfareTaskAdapter extends RecyclerView.Adapter<WelfareTaskAdapter.
     private LayoutInflater inflater;
     private Context context;
     private ArrayList<GetTask.taskData> list;
+    private int a;
+    private GetTask.taskData ZDSU;
+    private GetTask.taskData SHXXSU;
+    private GetTask.taskData JZSU;
+
 
     public WelfareTaskAdapter(Context context, ArrayList<GetTask.taskData> list) {
         this.context = context;
@@ -57,14 +62,19 @@ public class WelfareTaskAdapter extends RecyclerView.Adapter<WelfareTaskAdapter.
             holder.button.setEnabled(false);
         }
 
+        if (list.get(position).getProcess_code().equals("SHXXSU"))
+            SHXXSU = list.get(position);
+        if (list.get(position).getProcess_code().equals("JZSU"))
+            JZSU = list.get(position);
+        if (list.get(position).getProcess_code().equals("ZDSU"))
+            ZDSU = list.get(position);
+
         if (list.get(position).getProcess_code().equals("ZDSU") || list.get(position).getProcess_code().equals("JZSU") || list.get(position).getProcess_code().equals("SHXXSU")) {
 
             holder.button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     EventBus.getDefault().post(new HomePageNeedJump("jump"));
-
-
                 }
             });
         }
@@ -113,7 +123,18 @@ public class WelfareTaskAdapter extends RecyclerView.Adapter<WelfareTaskAdapter.
             return jump;
         }
 
+    }
 
+    public GetTask.taskData getShareTaskInfo() {
+        return SHXXSU;
+    }
+
+    public GetTask.taskData getTopTaskInfo() {
+        return JZSU;
+    }
+
+    public GetTask.taskData getPrecisionTaskInfo() {
+        return ZDSU;
     }
 
 

@@ -21,7 +21,7 @@ public class GridDrawAdapter extends RecyclerView.Adapter<GridDrawAdapter.ViewHo
     private LayoutInflater inflater;
     private Context context;
     private ArrayList<GetWelfareResponse.prizeData> list;
-    public GridDrawAdapter(Context context, ArrayList<GetWelfareResponse.prizeData> list) {
+    public GridDrawAdapter(Context context) {
         this.context = context;
         inflater = LayoutInflater.from(context);
     }
