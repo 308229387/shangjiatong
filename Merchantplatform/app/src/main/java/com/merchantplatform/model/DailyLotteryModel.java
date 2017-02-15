@@ -482,7 +482,8 @@ public class DailyLotteryModel extends BaseModel {
         dailyAwardDialog.setCancelable(false);
         dailyAwardDialog.setCanceledOnTouchOutside(false);
         dailyAwardDialog.setContent(content);
-        dailyAwardDialog.setBtnSureText("确定");
+        dailyAwardDialog.setBtnSureVisible(View.GONE);
+        dailyAwardDialog.setBtnCancelText("确定");
         dailyAwardDialog.setOnDialogClickListener(new OnAwardDialogClickListener());
         dailyAwardDialog.show();
     }
