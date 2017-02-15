@@ -32,9 +32,11 @@ import com.okhttputils.OkHttpUtils;
 import com.ui.ScratchCountDownTimerView;
 import com.ui.ScratchView;
 import com.ui.SpaceItemDecoration;
+import com.ui.dialog.CommonDialog;
 import com.utils.DisplayUtils;
 import com.utils.ToastUtils;
 import com.utils.Urls;
+import com.xrecyclerview.BaseRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
@@ -52,6 +54,7 @@ public class DailyLotteryModel extends BaseModel {
     private ScratchView sv_daily_lottery;
     private RelativeLayout rl_daily_lottery_start, rl_daily_lottery_result;
     private ScrollView scrollview;
+    private CommonDialog dailyAwardDialog;
     private DailyAwardAdapter dailyAwardAdapter;
     private ArrayList<LotteryDetailResponse.award> dailyAward;
     private ExplainMessageAdapter explainAdapter;
@@ -128,6 +131,7 @@ public class DailyLotteryModel extends BaseModel {
         bt_daily_lottery_check.setOnClickListener(new OnCheckLottery());
         bt_daily_lottery_again.setOnClickListener(new OnLotteryAgain());
         tv_detail_lottery_gotorecord.setOnClickListener(new OnGoToRecord());
+        dailyAwardAdapter.setOnItemClickListener(new OnDailyAwardItemClickListener());
     }
 
     public void getServerTime() {
@@ -457,6 +461,48 @@ public class DailyLotteryModel extends BaseModel {
         public void onClick(View v) {
             Intent intent = new Intent(context, AwardHistoryActivity.class);
             context.startActivity(intent);
+        }
+    }
+
+    private class OnDailyAwardItemClickListener implements BaseRecyclerViewAdapter.OnItemClickListener {
+
+        @Override
+        public void onItemClick(View view, int position) {
+            if (!TextUtils.isEmpty(dailyAward.get(position).getPrizeDescribe())) {
+                showDailyAwardDialog(dailyAward.get(position).getPrizeDescribe());
+            }
+        }
+    }
+
+    private void showDailyAwardDialog(String content) {
+        if (dailyAwardDialog != null && dailyAwardDialog.isShowing()) {
+            dailyAwardDialog.dismiss();
+        }
+        dailyAwardDialog = new CommonDialog(context);
+        dailyAwardDialog.setCancelable(false);
+        dailyAwardDialog.setCanceledOnTouchOutside(false);
+        dailyAwardDialog.setContent(content);
+        dailyAwardDialog.setBtnSureText("确定");
+        dailyAwardDialog.setOnDialogClickListener(new OnAwardDialogClickListener());
+        dailyAwardDialog.show();
+    }
+
+    private class OnAwardDialogClickListener implements CommonDialog.OnDialogClickListener {
+
+        @Override
+        public void onDialogClickSure() {
+            dailyAwardDialog.dismiss();
+        }
+
+        @Override
+        public void onDialogClickCancel() {
+            dailyAwardDialog.dismiss();
+        }
+    }
+
+    public void destroyDialog() {
+        if (dailyAwardDialog != null && dailyAwardDialog.isShowing()) {
+            dailyAwardDialog.dismiss();
         }
     }
 }

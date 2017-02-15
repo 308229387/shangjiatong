@@ -29,6 +29,12 @@ public class DailyLotteryActivity extends BaseActivity<DailyLotteryModel> {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        model.destroyDialog();
+    }
+
+    @Override
     public DailyLotteryModel createModel() {
         return new DailyLotteryModel(this);
     }
