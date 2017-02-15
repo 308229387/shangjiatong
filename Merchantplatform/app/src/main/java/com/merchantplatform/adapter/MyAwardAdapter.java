@@ -6,14 +6,9 @@ import android.view.ViewGroup;
 
 import com.merchantplatform.R;
 import com.merchantplatform.bean.MyAwardResponse;
-import com.utils.DateUtils;
 import com.xrecyclerview.BaseRecyclerViewAdapter;
 
 import java.util.ArrayList;
-
-/**
- * Created by MengZhiYuan on 2017/2/13.
- */
 
 public class MyAwardAdapter extends BaseRecyclerViewAdapter<MyAwardResponse.award, MyAwardAdapter.MyAwardViewHolder> {
 
@@ -23,11 +18,9 @@ public class MyAwardAdapter extends BaseRecyclerViewAdapter<MyAwardResponse.awar
 
     @Override
     protected void bindDataToItemView(MyAwardViewHolder myAwardViewHolder, int position) {
-        MyAwardResponse.award award = mList.get(position);
-        String winTime = DateUtils.formatDateTimeToDate(award.getWin_time());
-        myAwardViewHolder.setText(R.id.tv_prize_name, award.getPrize_name())
-                .setText(R.id.tv_win_time, winTime)
-                .setText(R.id.tv_my_award_validity, winTime + "至" + DateUtils.getDateAfterDate(winTime, 7));
+        myAwardViewHolder.setText(R.id.tv_prize_name, mList.get(position).getPrize_name())
+                .setText(R.id.tv_win_time, mList.get(position).getWin_time())
+                .setText(R.id.tv_my_award_describe, mList.get(position).getPrize_describe());
     }
 
     @Override

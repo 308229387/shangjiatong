@@ -23,35 +23,22 @@
             android:id="@+id/tv_win_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:textSize="12sp" />
 
     </RelativeLayout>
-
-    <LinearLayout
+    
+    <TextView
+        android:id="@+id/tv_my_award_describe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rl_prize_time"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="5dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="有效期："
-            android:textColor="@color/my_award_validity"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/tv_my_award_validity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/my_award_validity"
-            android:textSize="12sp" />
-    </LinearLayout>
+        android:textColor="@color/my_award_validity"
+        android:textSize="12sp" />
 
     <View
         android:layout_width="match_parent"
