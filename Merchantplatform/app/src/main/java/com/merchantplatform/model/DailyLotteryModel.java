@@ -141,7 +141,7 @@ public class DailyLotteryModel extends BaseModel {
 
     public void initData() {
         OkHttpUtils.get(Urls.DAILY_LOTTERY)
-                .execute(new getDailyLottery(context, false));
+                .execute(new getDailyLottery(context, true));
     }
 
     private class OnBackPressed implements View.OnClickListener {
@@ -482,7 +482,8 @@ public class DailyLotteryModel extends BaseModel {
         dailyAwardDialog.setCancelable(false);
         dailyAwardDialog.setCanceledOnTouchOutside(false);
         dailyAwardDialog.setContent(content);
-        dailyAwardDialog.setBtnSureText("确定");
+        dailyAwardDialog.setBtnSureVisible(View.GONE);
+        dailyAwardDialog.setBtnCancelText("确定");
         dailyAwardDialog.setOnDialogClickListener(new OnAwardDialogClickListener());
         dailyAwardDialog.show();
     }
