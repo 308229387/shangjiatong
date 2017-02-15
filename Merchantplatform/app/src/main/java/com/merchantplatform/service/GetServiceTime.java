@@ -65,7 +65,7 @@ public class GetServiceTime extends Service {
         calendar.setTimeInMillis(messageTime);
         calendar.setTimeZone(TimeZone.getTimeZone("GMT+8"));
 
-        int SystemHour = calendar.get(Calendar.HOUR);
+        int SystemHour = calendar.get(Calendar.HOUR_OF_DAY);
         int SystemMinute = calendar.get(Calendar.MINUTE);
         int SystemSecond = calendar.get(Calendar.SECOND);
 

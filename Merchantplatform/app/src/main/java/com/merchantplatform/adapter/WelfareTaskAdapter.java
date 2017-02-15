@@ -13,6 +13,8 @@ import com.merchantplatform.R;
 import com.merchantplatform.bean.GetTask;
 import com.utils.ToastUtils;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 
 /**
@@ -43,14 +45,28 @@ public class WelfareTaskAdapter extends RecyclerView.Adapter<WelfareTaskAdapter.
                 ToastUtils.showToast(position);
             }
         });
-        holder.taskCount.setText("+"+list.get(position).getTask_score()+"");
+        holder.taskCount.setText("+" + list.get(position).getTask_score() + "");
         holder.title.setText(list.get(position).getTask_name());
         holder.context.setText(list.get(position).getTask_describe());
         Glide.with(context).load(list.get(position).getPic_url()).into(holder.image);
 
-        if (position == 1) {
+        if (list.get(position).getState() == 0) {
             holder.taskCount.setTextColor(context.getResources().getColor(R.color.light_grey));
             holder.button.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.welfare_button_back_gray));
+            holder.button.setText("已完成");
+            holder.button.setEnabled(false);
+        }
+
+        if (list.get(position).getProcess_code().equals("ZDSU") || list.get(position).getProcess_code().equals("JZSU") || list.get(position).getProcess_code().equals("SHXXSU")) {
+
+            holder.button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    EventBus.getDefault().post(new HomePageNeedJump("jump"));
+
+
+                }
+            });
         }
 
 
@@ -85,5 +101,20 @@ public class WelfareTaskAdapter extends RecyclerView.Adapter<WelfareTaskAdapter.
 
         }
     }
+
+    public class HomePageNeedJump {
+        private String jump;
+
+        public HomePageNeedJump(String jump) {
+            this.jump = jump;
+        }
+
+        public String getJump() {
+            return jump;
+        }
+
+
+    }
+
 
 }

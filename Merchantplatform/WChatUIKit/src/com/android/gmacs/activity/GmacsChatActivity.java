@@ -27,6 +27,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.Utils.eventbus.IMKickoffEvent;
+import com.Utils.eventbus.IMReconnectEvent;
 import com.android.gmacs.R;
 import com.android.gmacs.adapter.GmacsChatAdapter;
 import com.android.gmacs.core.GmacsManager;
@@ -68,8 +70,8 @@ import com.common.gmacs.parse.talk.TalkType;
 import com.common.gmacs.utils.GLog;
 import com.common.gmacs.utils.GmacsConfig;
 import com.common.gmacs.utils.GmacsEnvi;
-import com.common.gmacs.utils.GmacsUiUtil;
 import com.common.gmacs.utils.ToastUtil;
+import com.commonview.CommonDialog;
 import com.log.LogUmengAgent;
 import com.log.LogUmengEnum;
 import com.xxganji.gmacs.proto.CommonPB;
@@ -133,6 +135,8 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
     public CardMsgClickListener getCardMsgClickListener() {
         return this;
     }
+
+    private CommonDialog commonDialog;
 
     @Override
     protected void initView() {
@@ -256,6 +260,7 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
     protected void onResume() {
         super.onResume();
         ClientManager.getInstance().registerLogViewListener(this);
+        showImKickoffDialog();
     }
 
     @Override
@@ -1206,6 +1211,43 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
     public void onUpdateInsertChatMsg(UpdateInsertChatMsgEvent event) {
         if (mTalk != null && mTalk.hasTheSameTalkIdWith(event.getMessage())) {
             receivedNewMsg(event.getMessage());
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(IMKickoffEvent action) {
+        showImKickoffDialog();
+    }
+
+    public void showImKickoffDialog() {
+
+        if (GmacsManager.isLoginState == false) {
+            if (null == commonDialog) {
+                commonDialog = new CommonDialog(this);
+                commonDialog.setBtnCancelColor(com.android.gmacs.R.color.common_text_gray);
+                commonDialog.setContent("您的消息在别处链接，请重新连接");
+                commonDialog.setContentColor(com.android.gmacs.R.color.common_text_gray);
+                commonDialog.setTitle("提示");
+                commonDialog.setBtnCancelColor(com.android.gmacs.R.color.common_text_gray);
+                commonDialog.setBtnSureText("重新连接");
+                commonDialog.setOnDialogClickListener(new CommonDialog.OnDialogClickListener() {
+                    @Override
+                    public void onDialogClickSure() {
+                        EventBus.getDefault().post(new IMReconnectEvent());
+                    }
+
+                    @Override
+                    public void onDialogClickCancel() {
+                        commonDialog.dismiss();
+                    }
+                });
+
+
+            }
+            //dialog没有展示,则展示
+            if (!commonDialog.isShowing()) {
+                commonDialog.show();
+            }
         }
     }
 

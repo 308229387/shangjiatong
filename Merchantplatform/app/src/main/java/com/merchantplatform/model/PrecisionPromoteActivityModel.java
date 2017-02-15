@@ -13,6 +13,7 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.Utils.TitleBar;
+import com.Utils.eventbus.PrecisionPromoteFirstSuccessEvent;
 import com.dataStore.PromotePrefersUtil;
 import com.log.LogUmengAgent;
 import com.log.LogUmengEnum;
@@ -22,8 +23,6 @@ import com.utils.AppInfoUtils;
 import com.utils.Constant;
 import com.utils.DateUtils;
 import com.utils.Urls;
-import com.utils.eventbus.EventAction;
-import com.utils.eventbus.EventType;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -160,8 +159,9 @@ public class PrecisionPromoteActivityModel extends BaseModel {
             if(url.startsWith(Urls.PROMOTE_MESSAGE)|| url.startsWith(Urls.PROMOTE_OTHER_MESSAGE)){
                 String precisionTime =  PromotePrefersUtil.getInstance().getPercisionPromote();
                 if(DateUtils.isEmptyAndNotToday(precisionTime)){
-                    EventAction precision_action = new EventAction(EventType.PRECISION_PROMOTE_FIRST_SUCCESS,precisionTime);
-                    EventBus.getDefault().post(precision_action);
+                    PrecisionPromoteFirstSuccessEvent precisionPromoteFirstSuccessEvent = new PrecisionPromoteFirstSuccessEvent();
+                    precisionPromoteFirstSuccessEvent.setData(precisionTime);
+                    EventBus.getDefault().post(precisionPromoteFirstSuccessEvent);
                 }
                 String currentTime = DateUtils.getCurrentDateTime();
                 PromotePrefersUtil.getInstance().savePercisionPromote(currentTime);

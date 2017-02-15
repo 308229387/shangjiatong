@@ -180,7 +180,21 @@
             android:name=".activity.DailyLotteryActivity"
             android:screenOrientation="portrait" />
 
-        <service android:name="com.merchantplatform.service.GetServiceTime"></service>
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <service android:name=".service.GetServiceTime" />
+
+        <activity
+            android:name=".activity.MyAwardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AwardHistoryActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

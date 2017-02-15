@@ -13,6 +13,9 @@ import com.merchantplatform.BuildConfig;
 import com.okhttputils.OkHttpUtils;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.Config;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
 import com.utils.Constant;
 import com.utils.IMInitAppUtils;
 import com.utils.LoginRegisterUtils;
@@ -94,6 +97,10 @@ public class HyApplication extends MultiDexApplication {
     }
 
     private void initUmeng() {
+
+        UMShareAPI.get(this);
+        PlatformConfig.setWeixin("wx462ab482f6f1e4a8", "9964bb78c88302401a6dd5db5e5cb012");
+        Config.dialogSwitch = false;
         LogUmengAgent.init(application);
         String userId = UserUtils.getUserId(application);
         if (StringUtil.isNotEmpty(userId)) {

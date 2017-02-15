@@ -79,7 +79,7 @@ public class infoListModel extends BaseModel {
 
         //处理空白页面
         emptyView = new EmptyView(fragment.getActivity());
-        view.addView(emptyView,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        view.addView(emptyView, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         xrv_post.setEmptyView(emptyView);
         emptyView.setText("您还没有发布信息,\n可以到58平台PC端进行发布哦~");
 

@@ -21,6 +21,9 @@ import org.greenrobot.eventbus.ThreadMode;
  * Created by caotongjun on 2015/11/13.
  */
 public class GmacsManager {
+
+    public static boolean isLoginState = true;//是否是登陆状态
+
     private final String TAG = GmacsManager.class.getSimpleName();
 
     private GmacsManager() {

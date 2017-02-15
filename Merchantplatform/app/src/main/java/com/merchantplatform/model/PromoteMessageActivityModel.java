@@ -13,6 +13,10 @@ import android.widget.ProgressBar;
 
 import com.Utils.TitleBar;
 import com.Utils.UserUtils;
+import com.Utils.eventbus.PrecisionPromoteFirstSuccessEvent;
+import com.Utils.eventbus.PrecisionPromoteSuccessEvent;
+import com.Utils.eventbus.UpPromoteFirstSuccessEvent;
+import com.Utils.eventbus.UpPromoteSuccessEvent;
 import com.dataStore.PromotePrefersUtil;
 import com.log.LogUmengAgent;
 import com.log.LogUmengEnum;
@@ -25,8 +29,6 @@ import com.utils.AppInfoUtils;
 import com.utils.DateUtils;
 import com.utils.PageSwitchUtils;
 import com.utils.Urls;
-import com.utils.eventbus.EventAction;
-import com.utils.eventbus.EventType;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -175,13 +177,15 @@ public class PromoteMessageActivityModel extends BaseModel{
                 return false;
             }else if((url.startsWith(Urls.PROMOTE_MESSAGE) && isUpIntercept)||(url.startsWith(Urls.PROMOTE_OTHER_MESSAGE)&& isUpIntercept)){
 
-                EventAction action = new EventAction(EventType.UP_PROMOTE_SUCCESS,upPromote_infoId);
-                EventBus.getDefault().post(action);
+                UpPromoteSuccessEvent upPromoteSuccessEvent = new UpPromoteSuccessEvent();
+                upPromoteSuccessEvent.setData(upPromote_infoId);
+                EventBus.getDefault().post(upPromoteSuccessEvent);
 
                 String upTime =  PromotePrefersUtil.getInstance().getUpPromote();
                 if(DateUtils.isEmptyAndNotToday(upTime)){
-                    EventAction up_action = new EventAction(EventType.UP_PROMOTE_FIRST_SUCCESS,upTime);
-                    EventBus.getDefault().post(up_action);
+                    UpPromoteFirstSuccessEvent upPromoteFirstSuccessEvent = new UpPromoteFirstSuccessEvent();
+                    upPromoteFirstSuccessEvent.setData(upTime);
+                    EventBus.getDefault().post(upPromoteFirstSuccessEvent);
                 }
                 String currentTime = DateUtils.getCurrentDateTime();
                 PromotePrefersUtil.getInstance().saveUpPromote(currentTime);
@@ -189,13 +193,15 @@ public class PromoteMessageActivityModel extends BaseModel{
                 return false;
             }else if((url.startsWith(Urls.PROMOTE_MESSAGE) && isPercisionIntercept)|| (url.startsWith(Urls.PROMOTE_OTHER_MESSAGE)&& isUpIntercept)){
 
-                EventAction action = new EventAction(EventType.PRECISION_PROMOTE_SUCCESS,precisionPromote_infoId);
-                EventBus.getDefault().post(action);
+                PrecisionPromoteSuccessEvent precisionPromoteSuccessEvent = new PrecisionPromoteSuccessEvent();
+                precisionPromoteSuccessEvent.setData(precisionPromote_infoId);
+                EventBus.getDefault().post(precisionPromoteSuccessEvent);
 
                 String precisionTime =  PromotePrefersUtil.getInstance().getPercisionPromote();
                 if(DateUtils.isEmptyAndNotToday(precisionTime)){
-                    EventAction precision_action = new EventAction(EventType.PRECISION_PROMOTE_FIRST_SUCCESS,precisionTime);
-                    EventBus.getDefault().post(precision_action);
+                    PrecisionPromoteFirstSuccessEvent precisionPromoteFirstSuccessEvent = new PrecisionPromoteFirstSuccessEvent();
+                    precisionPromoteFirstSuccessEvent.setData(precisionTime);
+                    EventBus.getDefault().post(precisionPromoteFirstSuccessEvent);
                 }
                 String currentTime = DateUtils.getCurrentDateTime();
                 PromotePrefersUtil.getInstance().savePercisionPromote(currentTime);

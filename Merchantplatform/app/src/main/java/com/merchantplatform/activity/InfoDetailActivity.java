@@ -2,10 +2,10 @@ package com.merchantplatform.activity;
 
 import android.os.Bundle;
 
+import com.Utils.eventbus.PrecisionPromoteSuccessEvent;
+import com.Utils.eventbus.UpPromoteSuccessEvent;
 import com.merchantplatform.R;
 import com.merchantplatform.model.InfoDetailModel;
-import com.utils.eventbus.EventAction;
-import com.utils.eventbus.EventType;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -26,9 +26,13 @@ public class InfoDetailActivity extends BaseActivity<InfoDetailModel> {
     }
 
     @Subscribe
-    public void refreshData(EventAction action) {
-        if (action.getType() == EventType.PRECISION_PROMOTE_SUCCESS)
-            model.initData();
+    public void refreshData(PrecisionPromoteSuccessEvent event) {
+        model.initData();
+    }
+
+    @Subscribe
+    public void refreshData(UpPromoteSuccessEvent event) {
+        model.initData();
     }
 
     @Override

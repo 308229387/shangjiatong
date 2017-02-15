@@ -13,6 +13,7 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.Utils.TitleBar;
+import com.Utils.eventbus.UpPromoteFirstSuccessEvent;
 import com.dataStore.PromotePrefersUtil;
 import com.log.LogUmengAgent;
 import com.log.LogUmengEnum;
@@ -22,8 +23,6 @@ import com.utils.AppInfoUtils;
 import com.utils.Constant;
 import com.utils.DateUtils;
 import com.utils.Urls;
-import com.utils.eventbus.EventAction;
-import com.utils.eventbus.EventType;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -160,8 +159,9 @@ public class UpPromoteActivityModel extends BaseModel{
             if(url.startsWith(Urls.PROMOTE_MESSAGE) ||url.startsWith(Urls.PROMOTE_OTHER_MESSAGE)){
                 String upTime =  PromotePrefersUtil.getInstance().getUpPromote();
                 if(DateUtils.isEmptyAndNotToday(upTime)){
-                    EventAction up_action = new EventAction(EventType.UP_PROMOTE_FIRST_SUCCESS,upTime);
-                    EventBus.getDefault().post(up_action);
+                    UpPromoteFirstSuccessEvent upPromoteFirstSuccessEvent = new UpPromoteFirstSuccessEvent();
+                    upPromoteFirstSuccessEvent.setData(upTime);
+                    EventBus.getDefault().post(upPromoteFirstSuccessEvent);
                 }
                 String currentTime = DateUtils.getCurrentDateTime();
                 PromotePrefersUtil.getInstance().saveUpPromote(currentTime);

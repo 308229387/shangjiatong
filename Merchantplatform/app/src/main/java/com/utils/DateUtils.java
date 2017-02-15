@@ -61,6 +61,20 @@ public class DateUtils {
         return formatMillisToDate(calendar.getTimeInMillis());
     }
 
+    public static String getDateAfterDate(String date, int afterDays) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateParser = null;
+        try {
+            dateParser = format.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateParser);
+        calendar.add(Calendar.DAY_OF_MONTH, afterDays);
+        return formatMillisToDate(calendar.getTimeInMillis());
+    }
+
     public static String displayByDateTime(String dateTime) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         if (TextUtils.isEmpty(dateTime)) {
@@ -118,5 +132,4 @@ public class DateUtils {
             return true;
         }
     }
-
 }

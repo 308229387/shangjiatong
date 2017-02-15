@@ -11,10 +11,6 @@ import com.xrecyclerview.BaseRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
-/**
- * Created by 58 on 2016/12/17.
- */
-
 public class CallDetailAdapter extends BaseRecyclerViewAdapter<CallDetailListBean, CallDetailAdapter.CallDetailViewHolder> {
 
     public CallDetailAdapter(Context context, ArrayList<CallDetailListBean> mList) {
@@ -25,8 +21,12 @@ public class CallDetailAdapter extends BaseRecyclerViewAdapter<CallDetailListBea
     protected void bindDataToItemView(CallDetailViewHolder callDetailViewHolder, int position) {
         CallDetailListBean detailList = mList.get(position);
         callDetailViewHolder.setText(R.id.item_call_detail_time, DateUtils.formatTimeToDisplayTime(DateUtils.formatDateTimeToTime(detailList.getTime())))
-                .setText(R.id.item_call_detail_type, detailList.getType() == 1 ? (detailList.getCallResult() == 10 ? "呼入电话" : "未接电话") : "呼出电话")
-                .setText(R.id.item_call_detail_duration, DateUtils.formatSecondsToDetailTime(detailList.getDuration()));
+                .setText(R.id.item_call_detail_type, detailList.getType() == 1 ? (detailList.getCallResult() == 10 ? "呼入电话" : "未接电话") : "呼出电话");
+        if (detailList.getType() == 1 && detailList.getCallResult() == 20) {
+            callDetailViewHolder.setText(R.id.item_call_detail_duration, "0秒");
+        } else {
+            callDetailViewHolder.setText(R.id.item_call_detail_duration, DateUtils.formatSecondsToDetailTime(detailList.getDuration()));
+        }
     }
 
     @Override

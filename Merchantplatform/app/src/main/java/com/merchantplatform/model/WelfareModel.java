@@ -10,12 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.Utils.UserUtils;
 import com.callback.JsonCallback;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.DailyLotteryActivity;
+import com.merchantplatform.activity.TaskRecordActivity;
 import com.merchantplatform.adapter.GridDrawAdapter;
 import com.merchantplatform.adapter.WelfareTaskAdapter;
 import com.merchantplatform.bean.GetTask;
+import com.merchantplatform.bean.GetWelfareResponse;
 import com.merchantplatform.fragment.WelfareFragment;
 import com.merchantplatform.service.GetServiceTime;
 import com.okhttputils.OkHttpUtils;
@@ -49,6 +52,7 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
     private TextView alredyAddCount;
     private RushBuyCountDownTimerView countDownText;
     private ArrayList<GetTask.taskData> list;
+    private ArrayList<GetWelfareResponse.prizeData> prizeList;
 
     private int taskTime = -1;
     private int surplusTime;
@@ -65,6 +69,7 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
         fraction = (TextView) view.findViewById(R.id.welfare_fraction);
         alredyAddCount = (TextView) view.findViewById(R.id.alredy_add_count);
         luckDraw.setOnClickListener(this);
+        fraction.setOnClickListener(this);
         mLayoutManager = new LinearLayoutManager(context.getActivity()) {
             @Override
             public boolean canScrollVertically() {
@@ -79,14 +84,13 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
         };
         gridViewSetting();
         listViewSetting();
-        fraction.setText("9999");
 
     }
 
     private void gridViewSetting() {
         gridRecyclerView.setLayoutManager(mGridManager);
         gridRecyclerView.setHasFixedSize(true);
-        mAdapter = new GridDrawAdapter(context.getActivity());
+        mAdapter = new GridDrawAdapter(context.getActivity(), prizeList);
         gridRecyclerView.setAdapter(mAdapter);
         gridRecyclerView.addItemDecoration(new SpaceItemDecoration(15));
     }
@@ -111,7 +115,12 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.luck_draw:
-                context.getActivity().startActivity(new Intent(context.getContext(), DailyLotteryActivity.class));
+                if (UserUtils.getIsVip(context.getActivity()) == 1)
+                    context.getActivity().startActivity(new Intent(context.getContext(), DailyLotteryActivity.class));
+                break;
+            case R.id.welfare_fraction:
+                context.getActivity().startActivity(new Intent(context.getContext(), TaskRecordActivity.class));
+                break;
         }
     }
 
@@ -120,25 +129,9 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
                 .execute(new Task());
     }
 
-    private class Task extends JsonCallback<GetTask> {
-        @Override
-        public void onResponse(boolean isFromCache, GetTask s, Request request, @Nullable Response response) {
-            try {
-                dealWithData(s);
-            } catch (Exception e) {
-                ToastUtils.showToast("数据解析错误");
-            }
-        }
-
-        private void dealWithData(GetTask s) {
-            String a = s.getData().getOpentime();
-            String[] b = a.split(":");
-            taskTime = dealWithTimeToSecond(b);
-            alredyAddCount.setText(String.format(context.getString(R.string.alredy_add_count), s.getData().getGainscore()));
-            fraction.setText(s.getData().getScore() + "");
-            list = s.getData().getTasklist();
-            welfareTaskAdapter.setData(list);
-        }
+    public void getWelfare() {
+        OkHttpUtils.get(Urls.GET_WELFARE)
+                .execute(new WelfareData());
     }
 
     public int dealWithTimeToSecond(String[] a) {
@@ -168,5 +161,34 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
     public void setTextToCountDown() {
         countDownText.setTime(calculateResult()[0], calculateResult()[1], calculateResult()[2]);
         countDownText.start();
+    }
+
+    private class Task extends JsonCallback<GetTask> {
+        @Override
+        public void onResponse(boolean isFromCache, GetTask s, Request request, @Nullable Response response) {
+            try {
+                dealWithData(s);
+            } catch (Exception e) {
+                ToastUtils.showToast("数据解析错误");
+            }
+        }
+
+        private void dealWithData(GetTask s) {
+            String a = s.getData().getOpentime();
+            String[] b = a.split(":");
+            taskTime = dealWithTimeToSecond(b);
+            alredyAddCount.setText(String.format(context.getString(R.string.alredy_add_count), s.getData().getGainscore()));
+            fraction.setText(s.getData().getScore() + "");
+            list = s.getData().getTasklist();
+            welfareTaskAdapter.setData(list);
+        }
+    }
+
+    private class WelfareData extends JsonCallback<GetWelfareResponse> {
+
+        @Override
+        public void onResponse(boolean isFromCache, GetWelfareResponse s, Request request, @Nullable Response response) {
+            mAdapter.setData(s.getData().getPrizeList());
+        }
     }
 }

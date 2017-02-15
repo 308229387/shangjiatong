@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Process;
 import android.view.View;
 
+import com.Utils.eventbus.IMKickoffEvent;
 import com.android.gmacs.GmacsEventBusIndex;
 import com.android.gmacs.activity.GmacsChatActivity;
 import com.android.gmacs.activity.GmacsContactDetailInfoActivity;
@@ -27,21 +28,18 @@ import com.common.gmacs.utils.GmacsUiUtil;
 import com.merchantplatform.BuildConfig;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.GuideActivity;
-import com.merchantplatform.activity.HomepageActivity;
 import com.merchantplatform.activity.LoginActivity;
-import com.merchantplatform.activity.WChatContactDetailInfoActivity;
 import com.merchantplatform.application.HyApplication;
 import com.wuba.wbpush.Push;
 
 import org.greenrobot.eventbus.EventBus;
-
-import static com.tencent.open.utils.Global.getPackageName;
 
 
 /**
  * Created by SongYongmeng on 2016/11/28.
  */
 public class IMInitAppUtils {
+
     private final HyApplication application;
 
     public IMInitAppUtils(HyApplication application) {
@@ -57,7 +55,7 @@ public class IMInitAppUtils {
             setEnvironment();
             setInfo();
             GmacsUiUtil.setAppMainClassName(GuideActivity.class.getName());
-            GmacsUiUtil.setChatClassName(GmacsChatActivity.class.getName());//liaotianxiangqing
+            GmacsUiUtil.setChatClassName(GmacsChatActivity.class.getName());//聊天详情
             GmacsUiUtil.setContactDetailInfoActivityClassName(GmacsContactDetailInfoActivity.class.getName());//用户详情
 
             EmojiManager.getInstance().setEmojiPaser(FaceConversionUtil.getInstace());
@@ -69,7 +67,12 @@ public class IMInitAppUtils {
                 @Override
                 public void connectStatusChanged(int status) {
                     if (GmacsConstant.STATUS_KICK_OFF == status) {
-                        logout("您的账号在另一设备登录，您被迫下线。");
+                        GmacsManager.isLoginState = false;
+                        EventBus.getDefault().post(new IMKickoffEvent());
+                    }
+
+                    if (GmacsConstant.STATUS_CONNECTED_VALUE == status) {
+                        GmacsManager.isLoginState = true;
                     }
                 }
 

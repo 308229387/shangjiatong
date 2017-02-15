@@ -20,7 +20,9 @@ import android.widget.Toast;
 import com.Utils.TitleBar;
 import com.callback.DialogCallback;
 import com.merchantplatform.R;
+import com.merchantplatform.activity.AwardHistoryActivity;
 import com.merchantplatform.activity.DailyLotteryActivity;
+import com.merchantplatform.activity.MyAwardActivity;
 import com.merchantplatform.adapter.DailyAwardAdapter;
 import com.merchantplatform.adapter.ExplainMessageAdapter;
 import com.merchantplatform.bean.LotteryDetailResponse;
@@ -31,6 +33,7 @@ import com.ui.ScratchCountDownTimerView;
 import com.ui.ScratchView;
 import com.ui.SpaceItemDecoration;
 import com.utils.DisplayUtils;
+import com.utils.ToastUtils;
 import com.utils.Urls;
 
 import java.util.ArrayList;
@@ -123,7 +126,7 @@ public class DailyLotteryModel extends BaseModel {
         sv_daily_lottery.setEraseStatusListener(new OnEraserStatusListener());
         sv_daily_lottery.setOnTouchListener(new OnLotteryTouchListener());
         bt_daily_lottery_check.setOnClickListener(new OnCheckLottery());
-        bt_daily_lottery_again.setOnClickListener(new OnStartLottery());
+        bt_daily_lottery_again.setOnClickListener(new OnLotteryAgain());
         tv_detail_lottery_gotorecord.setOnClickListener(new OnGoToRecord());
     }
 
@@ -148,9 +151,7 @@ public class DailyLotteryModel extends BaseModel {
 
         @Override
         public void onFinish() {
-            //倒计时结束
-            //刮奖开始倒计时结束之后，倒计时重置为刮奖结束倒计时，然后按钮变为可点击
-            //刮奖结束倒计时结束后，倒计时重置为刮奖开始倒计时，按钮置灰并不可点击
+            setIfCanStartScratch();
         }
     }
 
@@ -163,11 +164,16 @@ public class DailyLotteryModel extends BaseModel {
         @Override
         public void onResponse(boolean isFromCache, LotteryDetailResponse lotteryDetailResponse, Request request, @Nullable Response response) {
             if (lotteryDetailResponse != null && lotteryDetailResponse.getData() != null) {
-                setGrade(lotteryDetailResponse);
-                setDailyAward(lotteryDetailResponse);
-                setTimeSection(lotteryDetailResponse);
-                setExplainMessage(lotteryDetailResponse);
-                setIfCanStartScratch();
+                if (lotteryDetailResponse.getData().getIsVip() == 1) {
+                    setGrade(lotteryDetailResponse);
+                    setDailyAward(lotteryDetailResponse);
+                    setTimeSection(lotteryDetailResponse);
+                    setExplainMessage(lotteryDetailResponse);
+                    setIfCanStartScratch();
+                } else {
+                    ToastUtils.showToast("只有VIP客户可以参与刮奖");
+                    context.finish();
+                }
             }
         }
     }
@@ -231,7 +237,7 @@ public class DailyLotteryModel extends BaseModel {
         sc_daily_lottery_count_down.setVisibility(View.VISIBLE);
         sc_daily_lottery_count_down.setTime(calculateResult()[0], calculateResult()[1], calculateResult()[2]);
         sc_daily_lottery_count_down.start();
-        bt_daily_lottery_start.setOnClickListener(new OnStartLottery());
+        bt_daily_lottery_start.setOnClickListener(new OnLotteryStart());
         bt_daily_lottery_start.setText("点我刮奖");
         bt_daily_lottery_start.setBackgroundColor(context.getResources().getColor(R.color.home_bottom_color));
     }
@@ -263,17 +269,39 @@ public class DailyLotteryModel extends BaseModel {
         return a;
     }
 
-    private class OnStartLottery implements View.OnClickListener {
+    private class OnLotteryStart implements View.OnClickListener {
+
         @Override
         public void onClick(View v) {
             requestLotteryResult();
         }
     }
 
+    private class OnLotteryAgain implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            requestLotteryResultAgain();
+        }
+    }
+
     private void requestLotteryResult() {
         if (score > 0) {
             if (isInTimeSection()) {
+                bt_daily_lottery_start.setClickable(false);
                 getLotteryResult();
+            } else {
+                notInTimeSection();
+            }
+        } else {
+            noMoreScore();
+        }
+    }
+
+    private void requestLotteryResultAgain() {
+        if (score > 0) {
+            if (isInTimeSection()) {
+                bt_daily_lottery_again.setClickable(false);
+                getLotteryResultAgain();
             } else {
                 notInTimeSection();
             }
@@ -285,6 +313,11 @@ public class DailyLotteryModel extends BaseModel {
     private void getLotteryResult() {
         OkHttpUtils.get(Urls.GET_LOTTERY)
                 .execute(new getLotteryResult(context, false));
+    }
+
+    private void getLotteryResultAgain() {
+        OkHttpUtils.get(Urls.GET_LOTTERY)
+                .execute(new getLotteryResultAgain(context, false));
     }
 
     private class getLotteryResult extends DialogCallback<LotteryResultResponse> {
@@ -303,43 +336,82 @@ public class DailyLotteryModel extends BaseModel {
         }
     }
 
+    private class getLotteryResultAgain extends DialogCallback<LotteryResultResponse> {
+
+        public getLotteryResultAgain(Activity activity, boolean isShowDialog) {
+            super(activity, isShowDialog);
+        }
+
+        @Override
+        public void onResponse(boolean isFromCache, LotteryResultResponse lotteryResultResponse, Request request, @Nullable Response response) {
+            if (lotteryResultResponse != null && lotteryResultResponse.getData() != null) {
+                updateNewestMessage(lotteryResultResponse);
+                setScratchAgainUI();
+                setLotteryResult(lotteryResultResponse);
+            }
+        }
+    }
+
     private void updateNewestMessage(LotteryResultResponse lotteryResultResponse) {
         score = lotteryResultResponse.getData().getScore();
-        String openTimes = lotteryResultResponse.getData().getOpenTime();
-        String endTimes = lotteryResultResponse.getData().getEndTime();
-        openTime = dealWithTimeToSecond(openTimes.split(":"));
-        endTime = dealWithTimeToSecond(endTimes.split(":"));
     }
 
     private void setScratchUI() {
         tv_daily_lottery_grade.setText(score + "");
         rl_daily_lottery_start.setVisibility(View.GONE);
+        sv_daily_lottery.setVisibility(View.VISIBLE);
+        bt_daily_lottery_start.setClickable(true);
+        rl_daily_lottery_result.setVisibility(View.VISIBLE);
+    }
+
+    private void setScratchAgainUI() {
+        tv_daily_lottery_grade.setText(score + "");
+        rl_daily_lottery_start.setVisibility(View.GONE);
         sv_daily_lottery.reset();
         sv_daily_lottery.setVisibility(View.VISIBLE);
+        bt_daily_lottery_again.setClickable(true);
         rl_daily_lottery_result.setVisibility(View.VISIBLE);
     }
 
     private void setLotteryResult(LotteryResultResponse lotteryResultResponse) {
         if (lotteryResultResponse.getData().getPrizeDrawState() == 0) {
-            if (!TextUtils.isEmpty(lotteryResultResponse.getData().getMsg())) {
-                Toast.makeText(context, lotteryResultResponse.getData().getMsg(), Toast.LENGTH_SHORT).show();
-                context.finish();
-            }
+            notSatisfiedCondition(lotteryResultResponse);
         } else if (lotteryResultResponse.getData().getPrizeDrawState() == 1) {
-            tv_daily_lottery_result.setText("很遗憾，没刮中，请再接再厉！");
-            bt_daily_lottery_check.setVisibility(View.GONE);
+            notWinAPrize(lotteryResultResponse);
+        } else if (lotteryResultResponse.getData().getPrizeDrawState() == 2) {
+            winAPrize(lotteryResultResponse);
+        }
+    }
+
+    private void notSatisfiedCondition(LotteryResultResponse lotteryResultResponse) {
+        if (!TextUtils.isEmpty(lotteryResultResponse.getData().getMsg())) {
+            Toast.makeText(context, lotteryResultResponse.getData().getMsg(), Toast.LENGTH_SHORT).show();
+            context.finish();
+        }
+    }
+
+    private void notWinAPrize(LotteryResultResponse lotteryResultResponse) {
+        if (!TextUtils.isEmpty(lotteryResultResponse.getData().getMsg())) {
+            tv_daily_lottery_result.setText(lotteryResultResponse.getData().getMsg());
+        }
+        if (bt_daily_lottery_check.getVisibility() == View.VISIBLE) {
             ViewGroup.LayoutParams layoutParams = bt_daily_lottery_again.getLayoutParams();
             layoutParams.width = layoutParams.width + DisplayUtils.dpToPx(60, context);
             bt_daily_lottery_again.setLayoutParams(layoutParams);
-        } else if (lotteryResultResponse.getData().getPrizeDrawState() == 2) {
-            if (!TextUtils.isEmpty(lotteryResultResponse.getData().getPrizeName())) {
-                tv_daily_lottery_result.setText("恭喜您！抽中" + lotteryResultResponse.getData().getPrizeName());
-            }
-            bt_daily_lottery_check.setVisibility(View.VISIBLE);
+        }
+        bt_daily_lottery_check.setVisibility(View.GONE);
+    }
+
+    private void winAPrize(LotteryResultResponse lotteryResultResponse) {
+        if (!TextUtils.isEmpty(lotteryResultResponse.getData().getMsg())) {
+            tv_daily_lottery_result.setText(lotteryResultResponse.getData().getMsg());
+        }
+        if (bt_daily_lottery_check.getVisibility() == View.GONE) {
             ViewGroup.LayoutParams layoutParams = bt_daily_lottery_again.getLayoutParams();
             layoutParams.width = layoutParams.width - DisplayUtils.dpToPx(60, context);
             bt_daily_lottery_again.setLayoutParams(layoutParams);
         }
+        bt_daily_lottery_check.setVisibility(View.VISIBLE);
     }
 
     private class OnEraserStatusListener implements ScratchView.EraseStatusListener {
@@ -362,7 +434,8 @@ public class DailyLotteryModel extends BaseModel {
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(context, "查看自己的中奖记录", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context, MyAwardActivity.class);
+            context.startActivity(intent);
         }
     }
 
@@ -382,7 +455,8 @@ public class DailyLotteryModel extends BaseModel {
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(context, "查看所有人中奖记录", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context, AwardHistoryActivity.class);
+            context.startActivity(intent);
         }
     }
 }

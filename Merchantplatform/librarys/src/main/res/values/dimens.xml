@@ -1,3 +1,46 @@
 <resources>
     <dimen name="textandiconmargin">10dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="textsize">16sp</dimen>
+    <dimen name="tablayout_indicator_size">1.5dp</dimen>
+    <dimen name="tablayout_maxwidth">80dp</dimen>
+    <dimen name="phoneNum_textsize">18sp</dimen>
+    <dimen name="phoneCount_textsize">17sp</dimen>
+    <dimen name="item_phone_count_height">19dp</dimen>
+    <dimen name="divider_size">1dp</dimen>
+
+    <dimen name="personal_center_entry_padding_left_right">10.0dip</dimen>
+    <dimen name="personal_center_entry_icon">28.0dip</dimen>
+    <dimen name="personal_center_entry_title_padding">6dip</dimen>
+    <dimen name="personal_center_entry_height">48.0dip</dimen>
+
+    <dimen name="dialog_corner_radius">4dp</dimen>
+    <dimen name="dialog_content_min_height">40dp</dimen>
+    <dimen name="dialog_content_vertical_padding">30dp</dimen>
+    <dimen name="dialog_content_horizontal_padding">10dp</dimen>
+    <dimen name="dialog_btn_bar_height">40dp</dimen>
+
+    <dimen name="common_divider_line_height">0.5dip</dimen>
+
+    <dimen name="common_divider_padding">10dip</dimen>
+
+    <dimen name="common_text_size_32">32sp</dimen>
+    <dimen name="common_text_size_30">30sp</dimen>
+    <dimen name="common_text_size_26">26sp</dimen>
+    <dimen name="common_text_size_22">22sp</dimen>
+    <dimen name="common_text_size_21">21sp</dimen>
+    <dimen name="common_text_size_20">20sp</dimen>
+    <dimen name="common_text_size_18">18sp</dimen>
+    <dimen name="common_text_size_17">17sp</dimen>
+    <dimen name="common_text_size_16">16sp</dimen>
+    <dimen name="common_text_size_15">15sp</dimen>
+    <dimen name="common_text_size_14">14sp</dimen>
+    <dimen name="common_text_size_13">13sp</dimen>
+    <dimen name="common_text_size_12">12sp</dimen>
+    <dimen name="common_text_size_11">11sp</dimen>
+    <dimen name="common_text_size_10">10sp</dimen>
+    <dimen name="common_text_size_9">9sp</dimen>
+    <dimen name="common_text_size_8">8sp</dimen>
 </resources>

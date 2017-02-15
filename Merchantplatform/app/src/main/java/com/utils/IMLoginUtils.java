@@ -10,7 +10,6 @@ import com.common.gmacs.core.ClientManager;
 import com.common.gmacs.core.Gmacs;
 import com.common.gmacs.parse.message.GmacsUserInfo;
 import com.google.gson.Gson;
-import com.merchantplatform.activity.LoginActivity;
 import com.merchantplatform.application.HyApplication;
 import com.okhttputils.OkHttpUtils;
 import com.response.ImGetTokenResponse;
@@ -28,6 +27,7 @@ import okhttp3.Response;
  */
 
 public class IMLoginUtils {
+
     private Activity context;
 
     String userId = LoginClient.getUserID(HyApplication.getApplication());
@@ -95,28 +95,33 @@ public class IMLoginUtils {
 
         @Override
         public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
-            Gson temp = new Gson();
-            tokenResponse = temp.fromJson(s, ImGetTokenResponse.class);
-
-
-            GmacsUserInfo gmacsUserInfo = new GmacsUserInfo();
-            gmacsUserInfo.avatar = UserUtils.getFace(context);
-            gmacsUserInfo.userId = UserUtils.getUserId(context);
-            gmacsUserInfo.userName = UserUtils.getName(context);
-            gmacsUserInfo.userSource = 2;
-
-            tempUserId = UserUtils.getUserId(context);
-            imToken = tokenResponse.getToken();
-
-            Gmacs.getInstance().setGmacsUserInfo(gmacsUserInfo);
-            if (imToken != null)
-                Gmacs.getInstance().loginAsync(tempUserId, "", 2, "", imToken, 0, new ClientManager.LoginCb() {
-
-                    @Override
-                    public void done(int i, String s) {
-                        GmacsManager.getInstance().startGmacs(new MessageNotifyHelper());
-                    }
-                });
+            login(s);
         }
+    }
+
+
+    public void login(String s) {
+        Gson temp = new Gson();
+        tokenResponse = temp.fromJson(s, ImGetTokenResponse.class);
+
+
+        GmacsUserInfo gmacsUserInfo = new GmacsUserInfo();
+        gmacsUserInfo.avatar = UserUtils.getFace(context);
+        gmacsUserInfo.userId = UserUtils.getUserId(context);
+        gmacsUserInfo.userName = UserUtils.getName(context);
+        gmacsUserInfo.userSource = 2;
+
+        tempUserId = UserUtils.getUserId(context);
+        imToken = tokenResponse.getToken();
+
+        Gmacs.getInstance().setGmacsUserInfo(gmacsUserInfo);
+        if (imToken != null)
+            Gmacs.getInstance().loginAsync(tempUserId, "", 2, "", imToken, 0, new ClientManager.LoginCb() {
+
+                @Override
+                public void done(int i, String s) {
+                    GmacsManager.getInstance().startGmacs(new MessageNotifyHelper());
+                }
+            });
     }
 }

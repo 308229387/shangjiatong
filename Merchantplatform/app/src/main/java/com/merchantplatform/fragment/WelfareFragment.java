@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 import com.merchantplatform.model.WelfareModel;
 
+import org.greenrobot.eventbus.Subscribe;
+
 /**
  * Created by songyongmeng on 2017/2/3.
  */
@@ -24,6 +26,7 @@ public class WelfareFragment extends BaseFragment<WelfareModel> {
 
     private void getTask() {
         model.getTask();
+        model.getWelfare();
         model.dealWithTimeToResult();
         model.setTextToCountDown();
     }
@@ -36,4 +39,7 @@ public class WelfareFragment extends BaseFragment<WelfareModel> {
     protected WelfareModel createModel() {
         return new WelfareModel(this);
     }
+
+
+
 }
