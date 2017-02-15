@@ -141,7 +141,7 @@ public class DailyLotteryModel extends BaseModel {
 
     public void initData() {
         OkHttpUtils.get(Urls.DAILY_LOTTERY)
-                .execute(new getDailyLottery(context, false));
+                .execute(new getDailyLottery(context, true));
     }
 
     private class OnBackPressed implements View.OnClickListener {
