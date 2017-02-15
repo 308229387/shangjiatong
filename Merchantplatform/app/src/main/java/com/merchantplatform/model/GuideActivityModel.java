@@ -67,7 +67,6 @@ public class GuideActivityModel extends BaseModel {
 
             } else {
                 getStoragePermission();
-//                waitAndGo();
             }
 
         } else {
@@ -80,7 +79,6 @@ public class GuideActivityModel extends BaseModel {
      * 获取SD卡写权限
      */
     public void getStoragePermission() {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             boolean findMethod = true;
             try {
                 ContextCompat.class.getMethod("checkSelfPermission", Context.class, String.class);
@@ -103,9 +101,6 @@ public class GuideActivityModel extends BaseModel {
                 waitAndGo();
             }
 
-//        } else {
-//            waitAndGo();
-//        }
     }
 
     private void showAlertDialog(String content) {
@@ -174,7 +169,6 @@ public class GuideActivityModel extends BaseModel {
     public void requestPermissionResult(int requestCode, @NonNull int[] grantResults) {
         if (requestCode == CODE_READ_PHONE_STATE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                waitAndGo();
                 getStoragePermission();
             } else {
                 showAlertDialog("未取得您的手机权限，58商家通无法正常启动。请在设置-应用-58商家通-权限中，允许获取手机设备信息。");
