@@ -287,6 +287,7 @@ public class DailyLotteryModel extends BaseModel {
     private void requestLotteryResult() {
         if (score > 0) {
             if (isInTimeSection()) {
+                bt_daily_lottery_start.setClickable(false);
                 getLotteryResult();
             } else {
                 notInTimeSection();
@@ -299,6 +300,7 @@ public class DailyLotteryModel extends BaseModel {
     private void requestLotteryResultAgain() {
         if (score > 0) {
             if (isInTimeSection()) {
+                bt_daily_lottery_again.setClickable(false);
                 getLotteryResultAgain();
             } else {
                 notInTimeSection();
@@ -358,6 +360,7 @@ public class DailyLotteryModel extends BaseModel {
         tv_daily_lottery_grade.setText(score + "");
         rl_daily_lottery_start.setVisibility(View.GONE);
         sv_daily_lottery.setVisibility(View.VISIBLE);
+        bt_daily_lottery_start.setClickable(true);
         rl_daily_lottery_result.setVisibility(View.VISIBLE);
     }
 
@@ -366,36 +369,49 @@ public class DailyLotteryModel extends BaseModel {
         rl_daily_lottery_start.setVisibility(View.GONE);
         sv_daily_lottery.reset();
         sv_daily_lottery.setVisibility(View.VISIBLE);
+        bt_daily_lottery_again.setClickable(true);
         rl_daily_lottery_result.setVisibility(View.VISIBLE);
     }
 
     private void setLotteryResult(LotteryResultResponse lotteryResultResponse) {
         if (lotteryResultResponse.getData().getPrizeDrawState() == 0) {
-            if (!TextUtils.isEmpty(lotteryResultResponse.getData().getMsg())) {
-                Toast.makeText(context, lotteryResultResponse.getData().getMsg(), Toast.LENGTH_SHORT).show();
-                context.finish();
-            }
+            notSatisfiedCondition(lotteryResultResponse);
         } else if (lotteryResultResponse.getData().getPrizeDrawState() == 1) {
-            if (!TextUtils.isEmpty(lotteryResultResponse.getData().getMsg())) {
-                tv_daily_lottery_result.setText(lotteryResultResponse.getData().getMsg());
-            }
-            if (bt_daily_lottery_check.getVisibility() == View.VISIBLE) {
-                ViewGroup.LayoutParams layoutParams = bt_daily_lottery_again.getLayoutParams();
-                layoutParams.width = layoutParams.width + DisplayUtils.dpToPx(60, context);
-                bt_daily_lottery_again.setLayoutParams(layoutParams);
-            }
-            bt_daily_lottery_check.setVisibility(View.GONE);
+            notWinAPrize(lotteryResultResponse);
         } else if (lotteryResultResponse.getData().getPrizeDrawState() == 2) {
-            if (!TextUtils.isEmpty(lotteryResultResponse.getData().getMsg())) {
-                tv_daily_lottery_result.setText(lotteryResultResponse.getData().getMsg());
-            }
-            if (bt_daily_lottery_check.getVisibility() == View.GONE) {
-                ViewGroup.LayoutParams layoutParams = bt_daily_lottery_again.getLayoutParams();
-                layoutParams.width = layoutParams.width - DisplayUtils.dpToPx(60, context);
-                bt_daily_lottery_again.setLayoutParams(layoutParams);
-            }
-            bt_daily_lottery_check.setVisibility(View.VISIBLE);
+            winAPrize(lotteryResultResponse);
         }
+    }
+
+    private void notSatisfiedCondition(LotteryResultResponse lotteryResultResponse) {
+        if (!TextUtils.isEmpty(lotteryResultResponse.getData().getMsg())) {
+            Toast.makeText(context, lotteryResultResponse.getData().getMsg(), Toast.LENGTH_SHORT).show();
+            context.finish();
+        }
+    }
+
+    private void notWinAPrize(LotteryResultResponse lotteryResultResponse) {
+        if (!TextUtils.isEmpty(lotteryResultResponse.getData().getMsg())) {
+            tv_daily_lottery_result.setText(lotteryResultResponse.getData().getMsg());
+        }
+        if (bt_daily_lottery_check.getVisibility() == View.VISIBLE) {
+            ViewGroup.LayoutParams layoutParams = bt_daily_lottery_again.getLayoutParams();
+            layoutParams.width = layoutParams.width + DisplayUtils.dpToPx(60, context);
+            bt_daily_lottery_again.setLayoutParams(layoutParams);
+        }
+        bt_daily_lottery_check.setVisibility(View.GONE);
+    }
+
+    private void winAPrize(LotteryResultResponse lotteryResultResponse) {
+        if (!TextUtils.isEmpty(lotteryResultResponse.getData().getMsg())) {
+            tv_daily_lottery_result.setText(lotteryResultResponse.getData().getMsg());
+        }
+        if (bt_daily_lottery_check.getVisibility() == View.GONE) {
+            ViewGroup.LayoutParams layoutParams = bt_daily_lottery_again.getLayoutParams();
+            layoutParams.width = layoutParams.width - DisplayUtils.dpToPx(60, context);
+            bt_daily_lottery_again.setLayoutParams(layoutParams);
+        }
+        bt_daily_lottery_check.setVisibility(View.VISIBLE);
     }
 
     private class OnEraserStatusListener implements ScratchView.EraseStatusListener {
