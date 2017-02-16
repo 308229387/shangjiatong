@@ -176,7 +176,11 @@ public class InfoDetailModel extends BaseModel {
 
                             @Override
                             public void onError(SHARE_MEDIA share_media, Throwable throwable) {
-                                Toast.makeText(activity, "分享失败", Toast.LENGTH_SHORT).show();
+                                if (throwable.getMessage().contains("2008")) {
+                                    Toast.makeText(activity, "您的手机尚未安装微信", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(activity, "分享到微信朋友圈失败，请重试", Toast.LENGTH_SHORT).show();
+                                }
                             }
 
                             @Override
