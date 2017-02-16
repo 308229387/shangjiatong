@@ -59,8 +59,10 @@ public abstract class DialogCallback<T> extends JsonCallback<T> {
     public void onBefore(BaseRequest request) {
         super.onBefore(request);
         //网络请求前显示对话框
-        if (shapeLoadingDialog != null && !shapeLoadingDialog.isShowing()) {
-            shapeLoadingDialog.show();
+        if (activity != null && !activity.isFinishing()) {
+            if (shapeLoadingDialog != null && !shapeLoadingDialog.isShowing()) {
+                shapeLoadingDialog.show();
+            }
         }
     }
 
@@ -81,8 +83,10 @@ public abstract class DialogCallback<T> extends JsonCallback<T> {
     public void onAfter(boolean isFromCache, @Nullable T t, Call call, @Nullable Response response, @Nullable Exception e) {
         super.onAfter(isFromCache, t, call, response, e);
         //网络请求结束后关闭对话框
-        if (shapeLoadingDialog != null && shapeLoadingDialog.isShowing()) {
-            shapeLoadingDialog.dismiss();
+        if (activity != null && !activity.isFinishing()) {
+            if (shapeLoadingDialog != null && shapeLoadingDialog.isShowing()) {
+                shapeLoadingDialog.dismiss();
+            }
         }
         if (activity != null && !activity.isFinishing() && e != null) {
             if (e.getMessage().equals(PPU_UNVALID) && !isShow) {
