@@ -105,7 +105,6 @@ public class GetServiceTime extends Service {
                 case WHAT:
                     if (systemTimeSecond != (-1))
                         systemTimeSecond++;
-                    Log.i("song", systemTimeSecond + "");
                     break;
             }
         }

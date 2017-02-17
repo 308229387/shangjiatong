@@ -1,8 +1,6 @@
 package com.merchantplatform.model;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,7 +26,6 @@ import com.okhttputils.OkHttpUtils;
 import com.ui.RushBuyCountDownTimerView;
 import com.ui.SpaceItemDecoration;
 import com.ui.dialog.NotIsVipDialog;
-import com.utils.ToastUtils;
 import com.utils.Urls;
 import com.xrecyclerview.XRecyclerView;
 
@@ -36,7 +33,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
-import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -199,7 +195,8 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
         OkHttpUtils.get(Urls.TASK_SUCCESS)
                 .params("module_code", welfareTaskAdapter.getShareTaskInfo().getModule_code())
                 .params("process_code", welfareTaskAdapter.getShareTaskInfo().getProcess_code())
-                .execute(new WelfareData());
+                .execute(new WelfareEmptyData());
+
     }
 
     public void topSuccess() {
@@ -207,6 +204,7 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
                 .params("module_code", welfareTaskAdapter.getTopTaskInfo().getModule_code())
                 .params("process_code", welfareTaskAdapter.getTopTaskInfo().getProcess_code())
                 .execute(new WelfareData());
+        getTask();
     }
 
     public void precisionSuccess() {
@@ -227,7 +225,7 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
         luckDraw.setEnabled(false);
     }
 
-    public void todayHasPrize(){
+    public void todayHasPrize() {
         gridRecyclerView.setVisibility(View.VISIBLE);
         luckDraw.setVisibility(View.VISIBLE);
     }
@@ -237,7 +235,7 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
             noPrizeSetting();
         else if (s.getData().getPrizeListType() == 2)
             todayNoPrizeSetting();
-        else if(s.getData().getPrizeListType() ==1)
+        else if (s.getData().getPrizeListType() == 1)
             todayHasPrize();
     }
 
@@ -254,8 +252,8 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
     private class Task extends JsonCallback<GetTask> {
         @Override
         public void onResponse(boolean isFromCache, GetTask s, Request request, @Nullable Response response) {
-                dealWithData(s);
-                dealWithTimeToResult();
+            dealWithData(s);
+            dealWithTimeToResult();
         }
     }
 
@@ -266,6 +264,14 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
             mAdapter.setData(s.getData().getPrizeList());
             title.setText(s.getData().getPrizeTitle());
             setPrizeLayout(s);
+        }
+    }
+
+
+    private class WelfareEmptyData extends JsonCallback<String> {
+        @Override
+        public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
+            getTask();
         }
     }
 }

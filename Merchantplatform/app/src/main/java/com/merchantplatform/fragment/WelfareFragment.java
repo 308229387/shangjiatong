@@ -6,10 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.Utils.eventbus.DailyLotteryScore;
+import com.Utils.eventbus.PrecisionPromoteFirstSuccessEvent;
 import com.Utils.eventbus.ShareWechatCircleSuccessEvent;
 import com.Utils.eventbus.UpPromoteFirstSuccessEvent;
 import com.merchantplatform.model.WelfareModel;
-import com.utils.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -46,8 +47,19 @@ public class WelfareFragment extends BaseFragment<WelfareModel> {
 
     @Subscribe
     public void onEvent(UpPromoteFirstSuccessEvent action) {
-        model.shareSuccess();
+        model.topSuccess();
     }
+
+    @Subscribe
+    public void onEvent(PrecisionPromoteFirstSuccessEvent action) {
+        model.precisionSuccess();
+    }
+
+    @Subscribe
+    public void onEvent(DailyLotteryScore action) {
+        model.getTask();
+    }
+
 
     @Override
     protected WelfareModel createModel() {
