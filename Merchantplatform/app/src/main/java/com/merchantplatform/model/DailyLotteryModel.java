@@ -241,6 +241,7 @@ public class DailyLotteryModel extends BaseModel {
     }
 
     private void canScratchLottery() {
+        rl_daily_lottery_start.setVisibility(View.VISIBLE);
         tv_daily_lottery_start.setText("刮奖结束倒计时");
         sc_daily_lottery_count_down.setVisibility(View.VISIBLE);
         sc_daily_lottery_count_down.setTime(calculateResult()[0], calculateResult()[1], calculateResult()[2]);
@@ -251,6 +252,7 @@ public class DailyLotteryModel extends BaseModel {
     }
 
     private void noMoreScore() {
+        rl_daily_lottery_start.setVisibility(View.VISIBLE);
         tv_daily_lottery_start.setText("积分已耗尽，无法参与抽奖~");
         sc_daily_lottery_count_down.setVisibility(View.GONE);
         bt_daily_lottery_start.setOnClickListener(new OnGoToWelfare());
@@ -260,6 +262,7 @@ public class DailyLotteryModel extends BaseModel {
     }
 
     private void notInTimeSection() {
+        rl_daily_lottery_start.setVisibility(View.VISIBLE);
         tv_daily_lottery_start.setText("刮奖开始倒计时");
         sc_daily_lottery_count_down.setVisibility(View.VISIBLE);
         sc_daily_lottery_count_down.setTime(calculateResult()[0], calculateResult()[1], calculateResult()[2]);
