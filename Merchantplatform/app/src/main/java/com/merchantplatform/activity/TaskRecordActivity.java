@@ -17,7 +17,6 @@ public class TaskRecordActivity extends BaseActivity<TaskRecordModel> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task_record_layout);
         model.init();
-
     }
 
     @Override

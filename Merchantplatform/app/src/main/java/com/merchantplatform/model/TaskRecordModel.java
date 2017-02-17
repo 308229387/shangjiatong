@@ -75,7 +75,6 @@ public class TaskRecordModel extends BaseModel {
         @Override
         public void onRefresh() {
             listRecyclerView.refreshComplete();
-
         }
 
         @Override

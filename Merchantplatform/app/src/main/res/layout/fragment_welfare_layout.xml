@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:scrollbars="none"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:scrollbars="none">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -61,16 +61,17 @@
             android:id="@+id/draw_layout"
             android:layout_width="340dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="170dp"
+            android:layout_marginTop="172dp"
             android:background="@drawable/gmacs_bg_border">
 
             <TextView
+                android:id="@+id/prize_layout_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
-                android:text="今日奖品"
                 android:textColor="#000"
                 android:textSize="16sp" />
 
@@ -87,19 +88,31 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="65dp"
-                android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+                android:scrollbars="vertical"
+                android:visibility="gone"></android.support.v7.widget.RecyclerView>
 
             <TextView
                 android:id="@+id/luck_draw"
                 android:layout_width="200dp"
                 android:layout_height="45dp"
+                android:layout_below="@+id/my_recycler_view"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/welfare_button_back"
                 android:gravity="center"
                 android:text="我要抽奖"
                 android:textColor="#fff"
-                android:layout_marginBottom="10dp"
-                android:layout_below="@+id/my_recycler_view"
-                android:layout_centerHorizontal="true" />
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/no_prize_image"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="50dp"
+                android:layout_marginTop="80dp"
+                android:background="@mipmap/no_prize_image"
+                android:visibility="gone" />
 
         </RelativeLayout>
 
@@ -111,5 +124,6 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:scrollbars="vertical"></com.xrecyclerview.XRecyclerView>
+
     </RelativeLayout>
 </ScrollView>

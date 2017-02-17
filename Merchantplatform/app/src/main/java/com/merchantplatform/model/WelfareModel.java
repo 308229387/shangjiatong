@@ -1,6 +1,8 @@
 package com.merchantplatform.model;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.Utils.UserUtils;
@@ -54,6 +57,8 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
     private TextView luckDraw;
     private TextView fraction;
     private TextView alredyAddCount;
+    private TextView title;
+    private ImageView noPrizeImage;
     private RushBuyCountDownTimerView countDownText;
     private ArrayList<GetTask.taskData> list;
 
@@ -71,6 +76,8 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
         luckDraw = (TextView) view.findViewById(R.id.luck_draw);
         fraction = (TextView) view.findViewById(R.id.welfare_fraction);
         alredyAddCount = (TextView) view.findViewById(R.id.alredy_add_count);
+        title = (TextView) view.findViewById(R.id.prize_layout_title);
+        noPrizeImage = (ImageView) view.findViewById(R.id.no_prize_image);
     }
 
     public void setting() {
@@ -209,31 +216,46 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
                 .execute(new WelfareData());
     }
 
+    public void noPrizeSetting() {
+        noPrizeImage.setVisibility(View.VISIBLE);
+    }
+
+    public void todayNoPrizeSetting() {
+        gridRecyclerView.setVisibility(View.VISIBLE);
+        luckDraw.setVisibility(View.VISIBLE);
+        luckDraw.setBackgroundResource(R.drawable.welfare_gray_button_back);
+        luckDraw.setEnabled(false);
+    }
+
+    public void todayHasPrize(){
+        gridRecyclerView.setVisibility(View.VISIBLE);
+        luckDraw.setVisibility(View.VISIBLE);
+    }
+
+    private void setPrizeLayout(GetWelfareResponse s) {
+        if (s.getData().getPrizeListType() == 3)
+            noPrizeSetting();
+        else if (s.getData().getPrizeListType() == 2)
+            todayNoPrizeSetting();
+        else if(s.getData().getPrizeListType() ==1)
+            todayHasPrize();
+    }
+
+    private void dealWithData(GetTask s) {
+        String a = s.getData().getOpentime();
+        String[] b = a.split(":");
+        taskTime = dealWithTimeToSecond(b);
+        alredyAddCount.setText(String.format(context.getString(R.string.alredy_add_count), s.getData().getGainscore()));
+        fraction.setText(s.getData().getScore() + "");
+        list = s.getData().getTasklist();
+        welfareTaskAdapter.setData(list);
+    }
+
     private class Task extends JsonCallback<GetTask> {
         @Override
         public void onResponse(boolean isFromCache, GetTask s, Request request, @Nullable Response response) {
-            try {
                 dealWithData(s);
                 dealWithTimeToResult();
-            } catch (Exception e) {
-                ToastUtils.showToast("数据解析错误");
-            }
-        }
-
-        private void dealWithData(GetTask s) {
-            String a = s.getData().getOpentime();
-            String[] b = a.split(":");
-            taskTime = dealWithTimeToSecond(b);
-            alredyAddCount.setText(String.format(context.getString(R.string.alredy_add_count), s.getData().getGainscore()));
-            fraction.setText(s.getData().getScore() + "");
-            list = s.getData().getTasklist();
-            welfareTaskAdapter.setData(list);
-        }
-
-        @Override
-        public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-            super.onError(isFromCache, call, response, e);
-            ToastUtils.showToast(e.getMessage());
         }
     }
 
@@ -242,12 +264,8 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
         @Override
         public void onResponse(boolean isFromCache, GetWelfareResponse s, Request request, @Nullable Response response) {
             mAdapter.setData(s.getData().getPrizeList());
-        }
-
-        @Override
-        public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-            super.onError(isFromCache, call, response, e);
-            ToastUtils.showToast(e.getMessage());
+            title.setText(s.getData().getPrizeTitle());
+            setPrizeLayout(s);
         }
     }
 }

@@ -36,6 +36,10 @@ public class TaskRecordAdapter extends RecyclerView.Adapter<TaskRecordAdapter.Vi
         holder.title.setText(list.get(position).getDescription());
         holder.time.setText(list.get(position).getInfo_complete_time());
         holder.count.setText(list.get(position).getScore());
+        if(String.valueOf(list.get(position).getScore().charAt(0)).equals("-"))
+            holder.count.setTextColor(context.getResources().getColor(R.color.task_record_green_color));
+        if(String.valueOf(list.get(position).getScore().charAt(0)).equals("+"))
+        holder.count.setTextColor(context.getResources().getColor(R.color.task_record_red_color));
     }
 
     public void setData(ArrayList<IntegralRecordResponse.dataInfo> list) {

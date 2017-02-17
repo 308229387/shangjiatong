@@ -70,4 +70,9 @@
     <color name="my_award_decoration">#EEEEEE</color>
     <color name="my_award_validity">#989898</color>
     <color name="my_award_text_color">#333333</color>
+
+    <color name="task_record_green_color">#029952</color>
+    <color name="task_record_red_color">#FF552E</color>
+
+
 </resources>

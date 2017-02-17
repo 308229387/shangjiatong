@@ -22,7 +22,7 @@ public class GetWelfareResponse implements Serializable {
         private int score;
         private int gainscore;
         private String opentime;
-        private String prizeListType;
+        private int prizeListType;
         private String msg;
         private ArrayList<taskData> tasklist;
         private ArrayList<prizeData> prizeList;
@@ -52,7 +52,7 @@ public class GetWelfareResponse implements Serializable {
             return msg;
         }
 
-        public String getPrizeListType() {
+        public int getPrizeListType() {
             return prizeListType;
         }
 
