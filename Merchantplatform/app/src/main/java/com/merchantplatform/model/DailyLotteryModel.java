@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.Utils.TitleBar;
+import com.Utils.eventbus.DailyLotteryScore;
 import com.callback.DialogCallback;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.AwardHistoryActivity;
@@ -38,6 +39,8 @@ import com.utils.DisplayUtils;
 import com.utils.ToastUtils;
 import com.utils.Urls;
 import com.xrecyclerview.BaseRecyclerViewAdapter;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -366,6 +369,9 @@ public class DailyLotteryModel extends BaseModel {
 
     private void updateNewestMessage(LotteryResultResponse lotteryResultResponse) {
         score = lotteryResultResponse.getData().getScore();
+        DailyLotteryScore dailyLotteryScore = new DailyLotteryScore();
+        dailyLotteryScore.setData(score);
+        EventBus.getDefault().post(dailyLotteryScore);
     }
 
     private void setScratchUI() {
