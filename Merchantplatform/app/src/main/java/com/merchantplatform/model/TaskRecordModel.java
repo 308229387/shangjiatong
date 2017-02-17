@@ -30,7 +30,9 @@ public class TaskRecordModel extends BaseModel {
     private LinearLayoutManager mLayoutManager;
     private TitleBar title;
     private TaskRecordAdapter adapter;
-    private ArrayList<IntegralRecordResponse.dataInfo> list;
+    private ArrayList<IntegralRecordResponse.dataInfo> list = new ArrayList<>();
+    private int tag = 1;
+    private long id;
 
     public TaskRecordModel(TaskRecordActivity context) {
         this.context = context;
@@ -66,20 +68,23 @@ public class TaskRecordModel extends BaseModel {
 
     public void getData() {
         OkHttpUtils.get(Urls.INTEGRAL_LIST)
-                .params("id", "")
-                .params("refreshType", 1 + "")
+                .params("id", String.valueOf(id))
+                .params("refreshType", tag + "")
                 .execute(new GetTaskRecord());
     }
 
     private class RecyclerViewLoadingListener implements XRecyclerView.LoadingListener {
         @Override
         public void onRefresh() {
-            listRecyclerView.refreshComplete();
+            tag = 1;
+            id = 0;
+            getData();
         }
 
         @Override
         public void onLoadMore() {
-            listRecyclerView.loadMoreComplete();
+            tag = 0;
+            getData();
         }
 
     }
@@ -89,8 +94,25 @@ public class TaskRecordModel extends BaseModel {
         @Override
         public void onResponse(boolean isFromCache, IntegralRecordResponse s, Request request, @Nullable Response response) {
             try {
-                list = s.getData();
+                if (s.getData().size() > 0 && tag == 1) {
+                    list.clear();
+                    for (IntegralRecordResponse.dataInfo a : s.getData())
+                        list.add(a);
+                    id = list.get(list.size() - 1).getId();
+                    listRecyclerView.refreshComplete();
+                }
+                if (s.getData().size() > 0 && tag == 0) {
+                    for (IntegralRecordResponse.dataInfo a : s.getData())
+                        list.add(a);
+                    id = list.get(list.size() - 1).getId();
+                    listRecyclerView.loadMoreComplete();
+                }
+                if(s.getData().size()==0)
+                    listRecyclerView.setNoMore(true);
+
+
                 adapter.setData(list);
+
             } catch (Exception e) {
                 ToastUtils.showToast("解析错误");
             }
