@@ -21,6 +21,7 @@ import com.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
 
+import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -59,7 +60,6 @@ public class AwardHistoryModel extends BaseModel {
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         xrv_my_award.setLayoutManager(layoutManager);
-        xrv_my_award.setEmptyView(emptyView);
     }
 
     public void setListener() {
@@ -75,6 +75,7 @@ public class AwardHistoryModel extends BaseModel {
     }
 
     public void getNewData() {
+        emptyView.setVisibility(View.GONE);
         OkHttpUtils.get(Urls.LOTTERY_HISTORY)
                 .params("refreshType", "1")
                 .execute(new getNewDataResponse(context, false));
@@ -134,7 +135,15 @@ public class AwardHistoryModel extends BaseModel {
                 awardHistoryList.addAll(awardHistoryResponse.getData());
                 awardHistoryAdapter.notifyDataSetChanged();
                 xrv_my_award.refreshComplete();
+            } else {
+                emptyView.setVisibility(View.VISIBLE);
             }
+        }
+
+        @Override
+        public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+            super.onError(isFromCache, call, response, e);
+            emptyView.setVisibility(View.VISIBLE);
         }
     }
 
