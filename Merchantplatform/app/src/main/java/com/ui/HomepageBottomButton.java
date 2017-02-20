@@ -72,6 +72,6 @@ public class HomepageBottomButton extends FrameLayout {
     }
 
     public void setDrawableInfo(int drawable) {
-        imageLayout.setBackgroundDrawable(getResources().getDrawable(drawable));
+        imageLayout.setBackgroundResource(drawable);
     }
 }

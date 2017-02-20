@@ -57,6 +57,7 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
     private ImageView noPrizeImage;
     private RushBuyCountDownTimerView countDownText;
     private ArrayList<GetTask.taskData> list;
+    private int[] a = new int[3];
 
     private int taskTime = -1;
     private int surplusTime;
@@ -164,6 +165,7 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
     public void dealWithTimeToResult() {
         if (taskTime != -1)
             getTime();
+        calculateResult();
         setTextToCountDown();
     }
 
@@ -174,16 +176,14 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
             surplusTime = taskTime + (86400 - GetServiceTime.systemTimeSecond);
     }
 
-    public int[] calculateResult() {
-        int[] a = new int[3];
+    public void calculateResult() {
         a[0] = surplusTime / 3600;
         a[1] = (surplusTime % 3600) / 60;
         a[2] = (surplusTime % 3600) % 60;
-        return a;
     }
 
     public void setTextToCountDown() {
-        countDownText.setTime(calculateResult()[0], calculateResult()[1], calculateResult()[2]);
+        countDownText.setTime(a[0], a[1], a[2]);
         countDownText.start();
     }
 
