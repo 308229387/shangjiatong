@@ -231,6 +231,7 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
                 dealWithClick(bottomButton3, infoListFragment);
                 break;
             case R.id.homepage_bottom_button4:
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_DH_FL);
                 dealWithClick(bottomButton4, welfareFragment);
                 break;
             case R.id.homepage_bottom_button5:
@@ -366,8 +367,6 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
 
 
     private class Task extends JsonCallback<String> {
-
-
 
 
         @Override

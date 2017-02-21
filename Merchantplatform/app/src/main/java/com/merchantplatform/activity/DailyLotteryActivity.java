@@ -29,18 +29,6 @@ public class DailyLotteryActivity extends BaseActivity<DailyLotteryModel> {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        model.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        model.onPause();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         model.destroyDialog();

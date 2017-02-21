@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.Utils.UserUtils;
 import com.callback.JsonCallback;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.DailyLotteryActivity;
 import com.merchantplatform.activity.TaskRecordActivity;
@@ -133,12 +135,14 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.luck_draw:
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_FL_CHOUJIANG);
                 if (UserUtils.getIsVip(context.getActivity()) == 1)
                     context.getActivity().startActivity(new Intent(context.getContext(), DailyLotteryActivity.class));
                 else
                     new NotIsVipDialog(context.getActivity(), "只有VIP用户可以参与抽奖");
                 break;
             case R.id.welfare_fraction:
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_FL_JIFEN);
                 context.getActivity().startActivity(new Intent(context.getContext(), TaskRecordActivity.class));
                 break;
         }

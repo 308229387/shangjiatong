@@ -158,7 +158,7 @@ public class InfoDetailModel extends BaseModel {
         iv_info_detail_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_TZXQ_FX);
                 //配置分享的参数
                 UMImage imagelocal = new UMImage(activity, R.mipmap.iv_logo);
                 imagelocal.compressFormat = Bitmap.CompressFormat.PNG;

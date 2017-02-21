@@ -3,7 +3,6 @@ package com.merchantplatform.model;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +20,8 @@ import android.widget.Toast;
 import com.Utils.TitleBar;
 import com.Utils.eventbus.DailyLotteryScore;
 import com.callback.DialogCallback;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.AwardHistoryActivity;
 import com.merchantplatform.activity.DailyLotteryActivity;
@@ -67,9 +68,6 @@ public class DailyLotteryModel extends BaseModel {
     private int openTime = -1;
     private int endTime = -1;
     private int surplusTime;
-    private boolean isLotteryAutoAgain = true;
-    private boolean isOnResume;
-    private Handler autoHandler = new Handler();
 
     public DailyLotteryModel(DailyLotteryActivity context) {
         this.context = context;
@@ -287,6 +285,7 @@ public class DailyLotteryModel extends BaseModel {
 
         @Override
         public void onClick(View v) {
+            LogUmengAgent.ins().log(LogUmengEnum.LOG_GJ_GUAJIANG);
             requestLotteryResult();
         }
     }
@@ -294,7 +293,7 @@ public class DailyLotteryModel extends BaseModel {
     private class OnLotteryAgain implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            isLotteryAutoAgain = false;
+            LogUmengAgent.ins().log(LogUmengEnum.LOG_GJ_JIXU);
             requestLotteryResultAgain();
         }
     }
@@ -437,26 +436,14 @@ public class DailyLotteryModel extends BaseModel {
         public void onCompleted(View view) {
             sv_daily_lottery.clear();
             sv_daily_lottery.setVisibility(View.GONE);
-            isLotteryAutoAgain = true;
-            threeSecondsAutoLottery();
         }
-    }
-
-    private void threeSecondsAutoLottery() {
-        autoHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (isLotteryAutoAgain && isOnResume) {
-                    bt_daily_lottery_again.performClick();
-                }
-            }
-        }, 3000);
     }
 
     private class OnGoToWelfare implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
+            LogUmengAgent.ins().log(LogUmengEnum.LOG_GJ_QURENWU);
             context.finish();
         }
     }
@@ -465,6 +452,7 @@ public class DailyLotteryModel extends BaseModel {
 
         @Override
         public void onClick(View v) {
+            LogUmengAgent.ins().log(LogUmengEnum.LOG_GJ_QUCHAKAN);
             Intent intent = new Intent(context, MyAwardActivity.class);
             context.startActivity(intent);
         }
@@ -486,6 +474,7 @@ public class DailyLotteryModel extends BaseModel {
 
         @Override
         public void onClick(View v) {
+            LogUmengAgent.ins().log(LogUmengEnum.LOG_GJ_JILU);
             Intent intent = new Intent(context, AwardHistoryActivity.class);
             context.startActivity(intent);
         }
@@ -526,14 +515,6 @@ public class DailyLotteryModel extends BaseModel {
         public void onDialogClickCancel() {
             dailyAwardDialog.dismiss();
         }
-    }
-
-    public void onResume() {
-        isOnResume = true;
-    }
-
-    public void onPause() {
-        isOnResume = false;
     }
 
     public void destroyDialog() {
