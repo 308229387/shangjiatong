@@ -160,6 +160,7 @@ public class DailyLotteryModel extends BaseModel {
 
         @Override
         public void onFinish() {
+            updateNewstSurplusTime();
             setIfCanStartScratch();
         }
     }
@@ -204,13 +205,14 @@ public class DailyLotteryModel extends BaseModel {
         String endTimes = lotteryDetailResponse.getData().getEndTime();
         openTime = dealWithTimeToSecond(openTimes.split(":"));
         endTime = dealWithTimeToSecond(endTimes.split(":"));
+        updateNewstSurplusTime();
+    }
+
+    private void updateNewstSurplusTime() {
         if (isInTimeSection()) {
             surplusTime = endTime - GetServiceTime.systemTimeSecond;
-        } else {
-            if (GetServiceTime.systemTimeSecond < 86400)
-                surplusTime = 86400 - GetServiceTime.systemTimeSecond + openTime;
-            else
-                surplusTime = openTime - GetServiceTime.systemTimeSecond;
+        } else if (GetServiceTime.systemTimeSecond < openTime) {
+            surplusTime = openTime - GetServiceTime.systemTimeSecond;
         }
     }
 
@@ -263,14 +265,32 @@ public class DailyLotteryModel extends BaseModel {
     }
 
     private void notInTimeSection() {
+        if (GetServiceTime.systemTimeSecond < openTime)
+            timeBeforeOpenTime();
+        else if (GetServiceTime.systemTimeSecond > endTime)
+            timeAfterEndTime();
+    }
+
+    private void timeBeforeOpenTime() {
         rl_daily_lottery_start.setVisibility(View.VISIBLE);
         tv_daily_lottery_start.setText("刮奖开始倒计时");
         sc_daily_lottery_count_down.setVisibility(View.VISIBLE);
         sc_daily_lottery_count_down.setTime(calculateResult()[0], calculateResult()[1], calculateResult()[2]);
         sc_daily_lottery_count_down.start();
-        bt_daily_lottery_start.setClickable(false);
-        bt_daily_lottery_start.setText("点我刮奖");
-        bt_daily_lottery_start.setBackgroundColor(context.getResources().getColor(R.color.a_grade_pressed));
+        bt_daily_lottery_start.setOnClickListener(new OnGoToWelfare());
+        bt_daily_lottery_start.setText("去做任务攒积分");
+        bt_daily_lottery_start.setClickable(true);
+        bt_daily_lottery_start.setBackgroundColor(context.getResources().getColor(R.color.home_bottom_color));
+    }
+
+    private void timeAfterEndTime() {
+        rl_daily_lottery_start.setVisibility(View.VISIBLE);
+        tv_daily_lottery_start.setText("今日刮奖已结束");
+        sc_daily_lottery_count_down.setVisibility(View.GONE);
+        bt_daily_lottery_start.setOnClickListener(new OnGoToWelfare());
+        bt_daily_lottery_start.setText("去做任务攒积分");
+        bt_daily_lottery_start.setClickable(true);
+        bt_daily_lottery_start.setBackgroundColor(context.getResources().getColor(R.color.home_bottom_color));
     }
 
     private int[] calculateResult() {
