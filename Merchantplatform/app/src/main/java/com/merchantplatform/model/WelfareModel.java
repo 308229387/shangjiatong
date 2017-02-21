@@ -163,7 +163,7 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
     }
 
     public void dealWithTimeToResult() {
-        if (taskTime != -1)
+        if (taskTime != -1 && GetServiceTime.systemTimeSecond != -1)
             getTime();
         calculateResult();
         setTextToCountDown();
