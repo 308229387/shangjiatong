@@ -8,7 +8,9 @@ package com.log;
  */
 public enum LogUmengEnum {
 
-    /**1.0.0版本埋点*/
+    /**
+     * 1.0.0版本埋点
+     */
     LOG_DIANHUAXQY_BDDH("dianhuaXQY_BDDH", "电话详情页_点击拨打电话"),
     LOG_DIANHUAXQY_RETURN("dianhuaXQY_return", "电话详情页_点击返回上一级"),
     LOG_DY_DH("DY_DH", "单页-电话"),
@@ -58,7 +60,9 @@ public enum LogUmengEnum {
     LOG_XIAOXILBY_DELETE("xiaoxiLBY_delete", "消息列表页-删除对话（左滑）"),
     LOG_XIAOXILBY_HHDJ("xiaoxiLBY_HHDJ", "消息列表页-会话点击"),
 
-    /**1.0.1版本埋点*/
+    /**
+     * 1.0.1版本埋点
+     */
     LOG_DH_TZ("DH_TZ", "底部导航_帖子"),
     LOG_XX_TGZS("XX_TGZS", "消息_推广助手"),
     LOG_TZLB_TZQY("TZLB_TZQY", "帖子列表_帖子区域"),
@@ -70,7 +74,21 @@ public enum LogUmengEnum {
     LOG_TZ_ZDSDK_FH("TZ_ZDSDK_FH", "帖子_置顶SDK_返回"),
     LOG_TGSDK_FH("TGSDK_FH", "推广SDK_返回"),
     LOG_TZXQ_FH("TZXQ_FH", "帖子详情页_返回"),
-    LOG_TZXQ_ZD("TZXQ_ZD", "帖子详情页_置顶");
+    LOG_TZXQ_ZD("TZXQ_ZD", "帖子详情页_置顶"),
+
+    /**
+     * 1.0.2版本埋点
+     */
+    LOG_DH_FL("DH_FL", "底部导航_福利"),
+    LOG_TZXQ_FX("TZXQ_FX", "帖子详情页_分享"),
+    LOG_FL_JIFEN("FL_jifen", "福利_积分总和"),
+    LOG_FL_CHOUJIANG("FL_choujiang", "刮奖按钮"),
+    LOG_FL_QUWANCHENG("FL_quwancheng", "福利_完成任务按钮"),
+    LOG_GJ_JILU("GJ_jilu", "刮奖_中奖记录"),
+    LOG_GJ_GUAJIANG("GJ_guajiang", "刮奖_点我刮奖"),
+    LOG_GJ_QURENWU("GJ_qurenwu", "刮奖_去做任务"),
+    LOG_GJ_JIXU("GJ_jixu", "刮奖_再抽一次"),
+    LOG_GJ_QUCHAKAN("GJ_quchakan", "刮奖_去查看中奖记录");
 
     private String eventid;
     private String eventDescription;

@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.bean.GetTask;
 import com.utils.ToastUtils;
@@ -74,6 +76,7 @@ public class WelfareTaskAdapter extends RecyclerView.Adapter<WelfareTaskAdapter.
             holder.button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    LogUmengAgent.ins().log(LogUmengEnum.LOG_FL_QUWANCHENG);
                     EventBus.getDefault().post(new HomePageNeedJump("jump"));
                 }
             });

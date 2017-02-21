@@ -21,6 +21,8 @@ import android.widget.Toast;
 import com.Utils.TitleBar;
 import com.Utils.eventbus.DailyLotteryScore;
 import com.callback.DialogCallback;
+import com.log.LogUmengAgent;
+import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.AwardHistoryActivity;
 import com.merchantplatform.activity.DailyLotteryActivity;
@@ -287,6 +289,7 @@ public class DailyLotteryModel extends BaseModel {
 
         @Override
         public void onClick(View v) {
+            LogUmengAgent.ins().log(LogUmengEnum.LOG_GJ_GUAJIANG);
             requestLotteryResult();
         }
     }
@@ -294,6 +297,7 @@ public class DailyLotteryModel extends BaseModel {
     private class OnLotteryAgain implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            LogUmengAgent.ins().log(LogUmengEnum.LOG_GJ_JIXU);
             isLotteryAutoAgain = false;
             requestLotteryResultAgain();
         }
@@ -457,6 +461,7 @@ public class DailyLotteryModel extends BaseModel {
 
         @Override
         public void onClick(View v) {
+            LogUmengAgent.ins().log(LogUmengEnum.LOG_GJ_QURENWU);
             context.finish();
         }
     }
@@ -465,6 +470,7 @@ public class DailyLotteryModel extends BaseModel {
 
         @Override
         public void onClick(View v) {
+            LogUmengAgent.ins().log(LogUmengEnum.LOG_GJ_QUCHAKAN);
             Intent intent = new Intent(context, MyAwardActivity.class);
             context.startActivity(intent);
         }
@@ -486,6 +492,7 @@ public class DailyLotteryModel extends BaseModel {
 
         @Override
         public void onClick(View v) {
+            LogUmengAgent.ins().log(LogUmengEnum.LOG_GJ_JILU);
             Intent intent = new Intent(context, AwardHistoryActivity.class);
             context.startActivity(intent);
         }
