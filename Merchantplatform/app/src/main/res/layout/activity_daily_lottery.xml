@@ -19,6 +19,7 @@
             android:layout_height="wrap_content" />
 
         <LinearLayout
+            android:id="@+id/ll_daily_lottery_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
@@ -89,6 +90,7 @@
         </LinearLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_daily_lottery_red"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginLeft="12dp"
@@ -190,7 +192,7 @@
                     android:layout_below="@+id/ll_daily_lottery_start"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
-                    android:background="@color/a_grade_pressed"
+                    android:background="@color/home_bottom_color"
                     android:text="点我刮奖"
                     android:textColor="@color/text_white"
                     android:textSize="16sp" />

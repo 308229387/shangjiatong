@@ -32,6 +32,7 @@ public class DailyLotteryActivity extends BaseActivity<DailyLotteryModel> {
     protected void onDestroy() {
         super.onDestroy();
         model.destroyDialog();
+        model.destroyImage();
     }
 
     @Override
