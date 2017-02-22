@@ -3,6 +3,7 @@ package com.merchantplatform.model;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -28,6 +30,7 @@ import com.merchantplatform.activity.DailyLotteryActivity;
 import com.merchantplatform.activity.MyAwardActivity;
 import com.merchantplatform.adapter.DailyAwardAdapter;
 import com.merchantplatform.adapter.ExplainMessageAdapter;
+import com.merchantplatform.application.HyApplication;
 import com.merchantplatform.bean.LotteryDetailResponse;
 import com.merchantplatform.bean.LotteryResultResponse;
 import com.merchantplatform.service.GetServiceTime;
@@ -57,7 +60,8 @@ public class DailyLotteryModel extends BaseModel {
     private ScratchCountDownTimerView sc_daily_lottery_count_down;
     private Button bt_daily_lottery_start, bt_daily_lottery_check, bt_daily_lottery_again;
     private ScratchView sv_daily_lottery;
-    private RelativeLayout rl_daily_lottery_start, rl_daily_lottery_result;
+    private LinearLayout ll_daily_lottery_white;
+    private RelativeLayout rl_daily_lottery_red, rl_daily_lottery_start, rl_daily_lottery_result;
     private ScrollView scrollview;
     private CommonDialog dailyAwardDialog;
     private DailyAwardAdapter dailyAwardAdapter;
@@ -86,6 +90,8 @@ public class DailyLotteryModel extends BaseModel {
         bt_daily_lottery_check = (Button) context.findViewById(R.id.bt_daily_lottery_check);
         bt_daily_lottery_again = (Button) context.findViewById(R.id.bt_daily_lottery_again);
         sv_daily_lottery = (ScratchView) context.findViewById(R.id.sv_daily_lottery);
+        ll_daily_lottery_white = (LinearLayout) context.findViewById(R.id.ll_daily_lottery_white);
+        rl_daily_lottery_red = (RelativeLayout) context.findViewById(R.id.rl_daily_lottery_red);
         rl_daily_lottery_start = (RelativeLayout) context.findViewById(R.id.rl_daily_lottery_start);
         rl_daily_lottery_result = (RelativeLayout) context.findViewById(R.id.rl_daily_lottery_result);
         rv_lottery_explain = (RecyclerView) context.findViewById(R.id.rv_lottery_explain);
@@ -251,7 +257,6 @@ public class DailyLotteryModel extends BaseModel {
         sc_daily_lottery_count_down.start();
         bt_daily_lottery_start.setOnClickListener(new OnLotteryStart());
         bt_daily_lottery_start.setText("点我刮奖");
-        bt_daily_lottery_start.setBackgroundColor(context.getResources().getColor(R.color.home_bottom_color));
     }
 
     private void noMoreScore() {
@@ -261,7 +266,6 @@ public class DailyLotteryModel extends BaseModel {
         bt_daily_lottery_start.setOnClickListener(new OnGoToWelfare());
         bt_daily_lottery_start.setText("去做任务攒积分");
         bt_daily_lottery_start.setClickable(true);
-        bt_daily_lottery_start.setBackgroundColor(context.getResources().getColor(R.color.home_bottom_color));
     }
 
     private void notInTimeSection() {
@@ -280,7 +284,6 @@ public class DailyLotteryModel extends BaseModel {
         bt_daily_lottery_start.setOnClickListener(new OnGoToWelfare());
         bt_daily_lottery_start.setText("去做任务攒积分");
         bt_daily_lottery_start.setClickable(true);
-        bt_daily_lottery_start.setBackgroundColor(context.getResources().getColor(R.color.home_bottom_color));
     }
 
     private void timeAfterEndTime() {
@@ -290,7 +293,6 @@ public class DailyLotteryModel extends BaseModel {
         bt_daily_lottery_start.setOnClickListener(new OnGoToWelfare());
         bt_daily_lottery_start.setText("去做任务攒积分");
         bt_daily_lottery_start.setClickable(true);
-        bt_daily_lottery_start.setBackgroundColor(context.getResources().getColor(R.color.home_bottom_color));
     }
 
     private int[] calculateResult() {
@@ -432,7 +434,7 @@ public class DailyLotteryModel extends BaseModel {
         }
         if (bt_daily_lottery_check.getVisibility() == View.VISIBLE) {
             ViewGroup.LayoutParams layoutParams = bt_daily_lottery_again.getLayoutParams();
-            layoutParams.width = layoutParams.width + DisplayUtils.dpToPx(60, context);
+            layoutParams.width = layoutParams.width + DisplayUtils.dpToPx(60, HyApplication.getApplication());
             bt_daily_lottery_again.setLayoutParams(layoutParams);
         }
         bt_daily_lottery_check.setVisibility(View.GONE);
@@ -444,7 +446,7 @@ public class DailyLotteryModel extends BaseModel {
         }
         if (bt_daily_lottery_check.getVisibility() == View.GONE) {
             ViewGroup.LayoutParams layoutParams = bt_daily_lottery_again.getLayoutParams();
-            layoutParams.width = layoutParams.width - DisplayUtils.dpToPx(60, context);
+            layoutParams.width = layoutParams.width - DisplayUtils.dpToPx(60, HyApplication.getApplication());
             bt_daily_lottery_again.setLayoutParams(layoutParams);
         }
         bt_daily_lottery_check.setVisibility(View.VISIBLE);
@@ -539,6 +541,29 @@ public class DailyLotteryModel extends BaseModel {
     public void destroyDialog() {
         if (dailyAwardDialog != null && dailyAwardDialog.isShowing()) {
             dailyAwardDialog.dismiss();
+        }
+    }
+
+    public void destroyImage() {
+        Drawable background_white = ll_daily_lottery_white.getBackground();
+        if (background_white != null) {
+            background_white.setCallback(null);
+            ll_daily_lottery_white.setBackgroundDrawable(null);
+        }
+        Drawable background_red = rl_daily_lottery_red.getBackground();
+        if (background_red != null) {
+            background_red.setCallback(null);
+            rl_daily_lottery_red.setBackgroundDrawable(null);
+        }
+        Drawable background_start = rl_daily_lottery_start.getBackground();
+        if (background_start != null) {
+            background_start.setCallback(null);
+            rl_daily_lottery_start.setBackgroundDrawable(null);
+        }
+        Drawable background_result = rl_daily_lottery_result.getBackground();
+        if (background_result != null) {
+            background_result.setCallback(null);
+            rl_daily_lottery_result.setBackgroundDrawable(null);
         }
     }
 }
