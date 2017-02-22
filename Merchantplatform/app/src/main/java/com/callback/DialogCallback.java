@@ -74,7 +74,7 @@ public abstract class DialogCallback<T> extends JsonCallback<T> {
                 isToast = true;
             }
             if (!isToast) {
-                ToastUtils.showToast(e.getMessage());
+                ToastUtils.showToast("网络错误");
             }
         }
     }
