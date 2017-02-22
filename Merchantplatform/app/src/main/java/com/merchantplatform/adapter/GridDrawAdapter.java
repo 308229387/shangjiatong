@@ -34,7 +34,6 @@ public class GridDrawAdapter extends RecyclerView.Adapter<GridDrawAdapter.ViewHo
     @Override
     public void onBindViewHolder(GridDrawAdapter.ViewHolder holder, final int position) {
         holder.price.setText(list.get(position).getPrizeName());
-        holder.name.setText(list.get(position).getPrizeLevel());
     }
 
     @Override
@@ -44,13 +43,11 @@ public class GridDrawAdapter extends RecyclerView.Adapter<GridDrawAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public View view;
-        private TextView name;
         private TextView price;
 
         public ViewHolder(View view) {
             super(view);
             this.view = view;
-            name = (TextView)view.findViewById(R.id.welfare_type);
             price = (TextView)view.findViewById(R.id.welfare_name);
         }
     }

@@ -49,7 +49,6 @@ public class WelfareTaskAdapter extends RecyclerView.Adapter<WelfareTaskAdapter.
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtils.showToast(position);
             }
         });
         holder.taskCount.setText("+" + list.get(position).getTask_score() + "");
