@@ -132,11 +132,11 @@ public class WelfareTaskAdapter extends RecyclerView.Adapter<WelfareTaskAdapter.
     }
 
     public GetTask.taskData getTopTaskInfo() {
-        return JZSU;
+        return ZDSU;
     }
 
     public GetTask.taskData getPrecisionTaskInfo() {
-        return ZDSU;
+        return JZSU;
     }
 
 
