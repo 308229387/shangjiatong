@@ -6,12 +6,10 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.callback.JsonCallback;
 import com.merchantplatform.bean.GetSystemTime;
 import com.okhttputils.OkHttpUtils;
-import com.utils.ToastUtils;
 import com.utils.Urls;
 
 import java.util.Calendar;
@@ -36,9 +34,14 @@ public class GetServiceTime extends Service {
     public static int systemTimeSecond = -1;
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+        CereatTimer();
+    }
+
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         getSystemTime();
-        CereatTimer();
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -108,6 +111,5 @@ public class GetServiceTime extends Service {
                     break;
             }
         }
-
     }
 }

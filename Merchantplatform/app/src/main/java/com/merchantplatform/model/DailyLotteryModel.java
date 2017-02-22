@@ -209,10 +209,10 @@ public class DailyLotteryModel extends BaseModel {
     }
 
     private void updateNewstSurplusTime() {
-        if (isInTimeSection()) {
-            surplusTime = endTime - GetServiceTime.systemTimeSecond;
-        } else if (GetServiceTime.systemTimeSecond < openTime) {
+        if (GetServiceTime.systemTimeSecond < openTime) {
             surplusTime = openTime - GetServiceTime.systemTimeSecond;
+        } else if (isInTimeSection()) {
+            surplusTime = endTime - GetServiceTime.systemTimeSecond;
         }
     }
 
@@ -389,7 +389,6 @@ public class DailyLotteryModel extends BaseModel {
     private void updateNewestMessage(LotteryResultResponse lotteryResultResponse) {
         score = lotteryResultResponse.getData().getScore();
         DailyLotteryScore dailyLotteryScore = new DailyLotteryScore();
-        dailyLotteryScore.setData(score);
         EventBus.getDefault().post(dailyLotteryScore);
     }
 
