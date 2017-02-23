@@ -58,9 +58,15 @@ public class WelfareTaskAdapter extends RecyclerView.Adapter<WelfareTaskAdapter.
 
         if (list.get(position).getState() == 0) {
             holder.taskCount.setTextColor(context.getResources().getColor(R.color.light_grey));
-            holder.button.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.welfare_button_back_gray));
+            holder.button.setBackgroundResource(R.drawable.welfare_button_back_gray);
             holder.button.setText("已完成");
             holder.button.setEnabled(false);
+        }
+        if(list.get(position).getState() ==1){
+            holder.taskCount.setTextColor(context.getResources().getColor(R.color.common_text_orange));
+            holder.button.setBackgroundResource(R.drawable.welfare_button_back);
+            holder.button.setText("去完成");
+            holder.button.setEnabled(true);
         }
 
         if (list.get(position).getProcess_code().equals("SHXXSU"))
