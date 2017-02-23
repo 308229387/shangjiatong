@@ -207,7 +207,7 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
         OkHttpUtils.get(Urls.TASK_SUCCESS)
                 .params("module_code", welfareTaskAdapter.getTopTaskInfo().getModule_code())
                 .params("process_code", welfareTaskAdapter.getTopTaskInfo().getProcess_code())
-                .execute(new WelfareData());
+                .execute(new WelfareEmptyData());
         getTask();
     }
 
@@ -215,7 +215,7 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
         OkHttpUtils.get(Urls.TASK_SUCCESS)
                 .params("module_code", welfareTaskAdapter.getPrecisionTaskInfo().getModule_code())
                 .params("process_code", welfareTaskAdapter.getPrecisionTaskInfo().getProcess_code())
-                .execute(new WelfareData());
+                .execute(new WelfareEmptyData());
     }
 
     public void noPrizeSetting() {

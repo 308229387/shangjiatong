@@ -32,6 +32,7 @@ public class GetServiceTime extends Service {
     final Handler handler = new TempHandler();
     final int WHAT = 102;
     public static int systemTimeSecond = -1;
+    private int tag = 0;
 
     @Override
     public void onCreate() {
@@ -104,10 +105,15 @@ public class GetServiceTime extends Service {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            tag++;
             switch (msg.what) {
                 case WHAT:
                     if (systemTimeSecond != (-1))
                         systemTimeSecond++;
+                    else {
+                        if (tag % 10 == 0)
+                            getSystemTime();
+                    }
                     break;
             }
         }
