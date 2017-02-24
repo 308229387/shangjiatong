@@ -101,6 +101,7 @@ public class SendMsgLayout extends LinearLayout implements OnClickListener, OnIn
         mEmojiLayout.setGmacsChatActivity(gmacsChatActivity);
 
         mSendMoreLayout.setGmacsChatActivity(gmacsChatActivity);
+        //mSendMoreLayout.set
 
         sendMessageEditText.addTextChangedListener(this);
         sendMessageEditText.setOnClickListener(this);
@@ -139,7 +140,8 @@ public class SendMsgLayout extends LinearLayout implements OnClickListener, OnIn
             LogUmengAgent.ins().log(LogUmengEnum.LOG_LIAOTIANXQY_JH);//添加埋点信息
             switchSendMore();
         } else if (v == mSendVoice) {
-            LogUmengAgent.ins().log(LogUmengEnum.LOG_LIAOTIANXQY_YYLT);            switchSendVoice();
+            LogUmengAgent.ins().log(LogUmengEnum.LOG_LIAOTIANXQY_YYLT);
+            switchSendVoice();
         } else if (v == mQuickButton) {
             switchSendQuickMsg();
         } else if (v == sendTextButton) {
@@ -231,6 +233,7 @@ public class SendMsgLayout extends LinearLayout implements OnClickListener, OnIn
                                 }
                             });
                         }
+
                         public void onFailedRecord() {
                         }
                     });
@@ -346,6 +349,7 @@ public class SendMsgLayout extends LinearLayout implements OnClickListener, OnIn
             mSendEmojiButton.setVisibility(View.GONE);
         }
     }
+
     public void setSendMoreEnable(boolean enable) {
         if (enable) {
             mSendMoreButton.setVisibility(View.VISIBLE);
@@ -506,7 +510,7 @@ public class SendMsgLayout extends LinearLayout implements OnClickListener, OnIn
         if (needShowSendMoreLayoutInOnHide) {
             mSendMoreLayout.setVisibility(VISIBLE);
             needShowSendMoreLayoutInOnHide = false;
-        } else if (needShowEmojiLayoutInOnHide){
+        } else if (needShowEmojiLayoutInOnHide) {
             mEmojiLayout.show();
             needShowEmojiLayoutInOnHide = false;
         } else {
@@ -524,7 +528,7 @@ public class SendMsgLayout extends LinearLayout implements OnClickListener, OnIn
 
     public void setMsgEditText(String msg) {
         sendMessageEditText.setText(msg);
-        if (!TextUtils.isEmpty(msg)){
+        if (!TextUtils.isEmpty(msg)) {
             sendMessageEditText.setSelection(msg.length());
         }
     }
@@ -539,15 +543,16 @@ public class SendMsgLayout extends LinearLayout implements OnClickListener, OnIn
     }
 
 
-    public void registerOnMoreItemClick(SendMoreLayout.OnMoreItemClickListener onMoreItemClickListener){
+    public void registerOnMoreItemClick(SendMoreLayout.OnMoreItemClickListener onMoreItemClickListener) {
         mSendMoreLayout.registerOnMoreItemClick(onMoreItemClickListener);
     }
 
     /**
      * There are only 3 default buttons.
      * <br><b>We support more than eight buttons, there is a ViewPager will be shown if possible.</b></br>
-     * @param imgResId The resource id of image of buttons.
-     * @param text The unique texts of buttons, which can identify buttons definitely.
+     *
+     * @param imgResId                       The resource id of image of buttons.
+     * @param text                           The unique texts of buttons, which can identify buttons definitely.
      * @param isShowItemsSingleLinePreferred
      */
     public void setSendMoreItemResources(int[] imgResId, String[] text, boolean isShowItemsSingleLinePreferred) {
@@ -654,5 +659,9 @@ public class SendMsgLayout extends LinearLayout implements OnClickListener, OnIn
                 break;
         }
         return !gmacsChatActivity.sendMsgLayoutTouchable;
+    }
+
+    public void notifyMorelayout() {
+        mSendMoreLayout.notifyData();
     }
 }

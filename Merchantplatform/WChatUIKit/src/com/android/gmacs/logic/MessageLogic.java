@@ -1,18 +1,27 @@
 package com.android.gmacs.logic;
 
+import android.app.Application;
 import android.app.Notification;
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.Utils.UserUtils;
+import com.Utils.eventbus.IMCustomChangeEvent;
+import com.android.gmacs.utils.CustomMessage;
+import com.android.gmacs.utils.CustomMessageUtil;
+import com.android.gmacs.event.LoadHistoryMessagesEvent;
 import com.common.gmacs.core.ClientManager;
 import com.common.gmacs.core.ContactsManager;
 import com.common.gmacs.core.MessageManager;
-import com.android.gmacs.event.LoadHistoryMessagesEvent;
 import com.common.gmacs.core.RecentTalkManager;
 import com.common.gmacs.parse.contact.Contact;
 import com.common.gmacs.parse.message.GmacsUserInfo;
 import com.common.gmacs.parse.message.Message;
 import com.common.gmacs.parse.talk.TalkType;
 import com.common.gmacs.utils.GmacsUtils;
+import com.db.dao.IMMessageEntity;
+import com.db.helper.IMMessageDaoOperate;
+import com.google.gson.Gson;
 import com.xxganji.gmacs.proto.CommonPB;
 
 import org.greenrobot.eventbus.EventBus;
@@ -26,6 +35,17 @@ import java.util.List;
 public class MessageLogic extends BaseLogic implements MessageManager.RecvMsgListener {
 
     private static volatile MessageLogic ourInstance;
+
+    private static Application context;
+
+    public static void init(Application application) {
+        context = application;
+    }
+
+    public Application getApplication() {
+        return context;
+    }
+
     public static MessageLogic getInstance() {
         if (null == ourInstance) {
             synchronized (MessageLogic.class) {
@@ -36,13 +56,13 @@ public class MessageLogic extends BaseLogic implements MessageManager.RecvMsgLis
         }
         return ourInstance;
     }
+
     private MessageLogic() {
 
     }
 
     /**
      * 加载聊天消息记录
-     *
      */
     public void getHistoryMessages(String otherId, int otherSource, long beginMsgId, int count) {
         MessageManager.getInstance().getHistoryAsync(otherId, otherSource, beginMsgId, count, new MessageManager.GetHistoryMsgCb() {
@@ -58,7 +78,6 @@ public class MessageLogic extends BaseLogic implements MessageManager.RecvMsgLis
 
     /**
      * 删除消息
-     *
      */
     public void deleteMsgByMsgIds(long[] msgIdList) {
         if (msgIdList == null || msgIdList.length == 0) {
@@ -98,6 +117,24 @@ public class MessageLogic extends BaseLogic implements MessageManager.RecvMsgLis
 
     @Override
     public void msgRecved(Message msg) {
+        //TODO：Penta接收到的消息判断是否是客服消息
+        //if (msg.mSenderInfo.mUserSource == 8) {
+        if (true) {
+            String spUserId = UserUtils.getCustomId(context);
+            if (TextUtils.isEmpty(spUserId) || !msg.mSenderInfo.mUserId.equals(spUserId)) {
+
+                //TODO:服务端确认是否变更
+                //发送客服变更消息Event
+                UserUtils.setCustomId(context, msg.mSenderInfo.mUserId);
+                EventBus.getDefault().post(new IMCustomChangeEvent(msg.mSenderInfo));
+            }
+
+            //消息入私有库
+            IMMessageEntity imMessageEntity = CustomMessageUtil.originalToEntity(msg);
+            IMMessageDaoOperate.insertOrReplace(imMessageEntity);
+        }
+
+        //发送接收消息EventBus
         EventBus.getDefault().post(msg);
         if (msg.mMsgDetail.getmMsgContent().isNotice() && notifyHelper != null) {
             // 排除当前正进行的会话

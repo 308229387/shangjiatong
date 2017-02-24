@@ -20,35 +20,35 @@ public class CallListDaoOperate {
      * @desc 添加数据至数据库
      **/
     public static void insert(Context context, CallList callList) {
-        DbManager.getDaoSession(context).getCallListDao().insert(callList);
+        DbManager.getInstance().getDaoSession().getCallListDao().insert(callList);
     }
 
     /**
      * @desc 从数据库中删除
      **/
     public static void deleteData(Context context, CallList callList) {
-        DbManager.getDaoSession(context).getCallListDao().delete(callList);
+        DbManager.getInstance().getDaoSession().getCallListDao().delete(callList);
     }
 
     /**
      * @desc 根据条件删除
      **/
     public static void deleteByCondition(Context context, WhereCondition condition) {
-        DbManager.getDaoSession(context).getCallListDao().queryBuilder().where(condition).buildDelete().executeDeleteWithoutDetachingEntities();
+        DbManager.getInstance().getDaoSession().getCallListDao().queryBuilder().where(condition).buildDelete().executeDeleteWithoutDetachingEntities();
     }
 
     /**
      * @desc 修改数据
      **/
     public static void updateData(Context context, CallList callList) {
-        DbManager.getDaoSession(context).getCallListDao().update(callList);
+        DbManager.getInstance().getDaoSession().getCallListDao().update(callList);
     }
 
     /**
      * @desc 按条件返回结果集
      **/
     public static ArrayList<CallList> queryByCondition(Context context, WhereCondition whereCondition, WhereCondition... condMore) {
-        QueryBuilder<CallList> builder = DbManager.getDaoSession(context).getCallListDao().queryBuilder();
+        QueryBuilder<CallList> builder = DbManager.getInstance().getDaoSession().getCallListDao().queryBuilder();
         return (ArrayList<CallList>) builder.where(whereCondition, condMore).list();
     }
 
@@ -56,7 +56,7 @@ public class CallListDaoOperate {
      * @desc 按条件返回最新的限制条数结果集
      **/
     public static ArrayList<CallList> queryLimitDataByCondition(Context context, int limit, WhereCondition whereCondition, WhereCondition... condMore) {
-        QueryBuilder<CallList> builder = DbManager.getDaoSession(context).getCallListDao().queryBuilder();
+        QueryBuilder<CallList> builder = DbManager.getInstance().getDaoSession().getCallListDao().queryBuilder();
         return (ArrayList<CallList>) builder.where(whereCondition, condMore).orderDesc(CallListDao.Properties.CallTime).limit(limit).list();
     }
 
@@ -64,7 +64,7 @@ public class CallListDaoOperate {
      * @desc 按条件返回最新的限制条数结果集（带偏移量）
      **/
     public static ArrayList<CallList> queryOffsetLimitDataByCondition(Context context, int offset, int limit, WhereCondition whereCondition, WhereCondition... condMore) {
-        QueryBuilder<CallList> builder = DbManager.getDaoSession(context).getCallListDao().queryBuilder();
+        QueryBuilder<CallList> builder = DbManager.getInstance().getDaoSession().getCallListDao().queryBuilder();
         return (ArrayList<CallList>) builder.where(whereCondition, condMore).orderDesc(CallListDao.Properties.CallTime).offset(offset).limit(limit).list();
     }
 }

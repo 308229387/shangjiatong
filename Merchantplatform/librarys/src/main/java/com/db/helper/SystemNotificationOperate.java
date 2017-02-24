@@ -20,14 +20,14 @@ public class SystemNotificationOperate {
      * @desc 添加数据至数据库，如果存在，将原来的数据覆盖
      **/
     public static void insertOrReplace(Context context, SystemNotificationDetial callDetail) {
-        DbManager.getDaoSession(context).getSystemNotificationDetialDao().insertOrReplace(callDetail);
+        DbManager.getInstance().getDaoSession().getSystemNotificationDetialDao().insertOrReplace(callDetail);
     }
 
     /**
      * @desc 按条件返回按时间排序的结果集
      **/
     public static ArrayList<SystemNotificationDetial> queryByCondition(Context context, WhereCondition whereCondition, WhereCondition... condMore) {
-        QueryBuilder<SystemNotificationDetial> builder = DbManager.getDaoSession(context).getSystemNotificationDetialDao().queryBuilder();
+        QueryBuilder<SystemNotificationDetial> builder = DbManager.getInstance().getDaoSession().getSystemNotificationDetialDao().queryBuilder();
         return (ArrayList<SystemNotificationDetial>) builder.where(whereCondition, condMore).orderDesc(SystemNotificationDetialDao.Properties.SortId).list();
     }
 
@@ -35,7 +35,7 @@ public class SystemNotificationOperate {
      * @desc 按条件返回按时间排序的结果集
      **/
     public static ArrayList<SystemNotificationDetial> queryAll(Context context) {
-        QueryBuilder<SystemNotificationDetial> builder = DbManager.getDaoSession(context).getSystemNotificationDetialDao().queryBuilder();
+        QueryBuilder<SystemNotificationDetial> builder = DbManager.getInstance().getDaoSession().getSystemNotificationDetialDao().queryBuilder();
         WhereCondition conditionUserId = SystemNotificationDetialDao.Properties.UserId.eq(UserUtils.getUserId(context));
         return (ArrayList<SystemNotificationDetial>) builder.where(conditionUserId).orderDesc(SystemNotificationDetialDao.Properties.SortId).list();
     }
@@ -45,7 +45,7 @@ public class SystemNotificationOperate {
      * @desc 按条件返回按时间排序的结果集
      **/
     public static ArrayList<SystemNotificationDetial> checkReaded(Context context) {
-        QueryBuilder<SystemNotificationDetial> builder = DbManager.getDaoSession(context).getSystemNotificationDetialDao().queryBuilder();
+        QueryBuilder<SystemNotificationDetial> builder = DbManager.getInstance().getDaoSession().getSystemNotificationDetialDao().queryBuilder();
         WhereCondition conditionUserId = SystemNotificationDetialDao.Properties.UserId.eq(UserUtils.getUserId(context));
         return (ArrayList<SystemNotificationDetial>) builder.where(conditionUserId, SystemNotificationDetialDao.Properties.IsReaded.notEq(0)).list();
     }
@@ -60,7 +60,7 @@ public class SystemNotificationOperate {
         }
 
         for (SystemNotificationDetial a : unReaded) {
-            DbManager.getDaoSession(context).getSystemNotificationDetialDao().update(a);
+            DbManager.getInstance().getDaoSession().getSystemNotificationDetialDao().update(a);
         }
     }
 

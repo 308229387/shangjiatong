@@ -96,6 +96,9 @@ public class LoginActivityModel extends BaseModel {
 
     private void initIM() {
         new IMLoginUtils(context);
+        //TODO:服务端请求专属客服接口
+
+
     }
 
     private void bindAlias() {

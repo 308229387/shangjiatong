@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.android.gmacs.R;
 import com.android.gmacs.core.UserInfoCacheManager;
+import com.android.gmacs.utils.DateUtils;
 import com.android.gmacs.view.NetworkImageView;
 import com.common.gmacs.parse.message.Message;
 import com.common.gmacs.parse.talk.Talk;
@@ -32,7 +33,7 @@ public class ConversationListAdapter extends BaseAdapter {
     private LayoutInflater li;
     protected ArrayList<Talk> talkList;
     private Context context;
-    private SimpleDateFormat mSimpleDateFormat = (SimpleDateFormat) SimpleDateFormat.getDateTimeInstance();
+
 
     public ConversationListAdapter(Context context, ArrayList<Talk> talkList) {
         this.context = context;
@@ -40,55 +41,7 @@ public class ConversationListAdapter extends BaseAdapter {
         this.talkList = talkList;
     }
 
-    /**
-     * Format time.<br>Format message time on your own rule by overriding this method.</br>
-     *
-     * @param messageTime
-     * @return
-     */
-    protected String messageTimeFormat(long messageTime) {
-        Calendar calendar = Calendar.getInstance();
-        int currentYear = calendar.get(Calendar.YEAR);
-        int currentMonth = calendar.get(Calendar.MONTH);
-        int currentDate = calendar.get(Calendar.DATE);
 
-        calendar.setTimeInMillis(messageTime);
-        calendar.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-
-        int messageYear = calendar.get(Calendar.YEAR);
-        int messageMonth = calendar.get(Calendar.MONTH);
-        int messageDate = calendar.get(Calendar.DATE);
-
-        String formattedTime;
-        if (currentYear == messageYear && currentMonth == messageMonth) {
-            int delta = currentDate - messageDate;
-            if (delta == 0) {
-                mSimpleDateFormat.applyPattern("HH:mm");
-                formattedTime = mSimpleDateFormat.format(calendar.getTime());
-            } else if (delta > 0) {
-                if (delta == 1) {
-                    formattedTime = "昨天";
-                } else if (delta < 7) {
-                    String[] weekOfDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
-                    int week = calendar.get(Calendar.DAY_OF_WEEK) - 1;
-                    formattedTime = weekOfDays[week >= 0 ? week : 0];
-                } else {
-                    mSimpleDateFormat.applyPattern("MM-dd");
-                    formattedTime = mSimpleDateFormat.format(calendar.getTime());
-                }
-            } else {
-                mSimpleDateFormat.applyPattern("MM-dd");
-                formattedTime = mSimpleDateFormat.format(calendar.getTime());
-            }
-        } else if (currentYear == messageYear) {
-            mSimpleDateFormat.applyPattern("MM-dd");
-            formattedTime = mSimpleDateFormat.format(calendar.getTime());
-        } else {
-            mSimpleDateFormat.applyPattern("yyyy-MM-dd");
-            formattedTime = mSimpleDateFormat.format(calendar.getTime());
-        }
-        return formattedTime;
-    }
 
     /**
      * 用以子类重写该方法，当昵称未空时来设置默认昵称,若子类不重写则默认显示userId
@@ -207,7 +160,7 @@ public class ConversationListAdapter extends BaseAdapter {
 
         vh.tv_msg_text.setText(talk.getNewestMsgContent(context));
 
-        vh.tv_msg_time.setText(messageTimeFormat(talk.getTalkUpdatetime()));
+        vh.tv_msg_time.setText(DateUtils.messageTimeFormat(talk.getTalkUpdatetime()));
 
         // 未读消息数
         if (talk.mNoReadMsgCount > 99) {

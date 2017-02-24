@@ -23,6 +23,7 @@ public class UserUtils {
     private static final String VIP = "vip";
     private static final String FUNDS_OPEN = "funds_open";
     private static final String STAFF_PHONE = "staff_Phone";
+    private static final String CUSTOM_ID = "custom_id";//专属客服Id
     private static String userId = "";
     public static int hasValidate = 0; //默认未认证，1代表已经认证
     private static String face = "";
@@ -197,4 +198,19 @@ public class UserUtils {
         vip = context.getSharedPreferences(USER_SP_NAME, 0).getInt(VIP, 0);
         return vip;
     }
+
+    public static String getCustomId(Context context) {
+        return getSharedPreferences(context).getString(CUSTOM_ID + getUserId(context), "");
+    }
+
+    public static void setCustomId(Context context, String customid) {
+        SharedPreferences sp = context.getSharedPreferences(USER_SP_NAME, 0);
+        sp.edit().putString(CUSTOM_ID + getUserId(context), customid).commit();
+    }
+
+    private static SharedPreferences getSharedPreferences(Context context) {
+        return context.getSharedPreferences(USER_SP_NAME, 0);
+    }
+
+
 }

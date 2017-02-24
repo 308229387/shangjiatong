@@ -6,6 +6,7 @@ import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
 import com.Utils.UserUtils;
+import com.android.gmacs.logic.MessageLogic;
 import com.db.helper.DbManager;
 import com.facebook.stetho.Stetho;
 import com.log.LogUmengAgent;
@@ -57,7 +58,7 @@ public class HyApplication extends MultiDexApplication {
     }
 
     private void initGreenDao() {
-        DbManager.getInstance(application);
+        DbManager.init(application);
     }
 
     private void setApplicationContext() {
@@ -78,6 +79,7 @@ public class HyApplication extends MultiDexApplication {
 
     public void initIM() {
         new IMInitAppUtils(application);
+        MessageLogic.init(application);
     }
 
     private void initBugly() {

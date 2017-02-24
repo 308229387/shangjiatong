@@ -171,7 +171,8 @@ public class SendMoreLayout extends LinearLayout implements ViewPager.OnPageChan
             } else if (btnImgResIds[i] == R.drawable.gmacs_ic_send_camera) {
                 data.add(new SendMoreAdapterDataStruct(R.drawable.gmacs_ic_send_camera, DEFAULT_BTN_TEXT_CAMERA));
             } else if (btnImgResIds[i] == R.drawable.gmacs_ic_send_location) {
-                data.add(new SendMoreAdapterDataStruct(R.drawable.gmacs_ic_send_location, DEFAULT_BTN_TEXT_LOCATION));
+                if (null == gmacsChatActivity || gmacsChatActivity.sendLocationEnable())
+                    data.add(new SendMoreAdapterDataStruct(R.drawable.gmacs_ic_send_location, DEFAULT_BTN_TEXT_LOCATION));
             } else {
                 data.add(new SendMoreAdapterDataStruct(btnImgResIds[i], btnTexts[i]));
             }

@@ -27,6 +27,9 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.Utils.UserUtils;
+import com.Utils.eventbus.IMCustomChangeEvent;
+import com.Utils.eventbus.IMDetailDestroyEvent;
 import com.Utils.eventbus.IMKickoffEvent;
 import com.Utils.eventbus.IMReconnectEvent;
 import com.android.gmacs.R;
@@ -46,6 +49,9 @@ import com.android.gmacs.observer.CardMsgClickListener;
 import com.android.gmacs.sound.SoundPlayer;
 import com.android.gmacs.sound.SoundRecord;
 import com.android.gmacs.sound.SoundRecordUtil;
+import com.android.gmacs.utils.IMConstant;
+import com.android.gmacs.utils.CustomMessage;
+import com.android.gmacs.utils.CustomMessageUtil;
 import com.android.gmacs.view.GmacsDialog;
 import com.android.gmacs.view.PublicAccountMenu;
 import com.android.gmacs.view.ResizeLayout;
@@ -72,6 +78,9 @@ import com.common.gmacs.utils.GmacsConfig;
 import com.common.gmacs.utils.GmacsEnvi;
 import com.common.gmacs.utils.ToastUtil;
 import com.commonview.CommonDialog;
+import com.db.dao.IMMessageEntity;
+import com.db.helper.IMMessageDaoOperate;
+import com.google.gson.Gson;
 import com.log.LogUmengAgent;
 import com.log.LogUmengEnum;
 import com.xxganji.gmacs.proto.CommonPB;
@@ -81,6 +90,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -132,11 +142,44 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
     private GmacsDialog.Builder captchaDialog;
     private Set<Message> msgsNeedIdentify;
 
-    public CardMsgClickListener getCardMsgClickListener() {
-        return this;
+    private CommonDialog commonDialog;//断线重连弹窗
+
+    private int type;//聊天类型 1：专属客服聊天 0：普通聊天
+    private long customMessageTime = 0;//最后一条消息时间戳，用于增量拉取
+    private Message.MessageUserInfo messageUserInfo;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.gmacs_activity_chat);
+        setBackEnable(false);
     }
 
-    private CommonDialog commonDialog;
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mTalk != null) {
+            mTalk.setTalkState(Talk.TALK_STATE_ING);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ClientManager.getInstance().registerLogViewListener(this);
+        showImKickoffDialog();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        beginMsgId = -1;
+        mTalk = null;
+        MessageManager.getInstance().removeSendIMMsgListener(this);
+        TalkLogic.getInstance().getRecentTalks();
+        parseExtraObjects(intent);
+        refreshData();
+    }
 
     @Override
     protected void initView() {
@@ -210,67 +253,14 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
 
     @Override
     protected void initData() {
+        //注册EventBus
         EventBus.getDefault().register(this);
+        //获取intent传过来的数据
         parseExtraObjects(getIntent());
-        if (mTalk == null) {
-            return;
-        }
-        RecentTalkManager.getInstance().updateTalkRead(mTalk.mTalkOtherUserId, mTalk.mTalkOtherUserSource);
-        getOtherInfo();
-        resetViewState();
-        clearNotice();
-        setChatAdapter(new GmacsChatAdapter(this, mTalk));
-        loadHistoryMsgs();
-        loadPAFunctionConfig();
-        String currentTalkId = mTalk.getTalkId();
-        boolean isTalkHasSendingMsgs = MessageManager.getInstance().isTalkHasSendingMsgs(currentTalkId);
-        // 若有则把发送消息listener添加到发送manage中
-        if (isTalkHasSendingMsgs) {
-            MessageManager.getInstance().addSendIMMsgListener(this);
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissionOnNeed(Manifest.permission.READ_EXTERNAL_STORAGE,
-                    GmacsConstant.REQUEST_CODE_READ_EXTERNAL_STORAGE);
-        }
+        refreshData();
     }
 
-    protected void setChatAdapter(GmacsChatAdapter chatAdapter) {
-        this.chatAdapter = chatAdapter;
-        chatListView.setAdapter(chatAdapter);
-    }
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.gmacs_activity_chat);
-        setBackEnable(false);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (mTalk != null) {
-            mTalk.setTalkState(Talk.TALK_STATE_ING);
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        ClientManager.getInstance().registerLogViewListener(this);
-        showImKickoffDialog();
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        beginMsgId = -1;
-        mTalk = null;
-        MessageManager.getInstance().removeSendIMMsgListener(this);
-        TalkLogic.getInstance().getRecentTalks();
-        parseExtraObjects(intent);
+    private void refreshData() {
         if (mTalk == null) {
             return;
         }
@@ -281,7 +271,10 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
         if (chatAdapter != null) {
             chatAdapter.clearData();
             chatAdapter.setTalk(mTalk);
+        } else {
+            setChatAdapter(new GmacsChatAdapter(this, mTalk));
         }
+        //加载历史消息
         loadHistoryMsgs();
         loadPAFunctionConfig();
         String currentTalkId = mTalk.getTalkId();
@@ -297,6 +290,12 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
                     GmacsConstant.REQUEST_CODE_READ_EXTERNAL_STORAGE);
         }
     }
+
+    protected void setChatAdapter(GmacsChatAdapter chatAdapter) {
+        this.chatAdapter = chatAdapter;
+        chatListView.setAdapter(chatAdapter);
+    }
+
 
     /**
      * 重新设置view状态,从onNewIntent方法进入时需要重置状态
@@ -333,10 +332,14 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
     }
 
     public void sendTextMsg(String message) {
-        MessageManager.getInstance().sendIMTextMsg(mTalk.mTalkType, message
-                , refer, mTalk.mTalkOtherUserId
-                , mTalk.mTalkOtherUserSource, otherOpenId
-                , otherDeviceId, new IMMsgSendListener(this));
+        if (type == IMConstant.EXTRA_TYPE_CUSTOM) {
+            CustomMessageUtil.sendIMTextMsg(message, refer, messageUserInfo, new IMMsgSendListener(this));
+        } else {
+            MessageManager.getInstance().sendIMTextMsg(mTalk.mTalkType, message
+                    , refer, mTalk.mTalkOtherUserId
+                    , mTalk.mTalkOtherUserSource, otherOpenId
+                    , otherDeviceId, new IMMsgSendListener(this));
+        }
     }
 
     public void sendAudioMsg(String filePath, int duration) {
@@ -347,10 +350,14 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
     }
 
     public void sendImageMsg(String filePath, boolean sendRawImage) {
-        MessageManager.getInstance().sendIMImageMsg(mTalk.mTalkType, refer
-                , filePath, mTalk.mTalkOtherUserId
-                , mTalk.mTalkOtherUserSource, otherOpenId, otherDeviceId
-                , sendRawImage, new IMMsgSendListener(this));
+        if (type == IMConstant.EXTRA_TYPE_CUSTOM) {
+            CustomMessageUtil.sendIMImageMsg(refer, filePath, sendRawImage, messageUserInfo, new IMMsgSendListener(this));
+        } else {
+            MessageManager.getInstance().sendIMImageMsg(mTalk.mTalkType, refer
+                    , filePath, mTalk.mTalkOtherUserId
+                    , mTalk.mTalkOtherUserSource, otherOpenId, otherDeviceId
+                    , sendRawImage, new IMMsgSendListener(this));
+        }
     }
 
     public void sendLocationMsg(double longitude, double latitude, String address) {
@@ -384,7 +391,19 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
     }
 
     public boolean sendAudioEnable() {
-        return true;
+        if (type == IMConstant.EXTRA_TYPE_CUSTOM) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean sendLocationEnable() {
+        if (type == IMConstant.EXTRA_TYPE_CUSTOM) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public boolean sendEmojiEnable() {
@@ -529,9 +548,14 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
 
     @Override
     protected void onDestroy() {
+        if(type == IMConstant.EXTRA_TYPE_CUSTOM) {
+            IMMessageDaoOperate.updateDataRedDot(UserUtils.getUserId(this));
+            EventBus.getDefault().post(new IMDetailDestroyEvent());
+        }
         destroy();
         super.onDestroy();
         LogUmengAgent.ins().log(LogUmengEnum.LOG_LIAOTIANXQY_RETURN);
+
     }
 
     /**
@@ -559,8 +583,14 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
      * @param intent
      */
     protected void parseExtraObjects(Intent intent) {
-        Message.MessageUserInfo messageUserInfo = intent.getParcelableExtra(GmacsConstant.EXTRA_OHTER_USER_INFO);
+        messageUserInfo = intent.getParcelableExtra(GmacsConstant.EXTRA_OHTER_USER_INFO);
         refer = intent.getStringExtra(GmacsConstant.EXTRA_REFER);
+        type = intent.getIntExtra(IMConstant.EXTRA_TYPE, 0);//获取会话类型 0：普通聊天 1：客服聊天
+        sendMsgLayout.notifyMorelayout();//更新更多布局，主要是为了去掉专属客服的位置功能。
+        initExtraConfig();
+    }
+
+    private void initExtraConfig() {
         if (messageUserInfo == null || TextUtils.isEmpty(messageUserInfo.mUserId)) {
             finish();
             return;
@@ -588,6 +618,16 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
         sendMsgLayout.setMsgEditText(mTalk.mDraftBoxMsg);
         // 设置标题栏名称
         setTitle(mTalk.getOtherName(this, defaultName(TalkType.isGroupTalk(mTalk))));
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        if (type == IMConstant.EXTRA_TYPE_CUSTOM) {
+            super.setTitle("专属客服");
+        } else {
+            super.setTitle(title);
+        }
+
     }
 
     private void getOtherInfo() {
@@ -742,18 +782,46 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
      */
     private void loadHistoryMsgs() {
         isRequestLoading = true;
-        if (chatAdapter.getCount() > 0) {
-            beginMsgId = chatAdapter.getItem(0).mId;
+        if (type == IMConstant.EXTRA_TYPE_CUSTOM) {
+
+            List<IMMessageEntity> imMessageEntities = IMMessageDaoOperate.getCustomMessageByLastTime(
+                    customMessageTime, UserUtils.getUserId(this));
+
+            if (null != imMessageEntities && imMessageEntities.size() > 0) {
+
+                //记录最后一条消息时间戳
+                customMessageTime = imMessageEntities.get(imMessageEntities.size() - 1).getTimestamp();
+
+                List<Message> messageList = new ArrayList<>();
+                for (IMMessageEntity imMessageEntity : imMessageEntities) {
+                    Message message = CustomMessageUtil.entityToOriginal(imMessageEntity);
+                    messageList.add(message);
+                }
+                addAndSelectionFromTopMsgs(messageList);
+            }
+            chatListView.stopLoadMore();//停止下拉刷新
+            isRequestLoading = false;//不是请求消息状态
+            loadMsgsProgressBar.setVisibility(View.GONE);//关闭获取消息动画
+
+            if (null == imMessageEntities || imMessageEntities.size() < 20) {
+                hasMore = false;//没有更多历史消息了
+            }
+
         } else {
-            beginMsgId = -1;
+            if (chatAdapter.getCount() > 0) {
+                beginMsgId = chatAdapter.getItem(0).mId;
+            } else {
+                beginMsgId = -1;
+            }
+            MessageLogic.getInstance().getHistoryMessages(mTalk.mTalkOtherUserId,
+                    mTalk.mTalkOtherUserSource, beginMsgId, msgCountPerRequest);
         }
-        MessageLogic.getInstance().getHistoryMessages(mTalk.mTalkOtherUserId,
-                mTalk.mTalkOtherUserSource, beginMsgId, msgCountPerRequest);
     }
 
     /**
      * Downloading public account function config.
      */
+
     private void loadPAFunctionConfig() {
         sendMsgLayout.mPublicAccountMenuBtn.setVisibility(View.GONE);
         publicAccountMenu.setVisibility(LinearLayout.GONE);
@@ -813,6 +881,9 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
         TalkLogic.getInstance().getRecentTalks();
     }
 
+    /**
+     * @param msgs 消息列表
+     */
     private void addAndSelectionFromTopMsgs(List<Message> msgs) {
         chatAdapter.addMsgsToStartPosition(msgs);
         if (chatListView.getTranscriptMode() == ListView.TRANSCRIPT_MODE_DISABLED && !isAutoPull) {
@@ -821,6 +892,7 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
         } else {
             chatListView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         }
+
     }
 
 
@@ -907,6 +979,10 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
             }
         }
     }
+
+    /**
+     * ------------------ EventBus监听 start ------------------------
+     */
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onRemark(RemarkEvent event) {
@@ -1214,11 +1290,44 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
         }
     }
 
+    /**
+     * IM断开监听
+     *
+     * @param action
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(IMKickoffEvent action) {
         showImKickoffDialog();
     }
 
+    /**
+     * 专属客服更新判断
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(IMCustomChangeEvent event) {
+        String customId = UserUtils.getCustomId(this);
+
+        if (TextUtils.isEmpty(customId)) {
+            showCustomKickoffDialog();
+        } else {
+            if (event.getData() instanceof Message.MessageUserInfo) {
+                messageUserInfo = (Message.MessageUserInfo) event.getData();
+                initExtraConfig();
+                //refreshData();
+            }
+        }
+
+
+    }
+
+    /**------------------ EventBus监听 end ------------------------*/
+
+
+    /**
+     * IM断开连接后，弹窗提示
+     */
     public void showImKickoffDialog() {
 
         if (GmacsManager.isLoginState == false) {
@@ -1250,5 +1359,40 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
             }
         }
     }
+
+    /**
+     * 专属客服到期，弹窗提示
+     */
+    public void showCustomKickoffDialog() {
+
+        if (null == commonDialog) {
+            commonDialog = new CommonDialog(this);
+            commonDialog.setBtnCancelColor(com.android.gmacs.R.color.common_text_gray);
+            commonDialog.setContent("您的专属客服已到期，请续费使用");
+            commonDialog.setContentColor(com.android.gmacs.R.color.common_text_gray);
+            commonDialog.setTitle("提示");
+            commonDialog.setBtnCancelColor(com.android.gmacs.R.color.common_text_gray);
+            commonDialog.setBtnSureText("确认");
+            commonDialog.setCancelable(false);
+            commonDialog.setOnDialogClickListener(new CommonDialog.OnDialogClickListener() {
+                @Override
+                public void onDialogClickSure() {
+                    commonDialog.dismiss();
+                    finish();
+                }
+
+                @Override
+                public void onDialogClickCancel() {
+
+                }
+            });
+        }
+        //dialog没有展示,则展示
+        if (!commonDialog.isShowing()) {
+            commonDialog.show();
+        }
+
+    }
+
 
 }

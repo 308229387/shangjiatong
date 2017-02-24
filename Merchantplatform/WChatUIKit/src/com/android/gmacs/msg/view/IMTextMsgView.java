@@ -41,7 +41,7 @@ public class IMTextMsgView extends IMMessageView {
 
     protected View initView(LayoutInflater inflater) {
         //自己发送消息文本展现的样式
-        if (textMsg.parentMsg.mIsSelfSendMsg) {
+        if (null != textMsg.parentMsg && textMsg.parentMsg.mIsSelfSendMsg) {
             mContentView = inflater.inflate(R.layout.gmacs_adapter_talk_item_right_content_text, null);
             msgContentTv = (TextView) mContentView.findViewById(R.id.msg);
             msgContentTv.setTextColor(getContentView().getContext().getResources().getColor(R.color.chat_right));
@@ -92,7 +92,7 @@ public class IMTextMsgView extends IMMessageView {
     }
 
     private boolean extractUrlOrPhoneNumber(TextView v) {
-        SpannableString builder = FaceConversionUtil.getInstace().getExpressionString(textMsg.mMsg,20);
+        SpannableString builder = FaceConversionUtil.getInstace().getExpressionString(textMsg.mMsg, 20);
 
         // 匹配网络地址
         Matcher m = StringUtil.getUrlPattern().matcher(textMsg.mMsg);

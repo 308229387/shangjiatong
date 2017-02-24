@@ -3,7 +3,6 @@ package com.db.dao;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.annotation.Unique;
 
 /**
  * Created by 58 on 2016/12/6.

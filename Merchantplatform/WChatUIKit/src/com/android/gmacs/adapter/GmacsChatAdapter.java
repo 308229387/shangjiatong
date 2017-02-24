@@ -147,6 +147,10 @@ public class GmacsChatAdapter extends BaseAdapter implements View.OnClickListene
     public int getItemViewType(int position) {
         int type = ITEM_TYPE_EMPTY;
         Message message = mAllMessage.get(position);
+
+        if (null == message.mMsgDetail.getmMsgContent()) {
+            return type;
+        }
         String msgType = message.mMsgDetail.getmMsgContent().mType;
         if (MsgContentType.TYPE_GROUP_JOIN.equals(msgType)) {
             type = ITEM_TYPE_GROUP_JOIN;

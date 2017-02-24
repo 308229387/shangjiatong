@@ -1,9 +1,12 @@
 package com.android.gmacs.fragment;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.Utils.JumpExtendAction;
 import com.Utils.JumpSystemNotificationAction;
@@ -22,18 +26,31 @@ import com.Utils.SystemGetNotificationInfoAction;
 import com.Utils.SystemNotification;
 import com.Utils.SystemNotificationInfoAction;
 import com.Utils.UserUtils;
+import com.Utils.eventbus.IMCustomChangeEvent;
+import com.Utils.eventbus.IMDetailDestroyEvent;
 import com.android.gmacs.R;
+import com.android.gmacs.activity.GmacsChatActivity;
 import com.android.gmacs.adapter.ConversationListAdapter;
+import com.android.gmacs.utils.DateUtils;
+import com.android.gmacs.utils.IMConstant;
+import com.android.gmacs.utils.CustomMessage;
+import com.android.gmacs.utils.CustomMessageUtil;
 import com.android.gmacs.event.RecentTalksEvent;
 import com.android.gmacs.logic.TalkLogic;
 import com.android.gmacs.view.GmacsDialog;
 import com.common.gmacs.core.ChannelManager;
 import com.common.gmacs.core.ClientManager;
 import com.common.gmacs.core.GmacsConstant;
+import com.common.gmacs.msg.MsgContentType;
+import com.common.gmacs.msg.data.IMTextMsg;
+import com.common.gmacs.parse.message.Message;
 import com.common.gmacs.parse.talk.Talk;
 import com.common.gmacs.utils.GLog;
 import com.common.gmacs.utils.GmacsUiUtil;
 import com.common.gmacs.utils.NetworkUtil;
+import com.db.dao.IMMessageEntity;
+import com.db.helper.IMMessageDaoOperate;
+import com.google.gson.Gson;
 import com.log.LogUmengAgent;
 import com.log.LogUmengEnum;
 
@@ -51,7 +68,7 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
 
     protected ListView mListView;
     private ConversationListAdapter mTalkAdapter;
-    private LinearLayout mHiddenView, mHeaderView, mConnectionStatusHeaderViewContainer;
+    private LinearLayout mHeaderView, mConnectionStatusHeaderViewContainer;
     private boolean isBackground;
     private TextView redDot;
     private TextView systemText;
@@ -71,25 +88,19 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
     protected ImageView mConnectionStatusImageView;
 
     protected ArrayList<Talk> mTalks = new ArrayList<>();
-    private RelativeLayout titleBar;
     private ImageView callPhone;
     private RelativeLayout extendHead;
 
+    private TextView customTime;
+    private TextView customTextView;
+    private TextView customRedDot;
+    Message.MessageUserInfo messageUserInfo;
+    private View customView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setContentView(R.layout.gmacs_conversation_list);
         return super.onCreateView(inflater, container, savedInstanceState);
-    }
-
-    /**
-     * Add the child what you want in parent view mHiddenView, as hiddenView above ListView (NoScroll).
-     * <br><b>Invoke this function in method <i>initView().</i></b></br>
-     *
-     * @return hiddenView The parent view which has been added above ListView.
-     */
-    protected LinearLayout getHiddenView() {
-        return mHiddenView;
     }
 
     /**
@@ -108,7 +119,6 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
 
     @Override
     protected void initView() {
-        titleBar = (RelativeLayout) getView().findViewById(R.id.title_bar);
         mListView = (ListView) getView().findViewById(R.id.lv_conversation_list);
         mTalkListEmptyPromptView = (LinearLayout) getView().findViewById(R.id.ll_conversation_list_empty_prompt);
         callPhone = (ImageView) getView().findViewById(R.id.call_phone);
@@ -123,37 +133,12 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
             }
         });
 
+        /** 创建ListViewHeader部分 start */
+
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
-        View v = inflater.inflate(R.layout.system_notification_list_layout, null);
-        View vv = inflater.inflate(R.layout.extend_list_layout, null);
-        systemHead = (RelativeLayout) v.findViewById(R.id.system_notification_layout);
-        extendHead = (RelativeLayout) vv.findViewById(R.id.extend_layout);
 
-        redDot = (TextView) systemHead.findViewById(R.id.tv_conversation_msg_count);
-        systemText = (TextView) systemHead.findViewById(R.id.tv_conversation_msg_text);
-        systemHead.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                redDot.setVisibility(View.GONE);
-                EventBus.getDefault().post(new JumpSystemNotificationAction("jump"));
-            }
-        });
-        extendHead.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LogUmengAgent.ins().log(LogUmengEnum.LOG_XX_TGZS);
-                EventBus.getDefault().post(new JumpExtendAction("jump"));
-
-            }
-        });
-
-
-        mHiddenView = (LinearLayout) getView().findViewById(R.id.ll_conversation_hiddenview);
-        mHeaderView = new LinearLayout(getActivity());
-        mHeaderView.setOrientation(LinearLayout.VERTICAL);
-        mHeaderView.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
-                AbsListView.LayoutParams.WRAP_CONTENT));
+        //IM连接状态栏
         if (showDisconnectedHeader()) {
             ClientManager.getInstance().regConnectListener(this);
             mConnectionStatusHeaderViewContainer = new LinearLayout(getActivity());
@@ -166,13 +151,50 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
             mConnectionStatusHeaderViewContainer.addView(mConnectionStatusHeaderView);
             showOrHideDisconnectHeader(ClientManager.getInstance().getConnectionStatus());
         }
-        if (null != mConnectionStatusHeaderViewContainer) {
-            mListView.addHeaderView(mConnectionStatusHeaderViewContainer);
-        }
-        mListView.addHeaderView(mHeaderView);
-        mListView.addHeaderView(v);
-        mListView.addHeaderView(vv);
 
+        //系统通知
+        View systemNotificationView = inflater.inflate(R.layout.system_notification_list_layout, null);
+        systemHead = (RelativeLayout) systemNotificationView.findViewById(R.id.system_notification_layout);
+        redDot = (TextView) systemHead.findViewById(R.id.tv_conversation_msg_count);
+        systemText = (TextView) systemHead.findViewById(R.id.tv_conversation_msg_text);
+        systemHead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redDot.setVisibility(View.GONE);
+                EventBus.getDefault().post(new JumpSystemNotificationAction("jump"));
+            }
+        });
+        //专属客服
+        customView = inflater.inflate(R.layout.im_custom_layout, null);
+        customTextView = (TextView) customView.findViewById(R.id.tv_conversation_msg_text);
+        customTime = (TextView) customView.findViewById(R.id.tv_conversation_msg_time);
+        customRedDot = (TextView) customView.findViewById(R.id.tv_conversation_msg_count);
+        refreshCustom();
+        //推广助手
+        View extendView = inflater.inflate(R.layout.extend_list_layout, null);
+        extendHead = (RelativeLayout) extendView.findViewById(R.id.extend_layout);
+        extendHead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_XX_TGZS);
+                EventBus.getDefault().post(new JumpExtendAction("jump"));
+
+            }
+        });
+        mHeaderView = new LinearLayout(getActivity());
+        mHeaderView.setOrientation(LinearLayout.VERTICAL);
+        mHeaderView.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
+                AbsListView.LayoutParams.WRAP_CONTENT));
+        //HeaderView 加入各个子View
+        if (null != mConnectionStatusHeaderViewContainer) {
+            mHeaderView.addView(mConnectionStatusHeaderViewContainer);
+        }
+        mHeaderView.addView(systemNotificationView);
+        mHeaderView.addView(customView);
+        mHeaderView.addView(extendView);
+        //给ListView添加头部
+        mListView.addHeaderView(mHeaderView);
+        /** 创建ListViewHeader部分 start */
     }
 
 
@@ -201,6 +223,27 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
         if (temp.getRedDot() > 0 && showRed)
             redDot.setVisibility(View.VISIBLE);
         redDot.setText(temp.getRedDot() + "");
+    }
+
+    /**
+     * 专属客服更新判断
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(IMCustomChangeEvent event) {
+        //更新专属客服是否需要展示
+        judgeHasCustom();
+    }
+
+    /**
+     * IM聊天详情 退出事件，更新专属客服红点
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(IMDetailDestroyEvent event) {
+        refreshCustom();
     }
 
 
@@ -330,7 +373,14 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onTalkListChanged(RecentTalksEvent event) {
+
+        refreshCustom();
+
         List<Talk> talks = event.getTalks();
+
+        //TODO: Penta去除客服talks;
+
+
         mTalks.clear();
         if (talks != null) {
             mTalks.addAll(talks);
@@ -364,6 +414,79 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
         boolean isTalkListEmpty = mTalks.size() == 0;
         specialTalksPreparedWrapper(ChannelManager.getInstance().getSpecialTalks(), isTalkListEmpty);
     }
+
+    /**
+     * 更新客服消息栏状态
+     */
+    private void refreshCustom() {
+
+        //判断是否展示专属客服
+        if (!judgeHasCustom()) {
+            return;
+        }
+
+        IMMessageEntity imMessageEntity = IMMessageDaoOperate.getLastCustomMessage(UserUtils.getUserId(getActivity()));
+        if (null != imMessageEntity) {
+
+            Message message = CustomMessageUtil.entityToOriginal(imMessageEntity);
+            if (imMessageEntity.getReceiverId().equals(UserUtils.getUserId(getActivity()))) {
+                messageUserInfo = message.mSenderInfo;
+            } else if (imMessageEntity.getSenderId().equals(UserUtils.getUserId(getActivity()))) {
+                messageUserInfo = message.mReceiverInfo;
+            }
+
+            if (messageUserInfo != null)
+                customView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Toast.makeText(getActivity(), "进入详情页", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(createToChatActivity(getActivity(), "", messageUserInfo, IMConstant.EXTRA_TYPE_CUSTOM));
+                        startActivity(intent);
+                        IMMessageDaoOperate.updateDataRedDot(UserUtils.getUserId(getActivity()));
+                    }
+                });
+            if (null != message.mMsgDetail.getmMsgContent().mType) {
+                if (message.mMsgDetail.getmMsgContent().mType.equals(MsgContentType.TYPE_TEXT)) {
+                    customTextView.setText(((message.mMsgDetail.getmMsgContent())).getPlainTextSpannableStringBuilder(getActivity()));
+                } else if (message.mMsgDetail.getmMsgContent().mType.equals(MsgContentType.TYPE_IMAGE)) {
+                    customTextView.setText("[图片]");
+                }
+            }
+
+            long count = IMMessageDaoOperate.countUnRead(UserUtils.getUserId(getActivity()));
+            if (count > 0) {
+                customRedDot.setText("" + count);
+                customRedDot.setVisibility(View.VISIBLE);
+            } else {
+                customRedDot.setVisibility(View.GONE);
+            }
+            customTime.setText(DateUtils.messageTimeFormat(message.mMsgDetail.mMsgUpdateTime));
+
+
+        }
+
+    }
+
+    private boolean judgeHasCustom() {
+        String customId = UserUtils.getCustomId(getActivity());
+
+        if (TextUtils.isEmpty(customId)) {
+            customView.setVisibility(View.GONE);
+            return false;
+        } else {
+            customView.setVisibility(View.VISIBLE);
+            return true;
+        }
+    }
+
+    public static Intent createToChatActivity(Context var0, String var1, Message.MessageUserInfo var2, int type) {
+        Intent var3 = new Intent(var0, GmacsChatActivity.class);
+        var3.putExtra("refer", var1);
+        var3.putExtra("otherUserInfo", var2);
+        var3.putExtra(IMConstant.EXTRA_TYPE, type);
+        return var3;
+    }
+
 
     @Override
     public void connectStatusChanged(final int status) {

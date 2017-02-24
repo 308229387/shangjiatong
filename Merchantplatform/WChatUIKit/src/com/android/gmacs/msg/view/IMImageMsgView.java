@@ -58,7 +58,7 @@ public class IMImageMsgView extends IMMessageView {
 
     @Override
     protected View initView(LayoutInflater inflater) {
-        if (mImageMsg.parentMsg.mIsSelfSendMsg) {
+        if (null != mImageMsg.parentMsg && mImageMsg.parentMsg.mIsSelfSendMsg) {
             mContentView = inflater.inflate(R.layout.gmacs_adapter_talk_item_content_right_picture, null);
         } else {
             mContentView = inflater.inflate(R.layout.gmacs_adapter_talk_item_content_left_picture, null);
