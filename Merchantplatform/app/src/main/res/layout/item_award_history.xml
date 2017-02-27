@@ -3,33 +3,44 @@
     android:layout_width="match_parent"
     android:layout_height="50dp">
 
-    <TextView
-        android:id="@+id/tv_award_history_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="15dp"
-        android:layout_centerVertical="true"
-        android:textColor="@color/my_award_text_color"
-        android:textSize="13sp" />
-
-    <TextView
-        android:id="@+id/tv_award_history_username"
-        android:layout_width="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/my_award_text_color"
-        android:textSize="13sp" />
-
-    <TextView
-        android:id="@+id/tv_award_history_name"
-        android:layout_width="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_marginRight="15dp"
-        android:textColor="@color/my_award_text_color"
-        android:textSize="14sp" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="7">
+
+        <TextView
+            android:id="@+id/tv_award_history_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textColor="@color/my_award_text_color"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_award_history_username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.3"
+            android:gravity="center"
+            android:textColor="@color/my_award_text_color"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_award_history_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.7"
+            android:ellipsize="end"
+            android:maxEms="4"
+            android:singleLine="true"
+            android:textColor="@color/my_award_text_color"
+            android:textSize="14sp" />
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
