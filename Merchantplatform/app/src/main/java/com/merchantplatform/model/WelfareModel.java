@@ -58,7 +58,7 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
     private TextView title;
     private ImageView noPrizeImage;
     private RushBuyCountDownTimerView countDownText;
-    private ArrayList<GetTask.taskData> list;
+    private ArrayList<GetWelfareResponse.taskData> lists;
     private int[] a = new int[3];
 
     private int taskTime = -1;
@@ -118,10 +118,16 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
     private void listViewSetting() {
         listRecyclerView.setLayoutManager(mLayoutManager);
         listRecyclerView.setHasFixedSize(true);
-        welfareTaskAdapter = new WelfareTaskAdapter(context.getActivity(), list);
+        welfareTaskAdapter = new WelfareTaskAdapter(context.getActivity());
         listRecyclerView.setAdapter(welfareTaskAdapter);
         headView = LayoutInflater.from(context.getActivity()).inflate(R.layout.welfare_list_header, listRecyclerView, false);
         countDownText = (RushBuyCountDownTimerView) headView.findViewById(R.id.timerView);
+        countDownText.setTimeUpListener(new RushBuyCountDownTimerView.TimeUpListener() {
+            @Override
+            public void timeUp() {
+                getWelfare();
+            }
+        });
         listRecyclerView.addHeaderView(headView);
         listRecyclerView.setPullRefreshEnabled(false);
         listRecyclerView.setLoadingMoreEnabled(false);
@@ -146,11 +152,6 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
                 context.getActivity().startActivity(new Intent(context.getContext(), TaskRecordActivity.class));
                 break;
         }
-    }
-
-    public void getTask() {
-        OkHttpUtils.get(Urls.GET_TASK)
-                .execute(new Task());
     }
 
     public void getWelfare() {
@@ -208,7 +209,7 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
                 .params("module_code", welfareTaskAdapter.getTopTaskInfo().getModule_code())
                 .params("process_code", welfareTaskAdapter.getTopTaskInfo().getProcess_code())
                 .execute(new WelfareEmptyData());
-        getTask();
+        getWelfare();
     }
 
     public void precisionSuccess() {
@@ -243,22 +244,14 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
             todayHasPrize();
     }
 
-    private void dealWithData(GetTask s) {
+    private void dealWithTaskData(GetWelfareResponse s) {
         String a = s.getData().getOpentime();
         String[] b = a.split(":");
         taskTime = dealWithTimeToSecond(b);
         alredyAddCount.setText(String.format(context.getString(R.string.alredy_add_count), s.getData().getGainscore()));
         fraction.setText(s.getData().getScore() + "");
-        list = s.getData().getTasklist();
-        welfareTaskAdapter.setData(list);
-    }
-
-    private class Task extends JsonCallback<GetTask> {
-        @Override
-        public void onResponse(boolean isFromCache, GetTask s, Request request, @Nullable Response response) {
-            dealWithData(s);
-            dealWithTimeToResult();
-        }
+        lists = s.getData().getTasklist();
+        welfareTaskAdapter.setDatas(lists);
     }
 
     private class WelfareData extends JsonCallback<GetWelfareResponse> {
@@ -268,6 +261,9 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
             mAdapter.setData(s.getData().getPrizeList());
             title.setText(s.getData().getPrizeTitle());
             setPrizeLayout(s);
+
+            dealWithTaskData(s);
+            dealWithTimeToResult();
         }
     }
 
@@ -275,7 +271,7 @@ public class WelfareModel extends BaseModel implements View.OnClickListener {
     private class WelfareEmptyData extends JsonCallback<String> {
         @Override
         public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
-            getTask();
+            getWelfare();
         }
     }
 }

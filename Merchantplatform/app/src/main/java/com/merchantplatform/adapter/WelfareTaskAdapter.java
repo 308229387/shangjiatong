@@ -13,6 +13,7 @@ import com.log.LogUmengAgent;
 import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.bean.GetTask;
+import com.merchantplatform.bean.GetWelfareResponse;
 import com.utils.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -26,16 +27,15 @@ import java.util.ArrayList;
 public class WelfareTaskAdapter extends RecyclerView.Adapter<WelfareTaskAdapter.ViewHolder> {
     private LayoutInflater inflater;
     private Context context;
-    private ArrayList<GetTask.taskData> list;
+    private ArrayList<GetWelfareResponse.taskData> list;
     private int a;
-    private GetTask.taskData ZDSU;
-    private GetTask.taskData SHXXSU;
-    private GetTask.taskData JZSU;
+    private GetWelfareResponse.taskData ZDSU;
+    private GetWelfareResponse.taskData SHXXSU;
+    private GetWelfareResponse.taskData JZSU;
 
 
-    public WelfareTaskAdapter(Context context, ArrayList<GetTask.taskData> list) {
+    public WelfareTaskAdapter(Context context) {
         this.context = context;
-        this.list = list;
         inflater = LayoutInflater.from(context);
     }
 
@@ -95,7 +95,7 @@ public class WelfareTaskAdapter extends RecyclerView.Adapter<WelfareTaskAdapter.
         return list == null ? 0 : list.size();
     }
 
-    public void setData(ArrayList<GetTask.taskData> list) {
+    public void setDatas(ArrayList<GetWelfareResponse.taskData> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -133,15 +133,15 @@ public class WelfareTaskAdapter extends RecyclerView.Adapter<WelfareTaskAdapter.
 
     }
 
-    public GetTask.taskData getShareTaskInfo() {
+    public GetWelfareResponse.taskData getShareTaskInfo() {
         return SHXXSU;
     }
 
-    public GetTask.taskData getTopTaskInfo() {
+    public GetWelfareResponse.taskData getTopTaskInfo() {
         return ZDSU;
     }
 
-    public GetTask.taskData getPrecisionTaskInfo() {
+    public GetWelfareResponse.taskData getPrecisionTaskInfo() {
         return JZSU;
     }
 
