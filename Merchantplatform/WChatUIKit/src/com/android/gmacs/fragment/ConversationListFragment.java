@@ -1,12 +1,10 @@
 package com.android.gmacs.fragment;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.Utils.JumpExtendAction;
 import com.Utils.JumpSystemNotificationAction;
@@ -31,18 +28,16 @@ import com.Utils.eventbus.IMDetailDestroyEvent;
 import com.android.gmacs.R;
 import com.android.gmacs.activity.GmacsChatActivity;
 import com.android.gmacs.adapter.ConversationListAdapter;
-import com.android.gmacs.utils.DateUtils;
-import com.android.gmacs.utils.IMConstant;
-import com.android.gmacs.utils.CustomMessage;
-import com.android.gmacs.utils.CustomMessageUtil;
 import com.android.gmacs.event.RecentTalksEvent;
 import com.android.gmacs.logic.TalkLogic;
+import com.android.gmacs.utils.CustomMessageUtil;
+import com.android.gmacs.utils.DateUtils;
+import com.android.gmacs.utils.IMConstant;
 import com.android.gmacs.view.GmacsDialog;
 import com.common.gmacs.core.ChannelManager;
 import com.common.gmacs.core.ClientManager;
 import com.common.gmacs.core.GmacsConstant;
 import com.common.gmacs.msg.MsgContentType;
-import com.common.gmacs.msg.data.IMTextMsg;
 import com.common.gmacs.parse.message.Message;
 import com.common.gmacs.parse.talk.Talk;
 import com.common.gmacs.utils.GLog;
@@ -50,7 +45,6 @@ import com.common.gmacs.utils.GmacsUiUtil;
 import com.common.gmacs.utils.NetworkUtil;
 import com.db.dao.IMMessageEntity;
 import com.db.helper.IMMessageDaoOperate;
-import com.google.gson.Gson;
 import com.log.LogUmengAgent;
 import com.log.LogUmengEnum;
 
@@ -445,7 +439,7 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
                         IMMessageDaoOperate.updateDataRedDot(UserUtils.getUserId(getActivity()));
                     }
                 });
-            if (null != message.mMsgDetail.getmMsgContent().mType) {
+            if (null != message.mMsgDetail.getmMsgContent() && null != message.mMsgDetail.getmMsgContent().mType) {
                 if (message.mMsgDetail.getmMsgContent().mType.equals(MsgContentType.TYPE_TEXT)) {
                     customTextView.setText(((message.mMsgDetail.getmMsgContent())).getPlainTextSpannableStringBuilder(getActivity()));
                 } else if (message.mMsgDetail.getmMsgContent().mType.equals(MsgContentType.TYPE_IMAGE)) {

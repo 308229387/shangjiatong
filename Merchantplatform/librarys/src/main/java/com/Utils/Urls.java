@@ -1,4 +1,4 @@
-package com.utils;
+package com.Utils;
 
 /**
  * Created by SongYongmeng on 2016/11/21.
@@ -88,6 +88,9 @@ public class Urls {
      * 获取app全局参数
      */
     public static final String GLOBAL_PARAMS = BASE_URL_GLOBAL + "params";
+
+    public static final String GLOBAL_BINDSTAFF = BASE_URL_GLOBAL + "getBindStaff";
+
     /**
      * 拉取系统通知
      */

@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.Utils.CircleImageView;
+import com.Utils.Urls;
 import com.Utils.UserUtils;
 import com.callback.DialogCallback;
 import com.log.LogUmengAgent;
@@ -22,7 +23,6 @@ import com.okhttputils.OkHttpUtils;
 import com.ta.utdid2.android.utils.StringUtils;
 import com.utils.PageSwitchUtils;
 import com.utils.StringUtil;
-import com.utils.Urls;
 
 import okhttp3.Request;
 import okhttp3.Response;

@@ -11,13 +11,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.Utils.Urls;
 import com.callback.DialogCallback;
 import com.dataStore.AppPrefersUtil;
 import com.log.LogUmengAgent;
 import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.SettingFeedbackActivity;
-import com.merchantplatform.bean.FeedbackResponse;
 import com.merchantplatform.bean.TempResponse;
 import com.okhttputils.OkHttpUtils;
 import com.Utils.TitleBar;
@@ -25,11 +25,7 @@ import com.ta.utdid2.android.utils.StringUtils;
 import com.utils.KeyboardUtil;
 import com.utils.StringUtil;
 import com.utils.ToastUtils;
-import com.utils.Urls;
 
-import org.json.JSONObject;
-
-import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
 

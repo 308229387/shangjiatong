@@ -14,6 +14,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.Utils.TitleBar;
+import com.Utils.Urls;
 import com.Utils.UserUtils;
 import com.loadview.ShapeLoadingDialog;
 import com.merchantplatform.R;
@@ -25,7 +26,6 @@ import com.pay58.sdk.common.Common;
 import com.pay58.sdk.common.PayResult;
 import com.pay58.sdk.order.Order;
 import com.utils.AppInfoUtils;
-import com.utils.Urls;
 import com.wuba.loginsdk.external.LoginClient;
 
 /**

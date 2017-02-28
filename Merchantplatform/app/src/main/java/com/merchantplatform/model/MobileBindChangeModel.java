@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.Utils.TitleBar;
+import com.Utils.Urls;
 import com.Utils.UserUtils;
 import com.callback.DialogCallback;
 import com.log.LogUmengAgent;
@@ -27,7 +28,6 @@ import com.okhttputils.OkHttpUtils;
 import com.ui.dialog.CommonDialog;
 import com.utils.StringUtil;
 import com.utils.ToastUtils;
-import com.utils.Urls;
 
 import okhttp3.Request;
 import okhttp3.Response;

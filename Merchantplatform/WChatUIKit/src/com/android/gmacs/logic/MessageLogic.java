@@ -2,14 +2,15 @@ package com.android.gmacs.logic;
 
 import android.app.Application;
 import android.app.Notification;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 
+import com.Utils.Urls;
 import com.Utils.UserUtils;
 import com.Utils.eventbus.IMCustomChangeEvent;
-import com.android.gmacs.utils.CustomMessage;
-import com.android.gmacs.utils.CustomMessageUtil;
 import com.android.gmacs.event.LoadHistoryMessagesEvent;
+import com.android.gmacs.utils.CustomMessageUtil;
+import com.bean.BindStaffResponce;
 import com.common.gmacs.core.ClientManager;
 import com.common.gmacs.core.ContactsManager;
 import com.common.gmacs.core.MessageManager;
@@ -21,13 +22,17 @@ import com.common.gmacs.parse.talk.TalkType;
 import com.common.gmacs.utils.GmacsUtils;
 import com.db.dao.IMMessageEntity;
 import com.db.helper.IMMessageDaoOperate;
-import com.google.gson.Gson;
+import com.okhttputils.OkHttpUtils;
+import com.okhttputils.callback.AbsCallback;
 import com.xxganji.gmacs.proto.CommonPB;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by caotongjun on 2015/11/26.
@@ -116,17 +121,35 @@ public class MessageLogic extends BaseLogic implements MessageManager.RecvMsgLis
     }
 
     @Override
-    public void msgRecved(Message msg) {
+    public void msgRecved(final Message msg) {
         //TODO：Penta接收到的消息判断是否是客服消息
         //if (msg.mSenderInfo.mUserSource == 8) {
         if (true) {
-            String spUserId = UserUtils.getCustomId(context);
-            if (TextUtils.isEmpty(spUserId) || !msg.mSenderInfo.mUserId.equals(spUserId)) {
+            final String spUserId = UserUtils.getCustomId(context);
+            if (TextUtils.isEmpty(spUserId) || spUserId.equals("0") || !msg.mSenderInfo.mUserId.equals(spUserId)) {
 
-                //TODO:服务端确认是否变更
-                //发送客服变更消息Event
-                UserUtils.setCustomId(context, msg.mSenderInfo.mUserId);
-                EventBus.getDefault().post(new IMCustomChangeEvent(msg.mSenderInfo));
+                OkHttpUtils.get(Urls.GLOBAL_BINDSTAFF).execute(new AbsCallback<BindStaffResponce>() {
+                    @Override
+                    public BindStaffResponce parseNetworkResponse(Response response) throws Exception {
+                        return null;
+                    }
+
+                    @Override
+                    public void onResponse(boolean isFromCache, BindStaffResponce bindStaffResponce, Request request, @Nullable Response response) {
+                        if (null != bindStaffResponce && null != bindStaffResponce.getData()) {
+
+                            String stuffId = bindStaffResponce.getData().getStaffId();
+                            if (!TextUtils.isEmpty(stuffId) && !spUserId.equals(stuffId)) {
+                                //发送客服变更消息Event
+                                UserUtils.setCustomId(context, stuffId);
+                                EventBus.getDefault().post(new IMCustomChangeEvent(msg.mSenderInfo));
+                            }
+
+                        }
+
+                    }
+                });
+
             }
 
             //消息入私有库

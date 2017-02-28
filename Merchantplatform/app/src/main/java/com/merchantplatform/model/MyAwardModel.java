@@ -8,13 +8,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.Utils.TitleBar;
+import com.Utils.Urls;
 import com.callback.DialogCallback;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.MyAwardActivity;
 import com.merchantplatform.adapter.MyAwardAdapter;
 import com.merchantplatform.bean.MyAwardResponse;
 import com.okhttputils.OkHttpUtils;
-import com.utils.Urls;
 import com.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;

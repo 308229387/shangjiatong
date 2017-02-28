@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.Utils.Urls;
 import com.callback.DialogCallback;
 import com.merchantplatform.R;
 import com.merchantplatform.adapter.InfoListAdapter;
@@ -19,7 +20,6 @@ import com.merchantplatform.bean.InfoListResponse;
 import com.okhttputils.OkHttpUtils;
 import com.ui.diyview.EmptyView;
 import com.utils.Constant;
-import com.utils.Urls;
 import com.xrecyclerview.ProgressStyle;
 import com.xrecyclerview.XRecyclerView;
 

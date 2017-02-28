@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.Utils.TitleBar;
+import com.Utils.Urls;
 import com.callback.JsonCallback;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.TaskRecordActivity;
@@ -13,7 +14,6 @@ import com.merchantplatform.adapter.TaskRecordAdapter;
 import com.merchantplatform.bean.IntegralRecordResponse;
 import com.okhttputils.OkHttpUtils;
 import com.utils.ToastUtils;
-import com.utils.Urls;
 import com.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;

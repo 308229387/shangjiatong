@@ -3,6 +3,7 @@ package com.utils;
 import android.app.Activity;
 import android.support.annotation.Nullable;
 
+import com.Utils.Urls;
 import com.callback.DialogCallback;
 import com.okhttputils.OkHttpUtils;
 

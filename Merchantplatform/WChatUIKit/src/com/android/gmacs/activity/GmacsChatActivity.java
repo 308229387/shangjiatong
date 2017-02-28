@@ -49,9 +49,8 @@ import com.android.gmacs.observer.CardMsgClickListener;
 import com.android.gmacs.sound.SoundPlayer;
 import com.android.gmacs.sound.SoundRecord;
 import com.android.gmacs.sound.SoundRecordUtil;
-import com.android.gmacs.utils.IMConstant;
-import com.android.gmacs.utils.CustomMessage;
 import com.android.gmacs.utils.CustomMessageUtil;
+import com.android.gmacs.utils.IMConstant;
 import com.android.gmacs.view.GmacsDialog;
 import com.android.gmacs.view.PublicAccountMenu;
 import com.android.gmacs.view.ResizeLayout;
@@ -80,7 +79,6 @@ import com.common.gmacs.utils.ToastUtil;
 import com.commonview.CommonDialog;
 import com.db.dao.IMMessageEntity;
 import com.db.helper.IMMessageDaoOperate;
-import com.google.gson.Gson;
 import com.log.LogUmengAgent;
 import com.log.LogUmengEnum;
 import com.xxganji.gmacs.proto.CommonPB;
@@ -333,7 +331,7 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
 
     public void sendTextMsg(String message) {
         if (type == IMConstant.EXTRA_TYPE_CUSTOM) {
-            CustomMessageUtil.sendIMTextMsg(message, refer, messageUserInfo, new IMMsgSendListener(this));
+            CustomMessageUtil.sendIMTextMsg(message, "{\"show_in_app\": [\"10081\",\"100217\",\"100218\"]}", messageUserInfo, new IMMsgSendListener(this));
         } else {
             MessageManager.getInstance().sendIMTextMsg(mTalk.mTalkType, message
                     , refer, mTalk.mTalkOtherUserId
@@ -351,7 +349,7 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
 
     public void sendImageMsg(String filePath, boolean sendRawImage) {
         if (type == IMConstant.EXTRA_TYPE_CUSTOM) {
-            CustomMessageUtil.sendIMImageMsg(refer, filePath, sendRawImage, messageUserInfo, new IMMsgSendListener(this));
+            CustomMessageUtil.sendIMImageMsg("{\"show_in_app\":['10081','100217','100218']}", filePath, sendRawImage, messageUserInfo, new IMMsgSendListener(this));
         } else {
             MessageManager.getInstance().sendIMImageMsg(mTalk.mTalkType, refer
                     , filePath, mTalk.mTalkOtherUserId
@@ -1334,7 +1332,7 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
             if (null == commonDialog) {
                 commonDialog = new CommonDialog(this);
                 commonDialog.setBtnCancelColor(com.android.gmacs.R.color.common_text_gray);
-                commonDialog.setContent("您的消息在别处链接，请重新连接");
+                commonDialog.setContent("您的消息在别处连接，请重新连接");
                 commonDialog.setContentColor(com.android.gmacs.R.color.common_text_gray);
                 commonDialog.setTitle("提示");
                 commonDialog.setBtnCancelColor(com.android.gmacs.R.color.common_text_gray);

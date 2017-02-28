@@ -1,7 +1,7 @@
 package com.merchantplatform.bean;
 
 
-import com.utils.Urls;
+import com.Utils.Urls;
 
 /**
  * Created by 58 on 2016/10/20.

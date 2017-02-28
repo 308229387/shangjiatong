@@ -17,6 +17,8 @@ import com.db.helper.IMMessageDaoOperate;
 import com.google.gson.Gson;
 import com.xxganji.gmacs.proto.CommonPB;
 
+import java.util.Date;
+
 /**
  * Created by linyueyang on 17/2/20.
  */
@@ -169,6 +171,7 @@ public class CustomMessageUtil {
             //消息入库
             message.mMsgDetail.setMsgSendStatus(CommonPB.SendStatus.MSG_SENT);
             IMMessageEntity imMessageEntity = originalToEntity(message);
+            imMessageEntity.setTimestamp(new Date().getTime());
             IMMessageDaoOperate.insertOrReplace(imMessageEntity);
         }
     }
@@ -193,6 +196,7 @@ public class CustomMessageUtil {
             //消息入库
             message.mMsgDetail.setMsgSendStatus(CommonPB.SendStatus.MSG_SENT);
             IMMessageEntity imMessageEntity = originalToEntity(message);
+            imMessageEntity.setTimestamp(new Date().getTime());
             IMMessageDaoOperate.insertOrReplace(imMessageEntity);
         }
     }

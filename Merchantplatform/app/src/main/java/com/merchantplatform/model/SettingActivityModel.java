@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.Utils.Urls;
 import com.Utils.UserUtils;
 import com.callback.DialogCallback;
 import com.dataStore.SettingPushPreferUtil;
@@ -24,7 +25,6 @@ import com.ui.sheet.NormalActionSheet;
 import com.Utils.TitleBar;
 import com.umeng.analytics.MobclickAgent;
 import com.utils.PageSwitchUtils;
-import com.utils.Urls;
 import com.wuba.loginsdk.external.LoginClient;
 import com.wuba.wbpush.Push;
 

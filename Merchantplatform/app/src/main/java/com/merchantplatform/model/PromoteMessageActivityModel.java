@@ -12,6 +12,7 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.Utils.TitleBar;
+import com.Utils.Urls;
 import com.Utils.UserUtils;
 import com.Utils.eventbus.PrecisionPromoteFirstSuccessEvent;
 import com.Utils.eventbus.PrecisionPromoteSuccessEvent;
@@ -28,7 +29,6 @@ import com.ui.dialog.PayAlertDialog;
 import com.utils.AppInfoUtils;
 import com.utils.DateUtils;
 import com.utils.PageSwitchUtils;
-import com.utils.Urls;
 
 import org.greenrobot.eventbus.EventBus;
 

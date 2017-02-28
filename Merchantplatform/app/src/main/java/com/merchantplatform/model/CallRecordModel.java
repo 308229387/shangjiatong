@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.Utils.Urls;
 import com.Utils.UserUtils;
 import com.callback.DialogCallback;
 import com.db.dao.CallDetail;
@@ -38,7 +39,6 @@ import com.okhttputils.request.BaseRequest;
 import com.tablayout.SlidingTabLayout;
 import com.utils.DateUtils;
 import com.utils.PermissionUtils;
-import com.utils.Urls;
 import com.xrecyclerview.BaseRecyclerViewAdapter;
 import com.merchantplatform.adapter.CallRecordAdapter;
 import com.merchantplatform.fragment.CallRecordFragment;

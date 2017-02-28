@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.Utils.TitleBar;
+import com.Utils.Urls;
 import com.Utils.eventbus.DailyLotteryScore;
 import com.callback.DialogCallback;
 import com.log.LogUmengAgent;
@@ -39,7 +40,6 @@ import com.ui.SpaceItemDecoration;
 import com.ui.dialog.CommonDialog;
 import com.utils.DisplayUtils;
 import com.utils.ToastUtils;
-import com.utils.Urls;
 import com.xrecyclerview.BaseRecyclerViewAdapter;
 
 import org.greenrobot.eventbus.EventBus;

@@ -10,10 +10,12 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.Utils.SystemNotificationInfoAction;
+import com.Utils.Urls;
 import com.Utils.UserUtils;
 import com.Utils.eventbus.IMReconnectEvent;
 import com.android.gmacs.core.GmacsManager;
 import com.android.gmacs.fragment.ConversationListFragment;
+import com.bean.BindStaffResponce;
 import com.callback.DialogCallback;
 import com.callback.JsonCallback;
 import com.commonview.CommonDialog;
@@ -30,13 +32,13 @@ import com.merchantplatform.fragment.InfoListFragment;
 import com.merchantplatform.fragment.PersonalCenterFragment;
 import com.merchantplatform.fragment.WelfareFragment;
 import com.okhttputils.OkHttpUtils;
+import com.okhttputils.callback.AbsCallback;
 import com.ui.HomepageBottomButton;
 import com.ui.dialog.UpdateDialog;
 import com.utils.AppInfoUtils;
 import com.utils.DateUtils;
 import com.utils.StringUtil;
 import com.utils.UpdateUtils;
-import com.utils.Urls;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -268,7 +270,7 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
             if (null == commonDialog) {
                 commonDialog = new CommonDialog(context);
                 commonDialog.setBtnCancelColor(com.android.gmacs.R.color.common_text_gray);
-                commonDialog.setContent("您的消息在别处链接，请重新连接");
+                commonDialog.setContent("您的消息在别处连接，请重新连接");
                 commonDialog.setContentColor(com.android.gmacs.R.color.common_text_gray);
                 commonDialog.setTitle("提示");
                 commonDialog.setBtnCancelColor(com.android.gmacs.R.color.common_text_gray);
@@ -297,6 +299,28 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
 
     public void jumpPost() {
         onClick(bottomButton3);
+    }
+
+    public void getBindStuff() {
+        //更新专属客服
+        if (StringUtil.isNotEmpty(UserUtils.getUserId(context))) {
+            OkHttpUtils.get(Urls.GLOBAL_BINDSTAFF).execute(new AbsCallback<BindStaffResponce>() {
+                @Override
+                public BindStaffResponce parseNetworkResponse(Response response) throws Exception {
+                    return null;
+                }
+
+                @Override
+                public void onResponse(boolean isFromCache, BindStaffResponce bindStaffResponce, Request request, @Nullable Response response) {
+                    if (null != bindStaffResponce && null != bindStaffResponce.getData()) {
+                        String stuffId = bindStaffResponce.getData().getStaffId();
+                        if (!TextUtils.isEmpty(stuffId)) {
+                            UserUtils.setCustomId(context, stuffId);
+                        }
+                    }
+                }
+            });
+        }
     }
 
     private class globalCallback extends DialogCallback<GlobalResponse> {

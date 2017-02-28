@@ -7,12 +7,12 @@ import android.os.IBinder;
 import android.os.Message;
 import android.support.annotation.Nullable;
 
+import com.Utils.Urls;
 import com.callback.JsonCallback;
 import com.merchantplatform.bean.GetSystemTime;
 import com.merchantplatform.bean.GetTask;
 import com.okhttputils.OkHttpUtils;
 import com.utils.ToastUtils;
-import com.utils.Urls;
 
 import java.util.Calendar;
 import java.util.TimeZone;

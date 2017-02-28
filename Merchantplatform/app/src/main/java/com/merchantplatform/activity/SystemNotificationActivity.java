@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.Utils.ShowRedDotSystemNotificationAction;
 import com.Utils.SystemNotification;
+import com.Utils.Urls;
 import com.Utils.UserUtils;
 import com.android.gmacs.R;
 import com.android.gmacs.activity.BaseActivity;
@@ -18,7 +19,6 @@ import com.merchantplatform.adapter.SystemNotificationXAdapter;
 import com.merchantplatform.application.HyApplication;
 import com.merchantplatform.bean.SystemNotificationList;
 import com.okhttputils.OkHttpUtils;
-import com.utils.Urls;
 import com.xrecyclerview.ProgressStyle;
 import com.xrecyclerview.XRecyclerView;
 

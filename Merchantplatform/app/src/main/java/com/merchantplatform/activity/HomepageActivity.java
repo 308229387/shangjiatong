@@ -36,6 +36,7 @@ public class HomepageActivity extends BaseActivity<HomepageModel> {
         model.createFragment();
         model.createFragmentManagerAndShow();
         model.getGlobalParams();
+        model.getBindStuff();
     }
 
 

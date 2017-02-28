@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.Utils.Urls;
 import com.Utils.UserUtils;
 import com.callback.DialogCallback;
 import com.merchantplatform.R;
@@ -23,7 +24,6 @@ import com.ui.dialog.ConfirmDialog;
 import com.utils.PageSwitchUtils;
 import com.utils.StringUtil;
 import com.utils.ToastUtils;
-import com.utils.Urls;
 
 import okhttp3.Request;
 import okhttp3.Response;

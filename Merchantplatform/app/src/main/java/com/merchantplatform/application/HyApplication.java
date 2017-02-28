@@ -2,16 +2,22 @@ package com.merchantplatform.application;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
+import android.text.TextUtils;
 
+import com.Utils.Urls;
 import com.Utils.UserUtils;
+import com.Utils.eventbus.IMCustomChangeEvent;
 import com.android.gmacs.logic.MessageLogic;
+import com.bean.BindStaffResponce;
 import com.db.helper.DbManager;
 import com.facebook.stetho.Stetho;
 import com.log.LogUmengAgent;
 import com.merchantplatform.BuildConfig;
 import com.okhttputils.OkHttpUtils;
+import com.okhttputils.callback.AbsCallback;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.Config;
@@ -23,8 +29,13 @@ import com.utils.LoginRegisterUtils;
 import com.utils.StringUtil;
 import com.utils.WPushInitUtils;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.LinkedList;
 import java.util.List;
+
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by SongYongmeng on 2016/11/21.

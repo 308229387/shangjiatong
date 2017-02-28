@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.Utils.TitleBar;
+import com.Utils.Urls;
 import com.callback.DialogCallback;
 import com.merchantplatform.R;
 import com.merchantplatform.activity.AwardHistoryActivity;
@@ -16,7 +17,6 @@ import com.merchantplatform.activity.MyAwardActivity;
 import com.merchantplatform.adapter.AwardHistoryAdapter;
 import com.merchantplatform.bean.AwardHistoryResponse;
 import com.okhttputils.OkHttpUtils;
-import com.utils.Urls;
 import com.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;

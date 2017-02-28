@@ -13,6 +13,7 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.Utils.TitleBar;
+import com.Utils.Urls;
 import com.Utils.eventbus.PrecisionPromoteFirstSuccessEvent;
 import com.dataStore.PromotePrefersUtil;
 import com.log.LogUmengAgent;
@@ -22,7 +23,6 @@ import com.merchantplatform.activity.PrecisionPromoteActivity;
 import com.utils.AppInfoUtils;
 import com.utils.Constant;
 import com.utils.DateUtils;
-import com.utils.Urls;
 
 import org.greenrobot.eventbus.EventBus;
 

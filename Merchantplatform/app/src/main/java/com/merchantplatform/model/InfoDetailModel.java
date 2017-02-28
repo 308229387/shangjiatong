@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.Utils.Urls;
 import com.Utils.eventbus.ShareWechatCircleSuccessEvent;
 import com.bumptech.glide.Glide;
 import com.callback.DialogCallback;
@@ -37,7 +38,6 @@ import com.utils.Constant;
 import com.utils.InfoStateEnum;
 import com.utils.PageSwitchUtils;
 import com.utils.StringUtil;
-import com.utils.Urls;
 
 import org.greenrobot.eventbus.EventBus;
 

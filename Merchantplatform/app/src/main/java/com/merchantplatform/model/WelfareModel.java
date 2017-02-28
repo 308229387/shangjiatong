@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.Utils.Urls;
 import com.Utils.UserUtils;
 import com.callback.JsonCallback;
 import com.log.LogUmengAgent;
@@ -28,7 +29,6 @@ import com.okhttputils.OkHttpUtils;
 import com.ui.RushBuyCountDownTimerView;
 import com.ui.SpaceItemDecoration;
 import com.ui.dialog.NotIsVipDialog;
-import com.utils.Urls;
 import com.xrecyclerview.XRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;

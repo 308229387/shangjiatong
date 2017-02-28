@@ -7,7 +7,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
+import com.Utils.Urls;
 import com.Utils.UserUtils;
+import com.bean.BindStaffResponce;
 import com.callback.DialogCallback;
 import com.dataStore.DeviceUuidFactory;
 import com.log.LogUmengAgent;
@@ -18,12 +20,12 @@ import com.merchantplatform.activity.LoginActivity;
 import com.merchantplatform.application.HyApplication;
 import com.merchantplatform.bean.LoginResponse;
 import com.okhttputils.OkHttpUtils;
+import com.okhttputils.callback.AbsCallback;
 import com.ui.dialog.CommonDialog;
 import com.umeng.analytics.MobclickAgent;
 import com.utils.IMLoginUtils;
 import com.utils.PageSwitchUtils;
 import com.utils.StringUtil;
-import com.utils.Urls;
 import com.wuba.loginsdk.external.LoginCallback;
 import com.wuba.loginsdk.external.LoginClient;
 import com.wuba.loginsdk.external.Request;
@@ -96,8 +98,22 @@ public class LoginActivityModel extends BaseModel {
 
     private void initIM() {
         new IMLoginUtils(context);
-        //TODO:服务端请求专属客服接口
-
+        //更新专属客服
+        OkHttpUtils.get(Urls.GLOBAL_BINDSTAFF).execute(new AbsCallback<BindStaffResponce>() {
+            @Override
+            public BindStaffResponce parseNetworkResponse(Response response) throws Exception {
+                return null;
+            }
+            @Override
+            public void onResponse(boolean isFromCache, BindStaffResponce bindStaffResponce, okhttp3.Request request, @Nullable Response response) {
+                if (null != bindStaffResponce && null != bindStaffResponce.getData()) {
+                    String stuffId = bindStaffResponce.getData().getStaffId();
+                    if (!TextUtils.isEmpty(stuffId)) {
+                        UserUtils.setCustomId(context, stuffId);
+                    }
+                }
+            }
+        });
 
     }
 
