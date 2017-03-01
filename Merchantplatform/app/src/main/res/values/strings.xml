@@ -45,4 +45,118 @@
 
     <string name="lottery_explain_text">抽奖说明：\n1、每日抽奖时间为10:00-22:00；\n2、中奖后，工作人员会在2个工作日将奖品充值到您58账户；\n3、每个奖品的有效期为7天，请在中奖后7天内使用；\n4、所有抽奖活动由58同城提供；</string>
     <string name="alredy_add_count">今日已获得%1$s个积分</string>
+
+
+    <!--IM start-->
+    <string name="cancel">取消</string>
+    <string name="ok">确定</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="save">保存</string>
+    <string name="wait">请稍候</string>
+    <string name="sdcard_not_exist">SD卡不存在，请检查SD卡</string>
+    <string name="send_raw_picture">发送照片原图？</string>
+    <string name="send_count">发送(%1$d/%2$d)</string>
+    <string name="picture_save_ok">图片已保存至：/sdcard/%1$s/image</string>
+    <string name="picture_already_saved">已经是本地图片：/sdcard/%1$s/image</string>
+    <string name="picture_save_failed">图片保存失败</string>
+    <string name="reach_upload_max">最多只能上传%d张图片</string>
+    <string name="image_index">第%1$d张  (共%2$d张)</string>
+    <string name="select_picture_first">请先选择图片</string>
+    <string name="save_picture">保存图片</string>
+    <string name="no_available_picture">您似乎没有可以上传的照片哦</string>
+    <string name="default_album">默认相册</string>
+    <string name="local_album">本地相册</string>
+    <string name="system_album_not_found">未找到系统相册</string>
+    <string name="message_cannot_be_empty">发送内容不能为空</string>
+    <string name="message_cannot_be_space_or_enter">不支持仅包含空格或换行符的消息</string>
+    <string name="webview_title">WebView</string>
+    <string name="file_format_not_support">不支持该格式文件的传输</string>
+    <string name="no_file_selected">选择的文件为空</string>
+    <string name="copied">已复制</string>
+    <string name="close">关闭</string>
+    <string name="public_account">公众号</string>
+    <string name="preview">预览</string>
+    <string name="preview_count">预览(%1$d)</string>
+    <string name="send">发送</string>
+    <string name="add_picture">添加照片</string>
+    <string name="edit_remark">编辑备注</string>
+    <string name="delete_contact">删除联系人</string>
+    <string name="remark">备注</string>
+    <string name="remark_name">备注名 </string>
+    <string name="remark_phone">电话号码</string>
+    <string name="remark_phone_wrong">电话号码格式有误</string>
+    <string name="remark_info">备注信息</string>
+    <string name="remark_ok">修改备注成功</string>
+    <string name="remark_length_overflow">超出最大输入限制</string>
+    <string name="report">举报</string>
+    <string name="report_reason">举报原因</string>
+    <string name="report_submit">提交</string>
+    <string name="report_submit_error">举报内容不能为空</string>
+    <string name="report_submit_ok">举报成功</string>
+    <string name="starred_ok">标星成功</string>
+    <string name="unstarred_ok">取消标星成功</string>
+    <string name="chat">微聊</string>
+    <string name="contact">联系人</string>
+    <string name="contact_detail">详细资料</string>
+    <string name="starred_contact">星标客户</string>
+    <string name="add_contact">添加联系人</string>
+    <string name="add_contact_accept_msg">我通过了你的朋友验证请求，现在我们可以开始聊天了</string>
+    <string name="add_contact_ok">已添加</string>
+    <string name="goto_add_contact">快去添加更多联系人\n邀请他们和你一起聊天吧！</string>
+    <string name="loading_picture">图片加载中…</string>
+    <string name="request_loading">数据正在请求，请耐心等待</string>
+    <string name="retry_or_not">是否重新发送？</string>
+    <string name="retry">重发</string>
+    <string name="copy_message">复制消息</string>
+    <string name="delete_message">删除消息</string>
+    <string name="delete_talk">删除该聊天</string>
+    <string name="mark_as_read">标为已读</string>
+    <string name="mark_as_unread">标为未读</string>
+    <string name="retry_download_or_not">是否重新下载？</string>
+    <string name="call">呼叫</string>
+    <string name="copy">复制</string>
+    <string name="connection_status_disconnected">无连接</string>
+    <string name="connection_status_connecting">正在连接…</string>
+    <string name="connection_status_kickedoff">您已被踢下线</string>
+    <string name="connection_error_or_kickedoff">网络异常或已被踢下线</string>
+    <string name="network_unavailable">当前网络不可用，请检查你的网络设置</string>
+
+    <string name="default_user_name"></string>
+
+    <!-- Captcha -->
+    <string name="enter_captcha">请输入图片验证码</string>
+    <string name="nonnull_captcha">验证码不能为空</string>
+    <string name="captcha_verifying">验证中……</string>
+    <string name="valid_captcha">验证通过</string>
+    <string name="invalid_captcha">填写错误，请重试</string>
+
+    <!-- 语音录制 -->
+    <string name="record_failed">录制失败，请重新录制</string>
+    <string name="record_failed_err_msg">录制失败，失败信息：%s</string>
+    <string name="record_stop">松开 结束</string>
+    <string name="record_start">按住 说话</string>
+    <string name="record_time_too_shorter">说话时间太短</string>
+    <string name="record_time_too_longer">说话时间过长</string>
+    <string name="record_error_permission_denied">录制失败，请检测应用录音权限是否为允许</string>
+    <string name="record_slide_up_to_cancel">手指上滑，取消发送</string>
+    <string name="record_release_to_cancel">松开手指，取消发送</string>
+
+    <!-- 头像备选样式 -->
+    <string name="drawShape_RoundRect">RoundRect</string>
+    <string name="drawShape_Circle">Circle</string>
+    <string name="drawShape_Rect">Rect</string>
+    <!-- 头像样式 -->
+    <string name="drawShape">@string/drawShape_Circle</string>
+
+    <!-- 地图 -->
+    <string name="locate_failed">定位失败</string>
+    <string name="baidu_map_init_failed">百度地图初始化失败</string>
+    <string name="location_unavailable">没有获取到你的位置，请稍后再试</string>
+    <string name="action_not_handle">没有执行该操作的应用程序</string>
+    <string name="requesting">获取中，请稍候</string>
+    <string name="location_info">位置信息</string>
+    <string name="location_detail">详情</string>
+    <!--IM end-->
+
 </resources>

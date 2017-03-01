@@ -269,11 +269,11 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
             //如果当前dialog没有创建，则创建
             if (null == commonDialog) {
                 commonDialog = new CommonDialog(context);
-                commonDialog.setBtnCancelColor(com.android.gmacs.R.color.common_text_gray);
+                commonDialog.setBtnCancelColor(com.merchantplatform.R.color.common_text_gray);
                 commonDialog.setContent("您的消息在别处连接，请重新连接");
-                commonDialog.setContentColor(com.android.gmacs.R.color.common_text_gray);
+                commonDialog.setContentColor(com.merchantplatform.R.color.common_text_gray);
                 commonDialog.setTitle("提示");
-                commonDialog.setBtnCancelColor(com.android.gmacs.R.color.common_text_gray);
+                commonDialog.setBtnCancelColor(com.merchantplatform.R.color.common_text_gray);
                 commonDialog.setBtnSureText("重新连接");
                 commonDialog.setOnDialogClickListener(new CommonDialog.OnDialogClickListener() {
                     @Override

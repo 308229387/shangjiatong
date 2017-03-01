@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.gmacs.view.PublicAccountMenu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/public_account_menu"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:visibility="gone">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/gray_f7f7f7"
+        android:layout_height="53.25dip">
+
+        <View
+            android:id="@+id/line_top"
+            style="@style/DottedLine"
+            android:layout_alignParentTop="true"
+            android:background="@color/gray_a5a5a5" />
+
+        <ImageView
+            android:id="@+id/iv_public_account_keyboard_up"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_below="@id/line_top"
+            android:layout_marginLeft="4dip"
+            android:layout_marginRight="4dip"
+            android:clickable="true"
+            android:paddingBottom="5dip"
+            android:paddingTop="5dip"
+            android:src="@drawable/gmacs_ic_public_account_keyboard_up" />
+
+        <LinearLayout
+            android:id="@+id/ll_public_account_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/line_top"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/iv_public_account_keyboard_up"
+            android:orientation="horizontal">
+        </LinearLayout>
+    </RelativeLayout>
+
+</com.android.gmacs.view.PublicAccountMenu>

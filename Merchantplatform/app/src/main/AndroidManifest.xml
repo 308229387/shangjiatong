@@ -35,6 +35,17 @@
         android:name="getui.permission.GetuiService.com.merchantplatform"
         android:protectionLevel="normal" />
 
+    <!--IM start-->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!--IM end-->
+
     <application
         android:name=".application.HyApplication"
         android:allowBackup="true"
@@ -195,6 +206,75 @@
         <activity
             android:name=".activity.AwardHistoryActivity"
             android:screenOrientation="portrait" />
+
+
+        <!--IM start-->
+        <activity
+            android:name="com.android.gmacs.album.GmacsAlbumActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/GmacsTheme"
+            android:windowSoftInputMode="stateUnspecified|adjustResize" />
+        <activity
+            android:name="com.android.gmacs.album.GmacsImgDirsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/GmacsTheme"
+            android:windowSoftInputMode="stateUnspecified|adjustResize" />
+        <activity
+            android:name="com.android.gmacs.album.GmacsPhotoBrowseActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/GmacsTheme"
+            android:windowSoftInputMode="stateUnspecified|adjustResize" />
+        <activity
+            android:name="com.android.gmacs.activity.GmacsChatActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/GmacsTheme"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified" />
+        <activity
+            android:name="com.android.gmacs.activity.GmacsContactDetailInfoActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/GmacsTheme"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.android.gmacs.activity.GmacsWebViewActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/GmacsTheme"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified" />
+        <activity
+            android:name="com.android.gmacs.activity.GmacsImageActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/ImageViewerTheme"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"/>
+        <activity
+            android:name="com.android.gmacs.activity.GmacsContactRemarkActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/GmacsTheme"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"/>
+
+        <activity
+            android:name="com.android.gmacs.activity.GmacsBrandServiceListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/GmacsTheme"
+            android:windowSoftInputMode="stateUnspecified|adjustResize"/>
+        <activity
+            android:name="com.android.gmacs.activity.GmacsContactReportActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/GmacsTheme"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"/>
+        <activity android:name="com.android.gmacs.activity.GmacsMapActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/GmacsTheme">
+        </activity>
+        <!--IM end-->
+
+
     </application>
 
 </manifest>

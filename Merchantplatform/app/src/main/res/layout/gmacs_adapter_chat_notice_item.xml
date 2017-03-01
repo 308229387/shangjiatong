@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/list_post_title_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:paddingBottom="@dimen/im_chat_notice_paddingBottom"
+    android:paddingTop="@dimen/im_chat_notice_paddingTop">
+
+    <!-- 时间 -->
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/im_chat_msg_item_time_margin_content"
+        android:background="@drawable/gmacs_chat_time_background"
+        android:paddingBottom="1dp"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
+        android:paddingTop="1dp"
+        android:textColor="@color/chat_time_text_color"
+        android:textSize="12dp" />
+
+    <!-- 系统消息item -->
+
+    <LinearLayout
+        android:id="@+id/content_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/time"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/im_chat_notice_margin_left"
+        android:layout_marginRight="@dimen/im_chat_notice_margin_right"
+        android:layout_marginTop="3dip"
+        android:orientation="vertical"></LinearLayout>
+
+</RelativeLayout>

@@ -10,7 +10,7 @@ import com.Utils.ShowRedDotSystemNotificationAction;
 import com.Utils.SystemNotification;
 import com.Utils.Urls;
 import com.Utils.UserUtils;
-import com.android.gmacs.R;
+import com.merchantplatform.R;
 import com.android.gmacs.activity.BaseActivity;
 import com.callback.DialogCallback;
 import com.db.dao.SystemNotificationDetial;

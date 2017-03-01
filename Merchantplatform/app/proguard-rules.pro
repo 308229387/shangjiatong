@@ -123,4 +123,21 @@ public static final ** CREATOR;
 -keepattributes Signature
 #分享先关混淆 end
 
+#IM start
+-keepattributes InnerClasses
+-keepattributes Signature
+-dontoptimize
+-keep class com.android.gmacs.** { *;}
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
 
+# Only required if you use AsyncExecutor
+-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
+}
+-keep class com.baidu.** {*;}
+-keep class vi.com.gdi.bgl.android.**{*;}
+#IM end

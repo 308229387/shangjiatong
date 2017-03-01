@@ -10,7 +10,7 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
 import com.Utils.UserUtils;
-import com.android.gmacs.R;
+import com.merchantplatform.R;
 import com.android.gmacs.logic.MessageLogic;
 import com.common.gmacs.core.ChannelManager;
 import com.common.gmacs.core.GmacsConstant;

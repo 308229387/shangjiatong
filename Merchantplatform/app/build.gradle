@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 
 def outputPath = "../jenkinspackage/"
 
@@ -28,6 +29,12 @@ android {
             storePassword "lly5432lly"
             keyAlias "hyzhaobiao"
             keyPassword "lly5432lly"
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
         }
     }
 
@@ -111,6 +118,8 @@ android {
             include "armeabi"//im64位兼容问题
         }
     }
+
+
 }
 
 dependencies {
@@ -119,18 +128,32 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile project(path: ':librarys')
-    compile project(':pay58sdk') //支付SDK
-    compile project(':WChatUIKit')
+    compile project(':pay58sdk')
+    //支付SDK
     compile(name: 'wbpush-release_1.2.3_build_5490', ext: 'aar')
     compile 'com.android.support:support-v4:23.2.1'
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.tencent.bugly:crashreport:2.3.6'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-
     compile 'com.facebook.stetho:stetho:1.4.1'
     testCompile 'junit:junit:4.12'
     debugCompile 'com.wuba.wuxian.sdk:login:2.6.5-NOLEGO-test4'
     releaseCompile 'com.wuba.wuxian.sdk:login:2.6.5-NOLEGO'
     compile 'com.wuba.wchat:WChatLib-release:1.2.1.48'
+    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile files('libs/baidumapapi_base_v3_6_1.jar')
+    compile files('libs/baidumapapi_map_v3_6_1.jar')
+    compile files('libs/baidumapapi_search_v3_6_1.jar')
+    compile files('libs/locSDK_6.13.jar')
+    compile 'org.greenrobot:eventbus:3.0.0'
+    apt 'org.greenrobot:eventbus-annotation-processor:3.0.1'
+    compile 'com.wuba.wchat:WChatWrap-release:1.2.1.48'
+    compile 'com.wuba.wchat:WChatLib-release:1.2.1.48'
+}
+
+apt {
+    arguments {
+        eventBusIndex "com.android.gmacs.GmacsEventBusIndex"
+    }
 }
