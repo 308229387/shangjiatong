@@ -7,10 +7,10 @@ import android.os.IBinder;
 import android.os.Message;
 import android.support.annotation.Nullable;
 
-import com.Utils.Urls;
 import com.callback.JsonCallback;
 import com.merchantplatform.bean.GetSystemTime;
 import com.okhttputils.OkHttpUtils;
+import com.utils.Urls;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -32,11 +32,17 @@ public class GetServiceTime extends Service {
     final Handler handler = new TempHandler();
     final int WHAT = 102;
     public static int systemTimeSecond = -1;
+    private int tag = 0;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        CereatTimer();
+    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         getSystemTime();
-        CereatTimer();
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -99,13 +105,17 @@ public class GetServiceTime extends Service {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            tag++;
             switch (msg.what) {
                 case WHAT:
                     if (systemTimeSecond != (-1))
                         systemTimeSecond++;
+                    else {
+                        if (tag % 10 == 0)
+                            getSystemTime();
+                    }
                     break;
             }
         }
-
     }
 }

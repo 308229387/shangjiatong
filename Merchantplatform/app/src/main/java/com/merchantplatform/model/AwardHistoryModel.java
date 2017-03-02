@@ -130,7 +130,7 @@ public class AwardHistoryModel extends BaseModel {
 
         @Override
         public void onResponse(boolean isFromCache, AwardHistoryResponse awardHistoryResponse, Request request, @Nullable Response response) {
-            if (awardHistoryResponse != null && awardHistoryResponse.getData() != null) {
+            if (awardHistoryResponse != null && awardHistoryResponse.getData() != null && awardHistoryResponse.getData().size() > 0) {
                 awardHistoryList.clear();
                 awardHistoryList.addAll(awardHistoryResponse.getData());
                 awardHistoryAdapter.notifyDataSetChanged();

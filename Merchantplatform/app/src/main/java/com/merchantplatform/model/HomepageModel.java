@@ -2,6 +2,7 @@ package com.merchantplatform.model;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -31,6 +32,7 @@ import com.merchantplatform.fragment.CallMessageFragment;
 import com.merchantplatform.fragment.InfoListFragment;
 import com.merchantplatform.fragment.PersonalCenterFragment;
 import com.merchantplatform.fragment.WelfareFragment;
+import com.merchantplatform.service.GetServiceTime;
 import com.okhttputils.OkHttpUtils;
 import com.okhttputils.callback.AbsCallback;
 import com.ui.HomepageBottomButton;
@@ -38,12 +40,14 @@ import com.ui.dialog.UpdateDialog;
 import com.utils.AppInfoUtils;
 import com.utils.DateUtils;
 import com.utils.StringUtil;
+import com.utils.ToastUtils;
 import com.utils.UpdateUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
+import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -217,6 +221,11 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
                 .execute(new globalCallback(context));
     }
 
+    public void getServiceTime() {
+        Intent startIntent = new Intent(context, GetServiceTime.class);
+        context.startService(startIntent);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -335,6 +344,7 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
                 saveGlobalParams(globalResponse);
                 updateVersion(globalResponse);
                 loginSuccessTask();
+                getServiceTime();
             }
         }
 
@@ -392,10 +402,8 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
 
     private class Task extends JsonCallback<String> {
 
-
         @Override
         public void onResponse(boolean isFromCache, String o, Request request, @Nullable Response response) {
-
-        }
+                 }
     }
 }

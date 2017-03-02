@@ -113,7 +113,7 @@ public class MyAwardModel extends BaseModel {
 
         @Override
         public void onResponse(boolean isFromCache, MyAwardResponse myAwardResponse, Request request, @Nullable Response response) {
-            if (myAwardResponse != null && myAwardResponse.getData() != null) {
+            if (myAwardResponse != null && myAwardResponse.getData() != null && myAwardResponse.getData().size() > 0) {
                 myAwardList.clear();
                 myAwardList.addAll(myAwardResponse.getData());
                 myAwardAdapter.notifyDataSetChanged();

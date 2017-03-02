@@ -30,7 +30,6 @@ public class WelfareFragment extends BaseFragment<WelfareModel> {
     }
 
     private void getTask() {
-        model.getTask();
         model.getWelfare();
     }
 
@@ -57,7 +56,7 @@ public class WelfareFragment extends BaseFragment<WelfareModel> {
 
     @Subscribe
     public void onEvent(DailyLotteryScore action) {
-        model.getTask();
+        model.getWelfare();
     }
 
 

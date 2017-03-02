@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.merchantplatform.R;
 
@@ -32,6 +31,8 @@ public class RushBuyCountDownTimerView extends LinearLayout {
     private TextView tv_sec_decade;
     // 秒，个位
     private TextView tv_sec_unit;
+
+    private TimeUpListener listener;
 
     private Context context;
 
@@ -151,8 +152,8 @@ public class RushBuyCountDownTimerView extends LinearLayout {
 
                         if (isCarry4Unit(tv_hour_unit)) {
                             if (isCarry4Decade(tv_hour_decade)) {
-
                                 stop();
+                                listener.timeUp();
                             }
                         }
                     }
@@ -201,5 +202,13 @@ public class RushBuyCountDownTimerView extends LinearLayout {
             return false;
         }
 
+    }
+
+    public void setTimeUpListener(TimeUpListener listener) {
+        this.listener = listener;
+    }
+
+    public interface TimeUpListener {
+        void timeUp();
     }
 }

@@ -13,6 +13,7 @@ import com.log.LogUmengAgent;
 import com.log.LogUmengEnum;
 import com.merchantplatform.R;
 import com.merchantplatform.bean.GetTask;
+import com.merchantplatform.bean.GetWelfareResponse;
 import com.utils.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -26,16 +27,15 @@ import java.util.ArrayList;
 public class WelfareTaskAdapter extends RecyclerView.Adapter<WelfareTaskAdapter.ViewHolder> {
     private LayoutInflater inflater;
     private Context context;
-    private ArrayList<GetTask.taskData> list;
+    private ArrayList<GetWelfareResponse.taskData> list;
     private int a;
-    private GetTask.taskData ZDSU;
-    private GetTask.taskData SHXXSU;
-    private GetTask.taskData JZSU;
+    private GetWelfareResponse.taskData ZDSU;
+    private GetWelfareResponse.taskData SHXXSU;
+    private GetWelfareResponse.taskData JZSU;
 
 
-    public WelfareTaskAdapter(Context context, ArrayList<GetTask.taskData> list) {
+    public WelfareTaskAdapter(Context context) {
         this.context = context;
-        this.list = list;
         inflater = LayoutInflater.from(context);
     }
 
@@ -49,7 +49,6 @@ public class WelfareTaskAdapter extends RecyclerView.Adapter<WelfareTaskAdapter.
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtils.showToast(position);
             }
         });
         holder.taskCount.setText("+" + list.get(position).getTask_score() + "");
@@ -59,9 +58,15 @@ public class WelfareTaskAdapter extends RecyclerView.Adapter<WelfareTaskAdapter.
 
         if (list.get(position).getState() == 0) {
             holder.taskCount.setTextColor(context.getResources().getColor(R.color.light_grey));
-            holder.button.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.welfare_button_back_gray));
+            holder.button.setBackgroundResource(R.drawable.welfare_button_back_gray);
             holder.button.setText("已完成");
             holder.button.setEnabled(false);
+        }
+        if(list.get(position).getState() ==1){
+            holder.taskCount.setTextColor(context.getResources().getColor(R.color.common_text_orange));
+            holder.button.setBackgroundResource(R.drawable.welfare_button_back);
+            holder.button.setText("去完成");
+            holder.button.setEnabled(true);
         }
 
         if (list.get(position).getProcess_code().equals("SHXXSU"))
@@ -90,7 +95,7 @@ public class WelfareTaskAdapter extends RecyclerView.Adapter<WelfareTaskAdapter.
         return list == null ? 0 : list.size();
     }
 
-    public void setData(ArrayList<GetTask.taskData> list) {
+    public void setDatas(ArrayList<GetWelfareResponse.taskData> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -128,16 +133,16 @@ public class WelfareTaskAdapter extends RecyclerView.Adapter<WelfareTaskAdapter.
 
     }
 
-    public GetTask.taskData getShareTaskInfo() {
+    public GetWelfareResponse.taskData getShareTaskInfo() {
         return SHXXSU;
     }
 
-    public GetTask.taskData getTopTaskInfo() {
-        return JZSU;
+    public GetWelfareResponse.taskData getTopTaskInfo() {
+        return ZDSU;
     }
 
-    public GetTask.taskData getPrecisionTaskInfo() {
-        return ZDSU;
+    public GetWelfareResponse.taskData getPrecisionTaskInfo() {
+        return JZSU;
     }
 
 

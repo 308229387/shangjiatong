@@ -192,8 +192,4 @@ public class GuideActivityModel extends BaseModel {
         }
     }
 
-    public void getServiceTime() {
-        Intent startIntent = new Intent(context, GetServiceTime.class);
-        context.startService(startIntent);
-    }
 }

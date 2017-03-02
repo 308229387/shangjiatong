@@ -20,7 +20,7 @@ public class AwardHistoryAdapter extends BaseRecyclerViewAdapter<AwardHistoryRes
     @Override
     protected void bindDataToItemView(AwardHistoryViewHolder awardHistoryViewHolder, int position) {
         AwardHistoryResponse.AwardHistory awardHistory = mList.get(position);
-        awardHistoryViewHolder.setText(R.id.tv_award_history_time, DateUtils.formatDateTimeToDate(awardHistory.getWin_time()))
+        awardHistoryViewHolder.setText(R.id.tv_award_history_time, awardHistory.getWin_time())
                 .setText(R.id.tv_award_history_username, awardHistory.getUser_name())
                 .setText(R.id.tv_award_history_name, awardHistory.getPrize_name());
     }
