@@ -75,11 +75,6 @@ public class PinnedHeaderListView extends ListView {
         // Android 2.2及其 以下版本禁用悬浮条，getExpandableListPosition()不准确、onScroll也不精确；
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
             mHeaderView = view;
-            // Disable vertical fading when the pinned header is present
-            // TODO change ListView to allow separate measures for top and
-            // bottom fading edge;
-            // in this particular case we would like to disable the top, but not
-            // the bottom edge.
             if (mHeaderView != null) {
                 setFadingEdgeLength(0);
             }

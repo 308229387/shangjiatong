@@ -150,7 +150,6 @@ public class SendMoreLayout extends LinearLayout implements ViewPager.OnPageChan
      * @param isPreferred
      */
     public void showItemsSingleLinePreferred(boolean isPreferred) {
-        //TODO
         if (isPreferred && btnImgResIds.length <= 4) {
             mViewPager.getLayoutParams().height = GmacsUtils.dipToPixel(209.25f / 2 + getResources().getDimension(R.dimen.size_b_b) / 2);
         }

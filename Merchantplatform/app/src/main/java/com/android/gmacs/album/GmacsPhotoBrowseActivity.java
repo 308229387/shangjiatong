@@ -115,8 +115,6 @@ public class GmacsPhotoBrowseActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if ((boolean) mRawCheck.getTag()) {
-                    // TODO: 图片大小
-//                    mRawSizeText.setText();
                     mRawCheck.setTag(false);
                     mRawCheck.setImageResource(R.drawable.gmacs_btn_radio_unselected);
                 } else {

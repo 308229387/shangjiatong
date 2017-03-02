@@ -148,8 +148,6 @@ public class ParallaxBackLayout extends FrameLayout {
         try {
             return mDragHelper.shouldInterceptTouchEvent(event);
         } catch (ArrayIndexOutOfBoundsException e) {
-            // FIXME: handle exception
-            // issues #9
             return false;
         }
     }

@@ -371,9 +371,11 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
         refreshCustom();
 
         List<Talk> talks = event.getTalks();
-
-        //TODO: Penta去除客服talks;
-
+        for (Talk talk : talks) {
+            if (talk.mTalkOtherUserSource == 8) {
+                talks.remove(talk);
+            }
+        }
 
         mTalks.clear();
         if (talks != null) {

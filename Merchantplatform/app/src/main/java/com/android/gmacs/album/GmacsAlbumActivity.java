@@ -154,19 +154,7 @@ public class GmacsAlbumActivity extends BaseActivity {
         mSelectAlbumBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 相册列表
                 gotoGmacsImgDirsActivity();
-//                PopupWindow popupWindow = new PopupWindow(GmacsAlbumActivity.this);
-//                ListView listView = (ListView) LayoutInflater.from(GmacsAlbumActivity.this).inflate(R.layout.gmacs_activity_album_dir, null);
-//                popupWindow.setContentView(listView);
-//                popupWindow.setFocusable(true);
-//                popupWindow.setBackgroundDrawable(new ColorDrawable(0));
-//                popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-//                popupWindow.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
-//                popupWindow.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.transparent)));
-//                popupWindow.setOutsideTouchable(true);
-//                popupWindow.setAnimationStyle(R.style.popupwindow_anim);
-//                popupWindow.showAtLocation(gridView, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
             }
         });
         mPreviewBtn.setOnClickListener(new View.OnClickListener() {

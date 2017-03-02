@@ -88,7 +88,6 @@ public class GmacsImageDao {
             String _data = MediaStore.Images.Media.DATA;
 
             StringBuilder where = new StringBuilder();
-            //TODO  待优化
             where.append("(").append(_data).append(" LIKE '").append(dirPath).append("%jpg' OR ").append(_data).append(" LIKE '").append(dirPath)
                     .append("%jpeg' OR ").append(_data).append(" LIKE '").append(dirPath).append("%png' OR ").append(_data).append(" LIKE '").append(dirPath)
                     .append("%JPG' OR ").append(_data).append(" LIKE '").append(dirPath).append("%JPEG' OR ").append(_data).append(" LIKE '").append(dirPath)

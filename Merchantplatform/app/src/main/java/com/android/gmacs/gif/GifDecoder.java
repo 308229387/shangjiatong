@@ -12,7 +12,6 @@ import java.io.IOException;
  * For access only metadata (size, number of frames etc.) without pixels see {@link GifAnimationMetaData}.
  */
 public class GifDecoder {
-	//TODO extract common container
 	private final GifInfoHandle mGifInfoHandle;
 
 	/**

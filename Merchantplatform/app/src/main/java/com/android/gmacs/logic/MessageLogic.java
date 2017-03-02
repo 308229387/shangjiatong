@@ -123,8 +123,8 @@ public class MessageLogic extends BaseLogic implements MessageManager.RecvMsgLis
     @Override
     public void msgRecved(final Message msg) {
         //TODO：Penta接收到的消息判断是否是客服消息
-        //if (msg.mSenderInfo.mUserSource == 8) {
-        if (true) {
+        if (msg.mSenderInfo.mUserSource == 8) {
+        //if (true) {
             final String spUserId = UserUtils.getCustomId(context);
             if (TextUtils.isEmpty(spUserId) || spUserId.equals("0") || !msg.mSenderInfo.mUserId.equals(spUserId)) {
 

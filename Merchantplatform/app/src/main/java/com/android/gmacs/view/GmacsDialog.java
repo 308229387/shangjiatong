@@ -371,7 +371,6 @@ public class GmacsDialog extends Dialog {
                     if (mOnCancelListener != null) {
                         mOnCancelListener.onCancel(dialog);
                     } else {
-//                      TODO: default onCancel
                     }
                 }
             });

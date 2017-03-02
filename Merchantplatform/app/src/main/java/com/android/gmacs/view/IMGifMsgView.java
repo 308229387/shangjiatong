@@ -150,8 +150,6 @@ public class IMGifMsgView extends IMMessageView {
         if (downFailed != null) {
             downFailed.setVisibility(View.GONE);
         }
-        //TODO 需要完善，调用底层下载gif
-//        GifDownLoad.downloadGif(mGifMsg, new WeakReference<BaseAdapter>(mAdapter));
     }
 
 }
