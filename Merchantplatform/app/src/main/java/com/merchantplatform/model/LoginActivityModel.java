@@ -99,15 +99,13 @@ public class LoginActivityModel extends BaseModel {
     private void initIM() {
         new IMLoginUtils(context);
         //更新专属客服
-        OkHttpUtils.get(Urls.GLOBAL_BINDSTAFF).execute(new AbsCallback<BindStaffResponce>() {
-            @Override
-            public BindStaffResponce parseNetworkResponse(Response response) throws Exception {
-                return null;
-            }
+        OkHttpUtils.get(Urls.GLOBAL_BINDSTAFF).execute(new DialogCallback<BindStaffResponce>(context) {
+
             @Override
             public void onResponse(boolean isFromCache, BindStaffResponce bindStaffResponce, okhttp3.Request request, @Nullable Response response) {
                 if (null != bindStaffResponce && null != bindStaffResponce.getData()) {
                     String stuffId = bindStaffResponce.getData().getStaffId();
+                    Log.i("stuff", "获取到专属客服绑定Id-" + stuffId);
                     if (!TextUtils.isEmpty(stuffId)) {
                         UserUtils.setCustomId(context, stuffId);
                     }

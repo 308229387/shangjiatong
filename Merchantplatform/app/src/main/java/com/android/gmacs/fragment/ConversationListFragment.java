@@ -25,6 +25,8 @@ import com.Utils.SystemNotificationInfoAction;
 import com.Utils.UserUtils;
 import com.Utils.eventbus.IMCustomChangeEvent;
 import com.Utils.eventbus.IMDetailDestroyEvent;
+import com.common.gmacs.core.Gmacs;
+import com.common.gmacs.parse.talk.TalkType;
 import com.merchantplatform.R;
 import com.android.gmacs.activity.GmacsChatActivity;
 import com.android.gmacs.adapter.ConversationListAdapter;
@@ -371,9 +373,14 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
         refreshCustom();
 
         List<Talk> talks = event.getTalks();
-        for (Talk talk : talks) {
-            if (talk.mTalkOtherUserSource == 8) {
-                talks.remove(talk);
+        if (talks != null) {
+            for (int i = 0; i < talks.size(); i++) {
+                Talk talk = talks.get(0);
+
+                if (talk.mTalkOtherUserSource == 8) {
+                    talks.remove(talk);
+                    i--;
+                }
             }
         }
 
@@ -420,27 +427,18 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
         if (!judgeHasCustom()) {
             return;
         }
-
+        messageUserInfo = null;
         IMMessageEntity imMessageEntity = IMMessageDaoOperate.getLastCustomMessage(UserUtils.getUserId(getActivity()));
         if (null != imMessageEntity) {
 
             Message message = CustomMessageUtil.entityToOriginal(imMessageEntity);
-            if (imMessageEntity.getReceiverId().equals(UserUtils.getUserId(getActivity()))) {
-                messageUserInfo = message.mSenderInfo;
-            } else if (imMessageEntity.getSenderId().equals(UserUtils.getUserId(getActivity()))) {
-                messageUserInfo = message.mReceiverInfo;
-            }
+//            if (imMessageEntity.getReceiverId().equals(UserUtils.getUserId(getActivity()))) {
+//                messageUserInfo = message.mSenderInfo;
+//            } else if (imMessageEntity.getSenderId().equals(UserUtils.getUserId(getActivity()))) {
+//                messageUserInfo = message.mReceiverInfo;
+//            }
 
-            if (messageUserInfo != null)
-                customView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //Toast.makeText(getActivity(), "进入详情页", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(createToChatActivity(getActivity(), "", messageUserInfo, IMConstant.EXTRA_TYPE_CUSTOM));
-                        startActivity(intent);
-                        IMMessageDaoOperate.updateDataRedDot(UserUtils.getUserId(getActivity()));
-                    }
-                });
+
             if (null != message.mMsgDetail.getmMsgContent() && null != message.mMsgDetail.getmMsgContent().mType) {
                 if (message.mMsgDetail.getmMsgContent().mType.equals(MsgContentType.TYPE_TEXT)) {
                     customTextView.setText(((message.mMsgDetail.getmMsgContent())).getPlainTextSpannableStringBuilder(getActivity()));
@@ -460,13 +458,31 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
 
 
         }
+        if (messageUserInfo == null) {
+            String customId = UserUtils.getCustomId(getContext());
+            messageUserInfo = new Message.MessageUserInfo();
+            messageUserInfo.mUserId = customId;
+            messageUserInfo.mUserSource = 8;
+            messageUserInfo.mTalkType = 2;
+        }
+
+
+        customView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(getActivity(), "进入详情页", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(createToChatActivity(getActivity(), "", messageUserInfo, IMConstant.EXTRA_TYPE_CUSTOM));
+                startActivity(intent);
+                IMMessageDaoOperate.updateDataRedDot(UserUtils.getUserId(getActivity()));
+            }
+        });
 
     }
 
     private boolean judgeHasCustom() {
         String customId = UserUtils.getCustomId(getActivity());
 
-        if (TextUtils.isEmpty(customId)) {
+        if (TextUtils.isEmpty(customId) || customId.equals("0")) {
             customView.setVisibility(View.GONE);
             return false;
         } else {

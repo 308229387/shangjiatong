@@ -2,8 +2,11 @@ package com.android.gmacs.logic;
 
 import android.app.Application;
 import android.app.Notification;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.Utils.Urls;
 import com.Utils.UserUtils;
@@ -11,6 +14,8 @@ import com.Utils.eventbus.IMCustomChangeEvent;
 import com.android.gmacs.event.LoadHistoryMessagesEvent;
 import com.android.gmacs.utils.CustomMessageUtil;
 import com.bean.BindStaffResponce;
+import com.callback.DialogCallback;
+import com.callback.JsonCallback;
 import com.common.gmacs.core.ClientManager;
 import com.common.gmacs.core.ContactsManager;
 import com.common.gmacs.core.MessageManager;
@@ -22,6 +27,7 @@ import com.common.gmacs.parse.talk.TalkType;
 import com.common.gmacs.utils.GmacsUtils;
 import com.db.dao.IMMessageEntity;
 import com.db.helper.IMMessageDaoOperate;
+import com.merchantplatform.application.HyApplication;
 import com.okhttputils.OkHttpUtils;
 import com.okhttputils.callback.AbsCallback;
 import com.xxganji.gmacs.proto.CommonPB;
@@ -122,43 +128,46 @@ public class MessageLogic extends BaseLogic implements MessageManager.RecvMsgLis
 
     @Override
     public void msgRecved(final Message msg) {
-        //TODO：Penta接收到的消息判断是否是客服消息
+        Log.i("stuff", "收到消息-" + msg.mSenderInfo.mUserId);
+        boolean delay = false;//delay是否需要延迟发送消息
+
+        //专属客服消息单独处理
         if (msg.mSenderInfo.mUserSource == 8) {
-        //if (true) {
-            final String spUserId = UserUtils.getCustomId(context);
+            Log.i("stuff", "收到专属客服消息-" + msg.mSenderInfo.mUserId);
+            final String spUserId = UserUtils.getCustomId(context);//获取当前客服Id
+            //判断是不是专属客服变更消息
             if (TextUtils.isEmpty(spUserId) || spUserId.equals("0") || !msg.mSenderInfo.mUserId.equals(spUserId)) {
-
-                OkHttpUtils.get(Urls.GLOBAL_BINDSTAFF).execute(new AbsCallback<BindStaffResponce>() {
-                    @Override
-                    public BindStaffResponce parseNetworkResponse(Response response) throws Exception {
-                        return null;
-                    }
-
+                Log.i("stuff", "收到专属客服切换消息-" + msg.mSenderInfo.mUserId);
+                delay = true;//专属客服消息需要延迟
+                //发送确认请求判断是否真正变更
+                OkHttpUtils.get(Urls.GLOBAL_BINDSTAFF).execute(new JsonCallback<BindStaffResponce>() {
                     @Override
                     public void onResponse(boolean isFromCache, BindStaffResponce bindStaffResponce, Request request, @Nullable Response response) {
+                        //判断消息体是否为空
                         if (null != bindStaffResponce && null != bindStaffResponce.getData()) {
-
                             String stuffId = bindStaffResponce.getData().getStaffId();
+                            Log.i("stuff", "收到专属客服确认消息-" + stuffId);
+                            //最终专属客服的变更都已服务端返回为准，判断是否确认变更
                             if (!TextUtils.isEmpty(stuffId) && !spUserId.equals(stuffId)) {
-                                //发送客服变更消息Event
-                                UserUtils.setCustomId(context, stuffId);
-                                EventBus.getDefault().post(new IMCustomChangeEvent(msg.mSenderInfo));
+                                Log.i("stuff", "更新专属客服Id-" + stuffId);
+                                UserUtils.setCustomId(context, stuffId);//更新本地客服账号
+                                EventBus.getDefault().post(new IMCustomChangeEvent(msg.mSenderInfo));//发送客服变更消息Event
+                                EventBus.getDefault().post(msg);//发送新消息Event
                             }
-
                         }
-
                     }
                 });
-
             }
-
-            //消息入私有库
-            IMMessageEntity imMessageEntity = CustomMessageUtil.originalToEntity(msg);
-            IMMessageDaoOperate.insertOrReplace(imMessageEntity);
+            //消息入私有库 除了取消绑定消息
+            if (!msg.mSenderInfo.mUserId.equals("0")) {
+                IMMessageEntity imMessageEntity = CustomMessageUtil.originalToEntity(msg);
+                IMMessageDaoOperate.insertOrReplace(imMessageEntity);
+            }
         }
 
-        //发送接收消息EventBus
-        EventBus.getDefault().post(msg);
+        if (!delay)
+            EventBus.getDefault().post(msg);
+
         if (msg.mMsgDetail.getmMsgContent().isNotice() && notifyHelper != null) {
             // 排除当前正进行的会话
             boolean isNotify = !(RecentTalkManager.getInstance().isBelongTalking(msg)

@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.Utils.SystemNotificationInfoAction;
@@ -313,16 +314,13 @@ public class HomepageModel extends BaseModel implements View.OnClickListener {
     public void getBindStuff() {
         //更新专属客服
         if (StringUtil.isNotEmpty(UserUtils.getUserId(context))) {
-            OkHttpUtils.get(Urls.GLOBAL_BINDSTAFF).execute(new AbsCallback<BindStaffResponce>() {
-                @Override
-                public BindStaffResponce parseNetworkResponse(Response response) throws Exception {
-                    return null;
-                }
-
+            OkHttpUtils.get(Urls.GLOBAL_BINDSTAFF).execute(new DialogCallback<BindStaffResponce>(context) {
                 @Override
                 public void onResponse(boolean isFromCache, BindStaffResponce bindStaffResponce, Request request, @Nullable Response response) {
                     if (null != bindStaffResponce && null != bindStaffResponce.getData()) {
+
                         String stuffId = bindStaffResponce.getData().getStaffId();
+                        Log.i("stuff", "获取到专属客服绑定Id-" + stuffId);
                         if (!TextUtils.isEmpty(stuffId)) {
                             UserUtils.setCustomId(context, stuffId);
                         }

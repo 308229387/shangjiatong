@@ -151,6 +151,7 @@ public class CustomMessageUtil {
         message.mSenderInfo = Message.MessageUserInfo.createLoginUserInfo();
         message.mTalkType = mTalkType;
         message.mSenderInfo.mTalkType = message.mTalkType;
+        message.mMsgDetail.mMsgUpdateTime = new Date().getTime();
         if (sendIMMsgListener != null) {
             sendIMMsgListener.onPreSaveMessage(message);
         }
@@ -170,7 +171,6 @@ public class CustomMessageUtil {
             //消息入库
             message.mMsgDetail.setMsgSendStatus(CommonPB.SendStatus.MSG_SENT);
             IMMessageEntity imMessageEntity = originalToEntity(message);
-            imMessageEntity.setTimestamp(new Date().getTime());
             IMMessageDaoOperate.insertOrReplace(imMessageEntity);
         }
     }
@@ -195,7 +195,6 @@ public class CustomMessageUtil {
             //消息入库
             message.mMsgDetail.setMsgSendStatus(CommonPB.SendStatus.MSG_SENT);
             IMMessageEntity imMessageEntity = originalToEntity(message);
-            imMessageEntity.setTimestamp(new Date().getTime());
             IMMessageDaoOperate.insertOrReplace(imMessageEntity);
         }
     }

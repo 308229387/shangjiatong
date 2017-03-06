@@ -546,7 +546,7 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
 
     @Override
     protected void onDestroy() {
-        if(type == IMConstant.EXTRA_TYPE_CUSTOM) {
+        if (type == IMConstant.EXTRA_TYPE_CUSTOM) {
             IMMessageDaoOperate.updateDataRedDot(UserUtils.getUserId(this));
             EventBus.getDefault().post(new IMDetailDestroyEvent());
         }
@@ -1307,7 +1307,7 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
     public void onEvent(IMCustomChangeEvent event) {
         String customId = UserUtils.getCustomId(this);
 
-        if (TextUtils.isEmpty(customId)) {
+        if (TextUtils.isEmpty(customId) || customId.equals("0")) {
             showCustomKickoffDialog();
         } else {
             if (event.getData() instanceof Message.MessageUserInfo) {
@@ -1369,9 +1369,8 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
             commonDialog.setContent("您的专属客服已到期，请续费使用");
             commonDialog.setContentColor(R.color.common_text_gray);
             commonDialog.setTitle("提示");
-            commonDialog.setBtnCancelColor(R.color.common_text_gray);
-            commonDialog.setBtnSureText("确认");
-            commonDialog.setCancelable(false);
+            commonDialog.setBtnCancelText("确认");
+            commonDialog.setBtnSureVisible(View.GONE);
             commonDialog.setOnDialogClickListener(new CommonDialog.OnDialogClickListener() {
                 @Override
                 public void onDialogClickSure() {
