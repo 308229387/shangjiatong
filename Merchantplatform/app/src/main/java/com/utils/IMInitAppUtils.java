@@ -110,8 +110,8 @@ public class IMInitAppUtils {
     }
 
     public void setEnvironment() {
-//        ClientManager.getInstance().setServerLevel(Gmacs.SERVER_INTEGRATE);
-        ClientManager.getInstance().setServerLevel(Gmacs.SERVER_ONLINE);
+        ClientManager.getInstance().setServerLevel(Gmacs.SERVER_INTEGRATE);
+//        ClientManager.getInstance().setServerLevel(Gmacs.SERVER_ONLINE);
     }
 
     public void setInfo() {

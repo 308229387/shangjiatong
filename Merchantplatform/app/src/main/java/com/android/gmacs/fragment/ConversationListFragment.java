@@ -25,9 +25,6 @@ import com.Utils.SystemNotificationInfoAction;
 import com.Utils.UserUtils;
 import com.Utils.eventbus.IMCustomChangeEvent;
 import com.Utils.eventbus.IMDetailDestroyEvent;
-import com.common.gmacs.core.Gmacs;
-import com.common.gmacs.parse.talk.TalkType;
-import com.merchantplatform.R;
 import com.android.gmacs.activity.GmacsChatActivity;
 import com.android.gmacs.adapter.ConversationListAdapter;
 import com.android.gmacs.event.RecentTalksEvent;
@@ -49,6 +46,9 @@ import com.db.dao.IMMessageEntity;
 import com.db.helper.IMMessageDaoOperate;
 import com.log.LogUmengAgent;
 import com.log.LogUmengEnum;
+import com.merchantplatform.R;
+import com.merchantplatform.application.HyApplication;
+import com.ta.utdid2.android.utils.StringUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -177,6 +177,8 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
 
             }
         });
+        judgeHasExtension();
+
         mHeaderView = new LinearLayout(getActivity());
         mHeaderView.setOrientation(LinearLayout.VERTICAL);
         mHeaderView.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
@@ -488,6 +490,18 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
         } else {
             customView.setVisibility(View.VISIBLE);
             return true;
+        }
+    }
+
+    private void judgeHasExtension() {
+        String isPayOpen = UserUtils.getPay(HyApplication.getApplication());
+        String isUserFundsOpen = UserUtils.getFundsOpen(HyApplication.getApplication());
+        if (!StringUtils.isEmpty(isPayOpen) && !StringUtils.isEmpty(isUserFundsOpen)) {
+            if ("1".equals(isPayOpen) && "1".equals(isUserFundsOpen)) {
+                extendHead.setVisibility(View.VISIBLE);
+            } else {
+                extendHead.setVisibility(View.GONE);
+            }
         }
     }
 
