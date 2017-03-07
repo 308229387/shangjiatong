@@ -13,6 +13,7 @@ import com.Utils.eventbus.IMCustomChangeEvent;
 import com.android.gmacs.logic.MessageLogic;
 import com.bean.BindStaffResponce;
 import com.db.helper.DbManager;
+import com.db.helper.IMMessageDaoOperate;
 import com.facebook.stetho.Stetho;
 import com.log.LogUmengAgent;
 import com.merchantplatform.BuildConfig;
@@ -31,6 +32,9 @@ import com.utils.WPushInitUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -61,11 +65,12 @@ public class HyApplication extends MultiDexApplication {
         initWPush();
         initOkHttp();
         initLogin();
+        initGreenDao();
         initIM();
         initBugly();
         initStetho();
         initUmeng();
-        initGreenDao();
+
     }
 
     private void initGreenDao() {
@@ -91,6 +96,7 @@ public class HyApplication extends MultiDexApplication {
     public void initIM() {
         new IMInitAppUtils(application);
         MessageLogic.init(application);
+        IMMessageDaoOperate.deleteOverDateMessage();//删除超过30天的消息
     }
 
     private void initBugly() {

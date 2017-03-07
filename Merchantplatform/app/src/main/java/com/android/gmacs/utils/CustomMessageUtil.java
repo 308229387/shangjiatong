@@ -1,5 +1,6 @@
 package com.android.gmacs.utils;
 
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -164,14 +165,22 @@ public class CustomMessageUtil {
         if (msg != null && msg.trim() != "") {
             IMTextMsg imTextMsg = new IMTextMsg();
             imTextMsg.mMsg = msg;
-            Message message = createMessage(messageUserInfo.mTalkType, imTextMsg, messageUserInfo, sendIMMsgListener);
+            final Message message = createMessage(messageUserInfo.mTalkType, imTextMsg, messageUserInfo, sendIMMsgListener);
             message.mMsgDetail.setRefer(ref);
             MessageManager.getInstance().sendIMMsg(message, sendIMMsgListener);
 
-            //消息入库
-            message.mMsgDetail.setMsgSendStatus(CommonPB.SendStatus.MSG_SENT);
-            IMMessageEntity imMessageEntity = originalToEntity(message);
-            IMMessageDaoOperate.insertOrReplace(imMessageEntity);
+
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //消息入库
+                    message.mMsgDetail.setMsgSendStatus(CommonPB.SendStatus.MSG_SENT);
+                    IMMessageEntity imMessageEntity = originalToEntity(message);
+                    IMMessageDaoOperate.insertOrReplace(imMessageEntity);
+                }
+            },300);
+
         }
     }
 

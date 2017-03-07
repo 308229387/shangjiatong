@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
+import com.android.gmacs.utils.IMConstant;
 import com.merchantplatform.R;
 import com.android.gmacs.activity.GmacsWebViewActivity;
 import com.android.gmacs.view.emoji.FaceConversionUtil;
@@ -53,6 +54,12 @@ public class IMTextMsgView extends IMMessageView {
             @Override
             public boolean onLongClick(View v) {
                 mIsShowClickEvent = false;
+                String str[];
+                if (type == IMConstant.EXTRA_TYPE_CUSTOM) {
+                    str = new String[]{mChatActivity.getString(R.string.copy_message)};
+                } else {
+                    str = new String[]{mChatActivity.getString(R.string.copy_message), mChatActivity.getString(R.string.delete_message)};
+                }
                 final GmacsDialog.Builder dialog = new GmacsDialog.Builder(getContentView().getContext(), GmacsDialog.Builder.DIALOG_TYPE_LIST_NO_BUTTON);
                 dialog.initDialog(new AdapterView.OnItemClickListener() {
 
@@ -72,7 +79,8 @@ public class IMTextMsgView extends IMMessageView {
                         }
                         dialog.dismiss();
                     }
-                }).setListTexts(new String[]{mChatActivity.getString(R.string.copy_message), mChatActivity.getString(R.string.delete_message)}).create().show();
+                }).setListTexts(str).create().show();
+
                 return true;
             }
         });

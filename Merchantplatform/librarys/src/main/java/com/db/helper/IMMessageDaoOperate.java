@@ -11,6 +11,9 @@ import org.greenrobot.greendao.query.QueryBuilder;
 import org.greenrobot.greendao.query.WhereCondition;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -101,6 +104,15 @@ public class IMMessageDaoOperate {
         for (IMMessageEntity a : unReaded) {
             DbManager.getInstance().getDaoSession().getIMMessageEntityDao().update(a);
         }
+    }
+
+    public static void deleteOverDateMessage(){
+        GregorianCalendar gcNew = new GregorianCalendar();
+        gcNew.set(Calendar.MONTH, gcNew.get(Calendar.MONTH) - 1);
+        Date dtFrom = gcNew.getTime();
+        QueryBuilder<IMMessageEntity> builder = DbManager.getInstance().getDaoSession().getIMMessageEntityDao().queryBuilder();
+        builder = builder.where(IMMessageEntityDao.Properties.Timestamp.lt(dtFrom.getTime()));
+        builder.buildDelete().executeDeleteWithoutDetachingEntities();
     }
 
 }

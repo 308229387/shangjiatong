@@ -270,7 +270,7 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
             chatAdapter.clearData();
             chatAdapter.setTalk(mTalk);
         } else {
-            setChatAdapter(new GmacsChatAdapter(this, mTalk));
+            setChatAdapter(new GmacsChatAdapter(this, mTalk, type));
         }
         //加载历史消息
         loadHistoryMsgs();

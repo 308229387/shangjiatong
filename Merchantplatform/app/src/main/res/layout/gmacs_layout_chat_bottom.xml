@@ -114,9 +114,7 @@
         <RelativeLayout
             android:id="@+id/layout_send_right"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="@dimen/im_chat_buttons_margin_bottom"
+            android:layout_height="match_parent"
             android:layout_marginRight="@dimen/im_chat_buttons_margin_left_right"
             android:clickable="true"
             android:focusable="true"
@@ -144,18 +142,15 @@
             <Button
                 android:id="@+id/send_text"
                 style="@style/style_chat_send_button"
-                android:layout_alignBottom="@id/send_emoji_button"
-                android:layout_alignTop="@id/send_emoji_button"
-                android:layout_centerVertical="true"
+                android:layout_centerInParent="true"
                 android:layout_toRightOf="@id/send_emoji_button"
                 android:background="@drawable/gmacs_btn_send"
-                android:gravity="center"
-                android:visibility="gone" />
+                android:visibility="visible" />
         </RelativeLayout>
 
     </LinearLayout>
 
-    <!-- 底部发送"图片"、"拍照"、"房源" -->
+    <!--底部发送"图片"、"拍照"、"房源"-->
     <include
         layout="@layout/gmacs_send_more"
         android:visibility="gone" />

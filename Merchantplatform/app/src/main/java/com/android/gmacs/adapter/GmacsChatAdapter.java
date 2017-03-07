@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.gmacs.utils.IMConstant;
 import com.merchantplatform.R;
 import com.android.gmacs.activity.GmacsChatActivity;
 import com.android.gmacs.core.UserInfoCacheManager;
@@ -59,9 +60,12 @@ public class GmacsChatAdapter extends BaseAdapter implements View.OnClickListene
     private Talk mTalk;
     private SimpleDateFormat mSimpleDateFormat = (SimpleDateFormat) SimpleDateFormat.getDateTimeInstance();
 
-    public GmacsChatAdapter(Context context, Talk talk) {
+    private int type;//聊天类型 1：专属客服聊天 0：普通聊天
+
+    public GmacsChatAdapter(Context context, Talk talk, int type) {
         this.mActivity = (GmacsChatActivity) context;
         this.mTalk = talk;
+        this.type = type;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -242,7 +246,7 @@ public class GmacsChatAdapter extends BaseAdapter implements View.OnClickListene
             initConvertView(convertView, viewHolder);
             // 根据类型判断加载哪种消息视图
             messageView = mIMViewFactory.createItemView(message.mMsgDetail.getmMsgContent());
-            View msgCardView = messageView.createIMView(message.mMsgDetail.getmMsgContent(), viewHolder.contentItem, mInflater, position, this, mActivity);
+            View msgCardView = messageView.createIMView(message.mMsgDetail.getmMsgContent(), viewHolder.contentItem, mInflater, position, this, mActivity, type);
             replaceAloneSendProgressBar(viewHolder, msgCardView);
             viewHolder.contentItem.setTag(messageView);
         } else {
@@ -468,10 +472,14 @@ public class GmacsChatAdapter extends BaseAdapter implements View.OnClickListene
         } else {
             viewHolder.leftName.setText(name);
         }
-        viewHolder.leftHead
-                .setDefaultImageResId(defaultLeftAvatarRes())
-                .setErrorImageResId(defaultLeftAvatarRes())
-                .setImageUrl(ImageUtil.makeUpUrl(avatar, IMG_RESIZE, IMG_RESIZE));
+        if (type == IMConstant.EXTRA_TYPE_CUSTOM) {
+            viewHolder.leftHead.setDefaultImageResId(R.drawable.costom_icon);
+        } else {
+            viewHolder.leftHead
+                    .setDefaultImageResId(defaultLeftAvatarRes())
+                    .setErrorImageResId(defaultLeftAvatarRes())
+                    .setImageUrl(ImageUtil.makeUpUrl(avatar, IMG_RESIZE, IMG_RESIZE));
+        }
         if (TalkType.isGroupTalk(mTalk)) {
             viewHolder.leftName.setVisibility(View.VISIBLE);
         } else {

@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.gmacs.utils.IMConstant;
 import com.merchantplatform.R;
 import com.android.gmacs.activity.GmacsImageActivity;
 import com.common.gmacs.msg.IMMessage;
@@ -67,17 +68,21 @@ public class IMImageMsgView extends IMMessageView {
         upLoadProgress = (TextView) mContentView.findViewById(R.id.tv_load_progress);
         picImage.setOnLongClickListener(new View.OnLongClickListener() {
             public boolean onLongClick(View v) {
-                final GmacsDialog.Builder dialog = new GmacsDialog.Builder(getContentView().getContext(), GmacsDialog.Builder.DIALOG_TYPE_LIST_NO_BUTTON);
-                dialog.setListTexts(new String[]{mChatActivity.getString(R.string.delete_message)}).initDialog(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        switch (position) {
-                            case 0:// 删除消息
-                                deleteIMMessageView();
-                                dialog.dismiss();
+                if (type == IMConstant.EXTRA_TYPE_CUSTOM) {
+
+                } else {
+                    final GmacsDialog.Builder dialog = new GmacsDialog.Builder(getContentView().getContext(), GmacsDialog.Builder.DIALOG_TYPE_LIST_NO_BUTTON);
+                    dialog.setListTexts(new String[]{mChatActivity.getString(R.string.delete_message)}).initDialog(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            switch (position) {
+                                case 0:// 删除消息
+                                    deleteIMMessageView();
+                                    dialog.dismiss();
+                            }
                         }
-                    }
-                }).create().show();
+                    }).create().show();
+                }
                 return true;
             }
         });

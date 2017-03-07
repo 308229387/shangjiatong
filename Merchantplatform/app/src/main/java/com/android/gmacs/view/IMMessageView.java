@@ -24,6 +24,8 @@ public abstract class IMMessageView implements OnClickListener {
 
     private IMMessage mIMMsg;
 
+    int type;
+
     /**
      * 模板方法
      *
@@ -34,10 +36,11 @@ public abstract class IMMessageView implements OnClickListener {
      * @param adapter
      * @param activity
      */
-    public View createIMView(IMMessage msg, ViewGroup parentView, LayoutInflater inflater, int position, GmacsChatAdapter adapter, GmacsChatActivity activity) {
+    public View createIMView(IMMessage msg, ViewGroup parentView, LayoutInflater inflater, int position, GmacsChatAdapter adapter, GmacsChatActivity activity, int type) {
         init(position, adapter, activity, msg);
         parentView.addView(initView(inflater));
         mContentView.setTag(this);
+        this.type = type;
         return mContentView;
     }
 
