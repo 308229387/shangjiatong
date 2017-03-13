@@ -472,6 +472,7 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
         customView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LogUmengAgent.ins().log(LogUmengEnum.LOG_ZSKF);
                 //Toast.makeText(getActivity(), "进入详情页", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(createToChatActivity(getActivity(), "", messageUserInfo, IMConstant.EXTRA_TYPE_CUSTOM));
                 startActivity(intent);

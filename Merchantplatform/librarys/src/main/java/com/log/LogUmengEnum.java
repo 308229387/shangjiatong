@@ -88,7 +88,12 @@ public enum LogUmengEnum {
     LOG_GJ_GUAJIANG("GJ_guajiang", "刮奖_点我刮奖"),
     LOG_GJ_QURENWU("GJ_qurenwu", "刮奖_去做任务"),
     LOG_GJ_JIXU("GJ_jixu", "刮奖_再抽一次"),
-    LOG_GJ_QUCHAKAN("GJ_quchakan", "刮奖_去查看中奖记录");
+    LOG_GJ_QUCHAKAN("GJ_quchakan", "刮奖_去查看中奖记录"),
+
+    /**
+     * 1.2.1埋点
+     */
+    LOG_ZSKF("ZSKF", "专属客服");
 
     private String eventid;
     private String eventDescription;
