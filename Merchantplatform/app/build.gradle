@@ -17,7 +17,7 @@ android {
         applicationId "com.merchantplatform"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 3
+        versionCode 4
         versionName "1.2.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true //支持多dex
