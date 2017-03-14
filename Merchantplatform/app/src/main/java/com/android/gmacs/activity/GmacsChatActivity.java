@@ -1371,6 +1371,7 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
             commonDialog.setTitle("提示");
             commonDialog.setBtnCancelText("确认");
             commonDialog.setBtnSureVisible(View.GONE);
+            commonDialog.setCancelable(false);
             commonDialog.setOnDialogClickListener(new CommonDialog.OnDialogClickListener() {
                 @Override
                 public void onDialogClickSure() {
@@ -1380,6 +1381,8 @@ public class GmacsChatActivity extends BaseActivity implements SendMoreLayout.On
 
                 @Override
                 public void onDialogClickCancel() {
+                    commonDialog.dismiss();
+                    finish();
 
                 }
             });
