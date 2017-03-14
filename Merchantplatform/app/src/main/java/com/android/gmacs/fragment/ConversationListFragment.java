@@ -240,6 +240,7 @@ public class ConversationListFragment extends BaseFragment implements AdapterVie
     public void onEvent(IMCustomChangeEvent event) {
         //更新专属客服是否需要展示
         judgeHasCustom();
+        refreshCustom();
     }
 
     /**

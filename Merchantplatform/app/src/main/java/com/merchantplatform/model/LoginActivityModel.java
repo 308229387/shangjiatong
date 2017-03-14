@@ -20,7 +20,6 @@ import com.merchantplatform.activity.LoginActivity;
 import com.merchantplatform.application.HyApplication;
 import com.merchantplatform.bean.LoginResponse;
 import com.okhttputils.OkHttpUtils;
-import com.okhttputils.callback.AbsCallback;
 import com.ui.dialog.CommonDialog;
 import com.umeng.analytics.MobclickAgent;
 import com.utils.IMLoginUtils;
